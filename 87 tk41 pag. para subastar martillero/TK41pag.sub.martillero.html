@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=, initial-scale=1.0">
+    <link href=https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css>
+    <link rel="stylesheet" href="estilo.css">
+    <title>Subastar</title>
+</head>
+
+    <head><p><h1>Subastas</h1></p></head>
+
+
+    <!-- botones NAV: "evento" "lotes" "consignatarios" "pujadores" "administrar usuarios"-->
+<nav>
+    <button type="button" class="btn btn-secondary">Eventos</button> 
+    <button type="button" class="btn btn-secondary">Lotes</button> 
+    <button type="button" class="btn btn-secondary">Consignatarios</button> 
+    <button type="button" class="btn btn-secondary">Pujadores</button> 
+    <button type="button" class="btn btn-secondary">Administrar usuario</button> 
+    
+</nav>
+
+<body><!--Identificador de lote  -->
+      <aside>
+        <div> 
+            <p>Lote: <input type="text" name="lote" size="40"></p>
+            
+
+        <!--Imagen lote  -->
+                 <img src="..." class="lote" alt="..."> <!--Aqui va descripcion de imagen   -->
+                    <div class="lote">
+                      <p class="lote"> </br>       
+                 </br></p>
+                    </div>     
+</body>
+
+<aside>
+        <!--Recuadro para ingresar texto detallando caracteristicas del lote -->
+            <h3><label>Descripción del Lote<p><textarea name="comentario" rows="5" cols="60"
+              placeholder="Ingrese descripcion"></textarea> </textarea></p></label></h3>
+              
+              
+              <!--Aqui va fecha de subasta, que se determina en la pantalla de creacion de lote habría que vincularla   -->
+              <ol><h3><label>Fecha de Subasta<p> <input type="date" name="Fecha" rows="5" cols="6"
+                placeholder="Ingrese descripcion"></textarea>: </textarea></p></label></h3></ol><!--Aqui va el nuemero que identifica al lote  --></h3></ol>
+               
+            
+        <!--Aqui el martillero especifica el estado en el que se encuentra el lote   -->
+                <p>Estado Lote:</br>
+                    <input type="radio" name="hm" value="m"> En curso
+                    <input type="radio" name="hm" value="m"> Vendido
+                    <input type="radio" name="hm" value="m"> Sin ofertas
+                    <input type="radio" name="hm" value="m"> Anulado
+                </p>                          
+        <!--Aqui areceran las ofertas de los pujadores -->          
+                <aside>
+
+                <label><h3>Ofertas</h3><p><textarea name="ofertas" rows="5" cols="60"></textarea> 
+                    <li>
+                    <ul input="text" value="monto"></ul>
+                    <ul input="text" value="monto"></ul>
+                    <ul input="text" value="monto"></ul>
+                    </li>   
+</aside>
+         
+    <footer>
+        <!--Aqui va botones "evento" "lotes" "consignatarios" "pujadores" "administrar usuaarios"-->
+            
+            <button type="button" class="btn btn-secondary">Siguiente Lote</button> 
+            <button type="button" class="btn btn-secondary">Terminar Puja</button> 
+    </footer>
+
+</html>
