@@ -1,2 +1,0 @@
-git fetch origin
-git checkout 87-tk41-maquetar-en-html-página-para-subastar-lotes-martillero
