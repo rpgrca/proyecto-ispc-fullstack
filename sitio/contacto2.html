@@ -4,28 +4,31 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="images/favicon.ico">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="contacto2.css">
   <title>Contacto</title>
 </head>
 <body>
   
-  <div class="container">
-    <div>
-      <h2>Contacto</h2>
+  <section class="container">
+    <div class="section-title">
+      <h1>Contacto</h1>
       <p>Enviános tu consulta o comentario. Te responderemos lo antes posible, en horario laboral.</p>
     </div>
 
     <div class="row">
       
       <!-- primera columna -->
-      <div class="column">
-        <form action="/">
+      <div class="column my-form">
+        <form action="#">
           <p>
-            <label for="nombre">Nombre</label>
-            <input type="text" id="fname" name="nombre" placeholder="Nombre">
+            <label for="nombre">Nombre*</label>
+            <input type="text" id="nombre" name="nombre" placeholder="Nombre" required>
           </p>
           <p>
-            <label for="mail">Mail</label>
-            <input type="email" id="mail" name="mail" placeholder="Mail">
+            <label for="mail">Mail*</label>
+            <input type="email" id="mail" name="mail" placeholder="Mail" required>
           </p>
           <p>
             <label for="asunto">Asunto</label>
@@ -36,27 +39,29 @@
             </select>
           </p>
           <p>
-            <label for="mensaje">Mensaje</label>
-            <textarea id="mensaje" name="mensaje" placeholder="Mensaje" ></textarea>
+            <label for="mensaje">Mensaje*</label>
+            <textarea id="mensaje" name="mensaje" placeholder="Mensaje" required></textarea>
+            <small>* Campos obligatorios</small>
           </p>
-          <p>
+          <p class="btn-right">
             <input type="submit" value="Enviar">
           </p>
         </form>
       </div>
 
       <!-- segunda columna -->
-      <div class="column">
-        <p>🌎 Humberto Primo 680, 2º S22, X5000FAN, Córdoba</p> <!-- luegos se cambiarán los íconos, según el estilo de la web -->>
-        <p>🕓 Lunes a viernes, de 9:30 a 15:00</p>
-        <p>📞 0351 231-5529</p>
-        <p>
-          <a href="https://www.google.com/maps/place/ISPC+Instituto+Superior+Polit%C3%A9cnico+C%C3%B3rdoba/@-31.4071806,-64.1906638,15z/data=!4m5!3m4!1s0x0:0xcf43bc8d04170a61!8m2!3d-31.4071806!4d-64.1906638" target="_blank"><img src="images/no-image.svg"></a>
+      <div class="column my-location">
+        <p class="location-info"><i class="fa-solid fa-location-dot"></i>&nbsp; Humberto Primo 680, 2º S22, X5000FAN, Córdoba</p>
+        <p class="location-info"><i class="fa-solid fa-clock"></i> Lunes a viernes, de 9:30 a 15:00 hs</p>
+        <p class="location-info"><i class="fa-solid fa-phone"></i> 0351 231-5529</p>
+        <br>
+        <p class="location-map">
+          <a href="https://www.google.com/maps/place/ISPC+Instituto+Superior+Polit%C3%A9cnico+C%C3%B3rdoba/@-31.4071806,-64.1906638,15z/data=!4m5!3m4!1s0x0:0xcf43bc8d04170a61!8m2!3d-31.4071806!4d-64.1906638" target="_blank"><img src="images/bidon-map.jpg" alt="Mapa de ubicación"></a>
         </p>
       </div>
 
     </div>
-  </div>
+  </section>
 
 </body>
 </html>
