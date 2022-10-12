@@ -1,0 +1,30 @@
+body{
+    font-family:'Roboto', sans-serif ;
+    background: #e8e8e8;
+}
+
+.menu{
+    list-style: none;
+    padding: 0;
+    background: #ffffff;
+    width:90%;
+    max-width: 1000px;
+    margin: auto;
+}
+
+.menu li a{
+    text-decoration: none;
+    color: #212121;
+    padding: 20px ;
+    display: block;
+}
+
+.menu li{
+    display: inline-block;
+    text-align: center;
+    
+}
+
+.menu li a:hover{
+    background: #f17228;
+}
