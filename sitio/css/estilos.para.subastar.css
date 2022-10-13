@@ -1,0 +1,127 @@
+.seccion-en-articulo {
+    background-color: orange;
+    border-radius: 3px;
+    margin: 2px 2px 2px 2px;
+    clear: both;
+}
+
+.imagen-de-lote {
+    height: 100px;
+    float: left;
+}
+
+.precio-base {
+    float: left;
+}
+
+.precio-venta {
+    float: right;
+}
+
+.seccion-form {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    background: #e2e1dd;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    font-family: "calibri";
+
+}
+
+.form-register {
+    width: 400px;
+    background-color: #ffba26;
+    padding: 20px 40px;
+    margin: auto;
+    margin-top: 60px;
+    margin-bottom: 60px;
+    border-radius: 10px;
+    font-size: 19px;
+    color: black;
+    box-shadow: 7px 13px 37px #161615;
+
+}
+
+.form-register h4 {
+    margin: 0%;
+    height: 45px;
+    font-size: 35px;
+    margin-bottom: 40px;
+    border-bottom: 1px solid #f77409;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+.form-register .menu {
+    height: 25px;
+    width: 100%;
+    background-color: #ffba26;
+    padding: 10px;
+    border-radius: 5px;
+    margin: auto;
+    margin-bottom: 14px;
+    border: 2px solid #f77409;
+    font-size: 14px;
+    color: rgb(8, 7, 7);
+    
+}
+.form-register > .menu:focus {
+    border: solid 3px;
+    border-color: black;
+}
+.form-register .menu::placeholder{
+    color: rgb(53, 52, 51);
+}
+
+.form-register p {
+    height: 30px;
+    margin-top: -1em;
+    text-align: center;
+    font-size: 15px;
+    line-height: 40px;
+}
+.form-register a {
+    color: black;
+    text-decoration: none;
+    font-size: 18px;
+    font-weight: bold;
+    
+}
+.form-register a:hover {
+    color: white;
+    text-decoration: underline;
+}
+
+.form-register .buton {
+    width: 100%;
+    background-color: #f77409;
+    border-radius: 10px;
+    border: none;
+    padding: 14px;
+    color: white;
+    text-align: center;
+    font-size: 22px;
+    font-weight: bold;
+    margin: 14px;
+    cursor: pointer;
+
+}
+.form-register .buton:hover{
+    color: black;
+}
+.form-register label {
+    color: black;
+    font-family: "calibri";
+    text-align: center;
+
+}
+
+@media only screen and (max-width: 768px) {
+    .form-register
+    width: 90%;
+    padding: 1em;
+}
