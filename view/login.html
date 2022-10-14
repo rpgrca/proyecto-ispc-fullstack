@@ -1,42 +1,38 @@
 <!DOCTYPE html>
 <html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
-    <link rel="shortcut icon" href="images/favicon.png" type="image/x-icon">
-    <link rel="stylesheet" href="css/estilos.css">
-    <link rel="stylesheet" href="Menu/estilo.css">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Login</title>
+        <link rel="shortcut icon" href="images/favicon.png" type="image/x-icon">
+        <link rel="stylesheet" href="css/estilos.css">
+    </head>
 
-</head>
-<body>
-    <header>
-        <nav class="navbar-header">
-            <a class="nav-logo" href="index.html"><img src="images/bidon_logo.svg" alt="Logo Bidon" width="150px" height="100px"></a>
-            <ul class="menu">
-                <li><a href="acerca.html">Acerca de Nosotros</a></li>
-                <li><a href="funcionamiento.html">Cómo funciona</a></li>
-                <li><a href="subasta-martillero.html">Subastas</a></li>
-                <li><a href="lotes.html">Lotes</a></li>
-                <li><a href="contacto.html">Contacto</a></li>
-                <li><a href="login.html">Identificarse</a></li>
-            
-            </ul>
-        </nav>
-    </header>
-    <section class="seccion-form">
-    
-        <form class="form-register" method="post" action="index.html">
-            <h4>Ingresar</h4>
-            <input class="menu"  type="text" placeholder="Usuario">
-            <input class="menu"  type="password" placeholder="Contraseña">
-            <input class="buton" type="submit" value="Ingresar">
-            <p><a href="reestablecer.html">¿Olvidé mi contraseña?</a></p>
-            <p><a href="registro.html">Me quiero registrar</a></p>
-        </form>
+    <body>
+        <header>
+            <nav class="navbar-header">
+                <a class="nav-logo" href="index.html"><img src="images/bidon_logo.svg" alt="Logo Bidon" width="150px" height="100px"></a>
+                <ul class="menu">
+                    <li><a href="acerca.html">Acerca de Nosotros</a></li>
+                    <li><a href="funcionamiento.html">Cómo funciona</a></li>
+                    <li><a href="subasta-martillero.html">Subastas</a></li>
+                    <li><a href="lotes.html">Lotes</a></li>
+                    <li><a href="contacto.html">Contacto</a></li>
+                    <li><a href="login.html">Identificarse</a></li>
+                </ul>
+            </nav>
+        </header>
 
-    </section>
-
-</body>
+        <section class="seccion-form">
+            <form class="form-register" method="post" action="/registro">
+                <h4>Ingresar</h4>
+                <input class="menu"  type="text" placeholder="Usuario">
+                <input class="menu"  type="password" placeholder="Contraseña">
+                <input class="buton" type="submit" value="Ingresar">
+                <p><a href="reestablecer.html">¿Olvidé mi contraseña?</a></p>
+                <p><a href="registro.html">Me quiero registrar</a></p>
+            </form>
+        </section>
+    </body>
 </html>
