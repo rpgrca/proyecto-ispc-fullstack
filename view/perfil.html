@@ -1,69 +1,63 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Perfil</title>
-    <link rel="stylesheet" href="css/estilos.css">
-    <link rel="stylesheet" href="bs/css/bootstrap.min.css">
-    <link rel="shortcut icon" href="images/favicon.png" type="image/x-icon">
-    <link rel="stylesheet" href="Menu/estilo.css">
-    
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Perfil</title>
+        <link rel="stylesheet" href="css/estilos.css">
+        <link rel="stylesheet" href="bs/css/bootstrap.min.css">
+        <link rel="shortcut icon" href="images/favicon.png" type="image/x-icon">
+        <link rel="stylesheet" href="Menu/estilo.css">
+    </head>
   
-<body>
-    <header>
-        <nav class="navbar-header">
-            <a class="nav-logo" href="index.html"><img src="images/bidon_logo.svg" alt="Logo Bidon" width="150px" height="100px"></a>
-            <ul class="menu">
-                <li><a href="acerca.html">Acerca de Nosotros</a></li>
-                <li><a href="funcionamiento.html">Cómo funciona</a></li>
-                <li><a href="subasta-martillero.html">Subastas</a></li>
-                <li><a href="lotes.html">Lotes</a></li>
-                <li><a href="contacto.html">Contacto</a></li>
-                <li><a href="login.html">Identificarse</a></li>
-            
-            </ul>
-        </nav>
-    </header>
-    <header>
-        <h1>Editar información personal</h1>
-    </header>
+    <body>
+        <header>
+            <nav class="navbar-header">
+                <a class="nav-logo" href="index.html"><img src="images/bidon_logo.svg" alt="Logo Bidon" width="150px" height="100px"></a>
+                <ul class="menu">
+                    <li><a href="acerca.html">Acerca de Nosotros</a></li>
+                    <li><a href="funcionamiento.html">Cómo funciona</a></li>
+                    <li><a href="subasta-martillero.html">Subastas</a></li>
+                    <li><a href="lotes.html">Lotes</a></li>
+                    <li><a href="contacto.html">Contacto</a></li>
+                    <li><a href="login.html">Identificarse</a></li>
+                </ul>
+            </nav>
+            <h1>Editar información personal</h1>
+        </header>
 
-    <style type="tex/css "></style>
-    <section>
-        <form action="" method="post">
-        <p>
-         
-        <div class="clase">
-            <label></p>Nombre de Usuario</e-mail><input type="text" autofocus email="nombre" sice="5" 
-            maxlength="20" name="email"  required placeholder="Ingrese nombre de usuario"></label> 
-        </div>
-         
-        <div>
-            <label>E-mail</e-mail><input type="email" autofocus email="email" sice="15" 
-            maxlength="20" name="email"  required placeholder="Ingrese su e-mail"></label> 
-        </div>
-            
+        <style type="tex/css "></style>
+        <section>
+            <form action="" method="post">
+                <div class="clase">
+                    <label for="usuario">Nombre de Usuario</label>
+                    <input id="usuario" type="text" autofocus maxlength="20" name="usuario" required placeholder="Ingrese nombre de usuario">
+                </div>
 
-         <label>Descripción<p><textarea name="comentario" rows="5" cols="50"placeholder="Ingrese descripcion"></textarea>: </textarea></p>
+                <div>
+                    <label for="email">E-mail</label>
+                    <input id="email" type="email" autofocus maxlength="255" name="email"  required placeholder="Ingrese su e-mail">
+                </div>
 
-        <label>Contraseña anterior <input type="password" name="password" id="pasword" size="8"
-         maxlength="20" required placeholder="contraseña"></label>
+                <div>
+                    <label for="clave-vieja">Contraseña anterior</label>
+                    <input type="password" name="clave-vieja" id="clave-vieja" maxlength="20" required placeholder="Contraseña anterior">
+                </div>
 
+                <div>
+                    <label for="clave-nueva">Nueva contraseña</label>
+                    <input type="password" name="clave-nueva" id="clave-nueva" maxlength="20" required placeholder="Contraseña nueva">
+                </div>
 
-        <label> Nueva Contraseña <input type="password" name="password" id="pasword" size="8"
-         maxlength="20" required placeholder="contraseña"></label>
+                <div>
+                    <label for="repetir-clave">Repetir nueva contraseña</label>
+                    <input type="password" name="repetir-clave" id="repetir-clave" maxlength="20" required placeholder="Repetir contraseña">
+                </div>
 
-        <label> Repetir nueva contraseña <input type="password" name="password" id="pasword" size="8"
-         maxlength="20" required placeholder="contraseña"></label>
-
-        <input type="submit" value="Editar">
-        <input type="reset">
-    </p>
-</form>
-     </section>
-    
-</body>
+                <input type="submit" value="Editar">
+                <input type="reset">
+            </form>
+        </section>
+    </body>
 </html>
-
