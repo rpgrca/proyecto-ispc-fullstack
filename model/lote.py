@@ -1,5 +1,6 @@
 # lote.py
 #
-# obtener_precio_base(): float
-# agregar_puja(puja: Puja)
-# obtener_puja_ganadora(): Puja
+# crear(articulo, precio_base)
+# obtener_precio_base()
+# agregar_puja(puja)
+# obtener_puja_ganadora()

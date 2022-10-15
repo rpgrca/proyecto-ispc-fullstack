@@ -1,5 +1,6 @@
 # venta.py
 #
-# obtener_precio_final(): float
-# obtener_comision(): float
-# obtener_pago_a_consignatario(): float
+# crear(puja)
+# obtener_precio_final()
+# obtener_comision()
+# obtener_pago_a_consignatario()

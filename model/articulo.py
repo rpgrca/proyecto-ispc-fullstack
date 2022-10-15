@@ -1,4 +1,5 @@
 # articulo.py
 #
-# obtener_titulo(): string
-# obtener_descripcion(): string
+# - crear(titulo, descripcion, valuacion, consignatario)
+# - obtener_titulo()
+# - obtener_descripcion()

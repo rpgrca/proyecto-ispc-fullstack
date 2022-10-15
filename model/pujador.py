@@ -1,6 +1,7 @@
 # pujador.py
 #
-# obtener_nombre(): string
-# validar_password(password: string): bool
-# cambiar_password(password_nuevo: string)
-# cambiar_email(email_nuevo: string)
+# crear(usuario, nombre, apellido, email, clave, nacimiento)
+# obtener_nombre()
+# validar_password(password)
+# cambiar_password(password)
+# cambiar_email(email_nuevo)

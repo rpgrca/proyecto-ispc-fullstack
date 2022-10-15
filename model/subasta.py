@@ -1,5 +1,6 @@
 # subasta.py
 #
-# agregar_lote(lote: Lote)
-# obtener_lote(orden: int)
-# contar_lotes(): int
+# crear(titulo, imagen, descripcion, fecha)
+# agregar_lote(lote)
+# obtener_lote(orden)
+# contar_lotes()
