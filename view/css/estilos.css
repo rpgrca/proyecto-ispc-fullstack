@@ -40,7 +40,6 @@ body {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    background: #e2e1dd;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
@@ -247,4 +246,8 @@ body {
     border-radius: 10px;
     color: black;
     box-shadow: 7px 13px 37px #161615;
+}
+
+.aire-lote {
+    margin: 10px;
 }
