@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=, initial-scale=1.0">
+        <link rel="stylesheet" href="bs/css/bootstrap.min.css">
+        <link rel="stylesheet" href="css/estilos.css">
+        <link rel="shortcut icon" href="images/favicon.png" type="image/x-icon">
+        <title>Creación de subasta</title>
+    </head>
+
+    <body>
+        <header>
+            <nav class="navbar navbar-expand-lg bg-light navbar-header">
+                <div class="container-fluid">
+                    <a class="navbar-brand nav-logo" href="index.html"><img src="images/bidon_logo.svg" alt="Logo Bidon" width="150px" height="100px"></a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navegacion" aria-controls="navegacion" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navegacion">
+                        <ul class="navbar-nav me-auto mb-2 mb-lg-0 menu">
+                            <li class="nav-item"><a class="nav-link" href="acerca.html">Acerca de Nosotros</a></li>
+                            <li class="nav-item"><a class="nav-link" href="funcionamiento.html">Cómo funciona</a></li>
+                            <li class="nav-item"><a class="nav-link" href="catalogo.html">Catálogo</a></li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="herramientas" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Herramientas</a>
+                                <div class="dropdown-menu" aria-labelledby="herramientas">
+                                <a class="dropdown-item" href="creacion-consignatario.html">Crear un consignatario</a>
+                                <a class="dropdown-item" href="creacion-articulo.html">Crear un artículo</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="#">Crear una subasta</a>
+                                </div>
+                            </li>
+                            <li class="nav-item"><a class="nav-link" href="perfil.html">Perfil</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+            <div class="col-md-12 mt-auto pb-4">
+                <div class="container mt-5">
+                    <div class="text-center">
+                        <h1 class="text-white">Creación de artículo</h1>
+                    </div>
+                </div>
+            </div>
+        </header>
+ 
+        <div class="container">
+            <nav>
+                <button type="button" class="btn btn-secondary">Eventos</button> 
+                <button type="button" class="btn btn-secondary">Lotes</button> 
+                <button type="button" class="btn btn-secondary">Consignatarios</button> 
+                <button type="button" class="btn btn-secondary">Pujadores</button> 
+                <button type="button" class="btn btn-secondary">Administrar usuario</button>
+            </nav>
+
+            <p>Lote: <input type="text" name="lote" size="40"></p>
+
+
+            <!--Imagen lote  -->
+            <img src="..." class="lote" alt="..."> <!--Aqui va descripcion de imagen   -->
+            <div class="lote">
+                <p class="lote">
+                    </br>
+                </p>
+            </div>     
+            <!--Recuadro para ingresar texto detallando caracteristicas del lote -->
+            <h3><label>Descripción del Lote<p>
+                    <textarea name="comentario" rows="5" cols="60" placeholder="Ingrese descripcion"></textarea>
+                    </p>
+                </label>
+            </h3>
+                              
+                              
+            <!--Aqui va fecha de subasta, que se determina en la pantalla de creacion de lote habría que vincularla   -->
+            <ol><h3><label>Fecha de Subasta<p><input type="date" name="Fecha" rows="5" cols="6"
+            placeholder="Ingrese descripcion"></textarea>: </textarea></p></label></h3></ol>
+            <!--Aqui va el nuemero que identifica al lote  -->
+                               
+                            
+            <!--Aqui el martillero especifica el estado en el que se encuentra el lote   -->
+            <p>Estado Lote:</br>
+                <input type="radio" name="hm" value="m"> En curso
+                <input type="radio" name="hm" value="m"> Vendido
+                <input type="radio" name="hm" value="m"> Sin ofertas
+                <input type="radio" name="hm" value="m"> Anulado
+            </p>                          
+
+            <!--Aqui apareceran las ofertas de los pujadores -->          
+                
+            <label><h3>Ofertas</h3><p><textarea name="ofertas" rows="5" cols="60"></textarea></p></label> 
+                <li>
+                    <ul input="text" value="monto"></ul>
+                    <ul input="text" value="monto"></ul>
+                    <ul input="text" value="monto"></ul>
+                </li>   
+    </div>
+        
+        <footer>
+            <!--Aqui va botones "evento" "lotes" "consignatarios" "pujadores" "administrar usuaarios"-->
+                
+                <button type="button" class="btn btn-secondary">Siguiente Lote</button> 
+                <button type="button" class="btn btn-secondary">Terminar Puja</button> 
+        </footer>
+
+        <script src="/bs/js/popper.min.js"></script>
+        <script src="/bs/js/bootstrap.min.js"></script>
+    </body>
+</html>
