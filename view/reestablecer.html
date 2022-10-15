@@ -31,28 +31,23 @@
             </nav>
             <div class="col-md-12 mt-auto pb-4">
                 <div class="container mt-5">
-                    <div class="proximo text-center">
+                    <div class="text-center">
                         <h1 class="text-white">Reestablecer contraseña</h1>
                     </div>
                 </div>
             </div>
         </header>
 
-
-        <p><h1>Ingrese su e-mail. Recibira un enlace para establecer una nueva contraseña</h1></p>
-    <form name="contact" method="POST" data-netlify="true" type="email">
-
-        <p>          <label>E-mail</E-mail> <input type="email" name="email" required autofocus="email" 
-            sice="5" maxlength="20" name="email" placeholder="E-mail" /></label>
-        </p>
-      
-          <button type="submit">Enviar</button>
-        </p>
-    </form>
-    
- 
-
-
+        <div class="container">
+            <section class="seccion-form">
+                <form class="form-register" name="contact" method="post" action="/registro">
+                    <p>Ingrese su e-mail. Recibira un enlace para establecer una nueva contraseña</p>
+                    <label for="email">E-mail</label>
+                    <input type="email" name="email" id="email" required placeholder="E-mail">
+                    <input type="submit" value="Enviar">
+                </form>
+            </section>
+        </div>
 
     <script src="/bs/js/popper.min.js"></script>
     <script src="/bs/js/bootstrap.min.js"></script>
