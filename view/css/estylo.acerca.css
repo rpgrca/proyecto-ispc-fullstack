@@ -1,0 +1,31 @@
+*{
+  margin: 0;
+    padding: 0;
+    background-color:rgb(218, 116, 32);
+}
+
+
+.destacado{
+        background-color: orange ;
+        border-radius: 15px;
+        text-align: center;
+        float: center;
+        text-align: center;
+        max-block-size: 40%;
+        font-size: 40px;
+    }
+
+.parrafo{
+    background-color: #ffba26;
+    padding: 20px 40px;
+    margin: auto;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    border-radius: 10px;
+    font-size: 35px;
+    color: black;
+    box-shadow: 7px 13px 37px #161615;
+    width: 32cm;
+    height: 10cm;
+}
+
