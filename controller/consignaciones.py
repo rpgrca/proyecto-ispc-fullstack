@@ -1,0 +1,3 @@
+# consignaciones.py
+#
+# listar(consignatario)
