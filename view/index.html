@@ -12,18 +12,30 @@
 
 <body>
     <header>
-        <nav class="navbar-header">
-            <a class="nav-logo" href="index.html"><img src="images/bidon_logo.svg" alt="Logo Bidon" width="150px" height="100px"></a>
-            <ul class="menu">
-                <li><a href="acerca.html">Acerca de Nosotros</a></li>
-                <li><a href="funcionamiento.html">Cómo funciona</a></li>
-                <li><a href="subasta-martillero.html">Subastas</a></li>
-                <li><a href="catalogo.html">Catálogo</a></li>
-                <li><a href="contacto.html">Contacto</a></li>
-                <li><a href="login.html">Identificarse</a></li>
-            
-            </ul>
+        <nav class="navbar navbar-expand-lg bg-light navbar-header">
+            <div class="container-fluid">
+                <a class="navbar-brand nav-logo" href="index.html"><img src="images/bidon_logo.svg" alt="Logo Bidon" width="150px" height="100px"></a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navegacion" aria-controls="navegacion" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navegacion">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0 menu">
+                        <li class="nav-item"><a class="nav-link" href="acerca.html">Acerca de Nosotros</a></li>
+                        <li class="nav-item"><a class="nav-link" href="funcionamiento.html">Cómo funciona</a></li>
+                        <li class="nav-item"><a class="nav-link" href="catalogo.html">Catálogo</a></li>
+                        <li class="nav-item"><a class="nav-link" href="contacto-visitante.html">Contacto</a></li>
+                        <li class="nav-item"><a class="nav-link" href="login.html">Identificarse</a></li>
+                    </ul>
+                </div>
+            </div>
         </nav>
+        <div class="col-md-12 mt-auto pb-4">
+            <div class="container mt-5">
+                <div class="text-center">
+                    <h1 class="text-white">BidOn</h1>
+                </div>
+            </div>
+        </div>
     </header>
 
     <section class="seccion-central">
@@ -40,6 +52,7 @@
 
     </footer>
 
-
+    <script src="/bs/js/popper.min.js"></script>
+    <script src="/bs/js/bootstrap.min.js"></script>
 </body>
 </html>

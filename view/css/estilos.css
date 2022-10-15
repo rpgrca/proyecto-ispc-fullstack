@@ -1,6 +1,19 @@
+* {
+  box-sizing: border-box;
+}
+
 body {
     font-family:'Roboto', sans-serif ;
     background: #e8e8e8;
+    line-height: 1.2;
+    margin: 0;
+    padding: 0;
+}
+
+/* contenedor y columnas */
+.container {
+    background-color: #ffba26;
+    padding: 10px 50px;
 }
 
 .seccion-en-articulo {
@@ -72,8 +85,20 @@ body {
     border: 2px solid #f77409;
     font-size: 14px;
     color: rgb(8, 7, 7);
-    
 }
+
+.form-register .menu-sin-altura-maxima {
+    width: 100%;
+    background-color: #ffba26;
+    padding: 10px;
+    border-radius: 5px;
+    margin: auto;
+    margin-bottom: 14px;
+    border: 2px solid #f77409;
+    font-size: 14px;
+    color: rgb(8, 7, 7);
+}
+
 .form-register > .menu:focus {
     border: solid 3px;
     border-color: black;
