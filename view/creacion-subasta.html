@@ -40,70 +40,126 @@
             <div class="col-md-12 mt-auto pb-4">
                 <div class="container mt-5">
                     <div class="text-center">
-                        <h1 class="text-white">Creación de artículo</h1>
+                        <h1 class="text-white">Creación de subasta</h1>
                     </div>
                 </div>
             </div>
         </header>
  
         <div class="container">
-            <nav>
-                <button type="button" class="btn btn-secondary">Eventos</button> 
-                <button type="button" class="btn btn-secondary">Lotes</button> 
-                <button type="button" class="btn btn-secondary">Consignatarios</button> 
-                <button type="button" class="btn btn-secondary">Pujadores</button> 
-                <button type="button" class="btn btn-secondary">Administrar usuario</button>
-            </nav>
+            <section class="seccion-form">
+                <form class="form-register">
+                    <label for="titulo">Título: </label><input class="menu" id="titulo" type="text" name="titulo" size="40"><br>
+                    <label for="imagen">Imagen: </label><input id="imagen" name="consignatario" type="file" accept="image/x-png,image/gif,image/jpg,image/jpeg"><br>
+                    <label for="descripcion">Descripción: </label><textarea class="menu-sin-altura-maxima" name="descripcion" rows="5" cols="60" placeholder="Descripcion"></textarea><br>
+                    <label for="fecha">Fecha: </label><input class="menu" id="fecha" name="fecha" type="date"><br>
+                    <input class="buton" type="submit" value="Grabar">
+                </form>
+            </section>
 
-            <p>Lote: <input type="text" name="lote" size="40"></p>
+            <section id="lotes">
 
+                <div class="col-md-12 mt-auto pb-4">
+                    <div class="container mt-5">
+                        <div class="text-center">
+                            <h1 class="text-white">Reordene, agregue o borre artículos para la subasta</h1>
+                        </div>
+                    </div>
+                </div>
 
-            <!--Imagen lote  -->
-            <img src="..." class="lote" alt="..."> <!--Aqui va descripcion de imagen   -->
-            <div class="lote">
-                <p class="lote">
-                    </br>
-                </p>
-            </div>     
-            <!--Recuadro para ingresar texto detallando caracteristicas del lote -->
-            <h3><label>Descripción del Lote<p>
-                    <textarea name="comentario" rows="5" cols="60" placeholder="Ingrese descripcion"></textarea>
-                    </p>
-                </label>
-            </h3>
-                              
-                              
-            <!--Aqui va fecha de subasta, que se determina en la pantalla de creacion de lote habría que vincularla   -->
-            <ol><h3><label>Fecha de Subasta<p><input type="date" name="Fecha" rows="5" cols="6"
-            placeholder="Ingrese descripcion"></textarea>: </textarea></p></label></h3></ol>
-            <!--Aqui va el nuemero que identifica al lote  -->
-                               
-                            
-            <!--Aqui el martillero especifica el estado en el que se encuentra el lote   -->
-            <p>Estado Lote:</br>
-                <input type="radio" name="hm" value="m"> En curso
-                <input type="radio" name="hm" value="m"> Vendido
-                <input type="radio" name="hm" value="m"> Sin ofertas
-                <input type="radio" name="hm" value="m"> Anulado
-            </p>                          
-
-            <!--Aqui apareceran las ofertas de los pujadores -->          
-                
-            <label><h3>Ofertas</h3><p><textarea name="ofertas" rows="5" cols="60"></textarea></p></label> 
-                <li>
-                    <ul input="text" value="monto"></ul>
-                    <ul input="text" value="monto"></ul>
-                    <ul input="text" value="monto"></ul>
-                </li>   
-    </div>
+                <form method="post" action="">
+                    <div class="row align-items-start">
+                        <div class="col">
+                            <div class="row">
+                                <div class="card" style="width: 18rem;">
+                                    <img src="images/mesita-auxiliar-francesa.jpg" class="card-img-top" alt="mesita auxiliar francesa">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Mesita auxiliar francesa</h5>
+                                        <p class="card-text">Mesita auxiliar francesa con madera lavada y protegida realizada en caoba rayada con herrajes y regatones en bronce. Movimientos delicdados. 73 cm de alto, 40 cm de ancho y 30 cm de profundidad.</p>
+                                        <label for="base-1">Base: </label><input id="base-1" name="base-1" type="text" placeholder="Ingrese precio base">
+                                        <a href="#" class="btn btn-secondary">Borrar</a>
+                                        <a href="#" class="btn btn-secondary">Reordenar</a>
+                                    </div>
+                                </div>
+                                <div class="card" style="width: 18rem;">
+                                    <img src="images/bajo-aparador.jpg" class="card-img-top" alt="bajo aparador">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Bajo aparador</h5>
+                                        <p class="card-text">Mesita auxiliar francesa con madera lavada y protegida realizada en caoba rayada con herrajes y regatones en bronce. Movimientos delicdados. 73 cm de alto, 40 cm de ancho y 30 cm de profundidad.</p>
+                                        <label for="base-2">Base: </label><input id="base-2" name="base-2" type="text" placeholder="Ingrese precio base">
+                                        <a href="#" class="btn btn-secondary">Borrar</a>
+                                        <a href="#" class="btn btn-secondary">Reordenar</a>
+                                    </div>
+                                </div>
+                                <div class="card" style="width: 18rem;">
+                                    <img src="images/juego-living-luis-xvi.jpg" class="card-img-top" alt="juego living luis xvi">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Juego de living Luis XVI</h5>
+                                        <p class="card-text">Hermoso juego de living estilo Luis XVI. Modelo cantarella con madera lavada y protegida. Tapizado a estrenar en lino antimancha, realizado en capitoné. Trabajo de ebanistería muy sobrio.</p>
+                                        <label for="base-3">Base: </label><input id="base-3" name="base-3" type="text" placeholder="Ingrese precio base">
+                                        <a href="#" class="btn btn-secondary">Borrar</a>
+                                        <a href="#" class="btn btn-secondary">Reordenar</a>
+                                    </div>
+                                </div>
+                                <div class="card" style="width: 18rem;">
+                                    <img src="images/juego-dormitorio-provenzal.jpg" class="card-img-top" alt="juego dormitorio provenzal">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Juego de dormitorio provenzal</h5>
+                                        <p class="card-text">Juego de dormitorio provenzal realizado en madera de cedro y roble con madera lavada y protegida y herrajes de bronce. Hermoso trabajo de ebanistería con laterales replanados.</p>
+                                        <label for="base-4">Base: </label><input id="base-4" name="base-4" type="text" placeholder="Ingrese precio base">
+                                        <a href="#" class="btn btn-secondary">Borrar</a>
+                                        <a href="#" class="btn btn-secondary">Reordenar</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="card" style="width: 18rem;">
+                                    <img src="images/no-image.svg" class="card-img-top" alt="sin imagen">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Lorem ipsum</h5>
+                                        <p class="card-text">Pellentesque ac purus et diam consectetur sollicitudin. In et hendrerit turpis. Praesent sodales aliquet enim, non commodo tellus dictum a. Proin convallis orci eu lorem pretium, id sodales libero ultrices. Vestibulum vitae pharetra urna. Duis hendrerit risus sit amet rhoncus volutpat. Nam elementum odio tortor. Aenean facilisis vestibulum maximus. Mauris ac condimentum neque, in dapibus neque.</p>
+                                        <label for="base-5">Base: </label><input id="base-5" name="base-5" type="text" placeholder="Ingrese precio base">
+                                        <a href="#" class="btn btn-secondary">Borrar</a>
+                                        <a href="#" class="btn btn-secondary">Reordenar</a>
+                                    </div>
+                                </div>
+                                <div class="card" style="width: 18rem;">
+                                    <img src="images/no-image.svg" class="card-img-top" alt="sin imagen">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Lorem ipsum</h5>
+                                        <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam vel condimentum nisl. Ut ipsum leo, imperdiet sit amet venenatis eget, ultricies eu orci. Maecenas volutpat enim at lectus sagittis, id porta augue lobortis. Vestibulum lacus mauris, fermentum non velit in, porta molestie enim. Sed tellus urna, accumsan ut velit sed, interdum fermentum nibh. Proin leo tortor, hendrerit quis luctus nec, facilisis sed dui. Aliquam massa purus, volutpat sed scelerisque nec, posuere id massa. Integer euismod odio id augue tincidunt efficitur. Mauris eget cursus justo, sed egestas erat.</p>
+                                        <label for="base-6">Base: </label><input id="base-6" name="base-6" type="text" placeholder="Ingrese precio base">
+                                        <a href="#" class="btn btn-secondary">Borrar</a>
+                                        <a href="#" class="btn btn-secondary">Reordenar</a>
+                                    </div>
+                                </div>
+                                <div class="card" style="width: 18rem;">
+                                    <img src="images/no-image.svg" class="card-img-top" alt="sin imagen">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Lorem ipsum</h5>
+                                        <p class="card-text">Pellentesque ac purus et diam consectetur sollicitudin. In et hendrerit turpis. Praesent sodales aliquet enim, non commodo tellus dictum a. Proin convallis orci eu lorem pretium, id sodales libero ultrices. Vestibulum vitae pharetra urna. Duis hendrerit risus sit amet rhoncus volutpat. Nam elementum odio tortor. Aenean facilisis vestibulum maximus. Mauris ac condimentum neque, in dapibus neque.</p>
+                                        <label for="base-7">Base: </label><input id="base-7" name="base-7" type="text" placeholder="Ingrese precio base">
+                                        <a href="#" class="btn btn-secondary">Borrar</a>
+                                        <a href="#" class="btn btn-secondary">Reordenar</a>
+                                    </div>
+                                </div>
+                                <div class="card" style="width: 18rem;">
+                                    <img src="images/no-image.svg" class="card-img-top" alt="sin imagen">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Lorem ipsum</h5>
+                                        <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam vel condimentum nisl. Ut ipsum leo, imperdiet sit amet venenatis eget, ultricies eu orci. Maecenas volutpat enim at lectus sagittis, id porta augue lobortis. Vestibulum lacus mauris, fermentum non velit in, porta molestie enim. Sed tellus urna, accumsan ut velit sed, interdum fermentum nibh. Proin leo tortor, hendrerit quis luctus nec, facilisis sed dui. Aliquam massa purus, volutpat sed scelerisque nec, posuere id massa. Integer euismod odio id augue tincidunt efficitur. Mauris eget cursus justo, sed egestas erat.</p>
+                                        <label for="base-8">Base: </label><input id="base-8" name="base-8" type="text" placeholder="Ingrese precio base">
+                                        <a href="#" class="btn btn-secondary">Borrar</a>
+                                        <a href="#" class="btn btn-secondary">Reordenar</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>        
+                </div>
+            </div>
+        </div>
         
-        <footer>
-            <!--Aqui va botones "evento" "lotes" "consignatarios" "pujadores" "administrar usuaarios"-->
-                
-                <button type="button" class="btn btn-secondary">Siguiente Lote</button> 
-                <button type="button" class="btn btn-secondary">Terminar Puja</button> 
-        </footer>
-
         <script src="/bs/js/popper.min.js"></script>
         <script src="/bs/js/bootstrap.min.js"></script>
     </body>
