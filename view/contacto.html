@@ -37,22 +37,20 @@
         </div>
     </header>
 
-    <main>
-        <h1 id="title">Contacto</h1>
+    <div class="container">
         <section id="sectionParrafo">
-            <p>Hola</p>
-            <p id="user">@Usuario</p>
+            <p>Hola @Usuario</p>
             <p>Para contactar con el administrador llená el siguiente formulario</p>
         </section>
             
-        <section id="sectionForm">
-            <form id="contact-form" action="" method="post">
-                <input type="text" name="subjet" placeholder="Escribe aquí el asunto..." title="Asunto es un campo requerido" required>
-                <textarea name="coments" cols="50" rows="5" placeholder="Escribe aquí el mensaje..." title="Tu comentario no debe exceder los 1600 caracteres" data-pattern= "^.{1,1600}$" required></textarea>
+        <section class="seccion-form">
+            <form id="contact-form" action="contact" method="post" class="form-register">
+                <input class="menu" type="text" name="subjet" placeholder="Escribe aquí el asunto..." title="Asunto es un campo requerido" required>
+                <textarea class="menu-sin-altura-maxima" name="coments" cols="50" rows="5" placeholder="Escribe aquí el mensaje..." title="Tu comentario no debe exceder los 1600 caracteres" data-pattern= "^.{1,1600}$" required></textarea>
                 <input type="submit" value="Enviar">
             </form>     
         </section>
-    </main>
+    </div>
 
     <script src="/bs/js/popper.min.js"></script>
     <script src="/bs/js/bootstrap.min.js"></script>
