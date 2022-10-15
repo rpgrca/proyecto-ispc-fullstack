@@ -1,3 +1,3 @@
 # consignaciones.py
 #
-# listar(consignatario)
+# listar_articulos_propiedad_de(consignatario)

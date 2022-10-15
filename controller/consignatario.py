@@ -1,3 +1,3 @@
 # consignatario.py
 #
-# registrar_consignatario()
+# crear(usuario, nombre, apellido, email, clave)

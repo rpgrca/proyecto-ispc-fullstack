@@ -1,3 +1,3 @@
-# /controller/login.py
+# login.py
 #
 # login(usuario, password)

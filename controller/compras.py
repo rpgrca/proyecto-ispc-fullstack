@@ -1,3 +1,3 @@
 # compras
 #
-# listar(usuario)
+# listar_compras_por(pujador)
