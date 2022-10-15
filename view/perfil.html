@@ -40,37 +40,39 @@
             </div>
         </header>
 
-        <section>
-            <form action="" method="post">
-                <div class="clase">
-                    <label for="usuario">Nombre de Usuario</label>
-                    <input id="usuario" type="text" autofocus maxlength="20" name="usuario" required placeholder="Ingrese nombre de usuario">
-                </div>
+        <div class="container">
+            <section class="seccion-form">
+                <form action="perfil" method="post" class="form-register">
+                    <div>
+                        <label for="usuario">Nombre de Usuario</label>
+                        <input class="menu" id="usuario" type="text" autofocus maxlength="20" name="usuario" required placeholder="Ingrese nombre de usuario">
+                    </div>
 
-                <div>
-                    <label for="email">E-mail</label>
-                    <input id="email" type="email" autofocus maxlength="255" name="email"  required placeholder="Ingrese su e-mail">
-                </div>
+                    <div>
+                        <label for="email">E-mail</label>
+                        <input class="menu" id="email" type="email" autofocus maxlength="255" name="email"  required placeholder="Ingrese su e-mail">
+                    </div>
 
-                <div>
-                    <label for="clave-vieja">Contraseña anterior</label>
-                    <input type="password" name="clave-vieja" id="clave-vieja" maxlength="20" required placeholder="Contraseña anterior">
-                </div>
+                    <div>
+                        <label for="clave-vieja">Contraseña anterior</label>
+                        <input class="menu" type="password" name="clave-vieja" id="clave-vieja" maxlength="20" required placeholder="Contraseña anterior">
+                    </div>
 
-                <div>
-                    <label for="clave-nueva">Nueva contraseña</label>
-                    <input type="password" name="clave-nueva" id="clave-nueva" maxlength="20" required placeholder="Contraseña nueva">
-                </div>
+                    <div>
+                        <label for="clave-nueva">Nueva contraseña</label>
+                        <input class="menu" type="password" name="clave-nueva" id="clave-nueva" maxlength="20" required placeholder="Contraseña nueva">
+                    </div>
 
-                <div>
-                    <label for="repetir-clave">Repetir nueva contraseña</label>
-                    <input type="password" name="repetir-clave" id="repetir-clave" maxlength="20" required placeholder="Repetir contraseña">
-                </div>
+                    <div>
+                        <label for="repetir-clave">Repetir nueva contraseña</label>
+                        <input class="menu" type="password" name="repetir-clave" id="repetir-clave" maxlength="20" required placeholder="Repetir contraseña">
+                    </div>
 
-                <input type="submit" value="Editar">
-                <input type="reset">
-            </form>
-        </section>
+                    <input class="buton" type="submit" value="Editar">
+                    <input class="buton" type="reset">
+                </form>
+            </section>
+        </div>
 
         <script src="/bs/js/popper.min.js"></script>
         <script src="/bs/js/bootstrap.min.js"></script>
