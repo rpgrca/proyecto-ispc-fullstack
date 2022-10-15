@@ -1,6 +1,19 @@
+* {
+  box-sizing: border-box;
+}
+
 body {
     font-family:'Roboto', sans-serif ;
     background: #e8e8e8;
+    line-height: 1.2;
+    margin: 0;
+    padding: 0;
+}
+
+/* contenedor y columnas */
+.container {
+    background-color: #ffba26;
+    padding: 10px 50px;
 }
 
 .seccion-en-articulo {
