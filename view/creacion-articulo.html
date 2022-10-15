@@ -47,20 +47,21 @@
         </header>
  
         <div class="container">
-            <form>
-                <label for="titulo">Título: </label><input id="titulo" type="text" name="titulo" size="40"><br>
-                <label for="imagen">Imagen: </label><input id="imagen" name="consignatario" type="file" accept="image/x-png,image/gif,image/jpg,image/jpeg"><br>
-                <label for="consignatario">Consignatario: </label>
-                <select id="consignatario" name="consignatario">
-                    <option value="juan perez">Juan Perez</option>
-                    <option value="roberto alfonso">Roberto Alfonso</option>
-                    <option value="martín güemes">Martín Güemes</option>
-                    <option value="manuel belgrano">Manuel Belgrano</option>
-                </select><br>
-                <label for="descripcion">Descripción: </label><textarea name="descripcion" rows="5" cols="60" placeholder="Descripcion"></textarea><br>
-                <input type="submit" value="Grabar">
-                <input type="reset">
-            </form>
+            <section class="seccion-form">
+                <form class="form-register">
+                    <label for="titulo">Título: </label><input class="menu" id="titulo" type="text" name="titulo" size="40"><br>
+                    <label for="imagen">Imagen: </label><input id="imagen" name="consignatario" type="file" accept="image/x-png,image/gif,image/jpg,image/jpeg"><br>
+                    <label for="consignatario">Consignatario: </label>
+                    <select id="consignatario" name="consignatario">
+                        <option value="juan perez">Juan Perez</option>
+                        <option value="roberto alfonso">Roberto Alfonso</option>
+                        <option value="martín güemes">Martín Güemes</option>
+                        <option value="manuel belgrano">Manuel Belgrano</option>
+                    </select><br>
+                    <label for="descripcion">Descripción: </label><textarea class="menu-sin-altura-maxima" name="descripcion" rows="5" cols="60" placeholder="Descripcion"></textarea><br>
+                    <input class="buton" type="submit" value="Grabar">
+                </form>
+            </section>
         </div>
 
         <script src="/bs/js/popper.min.js"></script>
