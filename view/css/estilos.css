@@ -1,9 +1,6 @@
 * {
   box-sizing: border-box;
 }
-* {
-  outline: 1px solid #f00 !important;
-}
 
 body {
     font-family:'Roboto', sans-serif ;
@@ -173,14 +170,12 @@ body {
     margin: 1em;
     padding: 0;
     box-sizing: border-box;
-    background: #e2e1dd;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
     font-family: sans-serif;
-    background-color: #707070;
 }
 
 .seccion-central h2 {
