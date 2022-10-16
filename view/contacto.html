@@ -13,7 +13,7 @@
         <header>
             <nav class="navbar navbar-expand-lg bg-light navbar-header">
                 <div class="container-fluid">
-                    <a class="navbar-brand nav-logo" href="index.html"><img src="images/bidon_logo.svg" alt="Logo Bidon" width="150px" height="100px"></a>
+                    <a class="navbar-brand nav-logo" href="index.html"><img src="images/bidon_logo.svg" alt="Logo Bidon" width="150" height="100"></a>
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navegacion" aria-controls="navegacion" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
                     </button>
@@ -40,21 +40,19 @@
         </header>
 
         <div class="container">
-            <section id="sectionParrafo">
-                <p>Hola @Usuario</p>
-                <p>Para contactar con el administrador llená el siguiente formulario</p>
-            </section>
+            <h2>Hola usuari@!</h2>
+            <p>Para contactar con el administrador llená el siguiente formulario.</p>
             
-            <section class="seccion-form">
+            <div class="seccion-form">
                 <form id="contact-form" action="contact" method="post" class="form-register">
-                    <input class="menu" type="text" name="subjet" placeholder="Escribe aquí el asunto..." title="Asunto es un campo requerido" required>
+                    <input class="menu" type="text" name="subject" placeholder="Escribe aquí el asunto..." title="Asunto es un campo requerido" required>
                     <textarea class="menu-sin-altura-maxima" name="coments" cols="50" rows="5" placeholder="Escribe aquí el mensaje..." title="Tu comentario no debe exceder los 1600 caracteres" data-pattern= "^.{1,1600}$" required></textarea>
-                    <input type="submit" value="Enviar">
+                    <input class="buton" type="submit" value="Enviar">
                 </form>     
-            </section>
+            </div>
         </div>
 
-        <script src="/bs/js/popper.min.js"></script>
-        <script src="/bs/js/bootstrap.min.js"></script>
+        <script src="bs/js/popper.min.js"></script>
+        <script src="bs/js/bootstrap.min.js"></script>
     </body>
 </html>
