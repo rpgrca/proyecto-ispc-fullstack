@@ -23,19 +23,6 @@ body {
     clear: both;
 }
 
-.imagen-de-lote {
-    height: 100px;
-    float: left;
-}
-
-.precio-base {
-    float: left;
-}
-
-.precio-venta {
-    float: right;
-}
-
 .seccion-form {
     margin: 0;
     padding: 0;
@@ -135,7 +122,8 @@ body {
     text-align: center;
     font-size: 22px;
     font-weight: bold;
-    margin: 16px;
+    margin-top: 8px;
+    margin-bottom: 8px;
     cursor: pointer;
 
 }
