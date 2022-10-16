@@ -207,3 +207,7 @@ body {
     color: black;
     box-shadow: 7px 13px 37px #161615;
 }
+
+.link-en-fondo-naranja {
+    color: rgb(15, 15, 255);
+}
