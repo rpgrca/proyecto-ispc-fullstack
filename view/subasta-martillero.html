@@ -7,7 +7,7 @@
         <link rel="stylesheet" href="bs/css/bootstrap.min.css">
         <link rel="stylesheet" href="css/estilos.css">
         <link rel="shortcut icon" href="images/favicon.png" type="image/x-icon">
-        <title>Creación de artículo</title>
+        <title>Subastar</title>
     </head>
 
     <body>
@@ -27,10 +27,10 @@
                                 <a class="nav-link dropdown-toggle" href="#" id="herramientas" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Herramientas</a>
                                 <div class="dropdown-menu" aria-labelledby="herramientas">
                                 <a class="dropdown-item" href="creacion-consignatario.html">Crear un consignatario</a>
-                                <a class="dropdown-item" href="#">Crear un artículo</a>
+                                <a class="dropdown-item" href="creacion-articulo.html">Crear un artículo</a>
                                 <a class="dropdown-item" href="creacion-subasta.html">Crear una subasta</a>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="subasta-martillero.html">Empezar la subasta</a>
+                                <a class="dropdown-item" href="#">Empezar la subasta</a>
                                 </div>
                             </li>
                             <li class="nav-item"><a class="nav-link" href="perfil.html">Perfil</a></li>
@@ -41,30 +41,48 @@
             <div class="col-md-12 mt-auto pb-4">
                 <div class="container mt-5">
                     <div class="text-center">
-                        <h1 class="text-white">Creación de artículo</h1>
+                        <h1 class="text-white">Subastar</h1>
                     </div>
                 </div>
             </div>
         </header>
- 
-        <div class="container">
-            <section class="seccion-form">
-                <form class="form-register">
-                    <label for="titulo">Título: </label><input class="menu" id="titulo" type="text" name="titulo" size="40"><br>
-                    <label for="imagen">Imagen: </label><input id="imagen" name="consignatario" type="file" accept="image/x-png,image/gif,image/jpg,image/jpeg"><br>
-                    <label for="consignatario">Consignatario: </label>
-                    <select id="consignatario" name="consignatario">
-                        <option value="juan perez">Juan Perez</option>
-                        <option value="roberto alfonso">Roberto Alfonso</option>
-                        <option value="martín güemes">Martín Güemes</option>
-                        <option value="manuel belgrano">Manuel Belgrano</option>
-                    </select><br>
-                    <label for="descripcion">Descripción: </label><textarea class="menu-sin-altura-maxima" id="descripcion" name="descripcion" rows="5" cols="60" placeholder="Descripcion"></textarea><br>
-                    <label for="tasacion">Tasación: </label><input class="menu" id="tasacion" name="tasacion" type="number">
-                    <input class="buton" type="submit" value="Grabar">
-                </form>
-            </section>
-        </div>
+
+        <section>
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-4 col-md-4">
+                        <div class="card border-dark">
+                            <img src="images/mesita-auxiliar-francesa.jpg" class="card-img-top" alt="mesita auxiliar francesa">
+                            <div class="card-body">
+                                <h5 class="card-title">Mesita auxiliar francesa</h5>
+                                <p class="card-text">Mesita auxiliar francesa con madera lavada y protegida realizada en caoba rayada con herrajes y regatones en bronce. Movimientos delicdados. 73 cm de alto, 40 cm de ancho y 30 cm de profundidad.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-8">
+                        <div class="card border-dark">
+                            <div class="card-body">
+                                <h5 class="card-title">Últimas pujas</h5>
+                                <p class="card-text">$66.000 (Martín hace 5 segundos)</p>
+                                <p class="card-text">$65.000 (Julia hace 20 segundos)</p>
+                                <p class="card-text">$64.500 (El Sastre hace 33 segundos)</p>
+                                <p class="card-text">$63.500 (Lobo hace 40 segundos)</p>
+                                <p class="card-text">$62.500 (Cafecito hace 59 segundos)</p>
+                                <p class="card-text">$60.000 (base)</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-2">
+                        <div class="d-grid gap-2">
+                            <button type="button" class="btn btn-lg btn-dark" disabled>Abrir</button>
+                            <button type="button" class="btn btn-lg btn-dark">Cerrar</button>
+                            <button type="button" class="btn btn-lg btn-dark" disabled>Siguiente</button>
+                            <div class="">Recuerde abrir el lote primero y luego cerrarlo antes de pasar al siguiente.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
 
         <script src="bs/js/popper.min.js"></script>
         <script src="bs/js/bootstrap.min.js"></script>
