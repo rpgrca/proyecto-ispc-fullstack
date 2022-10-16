@@ -1,5 +1,6 @@
 * {
   box-sizing: border-box;
+  /*outline: 1px solid #f00 !important;*/
 }
 
 body {
@@ -14,7 +15,6 @@ body {
     background-color: #ffba26;
 }
 
-/* contenedor y columnas */
 .seccion-en-articulo {
     background-color: orange;
     border-radius: 3px;
@@ -23,8 +23,8 @@ body {
 }
 
 .seccion-form {
-    box-sizing: border-box;
     display: flex;
+    box-sizing: border-box;
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: center;
@@ -33,17 +33,22 @@ body {
 }
 
 .form-register {
-    max-width: 400px;
-    overflow-x: auto;
+    width: 55%;
     background-color: #ffba26;
     padding: 20px 40px;
-    margin: auto;
     margin-top: 30px;
     margin-bottom: 30px;
     border-radius: 10px;
     font-size: 19px;
     color: black;
     box-shadow: 7px 13px 37px #161615;
+}
+
+@media only screen and (max-width: 768px) {
+    .form-register {
+        width: 90%;
+        padding: 1em;
+    }
 }
 
 .form-register h4 {
@@ -131,13 +136,6 @@ body {
     font-family: "calibri";
     text-align: center;
 
-}
-
-@media only screen and (max-width: 768px) {
-    .form-register {
-        width: 90%;
-        padding: 1em;
-    }
 }
 
 .navbar-header .menu{
