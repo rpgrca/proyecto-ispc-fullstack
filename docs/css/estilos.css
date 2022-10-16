@@ -34,6 +34,7 @@ body {
 
 .form-register {
     width: 55%;
+    overflow-x: hidden;
     background-color: #ffba26;
     padding: 20px 40px;
     margin-top: 30px;
