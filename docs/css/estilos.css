@@ -1,0 +1,233 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+    font-family:'Roboto', sans-serif ;
+    background: #e8e8e8;
+    line-height: 1.2;
+    margin: 0;
+    padding: 0;
+}
+
+/* contenedor y columnas */
+.container {
+    background-color: #ffba26;
+    padding: 10px 50px;
+}
+
+.seccion-en-articulo {
+    background-color: orange;
+    border-radius: 3px;
+    margin: 2px 2px 2px 2px;
+    clear: both;
+}
+
+.seccion-form {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    font-family: "calibri";
+
+}
+
+.form-register {
+    width: 400px;
+    background-color: #ffba26;
+    padding: 20px 40px;
+    margin: auto;
+    margin-top: 60px;
+    margin-bottom: 60px;
+    border-radius: 10px;
+    font-size: 19px;
+    color: black;
+    box-shadow: 7px 13px 37px #161615;
+
+}
+
+.form-register h4 {
+    margin: 0%;
+    height: 45px;
+    font-size: 35px;
+    margin-bottom: 40px;
+    border-bottom: 1px solid #f77409;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+.form-register .menu {
+    height: 25px;
+    width: 100%;
+    background-color: #ffba26;
+    padding: 10px;
+    border-radius: 5px;
+    margin: auto;
+    margin-bottom: 14px;
+    border: 2px solid #f77409;
+    font-size: 14px;
+    color: rgb(8, 7, 7);
+}
+
+.form-register .menu-sin-altura-maxima {
+    width: 100%;
+    background-color: #ffba26;
+    padding: 10px;
+    border-radius: 5px;
+    margin: auto;
+    margin-bottom: 14px;
+    border: 2px solid #f77409;
+    font-size: 14px;
+    color: rgb(8, 7, 7);
+}
+
+.form-register > .menu:focus {
+    border: solid 3px;
+    border-color: black;
+}
+.form-register .menu::placeholder{
+    color: rgb(53, 52, 51);
+}
+
+.form-register p {
+    height: 30px;
+    margin-top: -1em;
+    text-align: center;
+    font-size: 15px;
+    line-height: 40px;
+}
+.form-register a {
+    color: black;
+    text-decoration: none;
+    font-size: 18px;
+    font-weight: bold;
+    
+}
+.form-register a:hover {
+    color: white;
+    text-decoration: underline;
+}
+
+.form-register .buton {
+    width: 100%;
+    background-color: #f77409;
+    border-radius: 10px;
+    border: none;
+    padding: 14px;
+    color: white;
+    text-align: center;
+    font-size: 22px;
+    font-weight: bold;
+    margin-top: 8px;
+    margin-bottom: 8px;
+    cursor: pointer;
+
+}
+.form-register .buton:hover{
+    color: black;
+}
+.form-register label {
+    color: black;
+    font-family: "calibri";
+    text-align: center;
+
+}
+
+@media only screen and (max-width: 768px) {
+    .form-register {
+        width: 90%;
+        padding: 1em;
+    }
+}
+
+.navbar-header .menu{
+    list-style: none;
+    padding: 0;
+    background: #ffffff;
+    width:90%;
+    max-width: 1000px;
+    margin: auto;
+}
+
+.navbar-header .menu li a{
+    text-decoration: none;
+    color: #212121;
+    padding: 20px ;
+    display: block;
+}
+
+.navbar-header .menu li{
+    display: inline-block;
+    text-align: center;
+    
+}
+
+.navbar-header .menu li a:hover{
+    background: #f17228;
+}
+
+.seccion-central{
+    margin: 40px;
+    margin-left: 100px;
+    margin-right: 100px;
+    padding: 0px;
+    box-sizing: border-box;
+    background: #e2e1dd;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    font-family: sans-serif;
+    background-color: #707070;
+    
+}
+    
+
+.seccion-central h4{
+    margin: 5%;
+    height: 50px;
+    margin-bottom: 30px;
+    font-size: 45px;
+    text-align: center;
+    color: rgb(8, 7, 7);
+    border-bottom: 2px solid #f77409;
+    font-weight: bold;
+}
+
+.seccion-central h6{
+    margin: 5%;
+    height: 50px;
+    font-size: 30px;
+    color: rgb(8, 7, 7);
+    text-align: center;
+    border-bottom: 2px solid #f77409;
+}
+
+.seccion-central p{
+    margin-top: 10px;
+    padding: 30px;
+    height: 10px;
+    text-align: center;
+    font-size: 20px;
+    color: rgb(8, 7, 7);
+}
+
+.parrafo {
+    background-color: #ffba26;
+    padding: 20px 40px;
+    margin: auto;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    border-radius: 10px;
+    color: black;
+    box-shadow: 7px 13px 37px #161615;
+}
+
+.aire-lote {
+    margin: 10px;
+}

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="bs/css/bootstrap.min.css">
+        <link rel="stylesheet" href="css/estilos.css">
+        <link rel="shortcut icon" href="images/favicon.png" type="image/x-icon">
+        <title>Login</title>
+    </head>
+
+    <body>
+        <header>
+            <nav class="navbar navbar-expand-lg bg-light navbar-header">
+                <div class="container-fluid">
+                    <a class="navbar-brand nav-logo" href="index.html"><img src="images/bidon_logo.svg" alt="Logo Bidon" width="150" height="100"></a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navegacion" aria-controls="navegacion" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navegacion">
+                        <ul class="navbar-nav me-auto mb-2 mb-lg-0 menu">
+                            <li class="nav-item"><a class="nav-link" href="acerca.html">Quiénes somos</a></li>
+                            <li class="nav-item"><a class="nav-link" href="funcionamiento.html">Cómo funciona</a></li>
+                            <li class="nav-item"><a class="nav-link" href="catalogo.html">Catálogo</a></li>
+                            <li class="nav-item"><a class="nav-link" href="contacto-visitante.html">Contacto</a></li>
+                            <li class="nav-item"><a class="nav-link active" aria-current="page" href="#">Identificarse</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+            <div class="col-md-12 mt-auto pb-4">
+                <div class="container mt-5">
+                    <div class="text-center">
+                        <h1 class="text-white">Ingresar</h1>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <div class="container">
+            <section class="seccion-form">
+                <form class="form-register" method="post" action="/registro">
+                    <input class="menu"  type="text" placeholder="Usuario">
+                    <input class="menu"  type="password" placeholder="Contraseña">
+                    <input class="buton" type="submit" value="Ingresar">
+                    <p><a href="reestablecer.html">¿Olvidé mi contraseña?</a></p>
+                    <p><a href="registro.html">Me quiero registrar</a></p>
+                </form>
+            </section>
+        </div>
+
+        <script src="bs/js/popper.min.js"></script>
+        <script src="bs/js/bootstrap.min.js"></script>
+    </body>
+</html>

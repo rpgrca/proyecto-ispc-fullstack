@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="bs/css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/contacto2.css">
+  <link rel="stylesheet" href="css/estilos.css">
+  <link rel="shortcut icon" href="images/favicon.png" type="image/png">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer">
+  <title>Contacto</title>
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg bg-light navbar-header">
+            <div class="container-fluid">
+                <a class="navbar-brand nav-logo" href="index.html"><img src="images/bidon_logo.svg" alt="Logo Bidon" width="150" height="100"></a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navegacion" aria-controls="navegacion" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navegacion">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0 menu">
+                        <li class="nav-item"><a class="nav-link" href="acerca.html">Quiénes somos</a></li>
+                        <li class="nav-item"><a class="nav-link" href="funcionamiento.html">Cómo funciona</a></li>
+                        <li class="nav-item"><a class="nav-link" href="catalogo.html">Catálogo</a></li>
+                        <li class="nav-item"><a class="nav-link active" aria-current="page" href="#">Contacto</a></li>
+                        <li class="nav-item"><a class="nav-link" href="login.html">Identificarse</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <div class="col-md-12 mt-auto pb-4">
+            <div class="container mt-5">
+                <div class="text-center">
+                    <h1 class="text-white">Contacto</h1>
+                </div>
+            </div>
+        </div>
+    </header>
+
+  <section class="container">
+    <div class="section-title">
+      <p>Enviános tu consulta o comentario. Te responderemos lo antes posible, en horario laboral.</p>
+    </div>
+
+    <div class="row">
+      
+      <!-- primera columna -->
+      <div class="column my-form">
+        <form action="#">
+          <p>
+            <label for="nombre">Nombre*</label>
+            <input type="text" id="nombre" name="nombre" placeholder="Nombre" required>
+          </p>
+          <p>
+            <label for="mail">Mail*</label>
+            <input type="email" id="mail" name="mail" placeholder="Mail" required>
+          </p>
+          <p>
+            <label for="asunto">Asunto</label>
+            <select id="asunto" name="asunto">
+              <option value="otro">Consulta general</option>
+              <option value="vender">Vender en subasta</option>
+              <option value="coomprar">Comprar en subasta</option>
+            </select>
+          </p>
+          <p>
+            <label for="mensaje">Mensaje*</label>
+            <textarea id="mensaje" name="mensaje" placeholder="Mensaje" required></textarea>
+            <small>* Campos obligatorios</small>
+          </p>
+          <p class="btn-right">
+            <input type="submit" value="Enviar">
+          </p>
+        </form>
+      </div>
+
+      <!-- segunda columna -->
+      <div class="column my-location">
+        <p class="location-info"><i class="fa-solid fa-location-dot"></i>&nbsp; Humberto Primo 680, 2º S22, X5000FAN, Córdoba</p>
+        <p class="location-info"><i class="fa-solid fa-clock"></i> Lunes a viernes, de 9:30 a 15:00 hs</p>
+        <p class="location-info"><i class="fa-solid fa-phone"></i> 0351 231-5529</p>
+        <br>
+        <p class="location-map">
+          <a href="https://www.google.com/maps/place/ISPC+Instituto+Superior+Polit%C3%A9cnico+C%C3%B3rdoba/@-31.4071806,-64.1906638,15z/data=!4m5!3m4!1s0x0:0xcf43bc8d04170a61!8m2!3d-31.4071806!4d-64.1906638" target="_blank"><img src="images/bidon-map.jpg" alt="Mapa de ubicación"></a>
+        </p>
+      </div>
+
+    </div>
+  </section>
+
+  <script src="bs/js/popper.min.js"></script>
+  <script src="bs/js/bootstrap.min.js"></script>
+</body>
+</html>
