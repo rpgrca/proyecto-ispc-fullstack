@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="bs/css/bootstrap.min.css">
+        <link rel="stylesheet" href="css/estilos.css">
+        <link rel="shortcut icon" href="images/favicon.png" type="image/x-icon">
+        <title>Creación de subasta</title>
+    </head>
+
+    <body>
+        <header>
+            <nav class="navbar navbar-expand-lg bg-light navbar-header">
+                <div class="container-fluid">
+                    <a class="navbar-brand nav-logo" href="index.html"><img src="images/bidon_logo.svg" alt="Logo Bidon" width="150" height="100"></a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navegacion" aria-controls="navegacion" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navegacion">
+                        <ul class="navbar-nav me-auto mb-2 mb-lg-0 menu">
+                            <li class="nav-item"><a class="nav-link" href="acerca.html">Quiénes somos</a></li>
+                            <li class="nav-item"><a class="nav-link" href="funcionamiento.html">Cómo funciona</a></li>
+                            <li class="nav-item"><a class="nav-link" href="catalogo.html">Catálogo</a></li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="herramientas" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Herramientas</a>
+                                <div class="dropdown-menu" aria-labelledby="herramientas">
+                                <a class="dropdown-item" href="creacion-consignatario.html">Crear un consignatario</a>
+                                <a class="dropdown-item" href="creacion-articulo.html">Crear un artículo</a>
+                                <a class="dropdown-item" href="#">Crear una subasta</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="subasta-martillero.html">Empezar la subasta</a>
+                                </div>
+                            </li>
+                            <li class="nav-item"><a class="nav-link" href="perfil.html">Perfil</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+            <div class="col-md-12 mt-auto pb-4">
+                <div class="container mt-5 p-2">
+                    <div class="text-center">
+                        <h1 class="text-white">Creación de subasta</h1>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <div class="container p-3">
+            <section class="seccion-form">
+                <form class="form-register">
+                    <label for="titulo">Título: </label><input class="menu" id="titulo" type="text" name="titulo" size="40"><br>
+                    <label for="imagen">Imagen: </label><input id="imagen" name="imagen" type="file" accept="image/x-png,image/gif,image/jpg,image/jpeg"><br>
+                    <label for="descripcion">Descripción: </label><textarea class="menu-sin-altura-maxima" id="descripcion" name="descripcion" rows="5" cols="60" placeholder="Descripcion"></textarea><br>
+                    <label for="fecha">Fecha: </label><input class="menu" id="fecha" name="fecha" type="date"><br>
+                    <input class="buton" type="submit" value="Crear">
+                </form>
+            </section>
+
+            <section id="lotes">
+                <div class="col-md-12 mt-auto pb-4">
+                    <div class="container mt-5">
+                        <div class="text-center">
+                            <h2 class="text-white">Reordene, agregue o borre artículos para la subasta</h2>
+                        </div>
+                    </div>
+                </div>
+
+                <form method="post" action="creacion">
+                    <div class="row align-items-start">
+                        <div class="col">
+                            <div class="row gap-3">
+                               <div class="card border-dark mx-auto" style="width: 18rem;">
+                                    <img src="images/mesita-auxiliar-francesa.jpg" class="card-img-top" alt="mesita auxiliar francesa">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Mesita auxiliar francesa</h5>
+                                        <p class="card-text">Mesita auxiliar francesa con madera lavada y protegida realizada en caoba rayada con herrajes y regatones en bronce. Movimientos delicdados. 73 cm de alto, 40 cm de ancho y 30 cm de profundidad.</p>
+                                        <label for="base-1">Base: </label><input id="base-1" name="base-1" type="number" placeholder="Ingrese precio base">
+                                        <label for="orden-1">Orden: </label><input id="orden-1" name="orden-1" type="number" placeholder="Ingrese orden">
+                                        <a href="#" class="btn btn-primary">Actualizar</a>
+                                        <a href="#" class="btn btn-secondary">Eliminar</a>
+                                    </div>
+                                </div>
+                                <div class="card border-dark mx-auto" style="width: 18rem;">
+                                    <img src="images/bajo-aparador.jpg" class="card-img-top" alt="bajo aparador">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Bajo aparador</h5>
+                                        <p class="card-text">Mesita auxiliar francesa con madera lavada y protegida realizada en caoba rayada con herrajes y regatones en bronce. Movimientos delicdados. 73 cm de alto, 40 cm de ancho y 30 cm de profundidad.</p>
+                                        <label for="base-2">Base: </label><input id="base-2" name="base-2" type="text" placeholder="Ingrese precio base">
+                                        <label for="orden-2">Orden: </label><input id="orden-2" name="orden-2" type="number" placeholder="Ingrese orden">
+                                        <a href="#" class="btn btn-primary">Actualizar</a>
+                                        <a href="#" class="btn btn-secondary">Eliminar</a>
+                                    </div>
+                                </div>
+                                <div class="card border-dark mx-auto" style="width: 18rem;">
+                                    <img src="images/juego-living-luis-xvi.jpg" class="card-img-top" alt="juego living luis xvi">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Juego de living Luis XVI</h5>
+                                        <p class="card-text">Hermoso juego de living estilo Luis XVI. Modelo cantarella con madera lavada y protegida. Tapizado a estrenar en lino antimancha, realizado en capitoné. Trabajo de ebanistería muy sobrio.</p>
+                                        <label for="base-3">Base: </label><input id="base-3" name="base-3" type="text" placeholder="Ingrese precio base">
+                                        <label for="orden-3">Orden: </label><input id="orden-3" name="orden-3" type="number" placeholder="Ingrese orden">
+                                        <a href="#" class="btn btn-primary">Grabar</a>
+                                        <a href="#" class="btn btn-secondary">Eliminar</a>
+                                    </div>
+                                </div>
+                                <div class="card border-dark mx-auto" style="width: 18rem;">
+                                    <img src="images/juego-dormitorio-provenzal.jpg" class="card-img-top" alt="juego dormitorio provenzal">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Juego de dormitorio provenzal</h5>
+                                        <p class="card-text">Juego de dormitorio provenzal realizado en madera de cedro y roble con madera lavada y protegida y herrajes de bronce. Hermoso trabajo de ebanistería con laterales replanados.</p>
+                                        <label for="base-4">Base: </label><input id="base-4" name="base-4" type="text" placeholder="Ingrese precio base">
+                                        <label for="orden-4">Orden: </label><input id="orden-4" name="orden-4" type="number" placeholder="Ingrese orden">
+                                        <a href="#" class="btn btn-primary">Actualizar</a>
+                                        <a href="#" class="btn btn-secondary">Eliminar</a>
+                                    </div>
+                                </div>
+                               <div class="card border-dark mx-auto" style="width: 18rem;">
+                                    <img src="images/antiguo-respaldo-cama.jpg" class="card-img-top" alt="antiguo respaldo cama">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Antiguo respaldo cama</h5>
+                                        <p class="card-text">Antiguo respaldo de cama estilo francés en madera lavada y tapizado en pana color natural, ideal para sommier tamaño King. Mide 2.06 metros de largo por 1.24 metros de alto.</p>
+                                        <label for="base-5">Base: </label><input id="base-5" name="base-5" type="number" placeholder="Ingrese precio base">
+                                        <label for="orden-5">Orden: </label><input id="orden-5" name="orden-5" type="number" placeholder="Ingrese orden">
+                                        <a href="#" class="btn btn-primary">Actualizar</a>
+                                        <a href="#" class="btn btn-secondary">Eliminar</a>
+                                    </div>
+                                </div>
+                                <div class="card border-dark mx-auto" style="width: 18rem;">
+                                    <img src="images/escritorio-estilo-ingles.jpg" class="card-img-top" alt="escritorio estilo ingles">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Escritorio estilo inglés</h5>
+                                        <p class="card-text">Escritorio estilo inglés con tapa de cuero en madera de roble lavada. 5 cajones y silla haciendo juego. 1.10 metros de largo, 50 cm de profundidad y 80 cm de altura.</p>
+                                        <label for="base-6">Base: </label><input id="base-6" name="base-6" type="text" placeholder="Ingrese precio base">
+                                        <label for="orden-6">Orden: </label><input id="orden-6" name="orden-6" type="number" placeholder="Ingrese orden">
+                                        <a href="#" class="btn btn-primary">Actualizar</a>
+                                        <a href="#" class="btn btn-secondary">Eliminar</a>
+                                    </div>
+                                </div>
+                                <div class="card border-dark mx-auto" style="width: 18rem;">
+                                    <img src="images/ropero-provenzal.jpg" class="card-img-top" alt="ropero provenzal">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Ropero provenzal</h5>
+                                        <p class="card-text">Ropero provenzal desarmable para fácil translado. Realizado en roble y cedro con herrajes de bronce. Puerta para guardar prendas largas, puerta para guardar prendas cortas, cuatro cajones y triple estantería.</p>
+                                        <label for="base-7">Base: </label><input id="base-7" name="base-7" type="text" placeholder="Ingrese precio base">
+                                        <label for="orden-7">Orden: </label><input id="orden-7" name="orden-7" type="number" placeholder="Ingrese orden">
+                                        <a href="#" class="btn btn-primary">Actualizar</a>
+                                        <a href="#" class="btn btn-secondary">Eliminar</a>
+                                    </div>
+                                </div>
+                                <div class="card border-dark mx-auto" style="width: 18rem;">
+                                    <img src="images/fideera-antigua.jpg" class="card-img-top" alt="fideera antigua">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Fideera antigua</h5>
+                                        <p class="card-text">Alzada desmontable con 10 cajones con visor de vidrio por sección. Realizado en madera de roble lavada y protegida. 160 cm de alto, 164 cm de ancho y 60 cm de profundidad. Cada cajón mide 52 cm de profundidad.</p>
+                                        <label for="base-8">Base: </label><input id="base-8" name="base-8" type="text" placeholder="Ingrese precio base">
+                                        <label for="orden-8">Orden: </label><input id="orden-8" name="orden-8" type="number" placeholder="Ingrese orden">
+                                        <a href="#" class="btn btn-primary">Actualizar</a>
+                                        <a href="#" class="btn btn-secondary">Eliminar</a>
+                                    </div>
+                                </div>
+                                <div class="card border-dark mx-auto" style="width: 18rem;">
+                                    <img src="images/juego-sillas-inglesas.jpg" class="card-img-top" alt="juego sillas inglesas">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Juego de sillas inglesas</h5>
+                                        <p class="card-text">Juego de seis sillas inglesas hechos en madera de roble lavada y protegida con respaldo en capitoné y tapizado a estrenar en Talampaya. Patas traseras en sable. 90 cm de alto, 50 cm de ancho y 50 cm de profundidad.</p>
+                                        <label for="base-9">Base: </label><input id="base-9" name="base-9" type="text" placeholder="Ingrese precio base">
+                                        <label for="orden-9">Orden: </label><input id="orden-9" name="orden-9" type="number" placeholder="Ingrese orden">
+                                        <a href="#" class="btn btn-primary">Actualizar</a>
+                                        <a href="#" class="btn btn-secondary">Eliminar</a>
+                                    </div>
+                                </div>
+                                <div class="card border-dark mx-auto" style="width: 18rem;">
+                                    <img src="images/vitrina-oriental.jpg" class="card-img-top" alt="vitrina oriental">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Vitrina oriental</h5>
+                                        <p class="card-text">Vitrina oriental de cuatro vientos con incrustaciones en nácar. Excelente chinoserie haciendo juego con ebanistería. Puertas laterales, boca llaves y herrajes de bronce y luz interior. Cristal viselado original. 161 cm de alto, 72 cm de ancho, 35 cm de profundidad.</p>
+                                        <label for="base-10">Base: </label><input id="base-10" name="base-10" type="text" placeholder="Ingrese precio base">
+                                        <label for="orden-10">Orden: </label><input id="orden-10" name="orden-10" type="number" placeholder="Ingrese orden">
+                                        <a href="#" class="btn btn-primary">Actualizar</a>
+                                        <a href="#" class="btn btn-secondary">Eliminar</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>        
+                </form>
+            </section>
+        </div>
+        
+        <script src="bs/js/popper.min.js"></script>
+        <script src="bs/js/bootstrap.min.js"></script>
+    </body>
+</html>
