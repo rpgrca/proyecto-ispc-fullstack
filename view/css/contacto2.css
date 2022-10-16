@@ -1,3 +1,8 @@
+.container {
+    background-color: #ffba26;
+    padding: 10px 50px;
+}
+
 /* inputs */
 input[type=text], input[type=email], select, textarea {
   background-color: #f5f5f5;
