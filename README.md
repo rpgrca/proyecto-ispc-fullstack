@@ -1,3 +1,8 @@
+[![contrib][contrib-img]][contrib-url]
+[![commit][commit-img]][commit-url]
+[![discuss][discuss-img]][discuss-url]
+[![issues][issues-img]][issues-url]
+
 ## Proyecto Full-Stack ISPC
 
 Información para el Sprint 1:
@@ -41,3 +46,11 @@ habrán páginas que no tendrán controladores ni modelos asociados (como
 las de Quiénes somos o la de Cómo funciona), existen controladores que
 utilizarán distintos modelos y otros que utilizarán los mismos.
 
+[commit-img]: https://img.shields.io/github/commit-activity/w/rpgrca/proyecto-ispc-fullstack/dev
+[commit-url]: https://github.com/rpgrca/proyecto-ispc-fullstack/graphs/code-frequency
+[contrib-img]: https://img.shields.io/github/contributors/rpgrca/proyecto-ispc-fullstack
+[contrib-url]: https://github.com/rpgrca/proyecto-ispc-fullstack/graphs/contributors
+[issues-img]: https://img.shields.io/github/issues/rpgrca/proyecto-ispc-fullstack
+[issues-url]: https://github.com/rpgrca/proyecto-ispc-fullstack/issues
+[discuss-img]: https://img.shields.io/github/discussions/rpgrca/proyecto-ispc-fullstack
+[discuss-url]: https://github.com/rpgrca/proyecto-ispc-fullstack/discussions
