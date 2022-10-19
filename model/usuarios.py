@@ -13,10 +13,10 @@ class Usuario:
 
 class Usuarios:
     __usuarios = {
-        "Roberto": "123456",
-        "Martin": "654321",
-        "Julia": "109283",
-        "Estela": "777777"
+        "Roberto": { "clave": "123456", "email": "roberto.carlos.alfonso@gmail.com" },
+        "Martin": { "clave": "654321", "email": "martin@gmail.com" },
+        "Julia": { "clave": "109283", "email": "julia@gmail.com" },
+        "Estela": { "clave": "777777", "email": "estela@gmail.com" }
     }
 
     def existe(self, usuario):
@@ -24,8 +24,11 @@ class Usuarios:
 
     def buscar(self, usuario: str, clave: str):
         if usuario in Usuarios.__usuarios:
-            if Usuarios.__usuarios[usuario] == clave:
+            if Usuarios.__usuarios[usuario]['clave'] == self.encriptar(clave):
                 return Usuario(usuario, clave)
 
         return None
+
+    def buscar_por_email(self, email: str):
+        usuario = filter(lambda u: u['email'] == email, Usuarios.__usuarios)
 
