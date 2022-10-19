@@ -7,8 +7,9 @@ class Usuario:
         self.__usuario = usuario
         self.__clave = clave
 
-class UsuarioInvalido(Usuario):
-    pass
+    def __str__(self):
+        return self.__usuario
+
 
 class Usuarios:
     __usuarios = {
@@ -23,4 +24,4 @@ class Usuarios:
             if Usuarios.__usuarios[usuario] == clave:
                 return Usuario(usuario, clave)
 
-        return UsuarioInvalido()
+        return None

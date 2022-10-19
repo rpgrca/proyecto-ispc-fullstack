@@ -1,19 +1,17 @@
 # login.py
 #
-from typing import Union
 from fastapi import FastAPI
-from pydantic import BaseModel
+from model.usuarios import Usuarios
 
 class LoginController:
     def __init__(self, usuario: str, clave: str):
-        model
         self.__usuario = usuario
         self.__clave = clave
-        self.__response = { "status": "error" }
+        self.__response = { "status": "error", "mensaje": "Usuario o contraseña inválida" }
 
-        if usuario in Login.__usuarios:
-            if Login.__usuarios[usuario] == clave:
-                self.__response = { "status": "ok" }
+        usuario = Usuarios().buscar(usuario, clave)
+        if usuario:
+            self.__response = { "status": "ok", "mensaje": f"Bienvenido, {usuario}!" }
 
     def obtener_respuesta(self):
         return self.__response
