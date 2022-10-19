@@ -1,5 +1,5 @@
-# articulo.py
+# articulos.py
 #
 # - crear(titulo, descripcion, valuacion, consignatario)
-# - obtener_titulo()
-# - obtener_descripcion()
+# - listar()
+# - listar_para(consignatario)

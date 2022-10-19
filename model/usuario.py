@@ -1,3 +1,3 @@
-# usuario.py
+# usuarios.py
 #
-# abstracta, usada por consignatario y pujador
+# crear(usuario, nombre, apellido, email, clave, nacimiento, tipo)

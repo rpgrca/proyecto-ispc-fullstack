@@ -1,4 +1,4 @@
-# puja.py
+# pujas.py
 #
-# obtener_monto()
-# obtener_nombre_pujador()
+# crear(pujador, lote, monto)
+# obtener(lote)
