@@ -19,9 +19,13 @@ class Usuarios:
         "Estela": "777777"
     }
 
+    def existe(self, usuario):
+        return usuario in Usuarios.__usuarios
+
     def buscar(self, usuario: str, clave: str):
         if usuario in Usuarios.__usuarios:
             if Usuarios.__usuarios[usuario] == clave:
                 return Usuario(usuario, clave)
 
         return None
+

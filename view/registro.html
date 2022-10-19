@@ -40,7 +40,7 @@
 
         <div class="container p-3">
             <section class="seccion-form">
-                <form method="post" action="registrar" class="form-register">
+                <form method="post" class="form-register" action="http://127.0.0.1:8000/registrar/">
                     <label for="nombre">Nombre:</label><br>
                     <input class="menu"  type="text" name="nombre" id="nombre" placeholder="Ingrese su nombre"><br>
                     <label for="apellido">Apellido:</label><br>
@@ -50,7 +50,7 @@
                     <label for="usuario">Nombre de usuario:</label><br>
                     <input class="menu"  type="text" name="usuario" id="usuario" placeholder="Nombre de Usuario" required><br>
                     <label for="password">Contraseña:</label><br>
-                    <input class="menu"  type="password" name="password" id="password" maxlength="20" required><br>
+                    <input class="menu"  type="password" name="clave" id="clave" maxlength="20" required><br>
                     <label for="nacimiento">Fecha de Nacimiento:</label><br>
                     <input class="menu"  type="date" name="nacimiento" id="nacimiento"><br>
                     <input class="buton" type="submit" value="Registrarse">
