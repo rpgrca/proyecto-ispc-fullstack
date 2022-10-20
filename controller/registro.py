@@ -9,7 +9,8 @@ class RegistroController:
         if db.existe(usuario):
             self.__resultado = { "status": "error", "mensaje": "La cuenta ya existe" }
         else:
-            self.__resultado = { "status": "ok", "mensaje": "La cuenta ha sido creada correctamente" }
+            db.agregar(nombre, apellido, email, usuario, clave, nacimiento)
+            self.__resultado = { "status": "ok", "mensaje": "La cuenta ha sido creada correctamente, ya puede ingresar a su cuenta" }
 
     def obtener_respuesta(self):
         return self.__resultado

@@ -19,7 +19,10 @@ class Usuarios:
         "Estela": { "clave": "777777", "email": "estela@gmail.com" }
     }
 
-    def existe(self, usuario):
+    def agregar(self, nombre: str, apellido: str, email: str, usuario: str, clave: str, nacimiento: str):
+        db[usuario] = { "clave": clave, "email": email }
+
+    def existe(self, usuario: str):
         return usuario in Usuarios.__usuarios
 
     def buscar(self, usuario: str, clave: str):
