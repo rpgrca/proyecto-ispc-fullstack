@@ -40,9 +40,9 @@
 
         <div class="container p-3">
             <section class="seccion-form">
-                <form class="form-register" method="post" action="http://ec2-18-219-83-7.us-east-2.compute.amazonaws.com:8000/ingresar/">
-                    <input class="menu" id="usuario" name="usuario" type="text" placeholder="Usuario">
-                    <input class="menu" id="clave" name="clave" type="password" placeholder="Contraseña">
+                <form id="formulario-login" class="form-register" method="post" action="http://ec2-18-219-83-7.us-east-2.compute.amazonaws.com:8000/ingresar/">
+                    <input class="menu" id="usuario" name="usuario" type="text" required placeholder="Usuario">
+                    <input class="menu" id="clave" name="clave" type="password" required placeholder="Contraseña">
                     <input class="buton" type="submit" value="Ingresar">
                     <p><a href="reestablecer.html">¿Olvidé mi contraseña?</a></p>
                     <p><a href="registro.html">Me quiero registrar</a></p>
@@ -52,5 +52,9 @@
 
         <script src="bs/js/popper.min.js"></script>
         <script src="bs/js/bootstrap.min.js"></script>
+        <script src="js/funciones.js"></script>
+        <script>
+            mostrar_respuesta_remota_para_formulario('formulario-login')
+        </script>
     </body>
 </html>
