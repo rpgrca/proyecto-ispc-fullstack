@@ -32,3 +32,5 @@ class Usuarios:
     def buscar_por_email(self, email: str):
         usuario = filter(lambda u: u['email'] == email, Usuarios.__usuarios)
 
+    def encriptar(self, clave: str):
+        return clave
