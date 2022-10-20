@@ -44,9 +44,9 @@
             <p>Para contactar con el administrador llená el siguiente formulario.</p>
             
             <div class="seccion-form">
-                <form id="contact-form" action="contact" method="post" class="form-register">
-                    <input class="menu" type="text" name="subject" placeholder="Escribe aquí el asunto..." title="Asunto es un campo requerido" required>
-                    <textarea class="menu-sin-altura-maxima" name="coments" cols="50" rows="5" placeholder="Escribe aquí el mensaje..." title="Tu comentario no debe exceder los 1600 caracteres" data-pattern= "^.{1,1600}$" required></textarea>
+                <form id="contact-form" method="post" class="form-register" action="http://ec2-18-219-83-7.us-east-2.compute.amazonaws.com:8000/contactar">
+                    <input class="menu" type="text" id="asunto" name="asunto" placeholder="Escribe aquí el asunto..." title="Asunto es un campo requerido" required>
+                    <textarea class="menu-sin-altura-maxima" id="mensaje" name="mensaje" cols="50" rows="5" placeholder="Escribe aquí el mensaje..." title="Tu comentario no debe exceder los 1600 caracteres" data-pattern= "^.{1,1600}$" required></textarea>
                     <input class="buton" type="submit" value="Enviar">
                 </form>     
             </div>
