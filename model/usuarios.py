@@ -20,7 +20,7 @@ class Usuarios:
     }
 
     def agregar(self, nombre: str, apellido: str, email: str, usuario: str, clave: str, nacimiento: str):
-        db[usuario] = { "clave": clave, "email": email }
+        Usuarios.__usuarios[usuario] = { "clave": clave, "email": email }
 
     def existe(self, usuario: str):
         return usuario in Usuarios.__usuarios
