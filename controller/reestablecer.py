@@ -5,8 +5,8 @@ from fastapi import FastAPI
 from model.usuarios import Usuarios
 
 class ReestablecerController:
-    def __init__(self, email: str):
-        usuario = Usuarios().buscar_por_email(email)
+    def __init__(self, db: Usuarios, email: str):
+        usuario = db.buscar_por_email(email)
         if usuario:
             self.enviar_mail_con_clave_a(usuario)
 
