@@ -41,7 +41,7 @@
         <div class="container p-3">
             <section class="seccion-form">
 
-                <form method="post" class="form-register" action="http://ec2-18-219-83-7.us-east-2.compute.amazonaws.com:8000/registrar">
+                <form id="formulario-registrar" method="post" class="form-register" action="http://ec2-18-219-83-7.us-east-2.compute.amazonaws.com:8000/registrar">
                     <label for="nombre">Nombre:</label><br>
                     <input class="menu"  type="text" name="nombre" id="nombre" placeholder="Ingrese su nombre"><br>
                     <label for="apellido">Apellido:</label><br>
@@ -62,5 +62,10 @@
 
         <script src="bs/js/popper.min.js"></script>
         <script src="bs/js/bootstrap.min.js"></script>
+        <script src="js/funciones.js"></script>
+        <script>
+            mostrar_respuesta_remota_para_formulario('formulario-registrar')
+        </script>
+
     </body>
 </html>
