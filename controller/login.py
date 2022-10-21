@@ -1,6 +1,3 @@
-# login.py
-#
-from fastapi import FastAPI
 from model.usuarios import Usuarios
 
 class LoginController:
@@ -11,7 +8,7 @@ class LoginController:
 
         usuario = db.buscar(usuario, clave)
         if usuario:
-            self.__response = { "status": "ok", "mensaje": f"Bienvenido, {usuario}!" }
+            self.__response = { "status": "ok", "mensaje": f"Bienvenido/a, {usuario}!" }
 
     def obtener_respuesta(self):
         return self.__response

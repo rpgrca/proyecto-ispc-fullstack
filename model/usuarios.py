@@ -1,7 +1,3 @@
-# usuarios.py
-#
-# crear(usuario, nombre, apellido, email, clave, nacimiento, tipo)
-
 class Usuario:
     def __init__(self, usuario, clave):
         self.__usuario = usuario

@@ -1,7 +1,3 @@
-# registro.py
-#
-# registrar(usuario, email, password)
-from fastapi import FastAPI
 from model.usuarios import Usuarios
 
 class RegistroController:

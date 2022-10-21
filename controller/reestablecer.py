@@ -1,7 +1,3 @@
-# reestablecer.py
-#
-# recuperar(email)
-from fastapi import FastAPI
 from model.usuarios import Usuarios
 
 class ReestablecerController:
