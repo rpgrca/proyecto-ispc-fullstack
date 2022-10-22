@@ -21,13 +21,15 @@ pip install -r requirements.txt
 
 En algunos sistemas es _python3_ y _pip3_, en otros _python_ y _pip_. La versión mínima es 3.9.
 
-
 ### Ejecutar servidor
 Para levantar el servidor del back-end desde una consola o shell:
 ```
 python main.py
 ```
-El servidor utiliza el puerto 8000.
+El servidor utiliza el puerto 8000. También es posible ejecutarlo de la siguiente manera:
+```
+uvicorn main:app
+```
 
 ### Ejecutar pruebas unitarias
 Para ejecutar las pruebas unitarias desde una consola o shell:
