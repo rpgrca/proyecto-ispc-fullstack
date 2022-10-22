@@ -24,29 +24,24 @@ db = UsuariosImplementadoConDiccionario({
     "Adrian": { "nombre": "Adrian", "apellido": "Acosta", "clave": "martillero", "email": "martillero@gmail.com", "nacimiento": 4/20/2000, "tipo": 1 }
 })
 
-@app.post("/ingresar/", status_code=200)
-def ingresar(usuario: str = Form(), clave: str = Form(), response: Response = Response()):
-    respuesta = LoginController(db, usuario, clave).obtener_respuesta()
+def __cambiar_status_code(respuesta: dict[str, str], response: Response):
     if respuesta["status"] != "ok":
         response.status_code = 401
 
-    return respuesta
+@app.post("/ingresar/", status_code=200)
+def ingresar(usuario: str = Form(), clave: str = Form(), response: Response = Response()):
+    respuesta = LoginController(db, usuario, clave).obtener_respuesta()
+    return __cambiar_status_code(respuesta, response)
 
 @app.post("/registrar/", status_code=200)
 def registrar(nombre: str = Form(), apellido: str = Form(), email: str = Form(), usuario: str = Form(), clave: str = Form(), nacimiento: str = Form(), response: Response = Response()):
     respuesta = RegistroController(db, nombre, apellido, email, usuario, clave, nacimiento).obtener_respuesta()
-    if respuesta["status"] != "ok":
-        response.status_code = 401
-
-    return respuesta
+    return __cambiar_status_code(respuesta, response)
 
 @app.post("/reestablecer/", status_code=200)
 def reestablecer(email: str = Form(), response: Response = Response()):
     respuesta = ReestablecerController(db, email).obtener_respuesta()
-    if respuesta["status"] != "ok":
-        response.status_code = 401
-
-    return respuesta
+    return __cambiar_status_code(respuesta, response)
 
 if __name__ == "__main__":
     uvicorn.run("main:app", host="0.0.0.0", port=8000, log_level="info")
