@@ -11,24 +11,43 @@ class LoginControllerTests(unittest.TestCase):
 
 
     def test_retornar_ok_cuando_usuario_y_clave_son_correctos(self):
-        respuesta = LoginController(self.__db_con_usuario, "Roberto", "123456").obtener_respuesta()
+        sut = LoginController(self.__db_con_usuario, "Roberto", "123456")
+        respuesta = sut.obtener_respuesta()
         self.assertEqual("ok", respuesta["status"])
         self.assertIn("Roberto", respuesta["mensaje"])
 
 
-    @data(("Roberto", "123"),
-          ("Carlos", "123456"))
+    @data(
+        ("Roberto", "123"),
+        ("Carlos", "123456")
+    )
     @unpack
     def test_retornar_error_cuando_usuario_o_clave_incorrecta(self, usuario: str, clave: str):
-        respuesta = LoginController(self.__db_con_usuario, usuario, clave).obtener_respuesta()
+        sut = LoginController(self.__db_con_usuario, usuario, clave)
+        respuesta = sut.obtener_respuesta()
         self.assertEqual("error", respuesta["status"])
         self.assertEqual("Usuario o contraseña inválida", respuesta["mensaje"])
 
 
     def test_retornar_error_cuando_base_esta_vacia(self):
-        respuesta = LoginController(UsuariosImplementadoConDiccionario({}), "Roberto", "123456").obtener_respuesta()
+        sut = LoginController(UsuariosImplementadoConDiccionario({}), "Roberto", "123456")
+        respuesta = sut.obtener_respuesta()
         self.assertEqual("error", respuesta["status"])
         self.assertEqual("Usuario o contraseña inválida", respuesta["mensaje"])
+
+
+    @data(
+        ("", "123456"),
+        (None, "123456"),
+        ("Roberto", ""),
+        ("Roberto", None)
+    )
+    @unpack
+    def test_retornar_error_cuando_falta_dato(self, usuario: str, clave: str):
+        sut = LoginController(UsuariosImplementadoConDiccionario({}), usuario, clave)
+        respuesta = sut.obtener_respuesta()
+        self.assertEqual("error", respuesta["status"])
+        self.assertIn("No se puede ingresar sin", respuesta["mensaje"])
 
 
 if __name__ == "__main__":
