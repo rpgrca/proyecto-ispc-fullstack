@@ -40,7 +40,7 @@
 
         <div class="container p-3">
             <section class="seccion-form">
-                <form class="form-register" name="contact" method="post" action="/registro">
+                <form class="form-register" id="formulario-reestablecer" method="post" action="http://localhost:8000/reestablecer">
                     <p>Ingrese su e-mail. Recibirá un enlace para establecer una nueva contraseña</p>
                     <input class="menu" type="email" name="email" id="email" required placeholder="E-mail">
                     <input class="buton" type="submit" value="Enviar">
@@ -50,5 +50,10 @@
 
         <script src="bs/js/popper.min.js"></script>
         <script src="bs/js/bootstrap.min.js"></script>
+        <script src="js/funciones.js"></script>
+        <script>
+            mostrar_respuesta_remota_para_formulario('formulario-reestablecer')
+        </script>
+
     </body>
 </html>
