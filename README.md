@@ -2,6 +2,8 @@
 [![commit][commit-img]][commit-url]
 [![discuss][discuss-img]][discuss-url]
 [![issues][issues-img]][issues-url]
+[![Python package][pipeline-img]][pipeline-url]
+[![codecov][codecov-img]][codecov-url]
 
 ## Proyecto Full-Stack ISPC
 
@@ -54,3 +56,7 @@ utilizarán distintos modelos y otros que utilizarán los mismos.
 [issues-url]: https://github.com/rpgrca/proyecto-ispc-fullstack/issues
 [discuss-img]: https://img.shields.io/github/discussions/rpgrca/proyecto-ispc-fullstack
 [discuss-url]: https://github.com/rpgrca/proyecto-ispc-fullstack/discussions
+[pipeline-img]: https://github.com/rpgrca/proyecto-ispc-fullstack/actions/workflows/python.yml/badge.svg
+[pipeline-url]: https://github.com/rpgrca/proyecto-ispc-fullstack/actions/workflows/python.yml
+[codecov-img]: https://codecov.io/gh/rpgrca/proyecto-ispc-fullstack/branch/main/graph/badge.svg?token=b8dMxouJmA
+[codecov-url]: https://codecov.io/gh/rpgrca/proyecto-ispc-fullstack
