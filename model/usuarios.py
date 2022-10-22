@@ -8,22 +8,35 @@ class Usuario:
 
 
 class Usuarios:
-    __usuarios = {
-        "Roberto": { "clave": "123456", "email": "roberto.carlos.alfonso@gmail.com" },
-        "Martin": { "clave": "654321", "email": "martin@gmail.com" },
-        "Julia": { "clave": "109283", "email": "julia@gmail.com" },
-        "Estela": { "clave": "777777", "email": "estela@gmail.com" }
-    }
-
     def agregar(self, nombre: str, apellido: str, email: str, usuario: str, clave: str, nacimiento: str):
-        Usuarios.__usuarios[usuario] = { "clave": clave, "email": email }
+        pass
+    
+    def existe(self, usuario: str):
+        pass
+    
+    def buscar(self, usuario: str, clave: str):
+        pass
+    
+    def buscar_por_email(self, email: str):
+        pass
+    
+    def encriptar(self, clave: str):
+        pass
+
+
+class UsuariosImplementadoConDiccionario(Usuarios):
+    def __init__(self, usuarios):
+        self.__usuarios = usuarios
+        
+    def agregar(self, nombre: str, apellido: str, email: str, usuario: str, clave: str, nacimiento: str):
+        self.__usuarios[usuario] = { "clave": clave, "email": email }
 
     def existe(self, usuario: str):
-        return usuario in Usuarios.__usuarios
+        return usuario in self.__usuarios
 
     def buscar(self, usuario: str, clave: str):
-        if usuario in Usuarios.__usuarios:
-            if Usuarios.__usuarios[usuario]['clave'] == self.encriptar(clave):
+        if usuario in self.__usuarios:
+            if self.__usuarios[usuario]['clave'] == self.encriptar(clave):
                 return Usuario(usuario, clave)
 
         return None

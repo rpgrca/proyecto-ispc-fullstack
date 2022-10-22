@@ -1,7 +1,7 @@
 import uvicorn
 from fastapi import FastAPI, Form, Response, status
 from fastapi.middleware.cors import CORSMiddleware
-from model.usuarios import Usuarios
+from model.usuarios import Usuarios, UsuariosImplementadoConDiccionario
 from controller.login import LoginController
 from controller.registro import RegistroController
 from controller.reestablecer import ReestablecerController
@@ -16,7 +16,12 @@ app.add_middleware(
     allow_headers=["*"]
 )
 
-db = Usuarios()
+db = UsuariosImplementadoConDiccionario({
+    "Roberto": { "clave": "123456", "email": "roberto.carlos.alfonso@gmail.com" },
+    "Martin": { "clave": "654321", "email": "martin@gmail.com" },
+    "Julia": { "clave": "109283", "email": "julia@gmail.com" },
+    "Estela": { "clave": "777777", "email": "estela@gmail.com" }
+})
 
 @app.post("/ingresar/", status_code=200)
 def ingresar(usuario: str = Form(), clave: str = Form(), response: Response = Response()):
