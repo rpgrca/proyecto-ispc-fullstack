@@ -1,5 +1,5 @@
+from controller.controller import Controller
 from model.usuarios import Usuarios, Usuario
-
 
 class EmailSender:
     def enviar_mail_a(self, usuario: Usuario) -> None:
@@ -12,13 +12,10 @@ class RealEmailSender(EmailSender):
         pass
 
 
-class ReestablecerController:
+class ReestablecerController(Controller):
     def __init__(self, db: Usuarios, email: str, sender: EmailSender = RealEmailSender()):
         usuario = db.buscar_por_email(email)
         if usuario:
             sender.enviar_mail_a(usuario)
 
-        self.__respuesta = { "status": "ok", "mensaje": "Si el correo está en nuestros registros se ha enviado un recordatorio a su cuenta" }
-
-    def obtener_respuesta(self) -> dict[str, str]:
-        return self.__respuesta
+        self._responder_bien_con("Si el correo está en nuestros registros se ha enviado un recordatorio a su cuenta")

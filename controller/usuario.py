@@ -1,39 +1,18 @@
+from controller.controller import Controller
 from model.usuarios import Usuarios, TipoDeUsuario
 
-class UsuarioController:
+class UsuarioController(Controller):
     def __init__(self, db: Usuarios, nombre: str, apellido: str, email: str, usuario: str, clave: str, nacimiento: str, tipo: TipoDeUsuario):
-        if not nombre:
-            self.__mensaje_error_por_dato_faltante("nombre")
-            return
+        if not self._verificar(nombre, "No se puede crear un usuario sin nombre") or \
+           not self._verificar(apellido, "No se puede crear un usuario sin apellido") or \
+           not self._verificar(email, "No se puede crear un usuario sin e-mail") or \
+           not self._verificar(usuario, "No se puede crear un usuario sin usuario") or \
+           not self._verificar(clave, "No se puede crear un usuario sin clave") or \
+           not self._verificar(nacimiento, "No se puede crear un usuario sin fecha de nacimiento"):
+           return
 
-        if not apellido:
-            self.__mensaje_error_por_dato_faltante("apellido")
-            return
-
-        if not email:
-            self.__mensaje_error_por_dato_faltante("e-mail")
-            return
-
-        if not usuario:
-            self.__mensaje_error_por_dato_faltante("usuario")
-            return
-
-        if not clave:
-            self.__mensaje_error_por_dato_faltante("clave")
-            return
-
-        if not nacimiento:
-            self.__mensaje_error_por_dato_faltante("nacimiento")
-            return
-
-        self.__resultado = { "status": "error", "mensaje": "La cuenta ya existe" }
+        self._responder_mal_con("La cuenta ya existe")
         if not db.existe(usuario):
             if not db.buscar_por_email(email):
                 db.agregar(nombre, apellido, email, usuario, clave, nacimiento, tipo)
-                self.__resultado = { "status": "ok", "mensaje": "La cuenta ha sido creada correctamente" }
-
-    def __mensaje_error_por_dato_faltante(self, atributo) -> None:
-        self.__resultado = { 'status': 'error', "mensaje": f"No se puede crear un usuario sin {atributo}" }
-
-    def obtener_respuesta(self) -> dict[str, str]:
-        return self.__resultado
+                self._responder_bien_con("La cuenta ha sido creada correctamente")
