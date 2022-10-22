@@ -39,7 +39,7 @@ jobs:
       run: |
         pytest main_tests.py --doctest-modules --junitxml=main.coverage.xml --cov=main_tests --cov-report=xml --cov-branch
         for t in `ls -d1 ./tests/*.py`; do
-            n=$(basename $t)
+            n=$(basename $t .py)
             PYTHONPATH=$PYTHONPATH:controller:model pytest $n.py --doctest-modules --junitxml=$n.coverage.xml --cov=$n --cov-report=xml --cov-branch
         done
 
