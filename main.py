@@ -1,7 +1,7 @@
 import uvicorn
 from fastapi import FastAPI, Form, Response
 from fastapi.middleware.cors import CORSMiddleware
-from model.usuarios import Usuarios, UsuariosImplementadoConDiccionario
+from model.usuarios import UsuariosImplementadoConDiccionario
 from controller.login import LoginController
 from controller.registro import RegistroController
 from controller.reestablecer import ReestablecerController

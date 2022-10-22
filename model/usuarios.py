@@ -8,7 +8,7 @@ class Usuario:
 
 
 class Usuarios:
-    def agregar(self, nombre: str, apellido: str, email: str, usuario: str, clave: str, nacimiento: str):
+    def agregar(self, nombre: str, apellido: str, email: str, usuario: str, clave: str, nacimiento: str) -> None:
         pass
     
     def existe(self, usuario: str) -> bool:
@@ -20,7 +20,7 @@ class Usuarios:
     def existe_con_mail(self, email: str) -> bool:
         pass
     
-    def encriptar(self, clave: str):
+    def encriptar(self, clave: str) -> str:
         pass
 
 
@@ -29,12 +29,19 @@ class UsuariosImplementadoConDiccionario(Usuarios):
         self.__usuarios = usuarios
         
     def agregar(self, nombre: str, apellido: str, email: str, usuario: str, clave: str, nacimiento: str):
-        self.__usuarios[usuario] = { "clave": clave, "email": email }
+        self.__usuarios[usuario] = {
+            "nombre": nombre,
+            "apellido": apellido,
+            "email": email,
+            "usuario": usuario,
+            "clave": clave,
+            "nacimiento": nacimiento
+        }
 
-    def existe(self, usuario: str):
+    def existe(self, usuario: str) -> bool:
         return usuario in self.__usuarios
 
-    def buscar(self, usuario: str, clave: str):
+    def buscar(self, usuario: str, clave: str) -> Usuario:
         if usuario in self.__usuarios:
             if self.__usuarios[usuario]['clave'] == self.encriptar(clave):
                 return Usuario(usuario, clave)
@@ -42,8 +49,7 @@ class UsuariosImplementadoConDiccionario(Usuarios):
         return None
 
     def buscar_por_email(self, email: str) -> bool:
-        filtered_users = list(filter(lambda u: u['email'] == email, self.__usuarios.values()))
-        return len(filtered_users) > 0
+        return any(filter(lambda u: u['email'] == email, self.__usuarios.values()))
 
-    def encriptar(self, clave: str):
+    def encriptar(self, clave: str) -> str:
         return clave

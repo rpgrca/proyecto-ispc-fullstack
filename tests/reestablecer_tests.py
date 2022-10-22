@@ -8,10 +8,10 @@ class FakeEmailSender(EmailSender):
     def __init__(self):
         self.__enviado = False
     
-    def enviar_mail_a(self, usuario: Usuario):
+    def enviar_mail_a(self, usuario: Usuario) -> None:
         self.__enviado = True
 
-    def envio_mail(self):
+    def envio_mail(self) -> bool:
         return self.__enviado
 
 

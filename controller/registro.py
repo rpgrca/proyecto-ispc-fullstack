@@ -32,8 +32,8 @@ class RegistroController:
                 db.agregar(nombre, apellido, email, usuario, clave, nacimiento)
                 self.__resultado = { "status": "ok", "mensaje": "La cuenta ha sido creada correctamente, ya puede ingresar a su cuenta" }
 
-    def __mensaje_error_por_dato_faltante(self, atributo):
+    def __mensaje_error_por_dato_faltante(self, atributo) -> None:
         self.__resultado = { 'status': 'error', "mensaje": f"No se puede crear un usuario sin {atributo}" }
 
-    def obtener_respuesta(self):
+    def obtener_respuesta(self) -> dict[str, str]:
         return self.__resultado
