@@ -5,10 +5,40 @@
 [![Python package][pipeline-img]][pipeline-url]
 [![codecov][codecov-img]][codecov-url]
 
-## Proyecto Full-Stack ISPC
+# Proyecto Full-Stack ISPC
 
-Información para el Sprint 1:
+## Instalación
+Instalar las dependencias (fastapi, pytest, etc) desde el directorio raíz:
+```
+python -m pip install -r requirements.txt
+```
 
+ó
+
+```
+pip install -r requirements.txt
+```
+
+En algunos sistemas es _python3_ y _pip3_, en otros _python_ y _pip_. La versión mínima es 3.9.
+
+
+### Ejecutar servidor
+Para levantar el servidor del back-end desde una consola o shell:
+```
+python main.py
+```
+El servidor utiliza el puerto 8000.
+
+### Ejecutar pruebas unitarias
+Para ejecutar las pruebas unitarias desde una consola o shell:
+```
+pytest main_tests.py
+```
+
+Esto ejecutará todas las pruebas unitarias que se encuentren dentro del suite (que incluyen todas las del directorio _tests_).
+
+
+## Información para el Sprint 1
 ### Front-end
 
 index.html realiza una navegación como visitante sin identificarse.
