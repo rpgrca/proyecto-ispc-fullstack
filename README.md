@@ -58,5 +58,5 @@ utilizarán distintos modelos y otros que utilizarán los mismos.
 [discuss-url]: https://github.com/rpgrca/proyecto-ispc-fullstack/discussions
 [pipeline-img]: https://github.com/rpgrca/proyecto-ispc-fullstack/actions/workflows/python.yml/badge.svg
 [pipeline-url]: https://github.com/rpgrca/proyecto-ispc-fullstack/actions/workflows/python.yml
-[codecov-img]: https://codecov.io/gh/rpgrca/proyecto-ispc-fullstack/branch/main/graph/badge.svg?token=b8dMxouJmA
+[codecov-img]: https://codecov.io/gh/rpgrca/proyecto-ispc-fullstack/branch/dev/graph/badge.svg?token=b8dMxouJmA
 [codecov-url]: https://codecov.io/gh/rpgrca/proyecto-ispc-fullstack
