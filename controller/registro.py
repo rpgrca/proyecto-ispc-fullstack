@@ -1,4 +1,4 @@
-from model.usuarios import Usuarios
+from model.usuarios import TipoDeUsuario, Usuarios
 
 class RegistroController:
     def __init__(self, db: Usuarios, nombre: str, apellido: str, email: str, usuario: str, clave: str, nacimiento: str):
@@ -29,7 +29,7 @@ class RegistroController:
         self.__resultado = { "status": "error", "mensaje": "La cuenta ya existe" }
         if not db.existe(usuario):
             if not db.buscar_por_email(email):
-                db.agregar(nombre, apellido, email, usuario, clave, nacimiento)
+                db.agregar(nombre, apellido, email, usuario, clave, nacimiento, TipoDeUsuario.Pujador)
                 self.__resultado = { "status": "ok", "mensaje": "La cuenta ha sido creada correctamente, ya puede ingresar a su cuenta" }
 
     def __mensaje_error_por_dato_faltante(self, atributo) -> None:

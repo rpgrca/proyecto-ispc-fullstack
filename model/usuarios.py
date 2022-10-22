@@ -1,3 +1,12 @@
+from enum import Enum
+
+
+class TipoDeUsuario(Enum):
+    Martillero = 1,
+    Consignatario = 2,
+    Pujador = 3
+
+
 class Usuario:
     def __init__(self, usuario, clave):
         self.__usuario = usuario
@@ -8,7 +17,7 @@ class Usuario:
 
 
 class Usuarios:
-    def agregar(self, nombre: str, apellido: str, email: str, usuario: str, clave: str, nacimiento: str) -> None:
+    def agregar(self, nombre: str, apellido: str, email: str, usuario: str, clave: str, nacimiento: str, tipo: TipoDeUsuario) -> None:
         pass
     
     def existe(self, usuario: str) -> bool:
@@ -28,14 +37,15 @@ class UsuariosImplementadoConDiccionario(Usuarios):
     def __init__(self, usuarios):
         self.__usuarios = usuarios
         
-    def agregar(self, nombre: str, apellido: str, email: str, usuario: str, clave: str, nacimiento: str):
+    def agregar(self, nombre: str, apellido: str, email: str, usuario: str, clave: str, nacimiento: str, tipo: TipoDeUsuario) -> None:
         self.__usuarios[usuario] = {
             "nombre": nombre,
             "apellido": apellido,
             "email": email,
             "usuario": usuario,
             "clave": clave,
-            "nacimiento": nacimiento
+            "nacimiento": nacimiento,
+            "tipo": tipo.value
         }
 
     def existe(self, usuario: str) -> bool:

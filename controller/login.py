@@ -16,9 +16,8 @@ class LoginController:
         if usuario:
             self.__respuesta = { "status": "ok", "mensaje": f"Bienvenido/a, {usuario}!" }
 
-    def __mensaje_error_por_dato_faltante(self, atributo):
+    def __mensaje_error_por_dato_faltante(self, atributo) -> None:
         self.__respuesta = { 'status': 'error', "mensaje": f"No se puede ingresar sin {atributo}" }
 
-
-    def obtener_respuesta(self):
+    def obtener_respuesta(self) -> dict[str, str]:
         return self.__respuesta
