@@ -1,5 +1,7 @@
+from datetime import date
 from model.database import BaseDeDatos
 from model.usuarios import Usuarios, Usuario, UsuariosFactory
+from model.subastas import Subastas, Subasta
 from model.tipo_usuario import TipoDeUsuario
 from model.lotes import Lotes
 
@@ -38,6 +40,12 @@ class UsuariosFake(Usuarios):
         return None
 
 
+
+class SubastasFake(Subastas):
+    def crear(self, titulo: str, descripcion: str, imagen: str, fecha: date):
+        return Subasta(titulo, descripcion, imagen, fecha)
+
+
 class CreadorDeBasesDeDatosTemporales:
     def __init__(self):
         self.__usuarios = UsuariosFake({
@@ -48,6 +56,7 @@ class CreadorDeBasesDeDatosTemporales:
             "Adrian": { "nombre": "Adrian", "apellido": "Acosta", "usuario": "Adrian", "clave": "martillero", "email": "martillero@gmail.com", "nacimiento": 4/20/2000, "tipo": 1 }
         })
         self.__lotes = []
+        self.__subastas = []
             
     def con_usuarios(self, usuarios: Usuarios):
         self.__usuarios = usuarios
@@ -56,6 +65,10 @@ class CreadorDeBasesDeDatosTemporales:
     def con_lotes(self, lotes: Lotes):
         self.__lotes = lotes
         return self
+    
+    def con_subastas(self, subastas: Subastas):
+        self.__subastas = subastas
+        return self
 
     def construir(self) -> BaseDeDatos:
-        return BaseDeDatos(self.__usuarios, self.__lotes)
+        return BaseDeDatos(self.__usuarios, self.__lotes, self.__subastas)

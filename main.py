@@ -1,6 +1,7 @@
 import uvicorn
 from fastapi import FastAPI, Form, Response
 from fastapi.middleware.cors import CORSMiddleware
+from controller.subasta import SubastaController
 from model.transcient_database import CreadorDeBasesDeDatosTemporales
 from controller.login import LoginController
 from controller.registro import RegistroController
@@ -38,6 +39,13 @@ def registrar(nombre: str = Form(), apellido: str = Form(), email: str = Form(),
 @app.post("/reestablecer/", status_code=200)
 def reestablecer(email: str = Form(), response: Response = Response()):
     controlador = ReestablecerController(db, email)
+    return __cambiar_status_code(controlador.obtener_respuesta(), response)
+
+
+@app.post("/crear_subasta/", status_code=200)
+def crear_subasta(titulo: str = Form(), descripcion: str = Form(), imagen: str = Form(), fecha: str = Form(), response: Response = Response()):
+    controlador = SubastaController(db);
+    controlador.crear(titulo, descripcion, imagen, fecha)
     return __cambiar_status_code(controlador.obtener_respuesta(), response)
 
 
