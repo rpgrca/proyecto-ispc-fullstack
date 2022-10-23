@@ -1,7 +1,7 @@
 import uvicorn
 from fastapi import FastAPI, Form, Response
 from fastapi.middleware.cors import CORSMiddleware
-from model.usuarios import UsuariosImplementadoConDiccionario
+from model.transcient_database import CreadorDeBasesDeDatosTemporales
 from controller.login import LoginController
 from controller.registro import RegistroController
 from controller.reestablecer import ReestablecerController
@@ -16,14 +16,7 @@ app.add_middleware(
     allow_headers=["*"]
 )
 
-db = UsuariosImplementadoConDiccionario({
-    "Roberto": { "nombre": "Roberto", "apellido": "Perez", "usuario": "Roberto", "clave": "123456", "email": "roberto.carlos.alfonso@gmail.com", "nacimiento": 17/9/2000, "tipo": 3 },
-    "Martin": { "nombre": "Martin", "apellido": "Rodriguez", "usuario": "Martin", "clave": "654321", "email": "martin@gmail.com", "nacimiento": 10/5/2000, "tipo": 3 },
-    "Julia": { "nombre": "Julia", "apellido": "Gonzalez", "usuario": "Julia", "clave": "109283", "email": "julia@gmail.com", "nacimiento": 12/12/2000, "tipo": 3 },
-    "Estela": { "nombre": "Estela", "apellido": "Flores", "usuario": "Estela", "clave": "777777", "email": "estela@gmail.com", "nacimiento": 6/6/2000, "tipo": 2 },
-    "Adrian": { "nombre": "Adrian", "apellido": "Acosta", "usuario": "Adrian", "clave": "martillero", "email": "martillero@gmail.com", "nacimiento": 4/20/2000, "tipo": 1 }
-})
-
+db = CreadorDeBasesDeDatosTemporales().construir()
 
 def __cambiar_status_code(respuesta: dict[str, str], response: Response):
     if respuesta["status"] != "ok":

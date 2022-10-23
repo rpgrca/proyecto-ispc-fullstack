@@ -1,10 +1,10 @@
 from controller.controller import Controller
 from controller.email_sender import EmailSender, RealEmailSender
-from model.usuarios import Usuarios, Usuario
+from model.database import BaseDeDatos
 
 class ReestablecerController(Controller):
-    def __init__(self, db: Usuarios, email: str, sender: EmailSender = RealEmailSender()):
-        usuario = db.buscar_por_email(email)
+    def __init__(self, db: BaseDeDatos, email: str, sender: EmailSender = RealEmailSender()):
+        usuario = db.Usuarios.buscar_por_email(email)
         if usuario:
             sender.enviar_mail_a(usuario, f"Recordatorio: Su clave es {usuario.obtener_clave()}")
 

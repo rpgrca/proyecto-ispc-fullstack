@@ -2,22 +2,23 @@ import unittest
 from ddt import ddt, data, unpack
 from controller.usuario import UsuarioController
 from model.tipo_usuario import TipoDeUsuario
-from model.usuarios import UsuariosImplementadoConDiccionario
+from model.base_temporal import UsuariosFake, CreadorDeBasesDeDatosTemporales
 
 @ddt
 class UsuarioControllerTests(unittest.TestCase):
     def setUp(self):
-        self.__db_con_usuario = UsuariosImplementadoConDiccionario({
-            "Roberto": {
-                "nombre": "Roberto",
-                "apellido": "Perez",
-                "email": "roberto@gmail.com",
-                "usuario": "Roberto",
-                "clave": "123456",
-                "nacimiento": 9/17/2000,
-                "tipo": TipoDeUsuario.Pujador.value
-            }
-        })
+        self.__db_con_usuario = CreadorDeBasesDeDatosTemporales() \
+            .con_usuarios(UsuariosFake({
+                "Roberto": {
+                    "nombre": "Roberto",
+                    "apellido": "Perez",
+                    "email": "roberto@gmail.com",
+                    "usuario": "Roberto",
+                    "clave": "123456",
+                    "nacimiento": 9/17/2000,
+                    "tipo": TipoDeUsuario.Pujador.value
+                }})) \
+            .construir()
 
 
     @data(TipoDeUsuario.Martillero, TipoDeUsuario.Consignatario, TipoDeUsuario.Pujador)
@@ -68,7 +69,11 @@ class UsuarioControllerTests(unittest.TestCase):
         
     @data(TipoDeUsuario.Martillero, TipoDeUsuario.Consignatario, TipoDeUsuario.Pujador)
     def test_retornar_ok_cuando_base_vacia(self, tipo):
-        sut = UsuarioController(UsuariosImplementadoConDiccionario({}), "Roberto", "Perez", "rperez@gmail.com", "Roberto", "123456", "1/1/2000", tipo)
+        db = CreadorDeBasesDeDatosTemporales() \
+            .con_usuarios(UsuariosFake({})) \
+            .construir()
+
+        sut = UsuarioController(db, "Roberto", "Perez", "rperez@gmail.com", "Roberto", "123456", "1/1/2000", tipo)
         respuesta = sut.obtener_respuesta()
         self.assertEqual("ok", respuesta["status"])
         self.assertIn("La cuenta ha sido creada correctamente", respuesta["mensaje"])

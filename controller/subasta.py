@@ -9,3 +9,15 @@
 # listar_pujas()
 # cerrar_lote()
 # siguiente_lote()
+
+
+from datetime import date
+from controller.controller import Controller
+from model.lotes import Lotes, Lote
+
+class SubastaController(Controller):
+    def __init__(self):
+        pass
+
+    def crear(self, db: Lotes, titulo: str, descripcion: str, imagen: str, fecha: date):
+        

@@ -3,7 +3,8 @@ from ddt import ddt
 from controller.email_sender import EmailSender
 from controller.reestablecer import ReestablecerController
 from model.tipo_usuario import TipoDeUsuario
-from model.usuarios import UsuariosImplementadoConDiccionario, Usuario
+from model.usuarios import Usuario
+from model.base_temporal import UsuariosFake, CreadorDeBasesDeDatosTemporales
 
 
 class EmailSenderSpy(EmailSender):
@@ -20,17 +21,18 @@ class EmailSenderSpy(EmailSender):
 @ddt
 class ReestablecerControllerTests(unittest.TestCase):
     def setUp(self):
-        self.__db_con_usuario = UsuariosImplementadoConDiccionario({
-            "Roberto": {
-                "nombre": "Roberto",
-                "apellido": "Perez",
-                "email": "roberto@gmail.com",
-                "usuario": "Roberto",
-                "clave": "123456",
-                "nacimiento": 9/17/2000,
-                "tipo": TipoDeUsuario.Pujador.value
-            }
-        })
+        self.__db_con_usuario = CreadorDeBasesDeDatosTemporales() \
+            .con_usuarios(UsuariosFake({
+                "Roberto": {
+                    "nombre": "Roberto",
+                    "apellido": "Perez",
+                    "email": "roberto@gmail.com",
+                    "usuario": "Roberto",
+                    "clave": "123456",
+                    "nacimiento": 9/17/2000,
+                    "tipo": TipoDeUsuario.Pujador.value
+                }})) \
+            .construir()
 
 
     def test_retornar_ok_cuando_mail_existe_en_base_de_datos(self):
@@ -48,7 +50,10 @@ class ReestablecerControllerTests(unittest.TestCase):
 
 
     def test_retornar_ok_cuando_base_esta_vacia(self):
-        sut = ReestablecerController(UsuariosImplementadoConDiccionario({}), "rperez@gmail.com", EmailSenderSpy())
+        db = CreadorDeBasesDeDatosTemporales() \
+            .con_usuarios(UsuariosFake({})) \
+            .construir()
+        sut = ReestablecerController(db, "rperez@gmail.com", EmailSenderSpy())
         respuesta = sut.obtener_respuesta()
         self.assertEqual("ok", respuesta["status"])
         self.assertIn("Si el correo está en nuestros registros se ha enviado un recordatorio a su cuenta", respuesta["mensaje"])

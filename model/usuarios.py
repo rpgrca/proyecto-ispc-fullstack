@@ -62,37 +62,3 @@ class UsuariosFactory:
             return Pujador(nombre, apellido, email, usuario, clave, nacimiento)
         else:
             return Martillero(nombre, apellido, email, usuario, clave, nacimiento)
-
-
-class UsuariosImplementadoConDiccionario(Usuarios):
-    def __init__(self, usuarios):
-        self.__usuarios = usuarios
-        
-    def agregar(self, nombre: str, apellido: str, email: str, usuario: str, clave: str, nacimiento: str, tipo: TipoDeUsuario) -> None:
-        self.__usuarios[usuario] = {
-            "nombre": nombre,
-            "apellido": apellido,
-            "email": email,
-            "usuario": usuario,
-            "clave": clave,
-            "nacimiento": nacimiento,
-            "tipo": tipo.value
-        }
-
-    def existe(self, usuario: str) -> bool:
-        return usuario in self.__usuarios
-
-    def buscar(self, usuario: str, clave: str) -> Usuario:
-        if usuario in self.__usuarios:
-            registro = self.__usuarios[usuario]
-            if registro["clave"] == clave:
-                return UsuariosFactory.crear(registro["nombre"], registro["apellido"], registro["email"], registro["usuario"], registro["clave"], registro["nacimiento"], registro["tipo"])
-
-        return None
-
-    def buscar_por_email(self, email: str) -> Usuario:
-        registro = next(filter(lambda u: u["email"] == email, self.__usuarios.values()), None)
-        if registro:
-            return UsuariosFactory.crear(registro["nombre"], registro["apellido"], registro["email"], registro["usuario"], registro["clave"], registro["nacimiento"], registro["tipo"])
-
-        return None
