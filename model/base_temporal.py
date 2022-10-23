@@ -5,8 +5,8 @@ from model.database import BaseDeDatos
 from model.generador_uid import GeneradorUid
 from model.usuarios import Usuarios, Usuario, UsuariosFactory
 from model.subastas import Subastas, Subasta
+from model.articulos import Articulos
 from model.tipo_usuario import TipoDeUsuario
-from model.lotes import Lote, Lotes
 
 
 class UsuariosFake(Usuarios):
@@ -43,28 +43,30 @@ class UsuariosFake(Usuarios):
         return None
 
 
-class LotesFake(Lotes):
-    def __init__(self, lotes: list):
-        self.__lotes = lotes
-
-    def crear(self, articulo: Articulo, base: float) -> Lote:
-        lote = Lote(articulo, base)
-        self.__lotes.append(lote)
-        return lote
-
-
 class SubastasFake(Subastas):
     def __init__(self, subastas: list, generador_uid: GeneradorUid = GeneradorUid()):
         self.__subastas = subastas
         self.__generador_uid = generador_uid
-    
+
     def crear(self, titulo: str, descripcion: str, imagen: str, fecha: date) -> Subasta:
         subasta = Subasta(self.__generador_uid.generar(), titulo, descripcion, imagen, fecha)
         self.__subastas.append(subasta)
         return subasta
-    
-    def buscar_por_uid(self, uid: uuid) -> Subasta:
+
+    def agregar_lote(self, subasta: Subasta, articulo: Articulo, base: float) -> None:
+        subasta.agregar(articulo, base)
+
+
+    def buscar_por_uid(self, uid: uuid.UUID) -> Subasta:
         return next(filter(lambda s: s.obtener_uid() == uid, self.__subastas), None)
+
+
+class ArticulosFake(Articulos):
+    def __init__(self, articulos: list):
+        self.__articulos = articulos
+        
+    def buscar_por_uid(self, uid: uuid.UUID) -> Articulo:
+        return next(filter(lambda s: s.obtener_uid() == uid, self.__articulos), None)
 
 
 class CreadorDeBasesDeDatosTemporales:
@@ -76,20 +78,20 @@ class CreadorDeBasesDeDatosTemporales:
             "Estela": { "nombre": "Estela", "apellido": "Flores", "usuario": "Estela", "clave": "777777", "email": "estela@gmail.com", "nacimiento": 6/6/2000, "tipo": 2 },
             "Adrian": { "nombre": "Adrian", "apellido": "Acosta", "usuario": "Adrian", "clave": "martillero", "email": "martillero@gmail.com", "nacimiento": 4/20/2000, "tipo": 1 }
         })
-        self.__lotes = LotesFake([])
         self.__subastas = SubastasFake([])
+        self.__articulos = ArticulosFake([])
             
     def con_usuarios(self, usuarios: Usuarios):
         self.__usuarios = usuarios
         return self
     
-    def con_lotes(self, lotes: Lotes):
-        self.__lotes = lotes
-        return self
-    
     def con_subastas(self, subastas: Subastas):
         self.__subastas = subastas
         return self
+    
+    def con_articulos(self, articulos: Articulos):
+        self.__articulos = articulos
+        return self
 
     def construir(self) -> BaseDeDatos:
-        return BaseDeDatos(self.__usuarios, self.__lotes, self.__subastas)
+        return BaseDeDatos(self.__usuarios, self.__subastas, self.__articulos)

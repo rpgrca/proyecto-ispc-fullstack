@@ -1,4 +1,5 @@
 import uuid
+from model.serialization import Serializable
 
 class Controller:
     def __init__(self):
@@ -16,6 +17,9 @@ class Controller:
 
     def _responder_bien_incluyendo_id(self, mensaje: str, id: uuid) -> None:
         self.__respuesta = { "status": "ok", "mensaje": mensaje, "id": str(id) }
+
+    def _responder_bien_serializando(self, model: Serializable):
+        self.__respuesta = { "status": "ok", "item": model.serialize() }
 
     def _responder_mal_con(self, mensaje: str) -> None:
         self.__respuesta = { "status": "error", "mensaje": mensaje }
