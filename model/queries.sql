@@ -1,0 +1,1 @@
+-- Lista de queries a utilizar
