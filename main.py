@@ -2,7 +2,7 @@ import uvicorn
 from fastapi import FastAPI, Form, Response
 from fastapi.middleware.cors import CORSMiddleware
 from controller.subasta import SubastaController
-from model.transcient_database import CreadorDeBasesDeDatosTemporales
+from model.base_temporal import CreadorDeBasesDeDatosTemporales
 from controller.login import LoginController
 from controller.registro import RegistroController
 from controller.reestablecer import ReestablecerController
