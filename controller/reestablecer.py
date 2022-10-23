@@ -1,16 +1,6 @@
 from controller.controller import Controller
+from controller.email_sender import EmailSender, RealEmailSender
 from model.usuarios import Usuarios, Usuario
-
-class EmailSender:
-    def enviar_mail_a(self, usuario: Usuario, mensaje: str) -> None:
-        pass
-
-
-class RealEmailSender(EmailSender):
-    def enviar_mail_a(self, usuario: Usuario, mensaje: str) -> None:
-        # codigo para enviar mail
-        pass
-
 
 class ReestablecerController(Controller):
     def __init__(self, db: Usuarios, email: str, sender: EmailSender = RealEmailSender()):

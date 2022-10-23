@@ -1,6 +1,7 @@
 import unittest
 from ddt import ddt
-from controller.reestablecer import ReestablecerController, EmailSender
+from controller.email_sender import EmailSender
+from controller.reestablecer import ReestablecerController
 from model.tipo_usuario import TipoDeUsuario
 from model.usuarios import UsuariosImplementadoConDiccionario, Usuario
 
