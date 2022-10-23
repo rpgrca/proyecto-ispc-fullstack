@@ -1,12 +1,21 @@
 import unittest
 from ddt import ddt, data, unpack
 from controller.login import LoginController
+from model.tipo_usuario import TipoDeUsuario
 from model.usuarios import UsuariosImplementadoConDiccionario
 
 @ddt
 class LoginControllerTests(unittest.TestCase):
     __db_con_usuario = UsuariosImplementadoConDiccionario({
-        "Roberto": { "clave": "123456" }
+        "Roberto": {
+            "nombre": "Roberto",
+            "apellido": "Perez",
+            "email": "roberto@gmail.com",
+            "usuario": "Roberto",
+            "clave": "123456",
+            "nacimiento": 9/17/2000,
+            "tipo": TipoDeUsuario.Pujador.value
+        }
     })
 
 

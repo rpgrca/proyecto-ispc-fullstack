@@ -1,6 +1,7 @@
 import unittest
 from controller.consignatario import ConsignatarioController
-from model.usuarios import TipoDeUsuario, UsuariosImplementadoConDiccionario
+from model.tipo_usuario import TipoDeUsuario
+from model.usuarios import UsuariosImplementadoConDiccionario
 
 class ConsignatarioControllerTests(unittest.TestCase):
     def test_graba_usuario_de_tipo_pujador(self):

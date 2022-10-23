@@ -1,5 +1,6 @@
 from controller.controller import Controller
-from model.usuarios import Usuarios, TipoDeUsuario
+from model.tipo_usuario import TipoDeUsuario
+from model.usuarios import Usuarios
 
 class UsuarioController(Controller):
     def __init__(self, db: Usuarios, nombre: str, apellido: str, email: str, usuario: str, clave: str, nacimiento: str, tipo: TipoDeUsuario):
