@@ -3,17 +3,26 @@ from model.tipo_usuario import TipoDeUsuario
 from model.database import BaseDeDatos
 
 class UsuarioController(Controller):
+    SIN_NOMBRE = "No se puede crear un usuario sin nombre"
+    SIN_APELLIDO = "No se puede crear un usuario sin apellido"
+    SIN_EMAIL = "No se puede crear un usuario sin e-mail"
+    SIN_USUARIO = "No se puede crear un usuario sin usuario"
+    SIN_CLAVE = "No se puede crear un usuario sin clave"
+    SIN_NACIMIENTO = "No se puede crear un usuario sin fecha de nacimiento"
+    CUENTA_YA_EXISTE = "La cuenta ya existe"
+    CUENTA_CREADA = "La cuenta ha sido creada correctamente"
+
     def __init__(self, db: BaseDeDatos, nombre: str, apellido: str, email: str, usuario: str, clave: str, nacimiento: str, tipo: TipoDeUsuario):
-        if not self._verificar(nombre, "No se puede crear un usuario sin nombre") or \
-           not self._verificar(apellido, "No se puede crear un usuario sin apellido") or \
-           not self._verificar(email, "No se puede crear un usuario sin e-mail") or \
-           not self._verificar(usuario, "No se puede crear un usuario sin usuario") or \
-           not self._verificar(clave, "No se puede crear un usuario sin clave") or \
-           not self._verificar(nacimiento, "No se puede crear un usuario sin fecha de nacimiento"):
+        if not self._verificar(nombre, self.SIN_NOMBRE) or \
+           not self._verificar(apellido, self.SIN_APELLIDO) or \
+           not self._verificar(email, self.SIN_EMAIL) or \
+           not self._verificar(usuario, self.SIN_USUARIO) or \
+           not self._verificar(clave, self.SIN_CLAVE) or \
+           not self._verificar(nacimiento, self.SIN_NACIMIENTO):
            return
 
-        self._responder_mal_con("La cuenta ya existe")
+        self._responder_mal_con(self.CUENTA_YA_EXISTE)
         if not db.Usuarios.existe(usuario):
             if not db.Usuarios.buscar_por_email(email):
                 db.Usuarios.agregar(nombre, apellido, email, usuario, clave, nacimiento, tipo)
-                self._responder_bien_con("La cuenta ha sido creada correctamente")
+                self._responder_bien_con(self.CUENTA_CREADA)
