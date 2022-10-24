@@ -8,7 +8,6 @@ import uuid
 from datetime import date
 from controller.controller import Controller
 from model.database import BaseDeDatos
-from model.articulos import Articulo
 
 class SubastaController(Controller):
     SIN_TITULO = "No se puede crear una subasta sin titulo"
