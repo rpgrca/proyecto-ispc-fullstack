@@ -31,6 +31,8 @@ El servidor utiliza el puerto 8000. También es posible ejecutarlo de la siguien
 uvicorn main:app
 ```
 
+![image](https://user-images.githubusercontent.com/15602473/197442544-6658bf45-fadf-4aae-8e76-3dddb0835cb9.png)
+
 ### Ejecutar pruebas unitarias
 Para ejecutar las pruebas unitarias desde una consola o shell:
 ```
@@ -39,6 +41,7 @@ pytest main_tests.py
 
 Esto ejecutará todas las pruebas unitarias que se encuentren dentro del suite (que incluyen todas las del directorio _tests_).
 
+![image](https://user-images.githubusercontent.com/15602473/197442599-4c2e61cc-db61-4c3a-9f20-0617e2b67513.png)
 
 ## Información para el Sprint 1
 ### Front-end
