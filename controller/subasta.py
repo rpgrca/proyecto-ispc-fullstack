@@ -43,6 +43,9 @@ class SubastaController(Controller):
            not self._verificar(articulo_uid, self.ARTICULO_NULO_EN_SUBASTA):
             return
 
+        if not self._verificar_uuid(subasta_uid) or not self._verificar_uuid(articulo_uid):
+            return
+
         subasta = self.__db.Subastas.buscar_por_uid(uuid.UUID(subasta_uid))
         if not self._verificar(subasta, self.LOTE_SUBASTA_INEXISTENTE):
             return
@@ -58,6 +61,9 @@ class SubastaController(Controller):
         if not self._verificar(subasta_uid, self.BUSCAR_SIN_SUBASTA):
             return
         
+        if not self._verificar_uuid(subasta_uid):
+            return
+        
         subasta = self.__db.Subastas.buscar_por_uid(uuid.UUID(subasta_uid))
         if not self._verificar(subasta, self.SUBASTA_INEXISTENTE):
             return
@@ -71,6 +77,9 @@ class SubastaController(Controller):
 
     def contar_lotes(self, subasta_uid: str) -> None:
         if not self._verificar(subasta_uid, self.CONTAR_SIN_SUBASTA):
+            return
+        
+        if not self._verificar_uuid(subasta_uid):
             return
 
         subasta = self.__db.Subastas.buscar_por_uid(uuid.UUID(subasta_uid))

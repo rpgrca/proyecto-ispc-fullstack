@@ -2,6 +2,8 @@ import uuid
 from model.serialization import Serializable
 
 class Controller:
+    UUID_INVALIDO = "UUID inválido"
+
     def __init__(self):
         self.__respuesta = {}
 
@@ -11,6 +13,14 @@ class Controller:
             return False
 
         return True
+
+    def _verificar_uuid(self, uid: str) -> bool:
+        try:
+            uuid.UUID(uid)
+            return True
+        except ValueError:
+            self.__respuesta = { "status": "error", "mensaje": self.UUID_INVALIDO }
+            return False
 
     def _responder_bien_con(self, mensaje: str) -> None:
         self.__respuesta = { "status": "ok", "mensaje": mensaje }

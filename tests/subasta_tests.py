@@ -1,6 +1,7 @@
 import unittest
 import uuid
 from ddt import ddt, data, unpack
+from controller.controller import Controller
 from controller.subasta import SubastaController
 from model.articulos import Articulo
 from model.base_temporal import ArticulosFake, CreadorDeBasesDeDatosTemporales, SubastasFake
@@ -60,13 +61,22 @@ class SubastaControllerTests(unittest.TestCase):
 
     def test_retornar_error_cuando_falta_subasta_en_agregar(self):
         sut = SubastaController(self.__db)
-        sut.agregar_lote(None, self._obtener_articulo_al_azar(), 100)
+        sut.agregar_lote(None, SubastaControllerTests.ARTICULO_UID_STR, 100)
         respuesta = sut.obtener_respuesta()
         self.assertEqual("error", respuesta["status"])
         self.assertEqual(SubastaController.LOTE_SIN_SUBASTA, respuesta["mensaje"])
 
-    def _obtener_articulo_al_azar(self):
-        return Articulo(uuid.uuid4())
+    @data(
+        ("uuid invalido", ARTICULO_UID_STR),
+        (SUBASTA_UID_STR, "uuid invalido")
+    )
+    @unpack
+    def test_retornar_error_cuando_uuid_invalido(self, subasta_uid, articulo_uid):
+        sut = SubastaController(self.__db)
+        sut.agregar_lote(subasta_uid, articulo_uid, 100)
+        respuesta = sut.obtener_respuesta()
+        self.assertEqual("error", respuesta["status"])
+        self.assertEqual(Controller.UUID_INVALIDO, respuesta["mensaje"])
 
     def test_retornar_error_cuando_falta_articulo_en_agregar(self):
         sut = SubastaController(self.__db)
@@ -85,7 +95,7 @@ class SubastaControllerTests(unittest.TestCase):
 
     def test_retornar_error_cuando_subasta_no_se_encuentra(self):
         sut = SubastaController(self.__db)
-        sut.agregar_lote(SubastaControllerTests.OTRA_SUBASTA_UID_STR, self._obtener_articulo_al_azar(), 100)
+        sut.agregar_lote(SubastaControllerTests.OTRA_SUBASTA_UID_STR, SubastaControllerTests.ARTICULO_UID_STR, 100)
         respuesta = sut.obtener_respuesta()
         self.assertEqual("error", respuesta["status"])
         self.assertEqual(SubastaController.LOTE_SUBASTA_INEXISTENTE, respuesta["mensaje"])
@@ -97,6 +107,14 @@ class SubastaControllerTests(unittest.TestCase):
         respuesta = sut.obtener_respuesta()
         self.assertEqual("ok", respuesta["status"])
         self.assertEqual(SubastaController.LOTE_AGREGADO, respuesta["mensaje"])
+
+    def test_retornar_error_cuando_uuid_invalido_en_obtener(self):
+        sut = SubastaController(self.__db)
+        sut.crear("Subasta!", "Nos vemos en la subasta!", "gransubasta.jpg", 9/17/2000)
+        sut.obtener_lote("uuid invalido", 1)
+        respuesta = sut.obtener_respuesta()
+        self.assertEqual("error", respuesta["status"])
+        self.assertEqual(Controller.UUID_INVALIDO, respuesta["mensaje"])
 
     def test_comienza_con_el_primer_lote_correctamente(self):
         sut = SubastaController(self.__db)
@@ -117,6 +135,14 @@ class SubastaControllerTests(unittest.TestCase):
         respuesta = sut.obtener_respuesta()
         self.assertEqual("ok", respuesta["status"])
         self.assertEqual(2, respuesta["item"]["orden"])
+ 
+    def test_retornar_error_cuando_cuenta_lotes_de_uuid_invalido(self):
+        sut = SubastaController(self.__db)
+        sut.crear("Subasta!", "Nos vemos en la subasta!", "gransubasta.jpg", 9/17/2000)
+        sut.contar_lotes("uuid invalido")
+        respuesta = sut.obtener_respuesta()
+        self.assertEqual("error", respuesta["status"])
+        self.assertEqual(Controller.UUID_INVALIDO, respuesta["mensaje"])
         
     def test_retorna_la_cantidad_de_lotes_correctamente(self):
         sut = SubastaController(self.__db)
