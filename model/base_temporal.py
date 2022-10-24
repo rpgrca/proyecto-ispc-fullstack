@@ -56,7 +56,6 @@ class SubastasFake(Subastas):
     def agregar_lote(self, subasta: Subasta, articulo: Articulo, base: float) -> None:
         subasta.agregar(articulo, base)
 
-
     def buscar_por_uid(self, uid: uuid.UUID) -> Subasta:
         return next(filter(lambda s: s.obtener_uid() == uid, self.__subastas), None)
     
@@ -84,8 +83,8 @@ class CreadorDeBasesDeDatosTemporales:
             "Estela": { "nombre": "Estela", "apellido": "Flores", "usuario": "Estela", "clave": "777777", "email": "estela@gmail.com", "nacimiento": 6/6/2000, "tipo": 2 },
             "Adrian": { "nombre": "Adrian", "apellido": "Acosta", "usuario": "Adrian", "clave": "martillero", "email": "martillero@gmail.com", "nacimiento": 4/20/2000, "tipo": 1 }
         })
-        self.__subastas = SubastasFake([])
-        self.__articulos = ArticulosFake([])
+        self.__subastas = SubastasFake([ Subasta(uuid.UUID("b8758e7c-008a-475b-93f4-7ad01064307a"), "Gran subasta!", "Nos vemos pronto!", "sofa.jpg", 17/10/2022) ])
+        self.__articulos = ArticulosFake([ Articulo(uuid.UUID("d3e6d89f-617b-4063-8561-20405ae1c759")) ])
             
     def con_usuarios(self, usuarios: Usuarios):
         self.__usuarios = usuarios
