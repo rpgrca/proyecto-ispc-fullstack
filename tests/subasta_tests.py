@@ -22,22 +22,22 @@ class SubastaControllerTests(unittest.TestCase):
             .construir()
 
     @data(
-        ("", "Nos vemos en la subasta!", "gransubasta.jpg", 9/17/2000, "titulo"),
-        (None, "Nos vemos en la subasta!", "gransubasta.jpg", 9/17/2000, "titulo"),
-        ("Subasta!", "", "gransubasta.jpg", 9/17/2000, "descripcion"),
-        ("Subasta!", None, "gransubasta.jpg", 9/17/2000, "descripcion"),
-        ("Subasta!", "Nos vemos en la subasta!", "", 9/17/2000, "imagen"),
-        ("Subasta!", "Nos vemos en la subasta!", None, 9/17/2000, "imagen"),
-        ("Subasta!", "Nos vemos en la subasta!", "gransubasta.jpg", "", "fecha"),
-        ("Subasta!", "Nos vemos en la subasta!", "gransubasta.jpg", None, "fecha")
+        ("", "Nos vemos en la subasta!", "gransubasta.jpg", 9/17/2000, "titulo", SubastaController.SIN_TITULO),
+        (None, "Nos vemos en la subasta!", "gransubasta.jpg", 9/17/2000, "titulo", SubastaController.SIN_TITULO),
+        ("Subasta!", "", "gransubasta.jpg", 9/17/2000, "descripcion", SubastaController.SIN_DESCRIPCION),
+        ("Subasta!", None, "gransubasta.jpg", 9/17/2000, "descripcion", SubastaController.SIN_DESCRIPCION),
+        ("Subasta!", "Nos vemos en la subasta!", "", 9/17/2000, "imagen", SubastaController.SIN_IMAGEN),
+        ("Subasta!", "Nos vemos en la subasta!", None, 9/17/2000, "imagen", SubastaController.SIN_IMAGEN),
+        ("Subasta!", "Nos vemos en la subasta!", "gransubasta.jpg", "", "fecha", SubastaController.SIN_FECHA),
+        ("Subasta!", "Nos vemos en la subasta!", "gransubasta.jpg", None, "fecha", SubastaController.SIN_FECHA)
     )
     @unpack
-    def test_retornar_error_cuando_falta_un_dato_en_creacion(self, titulo, descripcion, imagen, fecha, error):
+    def test_retornar_error_cuando_falta_un_dato_en_creacion(self, titulo, descripcion, imagen, fecha, error, mensaje_error):
         sut = SubastaController(self.__db)
         sut.crear(titulo, descripcion, imagen, fecha)
         respuesta = sut.obtener_respuesta()
         self.assertEqual("error", respuesta["status"])
-        self.assertIn("No se puede crear una subasta sin", respuesta["mensaje"])
+        self.assertIn(mensaje_error, respuesta["mensaje"])
         self.assertIn(error, respuesta["mensaje"])
 
     def test_crear_subasta_correctamente_cuando_datos_completos(self):
@@ -63,7 +63,7 @@ class SubastaControllerTests(unittest.TestCase):
         sut.agregar_lote(None, self._obtener_articulo_al_azar(), 100)
         respuesta = sut.obtener_respuesta()
         self.assertEqual("error", respuesta["status"])
-        self.assertEqual("No se puede agregar un lote sin subasta", respuesta["mensaje"])
+        self.assertEqual(SubastaController.LOTE_SIN_SUBASTA, respuesta["mensaje"])
 
     def _obtener_articulo_al_azar(self):
         return Articulo(uuid.uuid4())
@@ -73,7 +73,7 @@ class SubastaControllerTests(unittest.TestCase):
         sut.agregar_lote(SubastaControllerTests.SUBASTA_UID_STR, None, 100)
         respuesta = sut.obtener_respuesta()
         self.assertEqual("error", respuesta["status"])
-        self.assertEqual("No se puede agregar un articulo nulo a una subasta", respuesta["mensaje"])
+        self.assertEqual(SubastaController.ARTICULO_NULO_EN_SUBASTA, respuesta["mensaje"])
 
     def test_retornar_error_cuando_no_existe_articulo_para_agregar(self):
         sut = SubastaController(self.__db)
@@ -81,14 +81,14 @@ class SubastaControllerTests(unittest.TestCase):
         sut.agregar_lote(SubastaControllerTests.SUBASTA_UID_STR, SubastaControllerTests.OTRO_ARTICULO_UID_STR, 100)
         respuesta = sut.obtener_respuesta()
         self.assertEqual("error", respuesta["status"])
-        self.assertEqual("No se puede agregar un articulo inexistente a una subasta", respuesta["mensaje"])
+        self.assertEqual(SubastaController.ARTICULO_INEXISTENTE, respuesta["mensaje"])
 
     def test_retornar_error_cuando_subasta_no_se_encuentra(self):
         sut = SubastaController(self.__db)
         sut.agregar_lote(SubastaControllerTests.OTRA_SUBASTA_UID_STR, self._obtener_articulo_al_azar(), 100)
         respuesta = sut.obtener_respuesta()
         self.assertEqual("error", respuesta["status"])
-        self.assertEqual("No se puede agregar un lote a una subasta inexistente", respuesta["mensaje"])
+        self.assertEqual(SubastaController.LOTE_SUBASTA_INEXISTENTE, respuesta["mensaje"])
 
     def test_agregar_lote_correctamente(self):
         sut = SubastaController(self.__db)
@@ -96,7 +96,7 @@ class SubastaControllerTests(unittest.TestCase):
         sut.agregar_lote(SubastaControllerTests.SUBASTA_UID_STR, SubastaControllerTests.ARTICULO_UID_STR, 100)
         respuesta = sut.obtener_respuesta()
         self.assertEqual("ok", respuesta["status"])
-        self.assertEqual("El lote ha sido agregado correctamente", respuesta["mensaje"])
+        self.assertEqual(SubastaController.LOTE_AGREGADO, respuesta["mensaje"])
 
     def test_comienza_con_el_primer_lote_correctamente(self):
         sut = SubastaController(self.__db)
@@ -136,7 +136,7 @@ class SubastaControllerTests(unittest.TestCase):
         sut.obtener_lote(SubastaControllerTests.SUBASTA_UID_STR, orden)
         respuesta = sut.obtener_respuesta()
         self.assertEqual("error", respuesta["status"])
-        self.assertEqual("No existe tal lote", respuesta["mensaje"])
+        self.assertEqual(SubastaController.LOTE_INEXISTENTE, respuesta["mensaje"])
    
 
 if __name__ == "__main__":

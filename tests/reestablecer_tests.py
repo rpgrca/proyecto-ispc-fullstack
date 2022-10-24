@@ -34,20 +34,17 @@ class ReestablecerControllerTests(unittest.TestCase):
                 }})) \
             .construir()
 
-
     def test_retornar_ok_cuando_mail_existe_en_base_de_datos(self):
         sut = ReestablecerController(self.__db_con_usuario, "roberto@gmail.com", EmailSenderSpy())
         respuesta = sut.obtener_respuesta()
         self.assertEqual("ok", respuesta["status"])
-        self.assertEqual("Si el correo está en nuestros registros se ha enviado un recordatorio a su cuenta", respuesta["mensaje"])
-
+        self.assertEqual(ReestablecerController.RECORDATORIO_EXITOSO, respuesta["mensaje"])
 
     def test_retornar_ok_cuando_mail_no_existe_en_base_de_datos(self):
         sut = ReestablecerController(self.__db_con_usuario, "rperez@gmail.com", EmailSenderSpy())
         respuesta = sut.obtener_respuesta()
         self.assertEqual("ok", respuesta["status"])
-        self.assertIn("Si el correo está en nuestros registros se ha enviado un recordatorio a su cuenta", respuesta["mensaje"])
-
+        self.assertIn(ReestablecerController.RECORDATORIO_EXITOSO, respuesta["mensaje"])
 
     def test_retornar_ok_cuando_base_esta_vacia(self):
         db = CreadorDeBasesDeDatosTemporales() \
@@ -56,14 +53,12 @@ class ReestablecerControllerTests(unittest.TestCase):
         sut = ReestablecerController(db, "rperez@gmail.com", EmailSenderSpy())
         respuesta = sut.obtener_respuesta()
         self.assertEqual("ok", respuesta["status"])
-        self.assertIn("Si el correo está en nuestros registros se ha enviado un recordatorio a su cuenta", respuesta["mensaje"])
-
+        self.assertIn(ReestablecerController.RECORDATORIO_EXITOSO, respuesta["mensaje"])
 
     def test_enviar_mail_cuando_email_existe(self):
         sut = EmailSenderSpy()
         ReestablecerController(self.__db_con_usuario, "roberto@gmail.com", sut).obtener_respuesta()
         self.assertTrue(sut.envio_mail())
-
 
     def test_no_enviar_mail_cuando_email_no_existe(self):
         sut = EmailSenderSpy()
