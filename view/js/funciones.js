@@ -13,14 +13,14 @@ function mostrar_respuesta_remota_para_formulario(nombre) {
     })
 }
 
-function boton1(){
+function sube_puja(){
     alert ("Su apuesta fue aceptada. Se incrementó en 500 pesos")
 }
 
-function boton2(){
+function sube_puja_un_poco(){
     alert ("Su apuesta fue aceptada. Se incrementó en 1000 pesos")
 }
 
-function boton3(){
+function sube_puja_un_poco_mas(){
     alert ("Su apuesta fue aceptada. Se incrementó en 2500 pesos")
 }
