@@ -8,5 +8,5 @@ class EmailSender:
 
 class RealEmailSender(EmailSender):
     def enviar_mail_a(self, usuario: Usuario, mensaje: str) -> None:
-        # codigo para enviar mail
+        # TODO: codigo para enviar mail
         pass
