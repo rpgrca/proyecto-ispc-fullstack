@@ -129,9 +129,15 @@ class SubastaControllerTests(unittest.TestCase):
         self.assertEqual("ok", respuesta["status"])
         self.assertEqual(2, respuesta["total"])
 
-        
-    def test_termina_con_el_ultimo_lote_correctamente(self):
-        pass
+    @data(-1, 1)
+    def test_retorna_error_cuando_intenta_acceder_lote_invalido(self, orden: int):
+        sut = SubastaController(self.__db)
+        sut.crear("Subasta!", "Nos vemos en la subasta!", "gransubasta.jpg", 9/17/2000)
+        sut.obtener_lote(SubastaControllerTests.SUBASTA_UID_STR, orden)
+        respuesta = sut.obtener_respuesta()
+        self.assertEqual("error", respuesta["status"])
+        self.assertEqual("No existe tal lote", respuesta["mensaje"])
+   
 
 if __name__ == "__main__":
     unittest.main()

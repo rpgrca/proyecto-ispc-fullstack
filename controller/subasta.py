@@ -53,7 +53,11 @@ class SubastaController(Controller):
         subasta = self.__db.Subastas.buscar_por_uid(uuid.UUID(subasta_uid))
         if not self._verificar(subasta, "No se puede subastar un lote de una subasta inexistente"):
             return
-        
+
+        if orden < 1 or orden > subasta.contar_lotes():
+            self._responder_mal_con("No existe tal lote")
+            return
+
         lote = subasta.obtener_lote(orden - 1)
         self._responder_bien_serializando(lote)
 
