@@ -5,8 +5,6 @@ from controller.subasta import SubastaController
 from model.articulos import Articulo
 from model.base_temporal import ArticulosFake, CreadorDeBasesDeDatosTemporales, SubastasFake
 from model.generador_uid import FakeGeneradorUid
-from model.lotes import Lote
-from model.subastas import Subasta
 
 @ddt
 class SubastaControllerTests(unittest.TestCase):
@@ -109,6 +107,31 @@ class SubastaControllerTests(unittest.TestCase):
         self.assertEqual("ok", respuesta["status"])
         self.assertEqual(1, respuesta["item"]["orden"])
 
+    def test_avanza_al_siguiente_lote_correctamente(self):
+        sut = SubastaController(self.__db)
+        self.__db.Articulos.agregar(uuid.UUID(SubastaControllerTests.OTRO_ARTICULO_UID_STR))
+        sut.crear("Subasta!", "Nos vemos en la subasta!", "gransubasta.jpg", 9/17/2000)
+        sut.agregar_lote(SubastaControllerTests.SUBASTA_UID_STR, SubastaControllerTests.ARTICULO_UID_STR, 100)
+        sut.agregar_lote(SubastaControllerTests.SUBASTA_UID_STR, SubastaControllerTests.OTRO_ARTICULO_UID_STR, 200)
+        sut.obtener_lote(SubastaControllerTests.SUBASTA_UID_STR, 2)
+        respuesta = sut.obtener_respuesta()
+        self.assertEqual("ok", respuesta["status"])
+        self.assertEqual(2, respuesta["item"]["orden"])
+        
+    def test_retorna_la_cantidad_de_lotes_correctamente(self):
+        sut = SubastaController(self.__db)
+        self.__db.Articulos.agregar(uuid.UUID(SubastaControllerTests.OTRO_ARTICULO_UID_STR))
+        sut.crear("Subasta!", "Nos vemos en la subasta!", "gransubasta.jpg", 9/17/2000)
+        sut.agregar_lote(SubastaControllerTests.SUBASTA_UID_STR, SubastaControllerTests.ARTICULO_UID_STR, 100)
+        sut.agregar_lote(SubastaControllerTests.SUBASTA_UID_STR, SubastaControllerTests.OTRO_ARTICULO_UID_STR, 200)
+        sut.contar_lotes(SubastaControllerTests.SUBASTA_UID_STR)
+        respuesta = sut.obtener_respuesta()
+        self.assertEqual("ok", respuesta["status"])
+        self.assertEqual(2, respuesta["total"])
+
+        
+    def test_termina_con_el_ultimo_lote_correctamente(self):
+        pass
 
 if __name__ == "__main__":
     unittest.main()

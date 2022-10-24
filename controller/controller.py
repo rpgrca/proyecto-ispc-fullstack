@@ -15,11 +15,14 @@ class Controller:
     def _responder_bien_con(self, mensaje: str) -> None:
         self.__respuesta = { "status": "ok", "mensaje": mensaje }
 
-    def _responder_bien_incluyendo_id(self, mensaje: str, id: uuid) -> None:
+    def _responder_bien_incluyendo_id(self, mensaje: str, id: uuid.UUID) -> None:
         self.__respuesta = { "status": "ok", "mensaje": mensaje, "id": str(id) }
 
     def _responder_bien_serializando(self, model: Serializable):
         self.__respuesta = { "status": "ok", "item": model.serialize() }
+        
+    def _responder_bien_con_numero(self, key: str, valor: int):
+        self.__respuesta = { "status": "ok", key: valor }
 
     def _responder_mal_con(self, mensaje: str) -> None:
         self.__respuesta = { "status": "error", "mensaje": mensaje }

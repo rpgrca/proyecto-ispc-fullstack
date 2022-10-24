@@ -59,12 +59,18 @@ class SubastasFake(Subastas):
 
     def buscar_por_uid(self, uid: uuid.UUID) -> Subasta:
         return next(filter(lambda s: s.obtener_uid() == uid, self.__subastas), None)
+    
+    def contar_lotes(self) -> int:
+        return len(self.__subastas)
 
 
 class ArticulosFake(Articulos):
     def __init__(self, articulos: list):
         self.__articulos = articulos
         
+    def agregar(self, uid: uuid.UUID) -> None:
+        self.__articulos.append(Articulo(uid))
+
     def buscar_por_uid(self, uid: uuid.UUID) -> Articulo:
         return next(filter(lambda s: s.obtener_uid() == uid, self.__articulos), None)
 

@@ -19,5 +19,8 @@ class Articulo(Serializable):
     
     
 class Articulos:
+    def agregar(self, articulo_uid: uuid.UUID):
+        pass
+
     def buscar_por_uid(self, articulo_uid: uuid.UUID) -> Articulo:
         pass

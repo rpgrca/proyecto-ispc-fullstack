@@ -23,6 +23,9 @@ class Subasta:
 
     def obtener_lote(self, orden: int):
         return self.__lotes[orden]
+    
+    def contar_lotes(self) -> int:
+        return len(self.__lotes)
 
 
 class Subastas:
@@ -30,4 +33,7 @@ class Subastas:
         pass
     
     def buscar_por_uid(self, uid: uuid.UUID) -> Subasta:
+        pass
+    
+    def contar_lotes(self) -> int:
         pass
