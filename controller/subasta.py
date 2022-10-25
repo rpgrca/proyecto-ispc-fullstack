@@ -54,7 +54,7 @@ class SubastaController(Controller):
         if not self._verificar(articulo, self.ARTICULO_INEXISTENTE):
             return
 
-        subasta.agregar(articulo, base)
+        subasta.agregar_lote(articulo, base)
         self._responder_bien_con(self.LOTE_AGREGADO)
 
     def obtener_lote(self, subasta_uid: str, orden: int) -> None:
