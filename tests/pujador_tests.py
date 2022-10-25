@@ -10,7 +10,7 @@ class PujadorControllerTests(unittest.TestCase):
             .con_usuarios(UsuariosFake(diccionario)) \
             .construir()
 
-        PujadorController(db, "Roberto", "Perez", "rperez@gmail.com", "Roberto", "123456", "1/1/2000")
+        PujadorController(db, "Roberto", "Perez", "rperez@gmail.com", "Roberto", "123456", 1/1/2000)
         self.assertEqual(TipoDeUsuario.Pujador.value, diccionario["Roberto"]["tipo"])
 
 

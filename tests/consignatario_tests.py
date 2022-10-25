@@ -10,7 +10,7 @@ class ConsignatarioControllerTests(unittest.TestCase):
             .con_usuarios(UsuariosFake(diccionario)) \
             .construir()
 
-        ConsignatarioController(db, "Roberto", "Perez", "rperez@gmail.com", "Roberto", "123456", "1/1/2000")
+        ConsignatarioController(db, "Roberto", "Perez", "rperez@gmail.com", "Roberto", "123456", 1/1/2000)
         self.assertEqual(TipoDeUsuario.Consignatario.value, diccionario["Roberto"]["tipo"])
 
 
