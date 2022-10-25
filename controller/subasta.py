@@ -4,7 +4,6 @@
 # pujar(pujador, monto)
 # listar_pujas()
 
-import uuid
 from datetime import date
 from controller.controller import Controller
 from model.database import BaseDeDatos
@@ -38,33 +37,27 @@ class SubastaController(Controller):
         subasta = self.__db.Subastas.crear(titulo, descripcion, imagen, fecha)
         self._responder_bien_incluyendo_id(f"La subasta ha sido agendada para {str(fecha)}", subasta.obtener_uid())
 
-    def agregar_lote(self, subasta_uid: str, articulo_uid: str, base: float) -> None:
+    def agregar_lote(self, subasta_uid: int, articulo_uid: str, base: float) -> None:
         if not self._verificar(subasta_uid, self.LOTE_SIN_SUBASTA) or \
            not self._verificar(articulo_uid, self.ARTICULO_NULO_EN_SUBASTA):
             return
 
-        if not self._verificar_uuid(subasta_uid) or not self._verificar_uuid(articulo_uid):
-            return
-
-        subasta = self.__db.Subastas.buscar_por_uid(uuid.UUID(subasta_uid))
+        subasta = self.__db.Subastas.buscar_por_uid(subasta_uid)
         if not self._verificar(subasta, self.LOTE_SUBASTA_INEXISTENTE):
             return
 
-        articulo = self.__db.Articulos.buscar_por_uid(uuid.UUID(articulo_uid))
+        articulo = self.__db.Articulos.buscar_por_uid(articulo_uid)
         if not self._verificar(articulo, self.ARTICULO_INEXISTENTE):
             return
 
         subasta.agregar_lote(articulo, base)
         self._responder_bien_con(self.LOTE_AGREGADO)
 
-    def obtener_lote(self, subasta_uid: str, orden: int) -> None:
+    def obtener_lote(self, subasta_uid: int, orden: int) -> None:
         if not self._verificar(subasta_uid, self.BUSCAR_SIN_SUBASTA):
             return
         
-        if not self._verificar_uuid(subasta_uid):
-            return
-        
-        subasta = self.__db.Subastas.buscar_por_uid(uuid.UUID(subasta_uid))
+        subasta = self.__db.Subastas.buscar_por_uid(subasta_uid)
         if not self._verificar(subasta, self.SUBASTA_INEXISTENTE):
             return
 
@@ -75,14 +68,11 @@ class SubastaController(Controller):
         lote = subasta.obtener_lote(orden - 1)
         self._responder_bien_serializando(lote)
 
-    def contar_lotes(self, subasta_uid: str) -> None:
+    def contar_lotes(self, subasta_uid: int) -> None:
         if not self._verificar(subasta_uid, self.CONTAR_SIN_SUBASTA):
             return
         
-        if not self._verificar_uuid(subasta_uid):
-            return
-
-        subasta = self.__db.Subastas.buscar_por_uid(uuid.UUID(subasta_uid))
+        subasta = self.__db.Subastas.buscar_por_uid(subasta_uid)
         if not self._verificar(subasta, self.CONTAR_SUBASTA_INEXISTENTE):
             return
 

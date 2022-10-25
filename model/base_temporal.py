@@ -1,8 +1,6 @@
 from datetime import date
-import uuid
 from model.articulos import Articulo
 from model.database import BaseDeDatos
-from model.generador_uid import GeneradorUid
 from model.usuarios import Usuarios, Usuario, UsuariosFactory
 from model.subastas import Subastas, Subasta
 from model.articulos import Articulos
@@ -44,19 +42,18 @@ class UsuariosFake(Usuarios):
 
 
 class SubastasFake(Subastas):
-    def __init__(self, subastas: list, generador_uid: GeneradorUid = GeneradorUid()):
+    def __init__(self, subastas: list):
         self.__subastas = subastas
-        self.__generador_uid = generador_uid
 
     def crear(self, titulo: str, descripcion: str, imagen: str, fecha: date) -> Subasta:
-        subasta = Subasta(self.__generador_uid.generar(), titulo, descripcion, imagen, fecha)
+        subasta = Subasta(len(self.__subastas) + 1, titulo, descripcion, imagen, fecha)
         self.__subastas.append(subasta)
         return subasta
 
     def agregar_lote(self, subasta: Subasta, articulo: Articulo, base: float) -> None:
         subasta.agregar(articulo, base)
 
-    def buscar_por_uid(self, uid: uuid.UUID) -> Subasta:
+    def buscar_por_uid(self, uid: int) -> Subasta:
         return next(filter(lambda s: s.obtener_uid() == uid, self.__subastas), None)
     
     def contar_lotes(self) -> int:
@@ -67,10 +64,10 @@ class ArticulosFake(Articulos):
     def __init__(self, articulos: list):
         self.__articulos = articulos
         
-    def agregar(self, uid: uuid.UUID) -> None:
+    def agregar(self, uid: int) -> None:
         self.__articulos.append(Articulo(uid))
 
-    def buscar_por_uid(self, uid: uuid.UUID) -> Articulo:
+    def buscar_por_uid(self, uid: int) -> Articulo:
         return next(filter(lambda s: s.obtener_uid() == uid, self.__articulos), None)
 
 
@@ -83,8 +80,8 @@ class CreadorDeBasesDeDatosTemporales:
             "Estela": { "nombre": "Estela", "apellido": "Flores", "usuario": "Estela", "clave": "777777", "email": "estela@gmail.com", "nacimiento": 6/6/2000, "tipo": 2 },
             "Adrian": { "nombre": "Adrian", "apellido": "Acosta", "usuario": "Adrian", "clave": "martillero", "email": "martillero@gmail.com", "nacimiento": 4/20/2000, "tipo": 1 }
         })
-        self.__subastas = SubastasFake([ Subasta(uuid.UUID("b8758e7c-008a-475b-93f4-7ad01064307a"), "Gran subasta!", "Nos vemos pronto!", "sofa.jpg", 17/10/2022) ])
-        self.__articulos = ArticulosFake([ Articulo(uuid.UUID("d3e6d89f-617b-4063-8561-20405ae1c759")) ])
+        self.__subastas = SubastasFake([ Subasta(1, "Gran subasta!", "Nos vemos pronto!", "sofa.jpg", 17/10/2022) ])
+        self.__articulos = ArticulosFake([ Articulo(1) ])
             
     def con_usuarios(self, usuarios: Usuarios):
         self.__usuarios = usuarios
