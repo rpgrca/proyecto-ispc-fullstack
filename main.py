@@ -1,6 +1,5 @@
 import uvicorn
 from fastapi import FastAPI, Form, Response
-from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 from starlette import status
 from controller.subasta import SubastaController

@@ -1,3 +1,4 @@
+from datetime import date
 from model.tipo_usuario import TipoDeUsuario
 
 
@@ -16,6 +17,21 @@ class Usuario:
     
     def obtener_clave(self) -> str:
         return self.__clave
+    
+    def obtener_nombre(self) -> str:
+        return self.__nombre
+    
+    def obtener_apellido(self) -> str:
+        return self.__apellido
+    
+    def obtener_email(self) -> str:
+        return self.__email
+    
+    def obtener_usuario(self) -> str:
+        return self.__usuario
+    
+    def obtener_nacimiento(self) -> date:
+        return self.__nacimiento
 
 
 class Pujador(Usuario):
