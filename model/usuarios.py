@@ -48,9 +48,6 @@ class Usuarios:
     
     def existe_con_mail(self, email: str) -> bool:
         pass
-    
-    def encriptar(self, clave: str) -> str:
-        pass
 
 
 class UsuariosFactory:
