@@ -3,7 +3,7 @@ from model.tipo_usuario import TipoDeUsuario
 
 
 class Usuario:
-    def __init__(self, nombre: str, apellido: str, email: str, usuario: str, clave: str, nacimiento: str, tipo: TipoDeUsuario):
+    def __init__(self, nombre: str, apellido: str, email: str, usuario: str, clave: str, nacimiento: date, tipo: TipoDeUsuario):
         self.__nombre = nombre
         self.__apellido = apellido
         self.__email = email
@@ -35,22 +35,22 @@ class Usuario:
 
 
 class Pujador(Usuario):
-    def __init__(self, nombre: str, apellido: str, email: str, usuario: str, clave: str, nacimiento: str):
+    def __init__(self, nombre: str, apellido: str, email: str, usuario: str, clave: str, nacimiento: date):
         super().__init__(nombre, apellido, email, usuario, clave, nacimiento, TipoDeUsuario.Pujador)
 
 
 class Consignatario(Usuario):
-    def __init__(self, nombre: str, apellido: str, email: str, usuario: str, clave: str, nacimiento: str):
+    def __init__(self, nombre: str, apellido: str, email: str, usuario: str, clave: str, nacimiento: date):
         super().__init__(nombre, apellido, email, usuario, clave, nacimiento, TipoDeUsuario.Consignatario)
 
 
 class Martillero(Usuario):
-    def __init__(self, nombre: str, apellido: str, email: str, usuario: str, clave: str, nacimiento: str):
+    def __init__(self, nombre: str, apellido: str, email: str, usuario: str, clave: str, nacimiento: date):
         super().__init__(nombre, apellido, email, usuario, clave, nacimiento, TipoDeUsuario.Martillero)
 
 
 class Usuarios:
-    def agregar(self, nombre: str, apellido: str, email: str, usuario: str, clave: str, nacimiento: str, tipo: TipoDeUsuario) -> None:
+    def agregar(self, nombre: str, apellido: str, email: str, usuario: str, clave: str, nacimiento: date, tipo: TipoDeUsuario) -> None:
         pass
     
     def existe(self, usuario: str) -> bool:
@@ -68,7 +68,7 @@ class Usuarios:
 
 class UsuariosFactory:
     @staticmethod
-    def crear(nombre: str, apellido: str, email: str, usuario: str, clave: str, nacimiento: str, tipo: TipoDeUsuario):
+    def crear(nombre: str, apellido: str, email: str, usuario: str, clave: str, nacimiento: date, tipo: TipoDeUsuario):
         if tipo == TipoDeUsuario.Consignatario:
             return Consignatario(nombre, apellido, email, usuario, clave, nacimiento)
         elif tipo == TipoDeUsuario.Pujador:

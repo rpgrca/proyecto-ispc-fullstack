@@ -1,3 +1,4 @@
+from datetime import date
 from controller.controller import Controller
 from model.tipo_usuario import TipoDeUsuario
 from model.database import BaseDeDatos
@@ -12,7 +13,7 @@ class UsuarioController(Controller):
     CUENTA_YA_EXISTE = "La cuenta ya existe"
     CUENTA_CREADA = "La cuenta ha sido creada correctamente"
 
-    def __init__(self, db: BaseDeDatos, nombre: str, apellido: str, email: str, usuario: str, clave: str, nacimiento: str, tipo: TipoDeUsuario):
+    def __init__(self, db: BaseDeDatos, nombre: str, apellido: str, email: str, usuario: str, clave: str, nacimiento: date, tipo: TipoDeUsuario):
         if not self._verificar(nombre, self.SIN_NOMBRE) or \
            not self._verificar(apellido, self.SIN_APELLIDO) or \
            not self._verificar(email, self.SIN_EMAIL) or \
@@ -29,10 +30,10 @@ class UsuarioController(Controller):
 
 
 class ConsignatarioController(UsuarioController):
-    def __init__(self, db: BaseDeDatos, nombre: str, apellido: str, email: str, usuario: str, clave: str, nacimiento: str):
+    def __init__(self, db: BaseDeDatos, nombre: str, apellido: str, email: str, usuario: str, clave: str, nacimiento: date):
         super().__init__(db, nombre, apellido, email, usuario, clave, nacimiento, TipoDeUsuario.Consignatario)
 
 
 class PujadorController(UsuarioController):
-    def __init__(self, db: BaseDeDatos, nombre: str, apellido: str, email: str, usuario: str, clave: str, nacimiento: str):
+    def __init__(self, db: BaseDeDatos, nombre: str, apellido: str, email: str, usuario: str, clave: str, nacimiento: date):
         super().__init__(db, nombre, apellido, email, usuario, clave, nacimiento, TipoDeUsuario.Pujador)

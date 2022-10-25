@@ -1,3 +1,4 @@
+from datetime import date
 import uvicorn
 from fastapi import FastAPI, Form, Response
 from fastapi.middleware.cors import CORSMiddleware
@@ -32,7 +33,7 @@ def ingresar(usuario: str = Form(), clave: str = Form(), response: Response = Re
     return __cambiar_status_code(controlador.obtener_respuesta(), response)
 
 @app.post("/registrar/", status_code=200)
-def registrar(nombre: str = Form(), apellido: str = Form(), email: str = Form(), usuario: str = Form(), clave: str = Form(), nacimiento: str = Form(), response: Response = Response()):
+def registrar(nombre: str = Form(), apellido: str = Form(), email: str = Form(), usuario: str = Form(), clave: str = Form(), nacimiento: date = Form(), response: Response = Response()):
     controlador = RegistroController(db, nombre, apellido, email, usuario, clave, nacimiento)
     return __cambiar_status_code(controlador.obtener_respuesta(), response)
 
