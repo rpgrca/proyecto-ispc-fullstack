@@ -36,8 +36,8 @@ def ingresar(usuario: str = Form(), clave: str = Form(), response: Response = Re
 
 
 @app.post("/registrar/", status_code=status.HTTP_200_OK)
-def registrar(nombre: str = Form(), apellido: str = Form(), email: str = Form(), usuario: str = Form(), clave: str = Form(), \
-    nacimiento: date = Form(), response: Response = Response()):
+def registrar(nombre: str = Form(), apellido: str = Form(), email: str = Form(), usuario: str = Form(), clave: str = Form(),
+              nacimiento: date = Form(), response: Response = Response()):
     controlador = RegistroController(db, nombre, apellido, email, usuario, clave, nacimiento)
     return __cambiar_status_code(controlador.obtener_respuesta(), response)
 
@@ -49,8 +49,8 @@ def reestablecer(email: str = Form(), response: Response = Response()):
 
 
 @app.post("/crear_subasta/", status_code=status.HTTP_200_OK)
-def crear_subasta(titulo: str = Form(), descripcion: str = Form(), imagen: str = Form(), fecha: date = Form(), \
-    response: Response = Response()):
+def crear_subasta(titulo: str = Form(), descripcion: str = Form(), imagen: str = Form(), fecha: date = Form(),
+                  response: Response = Response()):
     controlador = SubastaController(db)
     controlador.crear(titulo, descripcion, imagen, fecha)
     return __cambiar_status_code(controlador.obtener_respuesta(), response)

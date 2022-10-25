@@ -3,8 +3,8 @@ from model.tipo_usuario import TipoDeUsuario
 
 
 class Usuario:
-    def __init__(self, nombre: str, apellido: str, email: str, usuario: str, clave: str, nacimiento: date, \
-        tipo: TipoDeUsuario):
+    def __init__(self, nombre: str, apellido: str, email: str, usuario: str, clave: str, nacimiento: date,
+                 tipo: TipoDeUsuario):
         self.__nombre = nombre
         self.__apellido = apellido
         self.__email = email
@@ -51,8 +51,8 @@ class Martillero(Usuario):
 
 
 class Usuarios:
-    def agregar(self, nombre: str, apellido: str, email: str, usuario: str, clave: str, nacimiento: date, \
-        tipo: TipoDeUsuario) -> None:
+    def agregar(self, nombre: str, apellido: str, email: str, usuario: str, clave: str, nacimiento: date,
+                tipo: TipoDeUsuario) -> None:
         pass
 
     def existe(self, usuario: str) -> bool:

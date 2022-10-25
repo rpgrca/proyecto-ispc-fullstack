@@ -11,8 +11,8 @@ class UsuariosFake(Usuarios):
     def __init__(self, usuarios):
         self.__usuarios = usuarios
 
-    def agregar(self, nombre: str, apellido: str, email: str, usuario: str, clave: str, nacimiento: str, \
-        tipo: TipoDeUsuario) -> None:
+    def agregar(self, nombre: str, apellido: str, email: str, usuario: str, clave: str, nacimiento: str,
+                tipo: TipoDeUsuario) -> None:
         self.__usuarios[usuario] = {
             "nombre": nombre,
             "apellido": apellido,
@@ -30,16 +30,16 @@ class UsuariosFake(Usuarios):
         if usuario in self.__usuarios:
             registro = self.__usuarios[usuario]
             if registro["clave"] == clave:
-                return UsuariosFactory.crear(registro["nombre"], registro["apellido"], registro["email"], \
-                    registro["usuario"], registro["clave"], registro["nacimiento"], registro["tipo"])
+                return UsuariosFactory.crear(registro["nombre"], registro["apellido"], registro["email"],
+                                             registro["usuario"], registro["clave"], registro["nacimiento"], registro["tipo"])
 
         return None
 
     def buscar_por_email(self, email: str) -> Usuario:
         registro = next(filter(lambda u: u["email"] == email, self.__usuarios.values()), None)
         if registro:
-            return UsuariosFactory.crear(registro["nombre"], registro["apellido"], registro["email"], \
-                registro["usuario"], registro["clave"], registro["nacimiento"], registro["tipo"])
+            return UsuariosFactory.crear(registro["nombre"], registro["apellido"], registro["email"],
+                                         registro["usuario"], registro["clave"], registro["nacimiento"], registro["tipo"])
 
         return None
 

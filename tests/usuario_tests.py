@@ -30,16 +30,16 @@ class UsuarioControllerTests(unittest.TestCase):
 
     @data(TipoDeUsuario.Martillero, TipoDeUsuario.Consignatario, TipoDeUsuario.Pujador)
     def test_retornar_error_cuando_quiere_crear_usuario_ya_existente(self, tipo):
-        sut = UsuarioController(self.__db_con_usuario, self.NOMBRE_USUARIO, self.APELLIDO_USUARIO, self.OTRO_EMAIL_USUARIO, \
-            self.NOMBRE_USUARIO, self.CLAVE_USUARIO, self.FECHA_NACIMIENTO_USUARIO, tipo)
+        sut = UsuarioController(self.__db_con_usuario, self.NOMBRE_USUARIO, self.APELLIDO_USUARIO, self.OTRO_EMAIL_USUARIO,
+                                self.NOMBRE_USUARIO, self.CLAVE_USUARIO, self.FECHA_NACIMIENTO_USUARIO, tipo)
         respuesta = sut.obtener_respuesta()
         self.assertEqual("error", respuesta["status"])
         self.assertEqual(UsuarioController.CUENTA_YA_EXISTE, respuesta["mensaje"])
 
     @data(TipoDeUsuario.Martillero, TipoDeUsuario.Consignatario, TipoDeUsuario.Pujador)
     def test_retornar_error_cuando_quiere_crear_con_email_ya_existente(self, tipo):
-        sut = UsuarioController(self.__db_con_usuario, self.NOMBRE_USUARIO, self.APELLIDO_USUARIO, self.EMAIL_USUARIO, \
-            "Roberto1", self.CLAVE_USUARIO, self.FECHA_NACIMIENTO_USUARIO, tipo)
+        sut = UsuarioController(self.__db_con_usuario, self.NOMBRE_USUARIO, self.APELLIDO_USUARIO, self.EMAIL_USUARIO,
+                                "Roberto1", self.CLAVE_USUARIO, self.FECHA_NACIMIENTO_USUARIO, tipo)
         respuesta = sut.obtener_respuesta()
         self.assertEqual("error", respuesta["status"])
         self.assertEqual(UsuarioController.CUENTA_YA_EXISTE, respuesta["mensaje"])
@@ -71,8 +71,8 @@ class UsuarioControllerTests(unittest.TestCase):
          TipoDeUsuario.Pujador, UsuarioController.SIN_NACIMIENTO),
     )
     @unpack
-    def test_retornar_error_cuando_falta_algun_dato(self, nombre, apellido, email, usuario, clave, nacimiento, tipo, \
-        mensaje_error):
+    def test_retornar_error_cuando_falta_algun_dato(self, nombre, apellido, email, usuario, clave, nacimiento, tipo,
+                                                    mensaje_error):
         sut = UsuarioController(self.__db_con_usuario, nombre, apellido, email, usuario, clave, nacimiento, tipo)
         respuesta = sut.obtener_respuesta()
         self.assertEqual("error", respuesta["status"])
@@ -80,8 +80,8 @@ class UsuarioControllerTests(unittest.TestCase):
 
     @data(TipoDeUsuario.Martillero, TipoDeUsuario.Consignatario, TipoDeUsuario.Pujador)
     def test_retornar_ok_cuando_ese_usuario_no_existe(self, tipo):
-        sut = UsuarioController(self.__db_con_usuario, self.NOMBRE_USUARIO, self.APELLIDO_USUARIO, "rperez1@gmail.com", \
-            "Roberto1", self.CLAVE_USUARIO, self.FECHA_NACIMIENTO_USUARIO, tipo)
+        sut = UsuarioController(self.__db_con_usuario, self.NOMBRE_USUARIO, self.APELLIDO_USUARIO, "rperez1@gmail.com",
+                                "Roberto1", self.CLAVE_USUARIO, self.FECHA_NACIMIENTO_USUARIO, tipo)
         respuesta = sut.obtener_respuesta()
         self.assertEqual("ok", respuesta["status"])
         self.assertIn(UsuarioController.CUENTA_CREADA, respuesta["mensaje"])
@@ -92,8 +92,8 @@ class UsuarioControllerTests(unittest.TestCase):
             .con_usuarios(UsuariosFake({})) \
             .construir()
 
-        sut = UsuarioController(db, self.NOMBRE_USUARIO, self.APELLIDO_USUARIO, self.OTRO_EMAIL_USUARIO, \
-            self.NOMBRE_USUARIO, self.CLAVE_USUARIO, self.FECHA_NACIMIENTO_USUARIO, tipo)
+        sut = UsuarioController(db, self.NOMBRE_USUARIO, self.APELLIDO_USUARIO, self.OTRO_EMAIL_USUARIO,
+                                self.NOMBRE_USUARIO, self.CLAVE_USUARIO, self.FECHA_NACIMIENTO_USUARIO, tipo)
         respuesta = sut.obtener_respuesta()
         self.assertEqual("ok", respuesta["status"])
         self.assertIn(UsuarioController.CUENTA_CREADA, respuesta["mensaje"])
@@ -103,8 +103,8 @@ class UsuarioControllerTests(unittest.TestCase):
             .con_usuarios(UsuariosFake({})) \
             .construir()
 
-        UsuarioController(db, self.NOMBRE_USUARIO, self.APELLIDO_USUARIO, self.OTRO_EMAIL_USUARIO, self.NOMBRE_USUARIO, \
-            self.CLAVE_USUARIO, self.FECHA_NACIMIENTO_USUARIO, TipoDeUsuario.Pujador)
+        UsuarioController(db, self.NOMBRE_USUARIO, self.APELLIDO_USUARIO, self.OTRO_EMAIL_USUARIO, self.NOMBRE_USUARIO,
+                          self.CLAVE_USUARIO, self.FECHA_NACIMIENTO_USUARIO, TipoDeUsuario.Pujador)
         usuario = db.Usuarios.buscar(self.NOMBRE_USUARIO, self.CLAVE_USUARIO)
 
         self.assertEqual(self.NOMBRE_USUARIO, usuario.obtener_nombre())
