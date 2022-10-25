@@ -26,3 +26,13 @@ class UsuarioController(Controller):
             if not db.Usuarios.buscar_por_email(email):
                 db.Usuarios.agregar(nombre, apellido, email, usuario, clave, nacimiento, tipo)
                 self._responder_bien_con(self.CUENTA_CREADA)
+
+
+class ConsignatarioController(UsuarioController):
+    def __init__(self, db: BaseDeDatos, nombre: str, apellido: str, email: str, usuario: str, clave: str, nacimiento: str):
+        super().__init__(db, nombre, apellido, email, usuario, clave, nacimiento, TipoDeUsuario.Consignatario)
+
+
+class PujadorController(UsuarioController):
+    def __init__(self, db: BaseDeDatos, nombre: str, apellido: str, email: str, usuario: str, clave: str, nacimiento: str):
+        super().__init__(db, nombre, apellido, email, usuario, clave, nacimiento, TipoDeUsuario.Pujador)

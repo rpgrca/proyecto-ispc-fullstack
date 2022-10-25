@@ -4,7 +4,7 @@ from model.tipo_usuario import TipoDeUsuario
 from model.base_temporal import UsuariosFake, CreadorDeBasesDeDatosTemporales
 
 class ConsignatarioControllerTests(unittest.TestCase):
-    def test_graba_usuario_de_tipo_pujador(self):
+    def test_graba_usuario_de_tipo_consignatario(self):
         diccionario = {}
         db = CreadorDeBasesDeDatosTemporales() \
             .con_usuarios(UsuariosFake(diccionario)) \
