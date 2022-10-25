@@ -49,7 +49,7 @@ def crear_subasta(titulo: str = Form(), descripcion: str = Form(), imagen: str =
     return __cambiar_status_code(controlador.obtener_respuesta(), response)
 
 @app.post("/agregar_lote", status_code=200)
-def agregar_lote(subasta_uid: str = Form(), articulo_uid: str = Form(), base: float = Form(), response: Response = Response()):
+def agregar_lote(subasta_uid: str = Form(), articulo_uid: str = Form(), base: int = Form(), response: Response = Response()):
     controlador = SubastaController(db)
     controlador.agregar_lote(subasta_uid, articulo_uid, base)
     return __cambiar_status_code(controlador.obtener_respuesta(), response)

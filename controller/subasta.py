@@ -37,7 +37,7 @@ class SubastaController(Controller):
         subasta = self.__db.Subastas.crear(titulo, descripcion, imagen, fecha)
         self._responder_bien_incluyendo_id(f"La subasta ha sido agendada para {str(fecha)}", subasta.obtener_uid())
 
-    def agregar_lote(self, subasta_uid: int, articulo_uid: str, base: float) -> None:
+    def agregar_lote(self, subasta_uid: int, articulo_uid: str, base: int) -> None:
         if not self._verificar(subasta_uid, self.LOTE_SIN_SUBASTA) or \
            not self._verificar(articulo_uid, self.ARTICULO_NULO_EN_SUBASTA):
             return

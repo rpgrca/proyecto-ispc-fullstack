@@ -14,7 +14,7 @@ class Subasta:
     def obtener_uid(self) -> int:
         return self.__uid
 
-    def agregar_lote(self, articulo: Articulo, base: float) -> None:
+    def agregar_lote(self, articulo: Articulo, base: int) -> None:
         lote = Lote(articulo, base, len(self.__lotes) + 1)
         self.__lotes.append(lote)
 

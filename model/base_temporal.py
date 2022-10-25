@@ -50,7 +50,7 @@ class SubastasFake(Subastas):
         self.__subastas.append(subasta)
         return subasta
 
-    def agregar_lote(self, subasta: Subasta, articulo: Articulo, base: float) -> None:
+    def agregar_lote(self, subasta: Subasta, articulo: Articulo, base: int) -> None:
         subasta.agregar(articulo, base)
 
     def buscar_por_uid(self, uid: int) -> Subasta:

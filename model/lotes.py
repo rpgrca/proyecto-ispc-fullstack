@@ -3,12 +3,12 @@ from model.serialization import Serializable
 
 
 class Lote(Serializable):
-    def __init__(self, articulo: Articulo, base: float, orden: int):
+    def __init__(self, articulo: Articulo, base: int, orden: int):
         self.__articulo = articulo
         self.__base = base
         self.__orden = orden
 
-    def obtener_precio_base(self) -> float:
+    def obtener_precio_base(self) -> int:
         return self.__base
     
     def obtener_orden(self) -> int:
