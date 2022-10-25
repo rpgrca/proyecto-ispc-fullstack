@@ -5,6 +5,7 @@
 # - listar_para(consignatario)
 from model.serialization import Serializable
 
+
 class Articulo(Serializable):
     def __init__(self, uid: int):
         self.__uid = uid
@@ -13,9 +14,9 @@ class Articulo(Serializable):
         return self.__uid
 
     def serialize(self):
-        return { }
-    
-    
+        return {}
+
+
 class Articulos:
     def agregar(self, articulo_uid: int):
         pass

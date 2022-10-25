@@ -8,6 +8,7 @@ from datetime import date
 from controller.controller import Controller
 from model.database import BaseDeDatos
 
+
 class SubastaController(Controller):
     SIN_TITULO = "No se puede crear una subasta sin titulo"
     SIN_DESCRIPCION = "No se puede crear una subasta sin descripcion"
@@ -56,7 +57,7 @@ class SubastaController(Controller):
     def obtener_lote(self, subasta_uid: int, orden: int) -> None:
         if not self._verificar(subasta_uid, self.BUSCAR_SIN_SUBASTA):
             return
-        
+
         subasta = self.__db.Subastas.buscar_por_uid(subasta_uid)
         if not self._verificar(subasta, self.SUBASTA_INEXISTENTE):
             return
@@ -71,7 +72,7 @@ class SubastaController(Controller):
     def contar_lotes(self, subasta_uid: int) -> None:
         if not self._verificar(subasta_uid, self.CONTAR_SIN_SUBASTA):
             return
-        
+
         subasta = self.__db.Subastas.buscar_por_uid(subasta_uid)
         if not self._verificar(subasta, self.CONTAR_SUBASTA_INEXISTENTE):
             return

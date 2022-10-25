@@ -1,6 +1,7 @@
 from controller.controller import Controller
 from model.database import BaseDeDatos
 
+
 class LoginController(Controller):
     SIN_USUARIO = "No se puede ingresar sin usuario"
     SIN_CLAVE = "No se puede ingresar sin clave"

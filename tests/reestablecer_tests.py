@@ -10,7 +10,7 @@ from model.base_temporal import UsuariosFake, CreadorDeBasesDeDatosTemporales
 class EmailSenderSpy(EmailSender):
     def __init__(self):
         self.__enviado = False
-    
+
     def enviar_mail_a(self, usuario: Usuario, mensaje: str) -> None:
         self.__enviado = True
 

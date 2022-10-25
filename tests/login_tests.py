@@ -4,6 +4,7 @@ from controller.login import LoginController
 from model.tipo_usuario import TipoDeUsuario
 from model.base_temporal import UsuariosFake, CreadorDeBasesDeDatosTemporales
 
+
 @ddt
 class LoginControllerTests(unittest.TestCase):
     def setUp(self):

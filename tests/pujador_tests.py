@@ -3,6 +3,7 @@ from controller.usuario import PujadorController
 from model.tipo_usuario import TipoDeUsuario
 from model.base_temporal import UsuariosFake, CreadorDeBasesDeDatosTemporales
 
+
 class PujadorControllerTests(unittest.TestCase):
     def test_graba_usuario_de_tipo_pujador(self):
         diccionario = {}

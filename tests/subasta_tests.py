@@ -1,9 +1,9 @@
 import unittest
 from ddt import ddt, data, unpack
-from controller.controller import Controller
 from controller.subasta import SubastaController
 from model.articulos import Articulo
 from model.base_temporal import ArticulosFake, CreadorDeBasesDeDatosTemporales, SubastasFake
+
 
 @ddt
 class SubastaControllerTests(unittest.TestCase):
@@ -19,7 +19,7 @@ class SubastaControllerTests(unittest.TestCase):
     def setUp(self):
         self.__db = CreadorDeBasesDeDatosTemporales() \
             .con_subastas(SubastasFake([])) \
-            .con_articulos(ArticulosFake([ Articulo(SubastaControllerTests.ARTICULO_UID) ])) \
+            .con_articulos(ArticulosFake([Articulo(SubastaControllerTests.ARTICULO_UID)])) \
             .construir()
 
     @data(
@@ -124,7 +124,7 @@ class SubastaControllerTests(unittest.TestCase):
         respuesta = sut.obtener_respuesta()
         self.assertEqual("ok", respuesta["status"])
         self.assertEqual(2, respuesta["item"]["orden"])
- 
+
     def test_retorna_la_cantidad_de_lotes_correctamente(self):
         sut = SubastaController(self.__db)
         self.__db.Articulos.agregar(SubastaControllerTests.OTRO_ARTICULO_UID)

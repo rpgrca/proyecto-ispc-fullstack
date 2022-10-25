@@ -3,7 +3,8 @@ from model.tipo_usuario import TipoDeUsuario
 
 
 class Usuario:
-    def __init__(self, nombre: str, apellido: str, email: str, usuario: str, clave: str, nacimiento: date, tipo: TipoDeUsuario):
+    def __init__(self, nombre: str, apellido: str, email: str, usuario: str, clave: str, nacimiento: date, \
+        tipo: TipoDeUsuario):
         self.__nombre = nombre
         self.__apellido = apellido
         self.__email = email
@@ -14,22 +15,22 @@ class Usuario:
 
     def __str__(self):
         return self.__usuario
-    
+
     def obtener_clave(self) -> str:
         return self.__clave
-    
+
     def obtener_nombre(self) -> str:
         return self.__nombre
-    
+
     def obtener_apellido(self) -> str:
         return self.__apellido
-    
+
     def obtener_email(self) -> str:
         return self.__email
-    
+
     def obtener_usuario(self) -> str:
         return self.__usuario
-    
+
     def obtener_nacimiento(self) -> date:
         return self.__nacimiento
 
@@ -50,18 +51,19 @@ class Martillero(Usuario):
 
 
 class Usuarios:
-    def agregar(self, nombre: str, apellido: str, email: str, usuario: str, clave: str, nacimiento: date, tipo: TipoDeUsuario) -> None:
+    def agregar(self, nombre: str, apellido: str, email: str, usuario: str, clave: str, nacimiento: date, \
+        tipo: TipoDeUsuario) -> None:
         pass
-    
+
     def existe(self, usuario: str) -> bool:
         pass
-    
+
     def buscar(self, usuario: str, clave: str) -> Usuario:
         pass
-    
+
     def buscar_por_email(self, email: str, clave: str) -> Usuario:
         pass
-    
+
     def existe_con_mail(self, email: str) -> bool:
         pass
 

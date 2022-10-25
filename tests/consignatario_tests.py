@@ -3,6 +3,7 @@ from controller.consignatario import ConsignatarioController
 from model.tipo_usuario import TipoDeUsuario
 from model.base_temporal import UsuariosFake, CreadorDeBasesDeDatosTemporales
 
+
 class ConsignatarioControllerTests(unittest.TestCase):
     def test_graba_usuario_de_tipo_consignatario(self):
         diccionario = {}

@@ -3,6 +3,7 @@ from controller.controller import Controller
 from model.tipo_usuario import TipoDeUsuario
 from model.database import BaseDeDatos
 
+
 class UsuarioController(Controller):
     SIN_NOMBRE = "No se puede crear un usuario sin nombre"
     SIN_APELLIDO = "No se puede crear un usuario sin apellido"
@@ -13,14 +14,15 @@ class UsuarioController(Controller):
     CUENTA_YA_EXISTE = "La cuenta ya existe"
     CUENTA_CREADA = "La cuenta ha sido creada correctamente"
 
-    def __init__(self, db: BaseDeDatos, nombre: str, apellido: str, email: str, usuario: str, clave: str, nacimiento: date, tipo: TipoDeUsuario):
+    def __init__(self, db: BaseDeDatos, nombre: str, apellido: str, email: str, usuario: str, clave: str, nacimiento: date, \
+        tipo: TipoDeUsuario):
         if not self._verificar(nombre, self.SIN_NOMBRE) or \
            not self._verificar(apellido, self.SIN_APELLIDO) or \
            not self._verificar(email, self.SIN_EMAIL) or \
            not self._verificar(usuario, self.SIN_USUARIO) or \
            not self._verificar(clave, self.SIN_CLAVE) or \
            not self._verificar(nacimiento, self.SIN_NACIMIENTO):
-           return
+            return
 
         self._responder_mal_con(self.CUENTA_YA_EXISTE)
         if not db.Usuarios.existe(usuario):

@@ -10,9 +10,9 @@ class Lote(Serializable):
 
     def obtener_precio_base(self) -> int:
         return self.__base
-    
+
     def obtener_orden(self) -> int:
         return self.__orden
 
     def serialize(self):
-        return { "articulo": self.__articulo.serialize(), "base": self.__base, "orden": self.__orden }
+        return {"articulo": self.__articulo.serialize(), "base": self.__base, "orden": self.__orden}
