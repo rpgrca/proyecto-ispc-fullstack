@@ -12,4 +12,4 @@ values
 
 -- traer información de un usuario dado
 select * from Usuarios
-%s where id = %s;
+where id = %s;
