@@ -1,4 +1,4 @@
-from model.tipo_usuario import Pujador
+from model.usuarios import Pujador
 from model.lotes import Lote
 
 
