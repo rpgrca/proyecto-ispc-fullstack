@@ -1,8 +1,11 @@
 import mysql.connector
 from mysql.connector import Error, errorcode
 from datetime import date
+from model.database import BaseDeDatos
 from model.tipo_usuario import TipoDeUsuario
 from model.usuarios import Usuario, Usuarios
+from model.subastas import Subasta, Subastas
+from model.articulos import Articulo, Articulos
 
 class MysqlDatabase:
     def __init__(self, connection_string: list[str]):
@@ -85,9 +88,30 @@ class MysqlDatabase:
                 else:
                     raise ValueError(err)
 
+    def obtener_conexion(self):
+        return self.__connection
 
 
-class UsuariosDatabase(Usuarios):
+class TablaSubastas(Subastas):
+    def crear(self, titulo: str, descripcion: str, imagen: str, fecha: date) -> Subasta:
+        pass
+
+    def buscar_por_uid(self, uid: int) -> Subasta:
+        pass
+
+    def contar_lotes(self) -> int:
+        pass
+
+
+class TablaArticulos(Articulos):
+    def agregar(self, articulo_uid: int):
+        pass
+
+    def buscar_por_uid(self, articulo_uid: int) -> Articulo:
+        pass
+
+
+class TablaUsuarios(Usuarios):
     EXISTE_USUARIO_SQL = "SELECT COUNT(id) FROM Usuarios WHERE usuario LIKE %s"
     EXISTE_USUARIO_CON_MAIL_SQL = "SELECT COUNT(id) FROM Usuarios WHERE email LIKE %s"
 
@@ -119,3 +143,14 @@ class UsuariosDatabase(Usuarios):
         valor = cursor().fetchone()[0] > 0
         cursor.close()
         return valor
+
+
+class CreadorDeBasesDeDatosMySql:
+    def __init__(self):
+        self.__connection = MysqlDatabase()
+        self.__usuarios = TablaUsuarios(self.__connection.obtener_conexion())
+        self.__subastas = TablaSubastas(self.__connection.obtener_conexion())
+        self.__articulos = TablaArticulos(self.__connection.obtener_conexion())
+
+    def construir(self) -> BaseDeDatos:
+        return BaseDeDatos(self.__usuarios, self.__subastas, self.__articulos)
