@@ -4,7 +4,7 @@ from fastapi import FastAPI, Form, Response
 from fastapi.middleware.cors import CORSMiddleware
 from starlette import status
 from controller.subasta import SubastaController
-from model.base_temporal import CreadorDeBasesDeDatosTemporales
+from model.content_provider.memory import CreadorDeBasesDeDatosTemporales
 from controller.login import LoginController
 from controller.registro import RegistroController
 from controller.reestablecer import ReestablecerController

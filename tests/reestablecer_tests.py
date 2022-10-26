@@ -4,7 +4,7 @@ from controller.email_sender import EmailSender
 from controller.reestablecer import ReestablecerController
 from model.tipo_usuario import TipoDeUsuario
 from model.usuarios import Usuario
-from model.base_temporal import UsuariosFake, CreadorDeBasesDeDatosTemporales
+from model.content_provider.memory import UsuariosFake, CreadorDeBasesDeDatosTemporales
 
 
 class EmailSenderSpy(EmailSender):

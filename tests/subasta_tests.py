@@ -2,7 +2,7 @@ import unittest
 from ddt import ddt, data, unpack
 from controller.subasta import SubastaController
 from model.articulos import Articulo
-from model.base_temporal import ArticulosFake, CreadorDeBasesDeDatosTemporales, SubastasFake
+from model.content_provider.memory import ArticulosFake, CreadorDeBasesDeDatosTemporales, SubastasFake
 
 
 @ddt

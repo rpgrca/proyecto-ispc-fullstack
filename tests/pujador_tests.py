@@ -1,7 +1,7 @@
 import unittest
 from controller.usuario import PujadorController
 from model.tipo_usuario import TipoDeUsuario
-from model.base_temporal import UsuariosFake, CreadorDeBasesDeDatosTemporales
+from model.content_provider.memory import UsuariosFake, CreadorDeBasesDeDatosTemporales
 
 
 class PujadorControllerTests(unittest.TestCase):

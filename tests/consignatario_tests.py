@@ -1,7 +1,7 @@
 import unittest
 from controller.consignatario import ConsignatarioController
 from model.tipo_usuario import TipoDeUsuario
-from model.base_temporal import UsuariosFake, CreadorDeBasesDeDatosTemporales
+from model.content_provider.memory import UsuariosFake, CreadorDeBasesDeDatosTemporales
 
 
 class ConsignatarioControllerTests(unittest.TestCase):

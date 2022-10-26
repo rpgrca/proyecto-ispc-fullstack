@@ -2,7 +2,7 @@ import unittest
 from ddt import ddt, data, unpack
 from controller.usuario import UsuarioController
 from model.tipo_usuario import TipoDeUsuario
-from model.base_temporal import UsuariosFake, CreadorDeBasesDeDatosTemporales
+from model.content_provider.memory import UsuariosFake, CreadorDeBasesDeDatosTemporales
 
 
 @ddt
