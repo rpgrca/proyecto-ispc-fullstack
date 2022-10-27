@@ -9,12 +9,12 @@ from tests.subasta_tests import SubastaControllerTests
 
 suite = unittest.TestSuite()
 
-suite.addTest(unittest.makeSuite(LoginControllerTests))
-suite.addTest(unittest.makeSuite(UsuarioControllerTests))
-suite.addTest(unittest.makeSuite(RegistroControllerTests))
-suite.addTest(unittest.makeSuite(ReestablecerControllerTests))
-suite.addTest(unittest.makeSuite(PujadorControllerTests))
-suite.addTest(unittest.makeSuite(ConsignatarioControllerTests))
-suite.addTest(unittest.makeSuite(SubastaControllerTests))
+suite.addTest(unittest.TestLoader().loadTestsFromTestCase(LoginControllerTests))
+suite.addTest(unittest.TestLoader().loadTestsFromTestCase(UsuarioControllerTests))
+suite.addTest(unittest.TestLoader().loadTestsFromTestCase(RegistroControllerTests))
+suite.addTest(unittest.TestLoader().loadTestsFromTestCase(ReestablecerControllerTests))
+suite.addTest(unittest.TestLoader().loadTestsFromTestCase(PujadorControllerTests))
+suite.addTest(unittest.TestLoader().loadTestsFromTestCase(ConsignatarioControllerTests))
+suite.addTest(unittest.TestLoader().loadTestsFromTestCase(SubastaControllerTests))
 
 unittest.TextTestRunner(verbosity=3).run(suite)
