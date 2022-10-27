@@ -83,3 +83,8 @@ class LoteControllerTests(unittest.TestCase):
         respuesta = sut.obtener_respuesta()
         self.assertEqual("error", respuesta["status"])
         self.assertEqual(LoteController.LOTE_INEXISTENTE, respuesta["mensaje"])
+
+
+if __name__ == "__main__":
+    unittest.main()
+

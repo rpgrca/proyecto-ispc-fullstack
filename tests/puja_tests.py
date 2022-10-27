@@ -43,3 +43,8 @@ class PujaControllerTests(unittest.TestCase):
 
     def agregar(self, monto: int, pujador: Pujador, lote: Lote):
         self.__pujas.append(Puja(monto, pujador, lote))
+
+
+if __name__ == "__main__":
+    unittest.main()
+
