@@ -26,3 +26,10 @@ values
 insert into Ventas (precio_final, comision, pago_consignatario, id_puja)
 values
 (%s, %s, %s, %s);
+
+--Traer todas las ventas hechas para un comprador dado 
+select v.id v_id, precio_final, comision, pago_consignatario
+from Usuarios u
+inner join Pujas p on u.id = p.id_pujador
+inner join Ventas v on p.id = v.id_puja
+where u.id = %s
