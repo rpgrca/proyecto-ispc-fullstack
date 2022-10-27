@@ -25,3 +25,6 @@ class Pujas:
 
     def buscar_por_monto(self, monto: int) -> Puja:
         raise NotImplementedError()
+
+    def buscar_ultima_puja(self, lote: Lote) -> Puja:
+        raise NotImplementedError()

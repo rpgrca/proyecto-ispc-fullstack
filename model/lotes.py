@@ -4,11 +4,15 @@ from model.subastas import Subasta
 
 
 class Lote(Serializable):
-    def __init__(self, subasta: Subasta, articulo: Articulo, base: int, orden: int):
+    def __init__(self, uid: int, subasta: Subasta, articulo: Articulo, base: int, orden: int):
+        self.__uid = uid
         self.__subasta = subasta
         self.__articulo = articulo
         self.__base = base
         self.__orden = orden
+
+    def obtener_uid(self) -> int:
+        return self.__uid
 
     def obtener_subasta_uid(self) -> int:
         return self.__subasta.obtener_uid()

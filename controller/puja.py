@@ -12,7 +12,7 @@ class PujaController(Controller):
     def __init__(self, db: BaseDeDatos):
         self.__db = db
 
-    def pujar(self, lote_uid: int, pujador_uid: int, monto: int) -> None:
+    def agregar(self, lote_uid: int, pujador_uid: int, monto: int) -> None:
         if not self._verificar(lote_uid, self.PUJAR_SIN_LOTE):
             return
 
@@ -32,5 +32,5 @@ class PujaController(Controller):
             self._responder_mal_con(self.PUJA_BAJA)
             return
 
-        self.__db.Pujas.agregar(lote, pujador, monto)
+        self.__db.Pujas.agregar(monto, pujador, lote)
         self._responder_bien_con("Puja realizada con éxito")

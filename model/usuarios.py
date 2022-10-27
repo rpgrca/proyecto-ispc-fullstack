@@ -3,8 +3,9 @@ from model.tipo_usuario import TipoDeUsuario
 
 
 class Usuario:
-    def __init__(self, nombre: str, apellido: str, email: str, usuario: str, clave: str, nacimiento: date,
+    def __init__(self, uid: int, nombre: str, apellido: str, email: str, usuario: str, clave: str, nacimiento: date,
                  tipo: TipoDeUsuario):
+        self.__uid = uid
         self.__nombre = nombre
         self.__apellido = apellido
         self.__email = email
@@ -15,6 +16,9 @@ class Usuario:
 
     def __str__(self):
         return self.__usuario
+
+    def obtener_uid(self) -> int:
+        return self.__uid
 
     def obtener_clave(self) -> str:
         return self.__clave
@@ -36,18 +40,18 @@ class Usuario:
 
 
 class Pujador(Usuario):
-    def __init__(self, nombre: str, apellido: str, email: str, usuario: str, clave: str, nacimiento: date):
-        super().__init__(nombre, apellido, email, usuario, clave, nacimiento, TipoDeUsuario.Pujador)
+    def __init__(self, uid: int, nombre: str, apellido: str, email: str, usuario: str, clave: str, nacimiento: date):
+        super().__init__(uid, nombre, apellido, email, usuario, clave, nacimiento, TipoDeUsuario.Pujador)
 
 
 class Consignatario(Usuario):
-    def __init__(self, nombre: str, apellido: str, email: str, usuario: str, clave: str, nacimiento: date):
-        super().__init__(nombre, apellido, email, usuario, clave, nacimiento, TipoDeUsuario.Consignatario)
+    def __init__(self, uid: int, nombre: str, apellido: str, email: str, usuario: str, clave: str, nacimiento: date):
+        super().__init__(uid, nombre, apellido, email, usuario, clave, nacimiento, TipoDeUsuario.Consignatario)
 
 
 class Martillero(Usuario):
-    def __init__(self, nombre: str, apellido: str, email: str, usuario: str, clave: str, nacimiento: date):
-        super().__init__(nombre, apellido, email, usuario, clave, nacimiento, TipoDeUsuario.Martillero)
+    def __init__(self, uid: int, nombre: str, apellido: str, email: str, usuario: str, clave: str, nacimiento: date):
+        super().__init__(uid, nombre, apellido, email, usuario, clave, nacimiento, TipoDeUsuario.Martillero)
 
 
 class Usuarios:
@@ -73,10 +77,11 @@ class Usuarios:
 
 class UsuariosFactory:
     @staticmethod
-    def crear(nombre: str, apellido: str, email: str, usuario: str, clave: str, nacimiento: date, tipo: TipoDeUsuario):
+    def crear(uid: int, nombre: str, apellido: str, email: str, usuario: str, clave: str, nacimiento: date,
+              tipo: TipoDeUsuario):
         if tipo == TipoDeUsuario.Consignatario:
-            return Consignatario(nombre, apellido, email, usuario, clave, nacimiento)
+            return Consignatario(uid, nombre, apellido, email, usuario, clave, nacimiento)
         elif tipo == TipoDeUsuario.Pujador:
-            return Pujador(nombre, apellido, email, usuario, clave, nacimiento)
+            return Pujador(uid, nombre, apellido, email, usuario, clave, nacimiento)
         else:
-            return Martillero(nombre, apellido, email, usuario, clave, nacimiento)
+            return Martillero(uid, nombre, apellido, email, usuario, clave, nacimiento)

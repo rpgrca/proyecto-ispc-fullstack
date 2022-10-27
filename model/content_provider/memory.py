@@ -10,9 +10,9 @@ from model.lotes import Lote, Lotes
 
 
 class UsuariosEnMemoria(Usuarios):
-    def __init__(self, usuarios):
-        self.__id = 1
+    def __init__(self, usuarios: dict):
         self.__usuarios = usuarios
+        self.__id = len(self.__usuarios) + 1
 
     def agregar(self, nombre: str, apellido: str, email: str, usuario: str, clave: str, nacimiento: str,
                 tipo: TipoDeUsuario) -> None:
@@ -38,7 +38,7 @@ class UsuariosEnMemoria(Usuarios):
         if usuario in self.__usuarios:
             registro = self.__usuarios[usuario]
             if registro["clave"] == clave:
-                return UsuariosFactory.crear(registro["nombre"], registro["apellido"], registro["email"],
+                return UsuariosFactory.crear(registro["id"], registro["nombre"], registro["apellido"], registro["email"],
                                              registro["usuario"], registro["clave"], registro["nacimiento"], registro["tipo"])
 
         return None
@@ -46,13 +46,13 @@ class UsuariosEnMemoria(Usuarios):
     def buscar_por_email(self, email: str) -> Usuario:
         registro = next(filter(lambda u: u["email"] == email, self.__usuarios.values()), None)
         if registro:
-            return UsuariosFactory.crear(registro["nombre"], registro["apellido"], registro["email"],
+            return UsuariosFactory.crear(registro["id"], registro["nombre"], registro["apellido"], registro["email"],
                                          registro["usuario"], registro["clave"], registro["nacimiento"], registro["tipo"])
 
         return None
 
     def buscar_pujador_por_uid(self, uid: int) -> Pujador:
-        return next(filter(lambda u: u["id"] == uid and u["tipo_usuario"] == TipoDeUsuario.Pujador, self.__usuarios), None)
+        return next(filter(lambda u: u["id"] == uid and u["tipo"] == TipoDeUsuario.Pujador, self.__usuarios.values()), None)
 
 
 class SubastasEnMemoria(Subastas):
@@ -89,13 +89,16 @@ class PujasEnMemoria:
     def buscar_por_monto(self, monto: int) -> Puja:
         pass
 
+    def buscar_ultima_puja(self, lote: Lote) -> Puja:
+        return next(filter(lambda p: p.obtener_lote_uid() == lote, self.__pujas[::-1]), None)
+
 
 class LotesEnMemoria:
     def __init__(self, lotes: list):
         self.__lotes = lotes
         
     def agregar(self, subasta: Subasta, articulo: Articulo, base: int, orden: int):
-        self.__lotes.append(Lote(subasta, articulo, base, orden))
+        self.__lotes.append(Lote(len(self.__lotes) + 1, subasta, articulo, base, orden))
 
     def contar_lotes(self, subasta: Subasta) -> int:
         return sum(1 if l.obtener_subasta_uid() == subasta.obtener_uid() else 0 for l in self.__lotes)
@@ -104,13 +107,14 @@ class LotesEnMemoria:
         return next(l for l in self.__lotes if l.obtener_subasta_uid() == subasta.obtener_uid() and l.obtener_orden() == orden)
 
     def buscar_por_uid(self, lote_uid: int) -> Lote:
-        return next(filter(lambda: l.obtener_uid() == lote_uid, self.__lotes))
+        return next(filter(lambda l: l.obtener_uid() == lote_uid, self.__lotes))
 
 
 class CreadorDeBasesDeDatosTemporales:
     def __init__(self):
         self.__usuarios = UsuariosEnMemoria({
             "Roberto": {
+                "id": 1,
                 "nombre": "Roberto",
                 "apellido": "Perez",
                 "usuario": "Roberto",
@@ -120,6 +124,7 @@ class CreadorDeBasesDeDatosTemporales:
                 "tipo": TipoDeUsuario.Pujador
             },
             "Martin": {
+                "id": 2,
                 "nombre": "Martin",
                 "apellido": "Rodriguez",
                 "usuario": "Martin",
@@ -129,6 +134,7 @@ class CreadorDeBasesDeDatosTemporales:
                 "tipo": TipoDeUsuario.Pujador
             },
             "Julia": {
+                "id": 3,
                 "nombre": "Julia",
                 "apellido": "Gonzalez",
                 "usuario": "Julia",
@@ -138,6 +144,7 @@ class CreadorDeBasesDeDatosTemporales:
                 "tipo": TipoDeUsuario.Pujador
             },
             "Estela": {
+                "id": 4,
                 "nombre": "Estela",
                 "apellido": "Flores",
                 "usuario": "Estela",
@@ -147,6 +154,7 @@ class CreadorDeBasesDeDatosTemporales:
                 "tipo": TipoDeUsuario.Consignatario
             },
             "Adrian": {
+                "id": 5,
                 "nombre": "Adrian",
                 "apellido": "Acosta",
                 "usuario": "Adrian",

@@ -12,6 +12,7 @@ class UsuarioControllerTests(unittest.TestCase):
         self.__db_con_usuario = CreadorDeBasesDeDatosTemporales() \
             .con_usuarios(UsuariosEnMemoria({
                 NOMBRE_USUARIO: {
+                    "id": ID_USUARIO,
                     "nombre": NOMBRE_USUARIO,
                     "apellido": APELLIDO_USUARIO,
                     "email": EMAIL_USUARIO,
