@@ -98,7 +98,7 @@ class PujasEnMemoria(Pujas):
         pass
 
     def buscar_ultima_puja(self, lote: Lote) -> Puja:
-        return next(filter(lambda p: p.obtener_lote_uid() == lote, self.__pujas[::-1]), None)
+        return next(filter(lambda p: p.obtener_lote_uid() == lote.obtener_uid(), reversed(self.__pujas)), None)
 
     def buscar_por_uid(self, uid: int) -> Puja:
         return next(filter(lambda p: p.obtener_uid() == uid, self.__pujas), None)
@@ -115,11 +115,11 @@ class LotesEnMemoria(Lotes):
         return sum(1 if lote.obtener_subasta_uid() == subasta.obtener_uid() else 0 for lote in self.__lotes)
 
     def obtener(self, subasta: Subasta, orden: int) -> Lote:
-        return next(lote for lote in self.__lotes if lote.obtener_subasta_uid() == subasta.obtener_uid() and
-                    lote.obtener_orden() == orden)
+        return next((lote for lote in self.__lotes if lote.obtener_subasta_uid() == subasta.obtener_uid() and
+                    lote.obtener_orden() == orden), None)
 
     def buscar_por_uid(self, lote_uid: int) -> Lote:
-        return next(filter(lambda l: l.obtener_uid() == lote_uid, self.__lotes))
+        return next(filter(lambda l: l.obtener_uid() == lote_uid, self.__lotes), None)
 
 
 class CreadorDeBasesDeDatosTemporales:

@@ -16,6 +16,21 @@ class LoteControllerTests(unittest.TestCase):
             .con_articulos(ArticulosEnMemoria([Articulo(C.ARTICULO_UID)])) \
             .construir()
 
+    @data("", None)
+    def test_retornar_error_cuando_la_subasta_es_invalida(self, subasta_invalida):
+        sut = LoteController(self.__db)
+        sut.contar_lotes_en(subasta_invalida)
+        respuesta = sut.obtener_respuesta()
+        self.assertEqual("error", respuesta["status"])
+        self.assertEqual(LoteController.CONTAR_SIN_SUBASTA, respuesta["mensaje"])
+
+    def test_retornar_error_cuando_no_existe_subasta(self):
+        sut = LoteController(self.__db)
+        sut.contar_lotes_en(C.OTRA_SUBASTA_UID)
+        respuesta = sut.obtener_respuesta()
+        self.assertEqual("error", respuesta["status"])
+        self.assertEqual(LoteController.CONTAR_SUBASTA_INEXISTENTE, respuesta["mensaje"])
+
     def test_retorna_la_cantidad_de_lotes_correctamente(self):
         sut = LoteController(self.__db)
         sut.agregar(C.SUBASTA_UID, C.ARTICULO_UID, 100)
@@ -58,6 +73,21 @@ class LoteControllerTests(unittest.TestCase):
         respuesta = sut.obtener_respuesta()
         self.assertEqual("ok", respuesta["status"])
         self.assertEqual(LoteController.LOTE_AGREGADO, respuesta["mensaje"])
+
+    @data("", None)
+    def test_retorna_error_con_subasta_invalida(self, subasta_invalida):
+        sut = LoteController(self.__db)
+        sut.obtener(subasta_invalida, 1)
+        respuesta = sut.obtener_respuesta()
+        self.assertEqual("error", respuesta["status"])
+        self.assertEqual(LoteController.BUSCAR_SIN_SUBASTA, respuesta["mensaje"])
+
+    def test_retorna_error_con_subasta_inexistente(self):
+        sut = LoteController(self.__db)
+        sut.obtener(C.OTRA_SUBASTA_UID, 1)
+        respuesta = sut.obtener_respuesta()
+        self.assertEqual("error", respuesta["status"])
+        self.assertEqual(LoteController.SUBASTA_INEXISTENTE, respuesta["mensaje"])
 
     def test_comienza_con_el_primer_lote_correctamente(self):
         sut = LoteController(self.__db)
