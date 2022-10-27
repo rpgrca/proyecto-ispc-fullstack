@@ -1,4 +1,4 @@
-from model.usuarios import Pujador
+from model.tipo_usuario import Pujador
 from model.lotes import Lote
 
 
@@ -16,3 +16,11 @@ class Puja:
 
     def obtener_lote(self) -> Lote:
         return self.__lote
+
+
+
+class Pujas:
+    def agregar(self, monto: int, pujador: Pujador, lote: Lote) -> Puja:
+        pass
+    def buscar_por_monto(self, monto: int) -> Puja:
+        pass
