@@ -1,6 +1,4 @@
 from datetime import date
-from model.lotes import Lote
-from model.articulos import Articulo
 
 
 class Subasta:
@@ -10,17 +8,9 @@ class Subasta:
         self.__descripcion = descripcion
         self.__imagen = imagen
         self.__fecha = fecha
-        self.__lotes = []
 
     def obtener_uid(self) -> int:
         return self.__uid
-
-    def agregar_lote(self, articulo: Articulo, base: int) -> None:
-        lote = Lote(articulo, base, len(self.__lotes) + 1)
-        self.__lotes.append(lote)
-
-    def obtener_lote(self, orden: int) -> Lote:
-        return self.__lotes[orden]
 
     def contar_lotes(self) -> int:
         return len(self.__lotes)
@@ -43,7 +33,4 @@ class Subastas:
         pass
 
     def buscar_por_uid(self, uid: int) -> Subasta:
-        pass
-
-    def contar_lotes(self) -> int:
         pass

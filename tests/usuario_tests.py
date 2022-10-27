@@ -2,7 +2,7 @@ import unittest
 from ddt import ddt, data, unpack
 from controller.usuario import UsuarioController
 from model.tipo_usuario import TipoDeUsuario
-from model.content_provider.memory import UsuariosFake, CreadorDeBasesDeDatosTemporales
+from model.content_provider.memory import UsuariosEnMemoria, CreadorDeBasesDeDatosTemporales
 
 
 @ddt
@@ -16,7 +16,7 @@ class UsuarioControllerTests(unittest.TestCase):
 
     def setUp(self):
         self.__db_con_usuario = CreadorDeBasesDeDatosTemporales() \
-            .con_usuarios(UsuariosFake({
+            .con_usuarios(UsuariosEnMemoria({
                 self.NOMBRE_USUARIO: {
                     "nombre": self.NOMBRE_USUARIO,
                     "apellido": self.APELLIDO_USUARIO,
@@ -89,7 +89,7 @@ class UsuarioControllerTests(unittest.TestCase):
     @data(TipoDeUsuario.Martillero, TipoDeUsuario.Consignatario, TipoDeUsuario.Pujador)
     def test_retornar_ok_cuando_base_vacia(self, tipo):
         db = CreadorDeBasesDeDatosTemporales() \
-            .con_usuarios(UsuariosFake({})) \
+            .con_usuarios(UsuariosEnMemoria({})) \
             .construir()
 
         sut = UsuarioController(db, self.NOMBRE_USUARIO, self.APELLIDO_USUARIO, self.OTRO_EMAIL_USUARIO,
@@ -100,7 +100,7 @@ class UsuarioControllerTests(unittest.TestCase):
 
     def test_completar_usuario_correctamente(self):
         db = CreadorDeBasesDeDatosTemporales() \
-            .con_usuarios(UsuariosFake({})) \
+            .con_usuarios(UsuariosEnMemoria({})) \
             .construir()
 
         UsuarioController(db, self.NOMBRE_USUARIO, self.APELLIDO_USUARIO, self.OTRO_EMAIL_USUARIO, self.NOMBRE_USUARIO,

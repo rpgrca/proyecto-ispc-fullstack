@@ -20,7 +20,8 @@ class Puja:
 
 
 class Pujas:
-    def agregar(self, monto: int, pujador: Pujador, lote: Lote) -> Puja:
+    def agregar(self, monto: int, pujador: Pujador, lote: Lote):
         pass
+
     def buscar_por_monto(self, monto: int) -> Puja:
         pass

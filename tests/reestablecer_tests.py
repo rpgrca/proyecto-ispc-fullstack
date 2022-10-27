@@ -4,7 +4,7 @@ from controller.email_sender import EmailSender
 from controller.reestablecer import ReestablecerController
 from model.tipo_usuario import TipoDeUsuario
 from model.usuarios import Usuario
-from model.content_provider.memory import UsuariosFake, CreadorDeBasesDeDatosTemporales
+from model.content_provider.memory import UsuariosEnMemoria, CreadorDeBasesDeDatosTemporales
 
 
 class EmailSenderSpy(EmailSender):
@@ -22,7 +22,7 @@ class EmailSenderSpy(EmailSender):
 class ReestablecerControllerTests(unittest.TestCase):
     def setUp(self):
         self.__db_con_usuario = CreadorDeBasesDeDatosTemporales() \
-            .con_usuarios(UsuariosFake({
+            .con_usuarios(UsuariosEnMemoria({
                 "Roberto": {
                     "nombre": "Roberto",
                     "apellido": "Perez",
@@ -48,7 +48,7 @@ class ReestablecerControllerTests(unittest.TestCase):
 
     def test_retornar_ok_cuando_base_esta_vacia(self):
         db = CreadorDeBasesDeDatosTemporales() \
-            .con_usuarios(UsuariosFake({})) \
+            .con_usuarios(UsuariosEnMemoria({})) \
             .construir()
         sut = ReestablecerController(db, "rperez@gmail.com", EmailSenderSpy())
         respuesta = sut.obtener_respuesta()

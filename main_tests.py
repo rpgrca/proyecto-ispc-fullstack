@@ -1,4 +1,5 @@
 import unittest
+from tests.lote_tests import LoteControllerTests
 from tests.pujador_tests import PujadorControllerTests
 from tests.consignatario_tests import ConsignatarioControllerTests
 from tests.login_tests import LoginControllerTests
@@ -16,5 +17,6 @@ suite.addTest(unittest.TestLoader().loadTestsFromTestCase(ReestablecerController
 suite.addTest(unittest.TestLoader().loadTestsFromTestCase(PujadorControllerTests))
 suite.addTest(unittest.TestLoader().loadTestsFromTestCase(ConsignatarioControllerTests))
 suite.addTest(unittest.TestLoader().loadTestsFromTestCase(SubastaControllerTests))
+suite.addTest(unittest.TestLoader().loadTestsFromTestCase(LoteControllerTests))
 
 unittest.TextTestRunner(verbosity=3).run(suite)

@@ -2,14 +2,14 @@ import unittest
 from ddt import ddt, data, unpack
 from controller.login import LoginController
 from model.tipo_usuario import TipoDeUsuario
-from model.content_provider.memory import UsuariosFake, CreadorDeBasesDeDatosTemporales
+from model.content_provider.memory import UsuariosEnMemoria, CreadorDeBasesDeDatosTemporales
 
 
 @ddt
 class LoginControllerTests(unittest.TestCase):
     def setUp(self):
         self.__db_con_usuario = CreadorDeBasesDeDatosTemporales() \
-            .con_usuarios(UsuariosFake({
+            .con_usuarios(UsuariosEnMemoria({
                 "Roberto": {
                     "nombre": "Roberto",
                     "apellido": "Perez",
@@ -40,7 +40,7 @@ class LoginControllerTests(unittest.TestCase):
 
     def test_retornar_error_cuando_base_esta_vacia(self):
         db = CreadorDeBasesDeDatosTemporales() \
-            .con_usuarios(UsuariosFake({})) \
+            .con_usuarios(UsuariosEnMemoria({})) \
             .construir()
 
         sut = LoginController(db, "Roberto", "123456")
@@ -57,7 +57,7 @@ class LoginControllerTests(unittest.TestCase):
     @unpack
     def test_retornar_error_cuando_falta_dato(self, usuario: str, clave: str, mensaje_error: str):
         db = CreadorDeBasesDeDatosTemporales() \
-            .con_usuarios(UsuariosFake({})) \
+            .con_usuarios(UsuariosEnMemoria({})) \
             .construir()
         sut = LoginController(db, usuario, clave)
         respuesta = sut.obtener_respuesta()

@@ -1,13 +1,15 @@
 from datetime import date
 from model.articulos import Articulo
 from model.database import BaseDeDatos
-from model.usuarios import Usuarios, Usuario, UsuariosFactory
+from model.usuarios import Pujador, Usuarios, Usuario, UsuariosFactory
 from model.subastas import Subastas, Subasta
 from model.articulos import Articulos
+from model.pujas import Pujas, Puja
 from model.tipo_usuario import TipoDeUsuario
+from model.lotes import Lote, Lotes
 
 
-class UsuariosFake(Usuarios):
+class UsuariosEnMemoria(Usuarios):
     def __init__(self, usuarios):
         self.__usuarios = usuarios
 
@@ -44,7 +46,7 @@ class UsuariosFake(Usuarios):
         return None
 
 
-class SubastasFake(Subastas):
+class SubastasEnMemoria(Subastas):
     def __init__(self, subastas: list):
         self.__subastas = subastas
 
@@ -53,17 +55,11 @@ class SubastasFake(Subastas):
         self.__subastas.append(subasta)
         return subasta
 
-    def agregar_lote(self, subasta: Subasta, articulo: Articulo, base: int) -> None:
-        subasta.agregar(articulo, base)
-
     def buscar_por_uid(self, uid: int) -> Subasta:
         return next(filter(lambda s: s.obtener_uid() == uid, self.__subastas), None)
 
-    def contar_lotes(self) -> int:
-        return len(self.__subastas)
 
-
-class ArticulosFake(Articulos):
+class ArticulosEnMemoria(Articulos):
     def __init__(self, articulos: list):
         self.__articulos = articulos
 
@@ -74,9 +70,34 @@ class ArticulosFake(Articulos):
         return next(filter(lambda s: s.obtener_uid() == uid, self.__articulos), None)
 
 
+class PujasEnMemoria:
+    def __init__(self, pujas: list):
+        self.__pujas = pujas
+
+    def agregar(self, monto: int, pujador: Pujador, lote: Lote):
+        self.__pujas.append(Puja(monto, pujador, lote))
+
+    def buscar_por_monto(self, monto: int) -> Puja:
+        pass
+
+
+class LotesEnMemoria:
+    def __init__(self, lotes: list):
+        self.__lotes = lotes
+        
+    def agregar(self, subasta: Subasta, articulo: Articulo, base: int, orden: int):
+        self.__lotes.append(Lote(subasta, articulo, base, orden))
+
+    def contar_lotes(self, subasta: Subasta) -> int:
+        return sum(1 if l.obtener_subasta_uid() == subasta.obtener_uid() else 0 for l in self.__lotes)
+    
+    def obtener(self, subasta: Subasta, orden: int) -> Lote:
+        return next(l for l in self.__lotes if l.obtener_subasta_uid() == subasta.obtener_uid() and l.obtener_orden() == orden)
+
+
 class CreadorDeBasesDeDatosTemporales:
     def __init__(self):
-        self.__usuarios = UsuariosFake({
+        self.__usuarios = UsuariosEnMemoria({
             "Roberto": {
                 "nombre": "Roberto",
                 "apellido": "Perez",
@@ -123,8 +144,9 @@ class CreadorDeBasesDeDatosTemporales:
                 "tipo": TipoDeUsuario.Martillero
             }
         })
-        self.__subastas = SubastasFake([Subasta(1, "Gran subasta!", "Nos vemos pronto!", "sofa.jpg", 17/10/2022)])
-        self.__articulos = ArticulosFake([Articulo(1)])
+        self.__subastas = SubastasEnMemoria([Subasta(1, "Gran subasta!", "Nos vemos pronto!", "sofa.jpg", 17/10/2022)])
+        self.__articulos = ArticulosEnMemoria([Articulo(1)])
+        self.__lotes = LotesEnMemoria([])
 
     def con_usuarios(self, usuarios: Usuarios):
         self.__usuarios = usuarios
@@ -138,5 +160,9 @@ class CreadorDeBasesDeDatosTemporales:
         self.__articulos = articulos
         return self
 
+    def con_lotes(self, lotes: Lotes):
+        self.__lotes = lotes
+        return self
+
     def construir(self) -> BaseDeDatos:
-        return BaseDeDatos(self.__usuarios, self.__subastas, self.__articulos)
+        return BaseDeDatos(self.__usuarios, self.__subastas, self.__articulos, self.__lotes)
