@@ -4,18 +4,20 @@ from model.database import BaseDeDatos
 from model.usuarios import Pujador, Usuarios, Usuario, UsuariosFactory
 from model.subastas import Subastas, Subasta
 from model.articulos import Articulos
-from model.pujas import Pujas, Puja
+from model.pujas import Puja
 from model.tipo_usuario import TipoDeUsuario
 from model.lotes import Lote, Lotes
 
 
 class UsuariosEnMemoria(Usuarios):
     def __init__(self, usuarios):
+        self.__id = 1
         self.__usuarios = usuarios
 
     def agregar(self, nombre: str, apellido: str, email: str, usuario: str, clave: str, nacimiento: str,
                 tipo: TipoDeUsuario) -> None:
         self.__usuarios[usuario] = {
+            "id": self.__id,
             "nombre": nombre,
             "apellido": apellido,
             "email": email,
@@ -24,9 +26,13 @@ class UsuariosEnMemoria(Usuarios):
             "nacimiento": nacimiento,
             "tipo": tipo.value
         }
+        self.__id += 1
 
     def existe(self, usuario: str) -> bool:
         return usuario in self.__usuarios
+
+    def existe_con_mail(self, email: str) -> bool:
+        return any(filter(lambda u: u["email"] == email, self.__usuarios.values()))
 
     def buscar(self, usuario: str, clave: str) -> Usuario:
         if usuario in self.__usuarios:
@@ -44,6 +50,9 @@ class UsuariosEnMemoria(Usuarios):
                                          registro["usuario"], registro["clave"], registro["nacimiento"], registro["tipo"])
 
         return None
+
+    def buscar_pujador_por_uid(self, uid: int) -> Pujador:
+        return next(filter(lambda u: u["id"] == uid and u["tipo_usuario"] == TipoDeUsuario.Pujador, self.__usuarios), None)
 
 
 class SubastasEnMemoria(Subastas):
@@ -93,6 +102,9 @@ class LotesEnMemoria:
     
     def obtener(self, subasta: Subasta, orden: int) -> Lote:
         return next(l for l in self.__lotes if l.obtener_subasta_uid() == subasta.obtener_uid() and l.obtener_orden() == orden)
+
+    def buscar_por_uid(self, lote_uid: int) -> Lote:
+        return next(filter(lambda: l.obtener_uid() == lote_uid, self.__lotes))
 
 
 class CreadorDeBasesDeDatosTemporales:

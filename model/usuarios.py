@@ -58,13 +58,16 @@ class Usuarios:
     def existe(self, usuario: str) -> bool:
         pass
 
+    def existe_con_mail(self, email: str) -> bool:
+        pass
+
     def buscar(self, usuario: str, clave: str) -> Usuario:
         pass
 
     def buscar_por_email(self, email: str, clave: str) -> Usuario:
         pass
 
-    def existe_con_mail(self, email: str) -> bool:
+    def buscar_pujador_por_uid(self, uid: int) -> Pujador:
         pass
 
 

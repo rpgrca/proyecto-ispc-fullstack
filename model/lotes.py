@@ -32,3 +32,6 @@ class Lotes:
 
     def obtener(self, subasta: Subasta, orden: int) -> Lote:
         pass
+
+    def buscar_por_uid(self, lote_uid: int) -> Lote:
+        pass

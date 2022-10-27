@@ -14,10 +14,8 @@ class SubastaController(Controller):
     SIN_IMAGEN = "No se puede crear una subasta sin imagen"
     SIN_FECHA = "No se puede crear una subasta sin fecha"
 
-
     def __init__(self, db: BaseDeDatos):
         self.__db = db
-
 
     def crear(self, titulo: str, descripcion: str, imagen: str, fecha: date) -> None:
         if not self._verificar(titulo, self.SIN_TITULO) or \
@@ -28,12 +26,3 @@ class SubastaController(Controller):
 
         subasta = self.__db.Subastas.crear(titulo, descripcion, imagen, fecha)
         self._responder_bien_incluyendo_id(f"La subasta ha sido agendada para {str(fecha)}", subasta.obtener_uid())
-
-
-    def pujar(self, lote_uid: int, monto: int):
-        if not self._verificar(lote_uid, self.BUSCAR_SIN_LOTE):
-            return
-
-        lote = self.__db.Lotes.buscar_por_uid(lote_uid)
-        if not self._verificar(lote, self.LOTE_INEXISTENTE):
-            return
