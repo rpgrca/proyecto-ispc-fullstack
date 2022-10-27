@@ -1,10 +1,10 @@
 from datetime import date
-from controller.controller import Controller
+from controller.servicio import Servicio
 from model.tipo_usuario import TipoDeUsuario
 from model.database import BaseDeDatos
 
 
-class UsuarioController(Controller):
+class ServicioUsuario(Servicio):
     SIN_NOMBRE = "No se puede crear un usuario sin nombre"
     SIN_APELLIDO = "No se puede crear un usuario sin apellido"
     SIN_EMAIL = "No se puede crear un usuario sin e-mail"
@@ -32,11 +32,11 @@ class UsuarioController(Controller):
                 self._responder_bien_con(self.CUENTA_CREADA)
 
 
-class ConsignatarioController(UsuarioController):
+class ConsignatarioController(ServicioUsuario):
     def __init__(self, db: BaseDeDatos, nombre: str, apellido: str, email: str, usuario: str, clave: str, nacimiento: date):
         super().__init__(db, nombre, apellido, email, usuario, clave, nacimiento, TipoDeUsuario.Consignatario)
 
 
-class PujadorController(UsuarioController):
+class PujadorController(ServicioUsuario):
     def __init__(self, db: BaseDeDatos, nombre: str, apellido: str, email: str, usuario: str, clave: str, nacimiento: date):
         super().__init__(db, nombre, apellido, email, usuario, clave, nacimiento, TipoDeUsuario.Pujador)

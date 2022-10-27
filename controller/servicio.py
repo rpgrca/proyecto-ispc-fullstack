@@ -1,7 +1,7 @@
 from model.serialization import Serializable
 
 
-class Controller:
+class Servicio:
     def __init__(self):
         self.__respuesta = {}
 

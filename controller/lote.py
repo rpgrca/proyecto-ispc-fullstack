@@ -1,8 +1,8 @@
-from controller.controller import Controller
+from controller.servicio import Servicio
 from model.database import BaseDeDatos
 
 
-class LoteController(Controller):
+class ServicioLote(Servicio):
     LOTE_SIN_SUBASTA = "No se puede agregar un lote sin subasta"
     ARTICULO_NULO_EN_SUBASTA = "No se puede agregar un articulo nulo a una subasta"
     LOTE_SUBASTA_INEXISTENTE = "No se puede agregar un lote a una subasta inexistente"

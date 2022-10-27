@@ -1,8 +1,8 @@
-from controller.controller import Controller
+from controller.servicio import Servicio
 from model.database import BaseDeDatos
 
 
-class LoginController(Controller):
+class ServicioLogin(Servicio):
     SIN_USUARIO = "No se puede ingresar sin usuario"
     SIN_CLAVE = "No se puede ingresar sin clave"
     LOGIN_INVALIDO = "Usuario o contraseña inválida"

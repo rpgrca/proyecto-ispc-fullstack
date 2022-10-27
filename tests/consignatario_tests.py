@@ -1,6 +1,6 @@
 import unittest
 import tests.constantes as C
-from controller.consignatario import ConsignatarioController
+from controller.consignatario import ServicioConsignatario
 from model.tipo_usuario import TipoDeUsuario
 from model.content_provider.memory import UsuariosEnMemoria, CreadorDeBasesDeDatosTemporales
 
@@ -12,7 +12,7 @@ class ConsignatarioControllerTests(unittest.TestCase):
             .con_usuarios(UsuariosEnMemoria(diccionario)) \
             .construir()
 
-        ConsignatarioController(db, C.NOMBRE_USUARIO, C.APELLIDO_USUARIO, C.OTRO_EMAIL_USUARIO, C.NOMBRE_USUARIO,
+        ServicioConsignatario(db, C.NOMBRE_USUARIO, C.APELLIDO_USUARIO, C.OTRO_EMAIL_USUARIO, C.NOMBRE_USUARIO,
                                 C.CLAVE_USUARIO, C.FECHA_NACIMIENTO_USUARIO)
         self.assertEqual(TipoDeUsuario.Consignatario.value, diccionario[C.NOMBRE_USUARIO]["tipo"])
 

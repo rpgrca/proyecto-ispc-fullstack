@@ -1,7 +1,7 @@
 import unittest
 from ddt import ddt, data, unpack
 import tests.constantes as C
-from controller.usuario import UsuarioController
+from controller.usuario import ServicioUsuario
 from model.tipo_usuario import TipoDeUsuario
 from model.content_provider.memory import UsuariosEnMemoria, CreadorDeBasesDeDatosTemporales
 
@@ -25,61 +25,61 @@ class UsuarioControllerTests(unittest.TestCase):
 
     @data(TipoDeUsuario.Martillero, TipoDeUsuario.Consignatario, TipoDeUsuario.Pujador)
     def test_retornar_error_cuando_quiere_crear_usuario_ya_existente(self, tipo):
-        sut = UsuarioController(self.__db_con_usuario, C.NOMBRE_USUARIO, C.APELLIDO_USUARIO, C.OTRO_EMAIL_USUARIO,
+        sut = ServicioUsuario(self.__db_con_usuario, C.NOMBRE_USUARIO, C.APELLIDO_USUARIO, C.OTRO_EMAIL_USUARIO,
                                 C.NOMBRE_USUARIO, C.CLAVE_USUARIO, C.FECHA_NACIMIENTO_USUARIO, tipo)
         respuesta = sut.obtener_respuesta()
         self.assertEqual("error", respuesta["status"])
-        self.assertEqual(UsuarioController.CUENTA_YA_EXISTE, respuesta["mensaje"])
+        self.assertEqual(ServicioUsuario.CUENTA_YA_EXISTE, respuesta["mensaje"])
 
     @data(TipoDeUsuario.Martillero, TipoDeUsuario.Consignatario, TipoDeUsuario.Pujador)
     def test_retornar_error_cuando_quiere_crear_con_email_ya_existente(self, tipo):
-        sut = UsuarioController(self.__db_con_usuario, C.NOMBRE_USUARIO, C.APELLIDO_USUARIO, C.EMAIL_USUARIO,
+        sut = ServicioUsuario(self.__db_con_usuario, C.NOMBRE_USUARIO, C.APELLIDO_USUARIO, C.EMAIL_USUARIO,
                                 "Roberto1", C.CLAVE_USUARIO, C.FECHA_NACIMIENTO_USUARIO, tipo)
         respuesta = sut.obtener_respuesta()
         self.assertEqual("error", respuesta["status"])
-        self.assertEqual(UsuarioController.CUENTA_YA_EXISTE, respuesta["mensaje"])
+        self.assertEqual(ServicioUsuario.CUENTA_YA_EXISTE, respuesta["mensaje"])
 
     @data(
         ("", C.APELLIDO_USUARIO, C.OTRO_EMAIL_USUARIO, C.NOMBRE_USUARIO, C.CLAVE_USUARIO, C.FECHA_NACIMIENTO_USUARIO,
-         TipoDeUsuario.Consignatario, UsuarioController.SIN_NOMBRE),
+         TipoDeUsuario.Consignatario, ServicioUsuario.SIN_NOMBRE),
         (None, C.APELLIDO_USUARIO, C.OTRO_EMAIL_USUARIO, C.NOMBRE_USUARIO, C.CLAVE_USUARIO, C.FECHA_NACIMIENTO_USUARIO,
-         TipoDeUsuario.Martillero, UsuarioController.SIN_NOMBRE),
+         TipoDeUsuario.Martillero, ServicioUsuario.SIN_NOMBRE),
         (C.NOMBRE_USUARIO, "", C.OTRO_EMAIL_USUARIO, C.NOMBRE_USUARIO, C.CLAVE_USUARIO, C.FECHA_NACIMIENTO_USUARIO,
-         TipoDeUsuario.Pujador, UsuarioController.SIN_APELLIDO),
+         TipoDeUsuario.Pujador, ServicioUsuario.SIN_APELLIDO),
         (C.NOMBRE_USUARIO, None, C.OTRO_EMAIL_USUARIO, C.NOMBRE_USUARIO, C.CLAVE_USUARIO, C.FECHA_NACIMIENTO_USUARIO,
-         TipoDeUsuario.Consignatario, UsuarioController.SIN_APELLIDO),
+         TipoDeUsuario.Consignatario, ServicioUsuario.SIN_APELLIDO),
         (C.NOMBRE_USUARIO, C.APELLIDO_USUARIO, "", C.NOMBRE_USUARIO, C.CLAVE_USUARIO, C.FECHA_NACIMIENTO_USUARIO,
-         TipoDeUsuario.Martillero, UsuarioController.SIN_EMAIL),
+         TipoDeUsuario.Martillero, ServicioUsuario.SIN_EMAIL),
         (C.NOMBRE_USUARIO, C.APELLIDO_USUARIO, None, C.NOMBRE_USUARIO, C.CLAVE_USUARIO, C.FECHA_NACIMIENTO_USUARIO,
-         TipoDeUsuario.Pujador, UsuarioController.SIN_EMAIL),
+         TipoDeUsuario.Pujador, ServicioUsuario.SIN_EMAIL),
         (C.NOMBRE_USUARIO, C.APELLIDO_USUARIO, C.OTRO_EMAIL_USUARIO, "", C.CLAVE_USUARIO, C.FECHA_NACIMIENTO_USUARIO,
-         TipoDeUsuario.Consignatario, UsuarioController.SIN_USUARIO),
+         TipoDeUsuario.Consignatario, ServicioUsuario.SIN_USUARIO),
         (C.NOMBRE_USUARIO, C.APELLIDO_USUARIO, C.OTRO_EMAIL_USUARIO, None, C.CLAVE_USUARIO, C.FECHA_NACIMIENTO_USUARIO,
-         TipoDeUsuario.Martillero, UsuarioController.SIN_USUARIO),
+         TipoDeUsuario.Martillero, ServicioUsuario.SIN_USUARIO),
         (C.NOMBRE_USUARIO, C.APELLIDO_USUARIO, C.OTRO_EMAIL_USUARIO, C.NOMBRE_USUARIO, "", C.FECHA_NACIMIENTO_USUARIO,
-         TipoDeUsuario.Pujador, UsuarioController.SIN_CLAVE),
+         TipoDeUsuario.Pujador, ServicioUsuario.SIN_CLAVE),
         (C.NOMBRE_USUARIO, C.APELLIDO_USUARIO, C.OTRO_EMAIL_USUARIO, C.NOMBRE_USUARIO, None, C.FECHA_NACIMIENTO_USUARIO,
-         TipoDeUsuario.Consignatario, UsuarioController.SIN_CLAVE),
+         TipoDeUsuario.Consignatario, ServicioUsuario.SIN_CLAVE),
         (C.NOMBRE_USUARIO, C.APELLIDO_USUARIO, C.OTRO_EMAIL_USUARIO, C.NOMBRE_USUARIO, C.CLAVE_USUARIO, "",
-         TipoDeUsuario.Martillero, UsuarioController.SIN_NACIMIENTO),
+         TipoDeUsuario.Martillero, ServicioUsuario.SIN_NACIMIENTO),
         (C.NOMBRE_USUARIO, C.APELLIDO_USUARIO, C.OTRO_EMAIL_USUARIO, C.NOMBRE_USUARIO, C.CLAVE_USUARIO, None,
-         TipoDeUsuario.Pujador, UsuarioController.SIN_NACIMIENTO),
+         TipoDeUsuario.Pujador, ServicioUsuario.SIN_NACIMIENTO),
     )
     @unpack
     def test_retornar_error_cuando_falta_algun_dato(self, nombre, apellido, email, usuario, clave, nacimiento, tipo,
                                                     mensaje_error):
-        sut = UsuarioController(self.__db_con_usuario, nombre, apellido, email, usuario, clave, nacimiento, tipo)
+        sut = ServicioUsuario(self.__db_con_usuario, nombre, apellido, email, usuario, clave, nacimiento, tipo)
         respuesta = sut.obtener_respuesta()
         self.assertEqual("error", respuesta["status"])
         self.assertIn(mensaje_error, respuesta["mensaje"])
 
     @data(TipoDeUsuario.Martillero, TipoDeUsuario.Consignatario, TipoDeUsuario.Pujador)
     def test_retornar_ok_cuando_ese_usuario_no_existe(self, tipo):
-        sut = UsuarioController(self.__db_con_usuario, C.NOMBRE_USUARIO, C.APELLIDO_USUARIO, "rperez1@gmail.com",
+        sut = ServicioUsuario(self.__db_con_usuario, C.NOMBRE_USUARIO, C.APELLIDO_USUARIO, "rperez1@gmail.com",
                                 "Roberto1", C.CLAVE_USUARIO, C.FECHA_NACIMIENTO_USUARIO, tipo)
         respuesta = sut.obtener_respuesta()
         self.assertEqual("ok", respuesta["status"])
-        self.assertIn(UsuarioController.CUENTA_CREADA, respuesta["mensaje"])
+        self.assertIn(ServicioUsuario.CUENTA_CREADA, respuesta["mensaje"])
 
     @data(TipoDeUsuario.Martillero, TipoDeUsuario.Consignatario, TipoDeUsuario.Pujador)
     def test_retornar_ok_cuando_base_vacia(self, tipo):
@@ -87,18 +87,18 @@ class UsuarioControllerTests(unittest.TestCase):
             .con_usuarios(UsuariosEnMemoria({})) \
             .construir()
 
-        sut = UsuarioController(db, C.NOMBRE_USUARIO, C.APELLIDO_USUARIO, C.OTRO_EMAIL_USUARIO,
+        sut = ServicioUsuario(db, C.NOMBRE_USUARIO, C.APELLIDO_USUARIO, C.OTRO_EMAIL_USUARIO,
                                 C.NOMBRE_USUARIO, C.CLAVE_USUARIO, C.FECHA_NACIMIENTO_USUARIO, tipo)
         respuesta = sut.obtener_respuesta()
         self.assertEqual("ok", respuesta["status"])
-        self.assertIn(UsuarioController.CUENTA_CREADA, respuesta["mensaje"])
+        self.assertIn(ServicioUsuario.CUENTA_CREADA, respuesta["mensaje"])
 
     def test_completar_usuario_correctamente(self):
         db = CreadorDeBasesDeDatosTemporales() \
             .con_usuarios(UsuariosEnMemoria({})) \
             .construir()
 
-        UsuarioController(db, C.NOMBRE_USUARIO, C.APELLIDO_USUARIO, C.OTRO_EMAIL_USUARIO, C.NOMBRE_USUARIO,
+        ServicioUsuario(db, C.NOMBRE_USUARIO, C.APELLIDO_USUARIO, C.OTRO_EMAIL_USUARIO, C.NOMBRE_USUARIO,
                           C.CLAVE_USUARIO, C.FECHA_NACIMIENTO_USUARIO, TipoDeUsuario.Pujador)
         usuario = db.Usuarios.buscar(C.NOMBRE_USUARIO, C.CLAVE_USUARIO)
 

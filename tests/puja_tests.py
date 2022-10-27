@@ -1,7 +1,7 @@
 import unittest
 from ddt import ddt, data
 import tests.constantes as C
-from controller.puja import PujaController
+from controller.puja import ServicioPuja
 from model.lotes import Lote
 from model.articulos import Articulo
 from model.subastas import Subasta
@@ -33,61 +33,61 @@ class PujaControllerTests(unittest.TestCase):
 
     @data("", None)
     def test_retornar_error_al_agregar_puja_con_lote_invalido(self, lote_invalido):
-        sut = PujaController(self.__db)
+        sut = ServicioPuja(self.__db)
         sut.agregar(lote_invalido, C.ID_USUARIO, C.MONTO_PUJA)
         respuesta = sut.obtener_respuesta()
         self.assertEqual("error", respuesta["status"])
-        self.assertEqual(PujaController.PUJAR_SIN_LOTE, respuesta["mensaje"])
+        self.assertEqual(ServicioPuja.PUJAR_SIN_LOTE, respuesta["mensaje"])
 
     @data("", None)
     def test_retornar_error_al_agregar_puja_con_pujador_invalido(self, pujador_invalido):
-        sut = PujaController(self.__db)
+        sut = ServicioPuja(self.__db)
         sut.agregar(C.LOTE_UID, pujador_invalido, C.MONTO_PUJA)
         respuesta = sut.obtener_respuesta()
         self.assertEqual("error", respuesta["status"])
-        self.assertEqual(PujaController.PUJAR_SIN_PUJADOR, respuesta["mensaje"])
+        self.assertEqual(ServicioPuja.PUJAR_SIN_PUJADOR, respuesta["mensaje"])
 
     def test_retornar_error_al_agregar_puja_con_lote_inexistente(self):
-        sut = PujaController(self.__db)
+        sut = ServicioPuja(self.__db)
         sut.agregar(C.OTRO_LOTE_UID, C.ID_USUARIO, C.MONTO_PUJA)
         respuesta = sut.obtener_respuesta()
         self.assertEqual("error", respuesta["status"])
-        self.assertEqual(PujaController.LOTE_INEXISTENTE, respuesta["mensaje"])
+        self.assertEqual(ServicioPuja.LOTE_INEXISTENTE, respuesta["mensaje"])
 
     def test_retornar_error_al_agregar_puja_con_pujador_inexistente(self):
-        sut = PujaController(self.__db)
+        sut = ServicioPuja(self.__db)
         sut.agregar(C.LOTE_UID, C.OTRO_ID_USUARIO, C.MONTO_PUJA)
         respuesta = sut.obtener_respuesta()
         self.assertEqual("error", respuesta["status"])
-        self.assertEqual(PujaController.PUJADOR_INEXISTENTE, respuesta["mensaje"])
+        self.assertEqual(ServicioPuja.PUJADOR_INEXISTENTE, respuesta["mensaje"])
 
     @data(None, 0)
     def test_retornar_error_al_agregar_puja_con_monto_invalido(self, monto_invalido):
-        sut = PujaController(self.__db)
+        sut = ServicioPuja(self.__db)
         sut.agregar(C.LOTE_UID, C.ID_USUARIO, monto_invalido)
         respuesta = sut.obtener_respuesta()
         self.assertEqual("error", respuesta["status"])
-        self.assertEqual(PujaController.MONTO_INVALIDO, respuesta["mensaje"])
+        self.assertEqual(ServicioPuja.MONTO_INVALIDO, respuesta["mensaje"])
 
     def test_retornar_error_al_agregar_puja_con_monto_invalido(self):
-        sut = PujaController(self.__db)
+        sut = ServicioPuja(self.__db)
         sut.agregar(C.LOTE_UID, C.ID_USUARIO, -1)
         respuesta = sut.obtener_respuesta()
         self.assertEqual("error", respuesta["status"])
-        self.assertEqual(PujaController.MONTO_INVALIDO, respuesta["mensaje"])
+        self.assertEqual(ServicioPuja.MONTO_INVALIDO, respuesta["mensaje"])
 
     def test_retornar_error_al_agregar_puja_menor_a_anterior(self):
-        sut = PujaController(self.__db)
+        sut = ServicioPuja(self.__db)
         sut.agregar(C.LOTE_UID, C.ID_USUARIO, C.OTRO_MONTO_PUJA)
         sut.agregar(C.LOTE_UID, C.ID_USUARIO, C.MONTO_PUJA)
         respuesta = sut.obtener_respuesta()
         self.assertEqual("error", respuesta["status"])
-        self.assertEqual(PujaController.PUJA_BAJA, respuesta["mensaje"])
+        self.assertEqual(ServicioPuja.PUJA_BAJA, respuesta["mensaje"])
        
 
 
     def test_agregar_puja_correctamente(self):
-        sut = PujaController(self.__db)
+        sut = ServicioPuja(self.__db)
         sut.agregar(C.LOTE_UID, C.ID_USUARIO, C.MONTO_PUJA)
         puja = self.__db.Pujas.buscar_por_uid(C.PUJA_UID)
         self.assertEqual(C.LOTE_UID, puja.obtener_lote_uid())
