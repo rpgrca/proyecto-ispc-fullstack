@@ -5,8 +5,6 @@ from controller.puja import PujaController
 from model.lotes import Lote
 from model.articulos import Articulo
 from model.subastas import Subasta
-from model.pujas import Puja
-from model.usuarios import Pujador
 from model.tipo_usuario import TipoDeUsuario
 from model.content_provider.memory import ArticulosEnMemoria, CreadorDeBasesDeDatosTemporales, LotesEnMemoria, SubastasEnMemoria, UsuariosEnMemoria
 
