@@ -3,6 +3,7 @@
 # - crear(titulo, descripcion, valuacion, consignatario)
 # - listar()
 # - listar_para(consignatario)
+from abc import ABC, abstractmethod
 from model.serialization import Serializable
 
 
@@ -17,9 +18,11 @@ class Articulo(Serializable):
         return {}
 
 
-class Articulos:
+class Articulos(ABC):
+    @abstractmethod
     def agregar(self, articulo_uid: int):
-        raise NotImplementedError()
+        pass
 
+    @abstractmethod
     def buscar_por_uid(self, articulo_uid: int) -> Articulo:
-        raise NotImplementedError()
+        pass

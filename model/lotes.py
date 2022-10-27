@@ -1,3 +1,4 @@
+from abc import ABC, abstractmethod
 from model.articulos import Articulo
 from model.serialization import Serializable
 from model.subastas import Subasta
@@ -27,15 +28,19 @@ class Lote(Serializable):
         return {"articulo": self.__articulo.serialize(), "base": self.__base, "orden": self.__orden}
 
 
-class Lotes:
+class Lotes(ABC):
+    @abstractmethod
     def agregar(self, subasta: Subasta, articulo: Articulo, base: int, orden: int) -> None:
-        raise NotImplementedError()
+        pass
 
+    @abstractmethod
     def contar_lotes(self, subasta: Subasta) -> int:
-        raise NotImplementedError()
+        pass
 
+    @abstractmethod
     def obtener(self, subasta: Subasta, orden: int) -> Lote:
-        raise NotImplementedError()
+        pass
 
+    @abstractmethod
     def buscar_por_uid(self, lote_uid: int) -> Lote:
-        raise NotImplementedError()
+        pass

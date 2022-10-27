@@ -1,4 +1,5 @@
 from datetime import date
+from abc import ABC, abstractmethod
 from model.tipo_usuario import TipoDeUsuario
 
 
@@ -54,25 +55,31 @@ class Martillero(Usuario):
         super().__init__(uid, nombre, apellido, email, usuario, clave, nacimiento, TipoDeUsuario.Martillero)
 
 
-class Usuarios:
+class Usuarios(ABC):
+    @abstractmethod
     def agregar(self, nombre: str, apellido: str, email: str, usuario: str, clave: str, nacimiento: date,
                 tipo: TipoDeUsuario) -> None:
-        raise NotImplementedError()
+        pass
 
+    @abstractmethod
     def existe(self, usuario: str) -> bool:
-        raise NotImplementedError()
+        pass
 
+    @abstractmethod
     def existe_con_mail(self, email: str) -> bool:
-        raise NotImplementedError()
+        pass
 
+    @abstractmethod
     def buscar(self, usuario: str, clave: str) -> Usuario:
-        raise NotImplementedError()
+        pass
 
+    @abstractmethod
     def buscar_por_email(self, email: str, clave: str) -> Usuario:
-        raise NotImplementedError()
+        pass
 
+    @abstractmethod
     def buscar_pujador_por_uid(self, uid: int) -> Pujador:
-        raise NotImplementedError()
+        pass
 
 
 class UsuariosFactory:

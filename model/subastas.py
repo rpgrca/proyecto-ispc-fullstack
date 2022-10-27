@@ -1,3 +1,4 @@
+from abc import ABC, abstractmethod
 from datetime import date
 
 
@@ -28,9 +29,11 @@ class Subasta:
         return self.__fecha
 
 
-class Subastas:
+class Subastas(ABC):
+    @abstractmethod
     def crear(self, titulo: str, descripcion: str, imagen: str, fecha: date) -> Subasta:
-        raise NotImplementedError()
+        pass
 
+    @abstractmethod
     def buscar_por_uid(self, uid: int) -> Subasta:
-        raise NotImplementedError()
+        pass

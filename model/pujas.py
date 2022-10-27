@@ -1,3 +1,4 @@
+from abc import ABC, abstractmethod
 from model.usuarios import Pujador
 from model.lotes import Lote
 
@@ -22,15 +23,19 @@ class Puja:
         return self.__lote.obtener_uid()
 
 
-class Pujas:
+class Pujas(ABC):
+    @abstractmethod
     def agregar(self, monto: int, pujador: Pujador, lote: Lote):
         raise NotImplementedError()
 
+    @abstractmethod
     def buscar_por_monto(self, monto: int) -> Puja:
         raise NotImplementedError()
 
+    @abstractmethod
     def buscar_ultima_puja(self, lote: Lote) -> Puja:
         raise NotImplementedError()
 
+    @abstractmethod
     def buscar_por_uid(self, uid: int) -> Puja:
         raise NotImplementedError()
