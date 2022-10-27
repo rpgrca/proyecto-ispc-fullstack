@@ -66,10 +66,6 @@ class Usuarios(ABC):
         pass
 
     @abstractmethod
-    def existe_con_mail(self, email: str) -> bool:
-        pass
-
-    @abstractmethod
     def buscar(self, usuario: str, clave: str) -> Usuario:
         pass
 

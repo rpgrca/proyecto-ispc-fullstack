@@ -83,8 +83,6 @@ class ServicioPujaTests(unittest.TestCase):
         respuesta = sut.obtener_respuesta()
         self.assertEqual("error", respuesta["status"])
         self.assertEqual(ServicioPuja.PUJA_BAJA, respuesta["mensaje"])
-       
-
 
     def test_agregar_puja_correctamente(self):
         sut = ServicioPuja(self.__db)

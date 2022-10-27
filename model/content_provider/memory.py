@@ -31,9 +31,6 @@ class UsuariosEnMemoria(Usuarios):
     def existe(self, usuario: str) -> bool:
         return usuario in self.__usuarios
 
-    def existe_con_mail(self, email: str) -> bool:
-        return any(filter(lambda u: u["email"] == email, self.__usuarios.values()))
-
     def buscar(self, usuario: str, clave: str) -> Usuario:
         if usuario in self.__usuarios:
             registro = self.__usuarios[usuario]

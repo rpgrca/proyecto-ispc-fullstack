@@ -13,9 +13,6 @@ class Subasta:
     def obtener_uid(self) -> int:
         return self.__uid
 
-    def contar_lotes(self) -> int:
-        return len(self.__lotes)
-
     def obtener_titulo(self) -> str:
         return self.__titulo
 
