@@ -13,3 +13,7 @@ values
 -- traer información de un usuario dado
 select * from Usuarios
 where id = %s;
+
+insert into Lotes (precio_base, orden, id_articulo, id_subasta)
+values
+(%s, %s, %s, %s);
