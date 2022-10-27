@@ -8,7 +8,7 @@ from model.content_provider.memory import ArticulosEnMemoria, CreadorDeBasesDeDa
 
 
 @ddt
-class LoteControllerTests(unittest.TestCase):
+class ServicioLoteTests(unittest.TestCase):
     def setUp(self):
         self.__db = CreadorDeBasesDeDatosTemporales() \
             .con_subastas(SubastasEnMemoria([Subasta(C.SUBASTA_UID, C.TITULO_SUBASTA, C.DESCRIPCION_SUBASTA, C.IMAGEN_SUBASTA,

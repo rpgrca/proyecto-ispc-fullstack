@@ -7,7 +7,7 @@ from model.content_provider.memory import UsuariosEnMemoria, CreadorDeBasesDeDat
 
 
 @ddt
-class LoginControllerTests(unittest.TestCase):
+class ServicioLoginTests(unittest.TestCase):
     def setUp(self):
         self.__db_con_usuario = CreadorDeBasesDeDatosTemporales() \
             .con_usuarios(UsuariosEnMemoria({

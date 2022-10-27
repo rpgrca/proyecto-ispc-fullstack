@@ -5,7 +5,7 @@ from model.tipo_usuario import TipoDeUsuario
 from model.content_provider.memory import UsuariosEnMemoria, CreadorDeBasesDeDatosTemporales
 
 
-class PujadorControllerTests(unittest.TestCase):
+class ServicioPujadorTests(unittest.TestCase):
     def test_graba_usuario_de_tipo_pujador(self):
         diccionario = {}
         db = CreadorDeBasesDeDatosTemporales() \

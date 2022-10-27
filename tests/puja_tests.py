@@ -11,7 +11,7 @@ from model.content_provider.memory import LotesEnMemoria, SubastasEnMemoria, Usu
 
 
 @ddt
-class PujaControllerTests(unittest.TestCase):
+class ServicioPujaTests(unittest.TestCase):
     def setUp(self):
         subasta = Subasta(C.SUBASTA_UID, C.TITULO_SUBASTA, C.DESCRIPCION_SUBASTA, C.IMAGEN_SUBASTA, C.FECHA_DE_SUBASTA)
         articulo = Articulo(C.ARTICULO_UID)

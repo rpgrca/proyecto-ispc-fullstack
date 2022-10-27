@@ -20,7 +20,7 @@ class EmailSenderSpy(EmailSender):
 
 
 @ddt
-class ReestablecerControllerTests(unittest.TestCase):
+class ServicioReestablecerTests(unittest.TestCase):
     def setUp(self):
         self.__db_con_usuario = CreadorDeBasesDeDatosTemporales() \
             .con_usuarios(UsuariosEnMemoria({
