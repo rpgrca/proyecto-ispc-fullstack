@@ -15,6 +15,7 @@ class LoteController(Controller):
     LOTE_INEXISTENTE = "No existe tal lote"
 
     def __init__(self, db: BaseDeDatos):
+        super().__init__()
         self.__db = db
 
     def agregar(self, subasta_uid: int, articulo_uid: str, base: int) -> None:

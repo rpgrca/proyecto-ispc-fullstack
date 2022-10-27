@@ -15,6 +15,7 @@ class SubastaController(Controller):
     SIN_FECHA = "No se puede crear una subasta sin fecha"
 
     def __init__(self, db: BaseDeDatos):
+        super().__init__()
         self.__db = db
 
     def crear(self, titulo: str, descripcion: str, imagen: str, fecha: date) -> None:

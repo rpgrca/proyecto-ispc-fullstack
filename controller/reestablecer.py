@@ -7,6 +7,7 @@ class ReestablecerController(Controller):
     RECORDATORIO_EXITOSO = "Si el correo está en nuestros registros se ha enviado un recordatorio a su cuenta"
 
     def __init__(self, db: BaseDeDatos, email: str, sender: EmailSender = RealEmailSender()):
+        super().__init__()
         usuario = db.Usuarios.buscar_por_email(email)
         if usuario:
             sender.enviar_mail_a(usuario, f"Recordatorio: Su clave es {usuario.obtener_clave()}")

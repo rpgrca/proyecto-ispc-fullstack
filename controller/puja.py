@@ -10,6 +10,7 @@ class PujaController(Controller):
     PUJA_BAJA = "No se puede pujar por menos de la última puja"
 
     def __init__(self, db: BaseDeDatos):
+        super().__init__()
         self.__db = db
 
     def agregar(self, lote_uid: int, pujador_uid: int, monto: int) -> None:

@@ -8,6 +8,7 @@ class LoginController(Controller):
     LOGIN_INVALIDO = "Usuario o contraseña inválida"
 
     def __init__(self, db: BaseDeDatos, usuario: str, clave: str):
+        super().__init__()
         if not self._verificar(usuario, self.SIN_USUARIO) or \
            not self._verificar(clave, self.SIN_CLAVE):
             return

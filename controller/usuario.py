@@ -16,6 +16,7 @@ class UsuarioController(Controller):
 
     def __init__(self, db: BaseDeDatos, nombre: str, apellido: str, email: str, usuario: str, clave: str, nacimiento: date,
                  tipo: TipoDeUsuario):
+        super().__init__()
         if not self._verificar(nombre, self.SIN_NOMBRE) or \
            not self._verificar(apellido, self.SIN_APELLIDO) or \
            not self._verificar(email, self.SIN_EMAIL) or \
