@@ -7,6 +7,7 @@ from model.usuarios import Usuario, Usuarios
 from model.subastas import Subasta, Subastas
 from model.articulos import Articulo, Articulos
 
+
 class MysqlDatabase:
     def __init__(self, connection_string: list[str]):
         self.name = "bidon_subastas"
@@ -24,7 +25,8 @@ class MysqlDatabase:
     def open(self):
         if not self.__connection:
             try:
-                self.__connection = mysql.connector.connect(user=self.__user, password=self.__password, host=self.__host, database=self.__database, connection_timeout=5)
+                self.__connection = mysql.connector.connect(user=self.__user, password=self.__password, host=self.__host,
+                                                            database=self.__database, connection_timeout=5)
             except Error as err:
                 if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
                     raise ValueError("Error en el usuario o password")
@@ -68,13 +70,13 @@ class MysqlDatabase:
                                    "constraint fk_id_subasta foreign key (id_subasta) references Subastas (id)"
                                    ") ENGINE=InnoDB")
                     cursor.execute("CREATE TABLE IF NOT EXISTS Pujas ("
-                                  "id int not null unique auto_increment primary key,"
-                                  "monto int not null,"
-                                  "id_pujador int not null,"
-                                  "id_lote int not null,"
-                                  "constraint fk_id_pujador foreign key (id_pujador) references Usuarios(id),"
-                                  "constraint fk_id_lote foreign key (id_lote) references Lotes(id)"
-                                  ") ENGINE=InnoDB")
+                                   "id int not null unique auto_increment primary key,"
+                                   "monto int not null,"
+                                   "id_pujador int not null,"
+                                   "id_lote int not null,"
+                                   "constraint fk_id_pujador foreign key (id_pujador) references Usuarios(id),"
+                                   "constraint fk_id_lote foreign key (id_lote) references Lotes(id)"
+                                   ") ENGINE=InnoDB")
                     cursor.execute("CREATE TABLE IF NOT EXISTS Ventas ("
                                    "id int not null unique auto_increment primary key,"
                                    "precio_final float not null,"
