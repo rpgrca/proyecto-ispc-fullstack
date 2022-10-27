@@ -34,55 +34,55 @@ class MysqlDatabase:
                     cursor.execute("CREATE DATABASE IF NOT EXISTS " + self.__database)
                     cursor.execute("USE " + self.__database)
                     cursor.execute("CREATE TABLE IF NOT EXISTS Usuarios ("
-                        "id INT NOT NULL UNIQUE AUTO_INCREMENT PRIMARY KEY,"
-                        "nombre varchar(25) not null,"
-                        "apellido varchar(25) not null,"
-                        "email varchar(128) not null,"
-                        "usuario varchar(20) not null,"
-                        "clave varchar(20) not null,"
-                        "nacimiento date not null,"
-                        "tipo_usuario int not null,"
-                        ") ENGINE=InnoDB")
+                                   "id INT NOT NULL UNIQUE AUTO_INCREMENT PRIMARY KEY,"
+                                   "nombre varchar(25) not null,"
+                                   "apellido varchar(25) not null,"
+                                   "email varchar(128) not null,"
+                                   "usuario varchar(20) not null,"
+                                   "clave varchar(20) not null,"
+                                   "nacimiento date not null,"
+                                   "tipo_usuario int not null,"
+                                   ") ENGINE=InnoDB")
                     cursor.execute("CREATE TABLE IF NOT EXISTS Articulos ("
-                        "id INT NOT NULL UNIQUE AUTO_INCREMENT PRIMARY KEY,"
-                        "titulo varchar(50) NOT NULL,"
-                        "description VARCHAR(512) NOT NULL,"
-                        "valuacion int not null,"
-                        "id_consignatario int not null,"
-                        "CONSTRAINT fk_id_consignatario FOREIGN KEY(id_consignatario) REFERENCES Usuarios(id)"
-                        ") ENGINE=InnoDB")
+                                   "id INT NOT NULL UNIQUE AUTO_INCREMENT PRIMARY KEY,"
+                                   "titulo varchar(50) NOT NULL,"
+                                   "description VARCHAR(512) NOT NULL,"
+                                   "valuacion int not null,"
+                                   "id_consignatario int not null,"
+                                   "CONSTRAINT fk_id_consignatario FOREIGN KEY(id_consignatario) REFERENCES Usuarios(id)"
+                                   ") ENGINE=InnoDB")
                     cursor.execute("CREATE TABLE IF NOT EXISTS Subastas ("
-                        "id int not null unique auto_increment primary key,"
-                        "fecha date not null,"
-                        "titulo varchar(50) not null,"
-                        "description varchar(50) not null,"
-                        "imagen varchar(256) not null"
-                        ") ENGINE=InnoDB")
+                                   "id int not null unique auto_increment primary key,"
+                                   "fecha date not null,"
+                                   "titulo varchar(50) not null,"
+                                   "description varchar(50) not null,"
+                                   "imagen varchar(256) not null"
+                                   ") ENGINE=InnoDB")
                     cursor.execute("CREATE TABLE IF NOT EXISTS Lotes ("
-                        "id int not null unique auto_increment primary key,"
-                        "precio_base int not null,"
-                        "orden int not null,"
-                        "id_articulo int not null,"
-                        "id_subasta int not null,"
-                        "constraint fk_id_articulo foreign key (id_articulo) references Articulo (id),"
-                        "constraint fk_id_subasta foreign key (id_subasta) references Subastas (id)"
-                        ") ENGINE=InnoDB")
+                                   "id int not null unique auto_increment primary key,"
+                                   "precio_base int not null,"
+                                   "orden int not null,"
+                                   "id_articulo int not null,"
+                                   "id_subasta int not null,"
+                                   "constraint fk_id_articulo foreign key (id_articulo) references Articulo (id),"
+                                   "constraint fk_id_subasta foreign key (id_subasta) references Subastas (id)"
+                                   ") ENGINE=InnoDB")
                     cursor.execute("CREATE TABLE IF NOT EXISTS Pujas ("
-                        "id int not null unique auto_increment primary key,"
-                        "monto int not null,"
-                        "id_pujador int not null,"
-                        "id_lote int not null,"
-                        "constraint fk_id_pujador foreign key (id_pujador) references Usuarios(id),"
-                        "constraint fk_id_lote foreign key (id_lote) references Lotes(id)"
-                        ") ENGINE=InnoDB")
+                                  "id int not null unique auto_increment primary key,"
+                                  "monto int not null,"
+                                  "id_pujador int not null,"
+                                  "id_lote int not null,"
+                                  "constraint fk_id_pujador foreign key (id_pujador) references Usuarios(id),"
+                                  "constraint fk_id_lote foreign key (id_lote) references Lotes(id)"
+                                  ") ENGINE=InnoDB")
                     cursor.execute("CREATE TABLE IF NOT EXISTS Ventas ("
-                        "id int not null unique auto_increment primary key,"
-                        "precio_final float not null,"
-                        "comision float not null,"
-                        "pago_consignatario float not null,"
-                        "id_puja int not null,"
-                        "constraint fk_id_puja foreign key(id_puja) references Pujas (id)"
-                        ") ENGINE=InnoDB")
+                                   "id int not null unique auto_increment primary key,"
+                                   "precio_final float not null,"
+                                   "comision float not null,"
+                                   "pago_consignatario float not null,"
+                                   "id_puja int not null,"
+                                   "constraint fk_id_puja foreign key(id_puja) references Pujas (id)"
+                                   ") ENGINE=InnoDB")
                     self.__connection.commit()
                     cursor.close()
                 else:
@@ -119,7 +119,7 @@ class TablaUsuarios(Usuarios):
         self.__connection = connection
 
     def agregar(self, nombre: str, apellido: str, email: str, usuario: str, clave: str, nacimiento: date,
-        tipo: TipoDeUsuario) -> None:
+                tipo: TipoDeUsuario) -> None:
         pass
 
     def existe(self, usuario: str) -> bool:

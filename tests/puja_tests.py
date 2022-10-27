@@ -6,7 +6,8 @@ from model.lotes import Lote
 from model.articulos import Articulo
 from model.subastas import Subasta
 from model.tipo_usuario import TipoDeUsuario
-from model.content_provider.memory import ArticulosEnMemoria, CreadorDeBasesDeDatosTemporales, LotesEnMemoria, SubastasEnMemoria, UsuariosEnMemoria
+from model.content_provider.memory import ArticulosEnMemoria, CreadorDeBasesDeDatosTemporales
+from model.content_provider.memory import LotesEnMemoria, SubastasEnMemoria, UsuariosEnMemoria
 
 
 @ddt
@@ -15,7 +16,7 @@ class PujaControllerTests(unittest.TestCase):
         subasta = Subasta(C.SUBASTA_UID, C.TITULO_SUBASTA, C.DESCRIPCION_SUBASTA, C.IMAGEN_SUBASTA, C.FECHA_DE_SUBASTA)
         articulo = Articulo(C.ARTICULO_UID)
         self.__db = CreadorDeBasesDeDatosTemporales() \
-            .con_usuarios(UsuariosEnMemoria({ C.NOMBRE_USUARIO: {
+            .con_usuarios(UsuariosEnMemoria({C.NOMBRE_USUARIO: {
                 "id": C.ID_USUARIO,
                 "nombre": C.NOMBRE_USUARIO,
                 "apellido": C.APELLIDO_USUARIO,

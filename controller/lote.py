@@ -16,7 +16,7 @@ class LoteController(Controller):
 
     def __init__(self, db: BaseDeDatos):
         self.__db = db
- 
+
     def agregar(self, subasta_uid: int, articulo_uid: str, base: int) -> None:
         if not self._verificar(subasta_uid, self.LOTE_SIN_SUBASTA) or \
            not self._verificar(articulo_uid, self.ARTICULO_NULO_EN_SUBASTA):
@@ -36,11 +36,11 @@ class LoteController(Controller):
     def contar_lotes_en(self, subasta_uid: int) -> None:
         if not self._verificar(subasta_uid, self.CONTAR_SIN_SUBASTA):
             return
-        
+
         subasta = self.__db.Subastas.buscar_por_uid(subasta_uid)
         if not self._verificar(subasta, self.CONTAR_SUBASTA_INEXISTENTE):
             return
-        
+
         cuenta = self.__db.Lotes.contar_lotes(subasta)
         self._responder_bien_con_numero("total", cuenta)
 

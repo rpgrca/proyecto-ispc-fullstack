@@ -52,10 +52,11 @@ class UsuariosEnMemoria(Usuarios):
         return None
 
     def buscar_pujador_por_uid(self, uid: int) -> Pujador:
-        registro = next(filter(lambda u: u["id"] == uid and u["tipo"] == TipoDeUsuario.Pujador.value, self.__usuarios.values()), None)
+        registro = next(filter(lambda u: u["id"] == uid and u["tipo"] == TipoDeUsuario.Pujador.value,
+                               self.__usuarios.values()), None)
         if registro:
-            return UsuariosFactory.crear(registro["id"], registro["nombre"], registro["apellido"], registro["email"], registro["usuario"],
-                           registro["clave"], registro["nacimiento"], registro["tipo"])
+            return UsuariosFactory.crear(registro["id"], registro["nombre"], registro["apellido"], registro["email"],
+                                         registro["usuario"], registro["clave"], registro["nacimiento"], registro["tipo"])
 
         return None
 
@@ -106,15 +107,16 @@ class PujasEnMemoria(Pujas):
 class LotesEnMemoria(Lotes):
     def __init__(self, lotes: list[Lote]):
         self.__lotes = lotes
-        
+
     def agregar(self, subasta: Subasta, articulo: Articulo, base: int, orden: int):
         self.__lotes.append(Lote(len(self.__lotes) + 1, subasta, articulo, base, orden))
 
     def contar_lotes(self, subasta: Subasta) -> int:
-        return sum(1 if l.obtener_subasta_uid() == subasta.obtener_uid() else 0 for l in self.__lotes)
-    
+        return sum(1 if lote.obtener_subasta_uid() == subasta.obtener_uid() else 0 for lote in self.__lotes)
+
     def obtener(self, subasta: Subasta, orden: int) -> Lote:
-        return next(l for l in self.__lotes if l.obtener_subasta_uid() == subasta.obtener_uid() and l.obtener_orden() == orden)
+        return next(lote for lote in self.__lotes if lote.obtener_subasta_uid() == subasta.obtener_uid() and
+                    lote.obtener_orden() == orden)
 
     def buscar_por_uid(self, lote_uid: int) -> Lote:
         return next(filter(lambda l: l.obtener_uid() == lote_uid, self.__lotes))
