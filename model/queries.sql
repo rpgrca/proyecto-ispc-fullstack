@@ -21,3 +21,8 @@ where id = %s;
 insert into Lotes (precio_base, orden, id_articulo, id_subasta)
 values
 (%s, %s, %s, %s);
+
+-- Crear un registro de venta
+insert into Ventas (precio_final, comision, pago_consignatario, id_puja)
+values
+(%s, %s, %s, %s);
