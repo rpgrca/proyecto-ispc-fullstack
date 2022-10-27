@@ -37,7 +37,7 @@ jobs:
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
     - name: Test with pytest
       run: |
-        for t in `ls -d1 ./tests/*.py`; do
+        for t in `ls -d1 ./tests/*_tests.py`; do
             n=$(basename $t .py)
             PYTHONPATH=$PYTHONPATH:controller:model pytest tests/$n.py --doctest-modules --junitxml=$n.coverage.xml --cov=$n --cov-report=xml --cov-branch --cov-append
         done
