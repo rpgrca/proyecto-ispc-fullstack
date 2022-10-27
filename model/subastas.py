@@ -30,7 +30,7 @@ class Subasta:
 
 class Subastas:
     def crear(self, titulo: str, descripcion: str, imagen: str, fecha: date) -> Subasta:
-        pass
+        raise NotImplementedError()
 
     def buscar_por_uid(self, uid: int) -> Subasta:
-        pass
+        raise NotImplementedError()

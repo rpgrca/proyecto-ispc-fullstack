@@ -21,7 +21,7 @@ class Puja:
 
 class Pujas:
     def agregar(self, monto: int, pujador: Pujador, lote: Lote):
-        pass
+        raise NotImplementedError()
 
     def buscar_por_monto(self, monto: int) -> Puja:
-        pass
+        raise NotImplementedError()

@@ -1,5 +1,6 @@
 import unittest
 from ddt import ddt
+from tests.constantes import *
 from controller.email_sender import EmailSender
 from controller.reestablecer import ReestablecerController
 from model.tipo_usuario import TipoDeUsuario
@@ -23,25 +24,25 @@ class ReestablecerControllerTests(unittest.TestCase):
     def setUp(self):
         self.__db_con_usuario = CreadorDeBasesDeDatosTemporales() \
             .con_usuarios(UsuariosEnMemoria({
-                "Roberto": {
-                    "nombre": "Roberto",
-                    "apellido": "Perez",
-                    "email": "roberto@gmail.com",
-                    "usuario": "Roberto",
-                    "clave": "123456",
-                    "nacimiento": 9/17/2000,
+                NOMBRE_USUARIO: {
+                    "nombre": NOMBRE_USUARIO,
+                    "apellido": APELLIDO_USUARIO,
+                    "email": EMAIL_USUARIO,
+                    "usuario": NOMBRE_USUARIO,
+                    "clave": CLAVE_USUARIO,
+                    "nacimiento": FECHA_NACIMIENTO_USUARIO,
                     "tipo": TipoDeUsuario.Pujador.value
                 }})) \
             .construir()
 
     def test_retornar_ok_cuando_mail_existe_en_base_de_datos(self):
-        sut = ReestablecerController(self.__db_con_usuario, "roberto@gmail.com", EmailSenderSpy())
+        sut = ReestablecerController(self.__db_con_usuario, EMAIL_USUARIO, EmailSenderSpy())
         respuesta = sut.obtener_respuesta()
         self.assertEqual("ok", respuesta["status"])
         self.assertEqual(ReestablecerController.RECORDATORIO_EXITOSO, respuesta["mensaje"])
 
     def test_retornar_ok_cuando_mail_no_existe_en_base_de_datos(self):
-        sut = ReestablecerController(self.__db_con_usuario, "rperez@gmail.com", EmailSenderSpy())
+        sut = ReestablecerController(self.__db_con_usuario, OTRO_EMAIL_USUARIO, EmailSenderSpy())
         respuesta = sut.obtener_respuesta()
         self.assertEqual("ok", respuesta["status"])
         self.assertIn(ReestablecerController.RECORDATORIO_EXITOSO, respuesta["mensaje"])
@@ -50,19 +51,19 @@ class ReestablecerControllerTests(unittest.TestCase):
         db = CreadorDeBasesDeDatosTemporales() \
             .con_usuarios(UsuariosEnMemoria({})) \
             .construir()
-        sut = ReestablecerController(db, "rperez@gmail.com", EmailSenderSpy())
+        sut = ReestablecerController(db, OTRO_EMAIL_USUARIO, EmailSenderSpy())
         respuesta = sut.obtener_respuesta()
         self.assertEqual("ok", respuesta["status"])
         self.assertIn(ReestablecerController.RECORDATORIO_EXITOSO, respuesta["mensaje"])
 
     def test_enviar_mail_cuando_email_existe(self):
         sut = EmailSenderSpy()
-        ReestablecerController(self.__db_con_usuario, "roberto@gmail.com", sut).obtener_respuesta()
+        ReestablecerController(self.__db_con_usuario, EMAIL_USUARIO, sut).obtener_respuesta()
         self.assertTrue(sut.envio_mail())
 
     def test_no_enviar_mail_cuando_email_no_existe(self):
         sut = EmailSenderSpy()
-        ReestablecerController(self.__db_con_usuario, "rperez@gmail.com", sut).obtener_respuesta()
+        ReestablecerController(self.__db_con_usuario, OTRO_EMAIL_USUARIO, sut).obtener_respuesta()
         self.assertFalse(sut.envio_mail())
 
 

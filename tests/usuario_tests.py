@@ -1,5 +1,6 @@
 import unittest
 from ddt import ddt, data, unpack
+from tests.constantes import *
 from controller.usuario import UsuarioController
 from model.tipo_usuario import TipoDeUsuario
 from model.content_provider.memory import UsuariosEnMemoria, CreadorDeBasesDeDatosTemporales
@@ -7,39 +8,32 @@ from model.content_provider.memory import UsuariosEnMemoria, CreadorDeBasesDeDat
 
 @ddt
 class UsuarioControllerTests(unittest.TestCase):
-    NOMBRE_USUARIO = "Roberto"
-    APELLIDO_USUARIO = "Perez"
-    EMAIL_USUARIO = "roberto@gmail.com"
-    OTRO_EMAIL_USUARIO = "rperez@gmail.com"
-    CLAVE_USUARIO = "123456"
-    FECHA_NACIMIENTO_USUARIO = 9/17/2000
-
     def setUp(self):
         self.__db_con_usuario = CreadorDeBasesDeDatosTemporales() \
             .con_usuarios(UsuariosEnMemoria({
-                self.NOMBRE_USUARIO: {
-                    "nombre": self.NOMBRE_USUARIO,
-                    "apellido": self.APELLIDO_USUARIO,
-                    "email": self.EMAIL_USUARIO,
-                    "usuario": self.NOMBRE_USUARIO,
-                    "clave": self.CLAVE_USUARIO,
-                    "nacimiento": self.FECHA_NACIMIENTO_USUARIO,
+                NOMBRE_USUARIO: {
+                    "nombre": NOMBRE_USUARIO,
+                    "apellido": APELLIDO_USUARIO,
+                    "email": EMAIL_USUARIO,
+                    "usuario": NOMBRE_USUARIO,
+                    "clave": CLAVE_USUARIO,
+                    "nacimiento": FECHA_NACIMIENTO_USUARIO,
                     "tipo": TipoDeUsuario.Pujador.value
                 }})) \
             .construir()
 
     @data(TipoDeUsuario.Martillero, TipoDeUsuario.Consignatario, TipoDeUsuario.Pujador)
     def test_retornar_error_cuando_quiere_crear_usuario_ya_existente(self, tipo):
-        sut = UsuarioController(self.__db_con_usuario, self.NOMBRE_USUARIO, self.APELLIDO_USUARIO, self.OTRO_EMAIL_USUARIO,
-                                self.NOMBRE_USUARIO, self.CLAVE_USUARIO, self.FECHA_NACIMIENTO_USUARIO, tipo)
+        sut = UsuarioController(self.__db_con_usuario, NOMBRE_USUARIO, APELLIDO_USUARIO, OTRO_EMAIL_USUARIO,
+                                NOMBRE_USUARIO, CLAVE_USUARIO, FECHA_NACIMIENTO_USUARIO, tipo)
         respuesta = sut.obtener_respuesta()
         self.assertEqual("error", respuesta["status"])
         self.assertEqual(UsuarioController.CUENTA_YA_EXISTE, respuesta["mensaje"])
 
     @data(TipoDeUsuario.Martillero, TipoDeUsuario.Consignatario, TipoDeUsuario.Pujador)
     def test_retornar_error_cuando_quiere_crear_con_email_ya_existente(self, tipo):
-        sut = UsuarioController(self.__db_con_usuario, self.NOMBRE_USUARIO, self.APELLIDO_USUARIO, self.EMAIL_USUARIO,
-                                "Roberto1", self.CLAVE_USUARIO, self.FECHA_NACIMIENTO_USUARIO, tipo)
+        sut = UsuarioController(self.__db_con_usuario, NOMBRE_USUARIO, APELLIDO_USUARIO, EMAIL_USUARIO,
+                                "Roberto1", CLAVE_USUARIO, FECHA_NACIMIENTO_USUARIO, tipo)
         respuesta = sut.obtener_respuesta()
         self.assertEqual("error", respuesta["status"])
         self.assertEqual(UsuarioController.CUENTA_YA_EXISTE, respuesta["mensaje"])
@@ -80,8 +74,8 @@ class UsuarioControllerTests(unittest.TestCase):
 
     @data(TipoDeUsuario.Martillero, TipoDeUsuario.Consignatario, TipoDeUsuario.Pujador)
     def test_retornar_ok_cuando_ese_usuario_no_existe(self, tipo):
-        sut = UsuarioController(self.__db_con_usuario, self.NOMBRE_USUARIO, self.APELLIDO_USUARIO, "rperez1@gmail.com",
-                                "Roberto1", self.CLAVE_USUARIO, self.FECHA_NACIMIENTO_USUARIO, tipo)
+        sut = UsuarioController(self.__db_con_usuario, NOMBRE_USUARIO, APELLIDO_USUARIO, "rperez1@gmail.com",
+                                "Roberto1", CLAVE_USUARIO, FECHA_NACIMIENTO_USUARIO, tipo)
         respuesta = sut.obtener_respuesta()
         self.assertEqual("ok", respuesta["status"])
         self.assertIn(UsuarioController.CUENTA_CREADA, respuesta["mensaje"])
@@ -92,8 +86,8 @@ class UsuarioControllerTests(unittest.TestCase):
             .con_usuarios(UsuariosEnMemoria({})) \
             .construir()
 
-        sut = UsuarioController(db, self.NOMBRE_USUARIO, self.APELLIDO_USUARIO, self.OTRO_EMAIL_USUARIO,
-                                self.NOMBRE_USUARIO, self.CLAVE_USUARIO, self.FECHA_NACIMIENTO_USUARIO, tipo)
+        sut = UsuarioController(db, NOMBRE_USUARIO, APELLIDO_USUARIO, OTRO_EMAIL_USUARIO,
+                                NOMBRE_USUARIO, CLAVE_USUARIO, FECHA_NACIMIENTO_USUARIO, tipo)
         respuesta = sut.obtener_respuesta()
         self.assertEqual("ok", respuesta["status"])
         self.assertIn(UsuarioController.CUENTA_CREADA, respuesta["mensaje"])
@@ -103,15 +97,15 @@ class UsuarioControllerTests(unittest.TestCase):
             .con_usuarios(UsuariosEnMemoria({})) \
             .construir()
 
-        UsuarioController(db, self.NOMBRE_USUARIO, self.APELLIDO_USUARIO, self.OTRO_EMAIL_USUARIO, self.NOMBRE_USUARIO,
-                          self.CLAVE_USUARIO, self.FECHA_NACIMIENTO_USUARIO, TipoDeUsuario.Pujador)
-        usuario = db.Usuarios.buscar(self.NOMBRE_USUARIO, self.CLAVE_USUARIO)
+        UsuarioController(db, NOMBRE_USUARIO, APELLIDO_USUARIO, OTRO_EMAIL_USUARIO, NOMBRE_USUARIO,
+                          CLAVE_USUARIO, FECHA_NACIMIENTO_USUARIO, TipoDeUsuario.Pujador)
+        usuario = db.Usuarios.buscar(NOMBRE_USUARIO, CLAVE_USUARIO)
 
-        self.assertEqual(self.NOMBRE_USUARIO, usuario.obtener_nombre())
-        self.assertEqual(self.APELLIDO_USUARIO, usuario.obtener_apellido())
-        self.assertEqual(self.OTRO_EMAIL_USUARIO, usuario.obtener_email())
-        self.assertEqual(self.NOMBRE_USUARIO, usuario.obtener_usuario())
-        self.assertEqual(self.FECHA_NACIMIENTO_USUARIO, usuario.obtener_nacimiento())
+        self.assertEqual(NOMBRE_USUARIO, usuario.obtener_nombre())
+        self.assertEqual(APELLIDO_USUARIO, usuario.obtener_apellido())
+        self.assertEqual(OTRO_EMAIL_USUARIO, usuario.obtener_email())
+        self.assertEqual(NOMBRE_USUARIO, usuario.obtener_usuario())
+        self.assertEqual(FECHA_NACIMIENTO_USUARIO, usuario.obtener_nacimiento())
 
 
 if __name__ == "__main__":

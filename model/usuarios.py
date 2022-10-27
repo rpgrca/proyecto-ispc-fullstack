@@ -53,22 +53,22 @@ class Martillero(Usuario):
 class Usuarios:
     def agregar(self, nombre: str, apellido: str, email: str, usuario: str, clave: str, nacimiento: date,
                 tipo: TipoDeUsuario) -> None:
-        pass
+        raise NotImplementedError()
 
     def existe(self, usuario: str) -> bool:
-        pass
+        raise NotImplementedError()
 
     def existe_con_mail(self, email: str) -> bool:
-        pass
+        raise NotImplementedError()
 
     def buscar(self, usuario: str, clave: str) -> Usuario:
-        pass
+        raise NotImplementedError()
 
     def buscar_por_email(self, email: str, clave: str) -> Usuario:
-        pass
+        raise NotImplementedError()
 
     def buscar_pujador_por_uid(self, uid: int) -> Pujador:
-        pass
+        raise NotImplementedError()
 
 
 class UsuariosFactory:

@@ -1,4 +1,5 @@
 import unittest
+from tests.constantes import *
 from controller.registro import RegistroController
 from model.tipo_usuario import TipoDeUsuario
 from model.content_provider.memory import UsuariosEnMemoria, CreadorDeBasesDeDatosTemporales
@@ -11,8 +12,8 @@ class RegistroControllerTests(unittest.TestCase):
             .con_usuarios(UsuariosEnMemoria(diccionario)) \
             .construir()
 
-        RegistroController(db, "Roberto", "Perez", "rperez@gmail.com", "Roberto", "123456", 1/1/2000)
-        self.assertEqual(TipoDeUsuario.Pujador.value, diccionario["Roberto"]["tipo"])
+        RegistroController(db, NOMBRE_USUARIO, APELLIDO_USUARIO, OTRO_EMAIL_USUARIO, NOMBRE_USUARIO, CLAVE_USUARIO, FECHA_NACIMIENTO_USUARIO)
+        self.assertEqual(TipoDeUsuario.Pujador.value, diccionario[NOMBRE_USUARIO]["tipo"])
 
 
 if __name__ == "__main__":

@@ -19,7 +19,7 @@ class Articulo(Serializable):
 
 class Articulos:
     def agregar(self, articulo_uid: int):
-        pass
+        raise NotImplementedError()
 
     def buscar_por_uid(self, articulo_uid: int) -> Articulo:
-        pass
+        raise NotImplementedError()

@@ -1,5 +1,6 @@
 import unittest
 from ddt import ddt, data, unpack
+from tests.constantes import *
 from controller.subasta import SubastaController
 from model.articulos import Articulo
 from model.content_provider.memory import ArticulosEnMemoria, CreadorDeBasesDeDatosTemporales, SubastasEnMemoria
@@ -7,19 +8,10 @@ from model.content_provider.memory import ArticulosEnMemoria, CreadorDeBasesDeDa
 
 @ddt
 class SubastaControllerTests(unittest.TestCase):
-    SUBASTA_UID = 1
-    OTRA_SUBASTA_UID = 17
-    ARTICULO_UID = 16
-    OTRO_ARTICULO_UID = 20
-    TITULO_SUBASTA = "Subasta!"
-    DESCRIPCION_SUBASTA = "Nos vemos en la subasta!"
-    IMAGEN_SUBASTA = "gransubasta.jpg"
-    FECHA_DE_SUBASTA = 9/17/2000
-
     def setUp(self):
         self.__db = CreadorDeBasesDeDatosTemporales() \
             .con_subastas(SubastasEnMemoria([])) \
-            .con_articulos(ArticulosEnMemoria([Articulo(SubastaControllerTests.ARTICULO_UID)])) \
+            .con_articulos(ArticulosEnMemoria([Articulo(ARTICULO_UID)])) \
             .construir()
 
     @data(
@@ -43,20 +35,20 @@ class SubastaControllerTests(unittest.TestCase):
 
     def test_crear_subasta_correctamente_cuando_datos_completos(self):
         sut = SubastaController(self.__db)
-        sut.crear(self.TITULO_SUBASTA, self.DESCRIPCION_SUBASTA, self.IMAGEN_SUBASTA, self.FECHA_DE_SUBASTA)
+        sut.crear(TITULO_SUBASTA, DESCRIPCION_SUBASTA, IMAGEN_SUBASTA, FECHA_DE_SUBASTA)
         respuesta = sut.obtener_respuesta()
         self.assertEqual("ok", respuesta["status"])
         self.assertIn("La subasta ha sido agendada para", respuesta["mensaje"])
-        self.assertEqual(SubastaControllerTests.SUBASTA_UID, respuesta["id"])
+        self.assertEqual(SUBASTA_UID, respuesta["id"])
 
     def test_completar_datos_subasta_correctamente(self):
         sut = SubastaController(self.__db)
-        sut.crear(self.TITULO_SUBASTA, self.DESCRIPCION_SUBASTA, self.IMAGEN_SUBASTA, self.FECHA_DE_SUBASTA)
-        subasta = self.__db.Subastas.buscar_por_uid(SubastaControllerTests.SUBASTA_UID)
-        self.assertEqual(self.TITULO_SUBASTA, subasta.obtener_titulo())
-        self.assertEqual(self.DESCRIPCION_SUBASTA, subasta.obtener_descripcion())
-        self.assertEqual(self.IMAGEN_SUBASTA, subasta.obtener_imagen())
-        self.assertEqual(self.FECHA_DE_SUBASTA, subasta.obtener_fecha())
+        sut.crear(TITULO_SUBASTA, DESCRIPCION_SUBASTA, IMAGEN_SUBASTA, FECHA_DE_SUBASTA)
+        subasta = self.__db.Subastas.buscar_por_uid(SUBASTA_UID)
+        self.assertEqual(TITULO_SUBASTA, subasta.obtener_titulo())
+        self.assertEqual(DESCRIPCION_SUBASTA, subasta.obtener_descripcion())
+        self.assertEqual(IMAGEN_SUBASTA, subasta.obtener_imagen())
+        self.assertEqual(FECHA_DE_SUBASTA, subasta.obtener_fecha())
 
     def test_agrega_subasta_correctamente(self):
         lista = []
@@ -65,7 +57,7 @@ class SubastaControllerTests(unittest.TestCase):
             .construir()
 
         sut = SubastaController(db)
-        sut.crear(self.TITULO_SUBASTA, self.DESCRIPCION_SUBASTA, self.IMAGEN_SUBASTA, self.FECHA_DE_SUBASTA)
+        sut.crear(TITULO_SUBASTA, DESCRIPCION_SUBASTA, IMAGEN_SUBASTA, FECHA_DE_SUBASTA)
         self.assertEqual(1, len(lista))
 
 

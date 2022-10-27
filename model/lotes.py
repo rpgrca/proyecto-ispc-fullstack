@@ -25,13 +25,13 @@ class Lote(Serializable):
 
 class Lotes:
     def agregar(self, subasta: Subasta, articulo: Articulo, base: int, orden: int) -> None:
-        pass
+        raise NotImplementedError()
 
     def contar_lotes(self, subasta: Subasta) -> int:
-        pass
+        raise NotImplementedError()
 
     def obtener(self, subasta: Subasta, orden: int) -> Lote:
-        pass
+        raise NotImplementedError()
 
     def buscar_por_uid(self, lote_uid: int) -> Lote:
-        pass
+        raise NotImplementedError()
