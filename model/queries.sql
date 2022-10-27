@@ -5,6 +5,10 @@ insert into Usuarios (nombre, apellido, email, usuario, clave, nacimiento, tipo_
 values
 (%s, %s, %s, %s, %s, %s, 2);
 
+insert into Usuarios (nombre, apellido, email, usuario, clave, nacimiento, tipo_usuario)
+values
+(%s, %s, %s, %s, %s, %s, 3);
+
 -- Agregar una subasta
 insert into Subastas (fecha, titulo, descripcion, imagen)
 values
