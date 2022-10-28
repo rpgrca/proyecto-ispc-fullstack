@@ -44,7 +44,7 @@ def registrar(nombre: str = Form(), apellido: str = Form(), email: str = Form(),
 
 @app.post("/reestablecer/", status_code=status.HTTP_200_OK)
 def reestablecer(email: str = Form(), response: Response = Response()):
-    controlador = ServicioReestablecer(db, email)
+    controlador = ServicioRecordatorio(db, email)
     return __cambiar_status_code(controlador.obtener_respuesta(), response)
 
 
