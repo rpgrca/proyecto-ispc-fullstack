@@ -30,7 +30,7 @@ values
 -- Crear un registro de puja
 insert into Pujas (monto, id_pujador, id_lote)
 values
-(%s, %s);
+(%s, %s, %s);
 
 --Traer todas las ventas hechas para un comprador dado 
 select v.id v_id, precio_final, comision, pago_consignatario
