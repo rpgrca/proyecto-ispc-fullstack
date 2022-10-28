@@ -58,4 +58,4 @@ class ServicioLote(Servicio):
             return
 
         lote = self.__db.Lotes.obtener(subasta, orden)
-        self._responder_bien_serializando(lote)
+        self._responder_bien_serializando_item(lote)

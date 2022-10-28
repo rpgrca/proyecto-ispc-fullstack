@@ -1,5 +1,6 @@
 from controller.servicio import Servicio
 from model.database import BaseDeDatos
+from model.pujas import Puja
 
 
 class ServicioPuja(Servicio):
@@ -44,3 +45,14 @@ class ServicioPuja(Servicio):
 
         self.__db.Pujas.agregar(monto, pujador, lote)
         self._responder_bien_con("Puja realizada con éxito")
+
+    def listar(self, lote_uid: int) -> None:
+        if not self._verificar(lote_uid, self.PUJAR_SIN_LOTE):
+            return
+        
+        lote = self.__db.Lotes.buscar_por_uid(lote_uid)
+        if not self._verificar(lote, self.LOTE_INEXISTENTE):
+            return
+        
+        pujas = self.__db.Pujas.buscar_por_lote(lote)
+        self._responder_bien_serializando_lista(pujas)

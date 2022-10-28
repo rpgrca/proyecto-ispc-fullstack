@@ -1,9 +1,10 @@
 from abc import ABC, abstractmethod
 from model.usuarios import Pujador
+from model.serialization import Serializable
 from model.lotes import Lote
 
 
-class Puja:
+class Puja(Serializable):
     def __init__(self, uid: int, monto: int, pujador: Pujador, lote: Lote):
         self.__uid = uid
         self.__monto = monto
@@ -22,20 +23,27 @@ class Puja:
     def obtener_lote_uid(self) -> int:
         return self.__lote.obtener_uid()
 
+    def serialize(self):
+        return {  "monto": self.__monto, "lote": self.__lote.obtener_uid(), "pujador": self.__lote.obtener_uid() }
+
 
 class Pujas(ABC):
     @abstractmethod
     def agregar(self, monto: int, pujador: Pujador, lote: Lote):
-        raise NotImplementedError()
+        pass
 
     @abstractmethod
     def buscar_por_monto(self, monto: int) -> Puja:
-        raise NotImplementedError()
+        pass
 
     @abstractmethod
     def buscar_ultima_puja(self, lote: Lote) -> Puja:
-        raise NotImplementedError()
+        pass
 
     @abstractmethod
     def buscar_por_uid(self, uid: int) -> Puja:
-        raise NotImplementedError()
+        pass
+
+    @abstractmethod
+    def buscar_por_lote(self, lote: Lote) -> list[Puja]:
+        pass

@@ -100,6 +100,9 @@ class PujasEnMemoria(Pujas):
     def buscar_por_uid(self, uid: int) -> Puja:
         return next(filter(lambda p: p.obtener_uid() == uid, self.__pujas), None)
 
+    def buscar_por_lote(self, lote: Lote) -> list[Puja]:
+        return [puja for puja in self.__pujas if puja.obtener_lote_uid() == lote.obtener_uid()]
+
 
 class LotesEnMemoria(Lotes):
     def __init__(self, lotes: list[Lote]):

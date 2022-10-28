@@ -92,6 +92,23 @@ class ServicioPujaTests(unittest.TestCase):
         self.assertEqual(C.ID_USUARIO, puja.obtener_pujador_uid())
         self.assertEqual(C.MONTO_PUJA, puja.obtener_monto())
 
+    def test_retornar_nada_cuando_no_hay_pujas_en_lote(self):
+        sut = ServicioPuja(self.__db)
+        sut.listar(C.LOTE_UID)
+        respuesta = sut.obtener_respuesta()
+        self.assertEqual("ok", respuesta["status"])
+        self.assertEqual([], respuesta["items"])
+
+    def test_retornar_lista_cuando_hay_pujas(self):
+        sut = ServicioPuja(self.__db)
+        sut.agregar(C.LOTE_UID, C.ID_USUARIO, C.MONTO_PUJA)
+        sut.agregar(C.LOTE_UID, C.ID_USUARIO, C.OTRO_MONTO_PUJA)
+        sut.listar(C.LOTE_UID)
+        respuesta = sut.obtener_respuesta()
+        self.assertEqual("ok", respuesta["status"])
+        self.assertEqual([{'lote': 1, 'monto': 500, 'pujador': 1}, {'lote': 1, 'monto': 600, 'pujador': 1}],
+                         respuesta["items"])
+
 
 if __name__ == "__main__":
     unittest.main()
