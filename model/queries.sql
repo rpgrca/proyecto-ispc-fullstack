@@ -27,6 +27,11 @@ insert into Ventas (precio_final, comision, pago_consignatario, id_puja)
 values
 (%s, %s, %s, %s);
 
+-- Crear un registro de puja
+insert into Pujas (monto, id_pujador, id_lote)
+values
+(%s, %s);
+
 --Traer todas las ventas hechas para un comprador dado 
 select v.id v_id, precio_final, comision, pago_consignatario
 from Usuarios u
