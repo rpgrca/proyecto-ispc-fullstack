@@ -1,5 +1,6 @@
 import unittest
 from ddt import ddt, data, unpack
+from model.usuarios import Consignatario, Martillero, Pujador, UsuariosFactory
 import tests.constantes as C
 from controller.usuario import ServicioUsuario
 from model.tipo_usuario import TipoDeUsuario
@@ -107,6 +108,17 @@ class ServicioUsuarioTests(unittest.TestCase):
         self.assertEqual(C.OTRO_EMAIL_USUARIO, usuario.obtener_email())
         self.assertEqual(C.NOMBRE_USUARIO, usuario.obtener_usuario())
         self.assertEqual(C.FECHA_NACIMIENTO_USUARIO, usuario.obtener_nacimiento())
+
+    @data(
+        (TipoDeUsuario.Martillero, Martillero),
+        (TipoDeUsuario.Consignatario, Consignatario),
+        (TipoDeUsuario.Pujador, Pujador)
+    )
+    @unpack
+    def test_retorna_instancia_martillero_cuando_se_pide_crear_martillero(self, tipo: TipoDeUsuario, clase: type):
+        usuario = UsuariosFactory.crear(C.ID_USUARIO, C.NOMBRE_USUARIO, C.APELLIDO_USUARIO, C.EMAIL_USUARIO,
+                                        C.NOMBRE_USUARIO, C.CLAVE_USUARIO, C.FECHA_NACIMIENTO_USUARIO, tipo)
+        self.assertIsInstance(usuario, clase)
 
 
 if __name__ == "__main__":
