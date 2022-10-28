@@ -61,6 +61,16 @@ class ServicioPujaTests(unittest.TestCase):
         self.assertEqual("error", respuesta["status"])
         self.assertEqual(ServicioPuja.PUJADOR_INEXISTENTE, respuesta["mensaje"])
 
+    @data(TipoDeUsuario.Consignatario, TipoDeUsuario.Martillero)
+    def test_retornar_error_al_pujar_con_usuario_no_pujador(self, tipo: TipoDeUsuario):
+        sut = ServicioPuja(self.__db)
+        self.__db.Usuarios.agregar(C.NOMBRE_USUARIO, C.APELLIDO_USUARIO, C.OTRO_EMAIL_USUARIO, C.OTRO_NOMBRE_USUARIO,
+                                   C.CLAVE_USUARIO, C.FECHA_NACIMIENTO_USUARIO, tipo)
+        sut.agregar(C.LOTE_UID, 2, C.MONTO_PUJA)
+        respuesta = sut.obtener_respuesta()
+        self.assertEqual("error", respuesta["status"])
+        self.assertEqual(ServicioPuja.PUJADOR_INEXISTENTE, respuesta["mensaje"])
+
     @data(None, 0)
     def test_retornar_error_al_agregar_puja_con_monto_inexistente(self, monto_invalido):
         sut = ServicioPuja(self.__db)
