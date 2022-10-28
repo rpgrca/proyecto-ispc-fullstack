@@ -18,6 +18,7 @@ values
 select * from Usuarios
 where id = %s;
 
+-- Crear un registro de Lotes
 insert into Lotes (precio_base, orden, id_articulo, id_subasta)
 values
 (%s, %s, %s, %s);
@@ -38,3 +39,7 @@ from Usuarios u
 inner join Pujas p on u.id = p.id_pujador
 inner join Ventas v on p.id = v.id_puja
 where u.id = %s
+
+-- Traer último registro de Subastas
+select * from Subastas
+order by Fecha  desc limit 1;
