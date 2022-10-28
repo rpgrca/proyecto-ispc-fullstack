@@ -74,6 +74,15 @@ class ServicioLoteTests(unittest.TestCase):
         self.assertEqual("ok", respuesta["status"])
         self.assertEqual(ServicioLote.LOTE_AGREGADO, respuesta["mensaje"])
 
+    def test_agregar_lote_correctamente_a_base_de_datos(self):
+        sut = ServicioLote(self.__db)
+        sut.agregar(C.SUBASTA_UID, C.ARTICULO_UID, 234)
+        lote = self.__db.Lotes.buscar_por_uid(C.LOTE_UID)
+        self.assertEqual(234, lote.obtener_precio_base())
+        self.assertEqual(1, lote.obtener_orden())
+        self.assertEqual(C.SUBASTA_UID, lote.obtener_subasta_uid())
+        self.assertEqual(C.LOTE_UID, lote.obtener_uid())
+
     @data("", None)
     def test_retorna_error_con_subasta_invalida(self, subasta_invalida):
         sut = ServicioLote(self.__db)
