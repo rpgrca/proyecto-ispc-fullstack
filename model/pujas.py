@@ -24,7 +24,7 @@ class Puja(Serializable):
         return self.__lote.obtener_uid()
 
     def serialize(self):
-        return {  "monto": self.__monto, "lote": self.__lote.obtener_uid(), "pujador": self.__lote.obtener_uid() }
+        return {"monto": self.__monto, "lote": self.__lote.obtener_uid(), "pujador": self.__lote.obtener_uid()}
 
 
 class Pujas(ABC):

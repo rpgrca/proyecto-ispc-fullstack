@@ -26,7 +26,7 @@ class ServicioUsuarioTests(unittest.TestCase):
     @data(TipoDeUsuario.Martillero, TipoDeUsuario.Consignatario, TipoDeUsuario.Pujador)
     def test_retornar_error_cuando_quiere_crear_usuario_ya_existente(self, tipo):
         sut = ServicioUsuario(self.__db_con_usuario, C.NOMBRE_USUARIO, C.APELLIDO_USUARIO, C.OTRO_EMAIL_USUARIO,
-                                C.NOMBRE_USUARIO, C.CLAVE_USUARIO, C.FECHA_NACIMIENTO_USUARIO, tipo)
+                              C.NOMBRE_USUARIO, C.CLAVE_USUARIO, C.FECHA_NACIMIENTO_USUARIO, tipo)
         respuesta = sut.obtener_respuesta()
         self.assertEqual("error", respuesta["status"])
         self.assertEqual(ServicioUsuario.CUENTA_YA_EXISTE, respuesta["mensaje"])
@@ -34,7 +34,7 @@ class ServicioUsuarioTests(unittest.TestCase):
     @data(TipoDeUsuario.Martillero, TipoDeUsuario.Consignatario, TipoDeUsuario.Pujador)
     def test_retornar_error_cuando_quiere_crear_con_email_ya_existente(self, tipo):
         sut = ServicioUsuario(self.__db_con_usuario, C.NOMBRE_USUARIO, C.APELLIDO_USUARIO, C.EMAIL_USUARIO,
-                                "Roberto1", C.CLAVE_USUARIO, C.FECHA_NACIMIENTO_USUARIO, tipo)
+                              "Roberto1", C.CLAVE_USUARIO, C.FECHA_NACIMIENTO_USUARIO, tipo)
         respuesta = sut.obtener_respuesta()
         self.assertEqual("error", respuesta["status"])
         self.assertEqual(ServicioUsuario.CUENTA_YA_EXISTE, respuesta["mensaje"])
@@ -76,7 +76,7 @@ class ServicioUsuarioTests(unittest.TestCase):
     @data(TipoDeUsuario.Martillero, TipoDeUsuario.Consignatario, TipoDeUsuario.Pujador)
     def test_retornar_ok_cuando_ese_usuario_no_existe(self, tipo):
         sut = ServicioUsuario(self.__db_con_usuario, C.NOMBRE_USUARIO, C.APELLIDO_USUARIO, "rperez1@gmail.com",
-                                "Roberto1", C.CLAVE_USUARIO, C.FECHA_NACIMIENTO_USUARIO, tipo)
+                              "Roberto1", C.CLAVE_USUARIO, C.FECHA_NACIMIENTO_USUARIO, tipo)
         respuesta = sut.obtener_respuesta()
         self.assertEqual("ok", respuesta["status"])
         self.assertIn(ServicioUsuario.CUENTA_CREADA, respuesta["mensaje"])
@@ -88,7 +88,7 @@ class ServicioUsuarioTests(unittest.TestCase):
             .construir()
 
         sut = ServicioUsuario(db, C.NOMBRE_USUARIO, C.APELLIDO_USUARIO, C.OTRO_EMAIL_USUARIO,
-                                C.NOMBRE_USUARIO, C.CLAVE_USUARIO, C.FECHA_NACIMIENTO_USUARIO, tipo)
+                              C.NOMBRE_USUARIO, C.CLAVE_USUARIO, C.FECHA_NACIMIENTO_USUARIO, tipo)
         respuesta = sut.obtener_respuesta()
         self.assertEqual("ok", respuesta["status"])
         self.assertIn(ServicioUsuario.CUENTA_CREADA, respuesta["mensaje"])
@@ -99,7 +99,7 @@ class ServicioUsuarioTests(unittest.TestCase):
             .construir()
 
         ServicioUsuario(db, C.NOMBRE_USUARIO, C.APELLIDO_USUARIO, C.OTRO_EMAIL_USUARIO, C.NOMBRE_USUARIO,
-                          C.CLAVE_USUARIO, C.FECHA_NACIMIENTO_USUARIO, TipoDeUsuario.Pujador)
+                        C.CLAVE_USUARIO, C.FECHA_NACIMIENTO_USUARIO, TipoDeUsuario.Pujador)
         usuario = db.Usuarios.buscar(C.NOMBRE_USUARIO, C.CLAVE_USUARIO)
 
         self.assertEqual(C.NOMBRE_USUARIO, usuario.obtener_nombre())

@@ -6,8 +6,6 @@ from starlette import status
 from controller.subasta import ServicioSubasta
 from model.content_provider.memory import CreadorDeBasesDeDatosTemporales
 from controller.login import ServicioLogin
-from controller.registro import ServicioController
-from controller.reestablecer import ServicioController
 
 app = FastAPI()
 origins = ["*"]

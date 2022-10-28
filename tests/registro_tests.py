@@ -13,7 +13,7 @@ class ServicioRegistroTests(unittest.TestCase):
             .construir()
 
         ServicioRegistro(db, C.NOMBRE_USUARIO, C.APELLIDO_USUARIO, C.OTRO_EMAIL_USUARIO, C.NOMBRE_USUARIO, C.CLAVE_USUARIO,
-                           C.FECHA_NACIMIENTO_USUARIO)
+                         C.FECHA_NACIMIENTO_USUARIO)
         self.assertEqual(TipoDeUsuario.Pujador.value, diccionario[C.NOMBRE_USUARIO]["tipo"])
 
 
