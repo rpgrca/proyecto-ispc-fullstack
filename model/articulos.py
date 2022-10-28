@@ -20,9 +20,9 @@ class Articulo(Serializable):
 
 class Articulos(ABC):
     @abstractmethod
-    def agregar(self, articulo_uid: int):
+    def agregar(self, uid: int):
         pass
 
     @abstractmethod
-    def buscar_por_uid(self, articulo_uid: int) -> Articulo:
+    def buscar_por_uid(self, uid: int) -> Articulo:
         pass
