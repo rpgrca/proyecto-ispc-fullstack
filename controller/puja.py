@@ -15,7 +15,7 @@ class ControladorPuja(Controlador):
             self._responder_bien_con(self.PUJA_REALIZADA)
         except Exception as err:
             self._responder_mal_con(str(err))
-            
+
     def listar(self, lote_uid: int) -> None:
         try:
             pujas = ServicioPuja(self.__db).listar(lote_uid)

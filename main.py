@@ -6,7 +6,7 @@ from starlette import status
 from model.content_provider.memory import CreadorDeBasesDeDatosTemporales
 from controller.subasta import ControladorSubasta
 from controller.lote import ControladorLote
-from controller.login import ControladorLogin, ServicioLogin
+from controller.login import ControladorLogin
 from controller.registro import ControladorRegistro
 from controller.reestablecer import ControladorRecordatorio
 

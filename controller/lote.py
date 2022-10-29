@@ -1,7 +1,6 @@
 from services.lotes import ServicioLote
 from controller.controlador import Controlador
 from model.database import BaseDeDatos
-from model.lotes import Lote
 
 
 class ControladorLote(Controlador):
