@@ -99,7 +99,7 @@ class ControladorPujaTests(unittest.TestCase):
         sut.agregar(C.LOTE_UID, C.ID_USUARIO, C.MONTO_PUJA)
         puja = self.__db.Pujas.buscar_por_uid(C.PUJA_UID)
         self.assertEqual(C.LOTE_UID, puja.obtener_lote_uid())
-        self.assertEqual(C.ID_USUARIO, puja.obtener_pujador_uid())
+        self.assertEqual(C.ID_USUARIO, puja.obtener_pujador().obtener_uid())
         self.assertEqual(C.MONTO_PUJA, puja.obtener_monto())
 
     def test_retornar_nada_cuando_no_hay_pujas_en_lote(self):

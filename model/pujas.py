@@ -17,8 +17,11 @@ class Puja(Serializable):
     def obtener_monto(self) -> int:
         return self.__monto
 
-    def obtener_pujador_uid(self) -> int:
-        return self.__pujador.obtener_uid()
+    def obtener_pujador(self) -> Pujador:
+        return self.__pujador
+
+    def obtener_titulo_lote(self) -> str:
+        return self.__lote.obtener_titulo_articulo()
 
     def obtener_lote_uid(self) -> int:
         return self.__lote.obtener_uid()
