@@ -1,6 +1,6 @@
 import unittest
-from tests.lote_tests import ServicioLoteTests
-from tests.puja_tests import ServicioPujaTests
+from tests.lote_tests import ControladorLoteTests
+from tests.puja_tests import ControladorPujaTests
 from tests.pujador_tests import ServicioPujadorTests
 from tests.consignatario_tests import ServicioConsignatarioTests
 from tests.login_tests import ServicioLoginTests
@@ -18,7 +18,7 @@ suite.addTest(unittest.TestLoader().loadTestsFromTestCase(ServicioReestablecerTe
 suite.addTest(unittest.TestLoader().loadTestsFromTestCase(ServicioPujadorTests))
 suite.addTest(unittest.TestLoader().loadTestsFromTestCase(ServicioConsignatarioTests))
 suite.addTest(unittest.TestLoader().loadTestsFromTestCase(ServicioSubastaTests))
-suite.addTest(unittest.TestLoader().loadTestsFromTestCase(ServicioLoteTests))
-suite.addTest(unittest.TestLoader().loadTestsFromTestCase(ServicioPujaTests))
+suite.addTest(unittest.TestLoader().loadTestsFromTestCase(ControladorLoteTests))
+suite.addTest(unittest.TestLoader().loadTestsFromTestCase(ControladorPujaTests))
 
 unittest.TextTestRunner(verbosity=3).run(suite)
