@@ -5,7 +5,7 @@ from model.database import BaseDeDatos
 from model.lotes import Lote, Lotes
 from model.pujas import Puja, Pujas
 from model.tipo_usuario import TipoDeUsuario
-from model.usuarios import Pujador, Usuario, Usuarios
+from model.usuarios import Consignatario, Pujador, Usuario, Usuarios
 from model.subastas import Subasta, Subastas
 from model.articulos import Articulo, Articulos
 
@@ -118,6 +118,22 @@ class MysqlDatabase:
 
         return None
 
+    def obtener_muchos(self, sql: str, valores=(), creador=lambda r: None):
+        try:
+            resultado = []
+            cursor = self.__connection.cursor()
+            cursor.execute(sql, valores)
+            self.__connection.commit()
+            records = cursor.fetchall()
+            for record in records:
+                resultado.append(creador(record))
+
+            return resultado
+        except:
+            pass
+
+        return []
+
     def insertar(self, sql: str, valores=(), creator=lambda i, v: None):
         try:
             cursor = self.__connection.cursor()
@@ -153,6 +169,7 @@ class TablaSubastas(Subastas):
 class TablaArticulos(Articulos):
     CREAR_ARTICULO = "INSERT INTO Articulos" # FIXME
     BUSCAR_ARTICULO = "SELECT id FROM Articulos" # FIXME
+    BUSCAR_POR_CONSIGNATARIO = "SELECT id FROM Articulos WHERE consignatario_id = %s"
 
     def __init__(self, db: MysqlDatabase):
         self.__db = db
@@ -162,6 +179,11 @@ class TablaArticulos(Articulos):
 
     def buscar_por_uid(self, uid: int) -> Articulo:
         return self.__db.obtener_uno(self.BUSCAR_ARTICULO, (uid), lambda r: Articulo(r[0]))
+
+    def listar_articulos_propiedad_de(self, consignatario: Consignatario) -> list[Articulo]:
+        return self.__db.obtener_muchos(self.BUSCAR_POR_CONSIGNATARIO, (consignatario.obtener_uid()),
+                                        lambda r: Articulo(r[0]))
+
 
 
 class TablaUsuarios(Usuarios):

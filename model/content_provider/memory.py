@@ -1,7 +1,7 @@
 from datetime import date
 from model.articulos import Articulo
 from model.database import BaseDeDatos
-from model.usuarios import Pujador, Usuarios, Usuario, UsuariosFactory
+from model.usuarios import Consignatario, Pujador, Usuarios, Usuario, UsuariosFactory
 from model.subastas import Subastas, Subasta
 from model.articulos import Articulos
 from model.pujas import Puja, Pujas
@@ -80,6 +80,9 @@ class ArticulosEnMemoria(Articulos):
 
     def buscar_por_uid(self, uid: int) -> Articulo:
         return next(filter(lambda s: s.obtener_uid() == uid, self.__articulos), None)
+
+    def listar_articulos_propiedad_de(self, consignatario: Consignatario) -> list[Articulo]:
+        return [art for art in self.__articulos if art.obtener_consignatario_uid() == consignatario.obtener_uid()]
 
 
 class PujasEnMemoria(Pujas):

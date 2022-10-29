@@ -5,6 +5,7 @@
 # - listar_para(consignatario)
 from abc import ABC, abstractmethod
 from model.serialization import Serializable
+from model.usuarios import Consignatario
 
 
 class Articulo(Serializable):
@@ -25,4 +26,8 @@ class Articulos(ABC):
 
     @abstractmethod
     def buscar_por_uid(self, uid: int) -> Articulo:
+        pass
+
+    @abstractmethod
+    def listar_articulos_propiedad_de(self, consignatario: Consignatario) -> list[Articulo]:
         pass
