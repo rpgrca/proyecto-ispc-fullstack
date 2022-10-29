@@ -118,7 +118,7 @@ class ControladorLoteTests(unittest.TestCase):
 
     def test_avanza_al_siguiente_lote_correctamente(self):
         sut = ControladorLote(self.__db)
-        self.__db.Articulos.agregar(C.OTRO_ARTICULO_UID, C.TITULO_ARTICULO)
+        self.__db.Articulos.crear(C.OTRO_ARTICULO_UID, C.TITULO_ARTICULO)
         sut.agregar(C.SUBASTA_UID, C.ARTICULO_UID, 100)
         sut.agregar(C.SUBASTA_UID, C.OTRO_ARTICULO_UID, 200)
         sut.obtener(C.SUBASTA_UID, 2)

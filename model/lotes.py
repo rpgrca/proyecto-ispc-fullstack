@@ -47,3 +47,7 @@ class Lotes(ABC):
     @abstractmethod
     def buscar_por_uid(self, lote_uid: int) -> Lote:
         pass
+
+    @abstractmethod
+    def listar(self, subasta: Subasta) -> list[Lote]:
+        pass

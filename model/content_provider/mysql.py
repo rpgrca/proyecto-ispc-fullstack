@@ -168,7 +168,7 @@ class TablaArticulos(Articulos):
     def __init__(self, db: MysqlDatabase):
         self.__db = db
 
-    def agregar(self, uid: int, titulo: str):
+    def crear(self, uid: int, titulo: str) -> Articulo:
         return self.__db.insertar(self.CREAR_ARTICULO, (uid, titulo), lambda i, r: Articulo(i, r[0]))  # FIXME: agregar campos
 
     def buscar_por_uid(self, uid: int) -> Articulo:

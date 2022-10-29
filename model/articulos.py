@@ -31,7 +31,7 @@ class Articulo(Serializable):
 
 class Articulos(ABC):
     @abstractmethod
-    def agregar(self, uid: int, titulo: str):
+    def crear(self, uid: int, titulo: str) -> Articulo:
         pass
 
     @abstractmethod

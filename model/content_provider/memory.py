@@ -97,8 +97,10 @@ class ArticulosEnMemoria(Articulos):
     def __init__(self, articulos: list[Articulo]):
         self.__articulos = articulos
 
-    def agregar(self, uid: int, titulo: str) -> None:
-        self.__articulos.append(Articulo(uid, titulo))
+    def crear(self, uid: int, titulo: str) -> Articulo:
+        articulo = Articulo(uid, titulo)
+        self.__articulos.append(articulo)
+        return articulo
 
     def buscar_por_uid(self, uid: int) -> Articulo:
         return next(filter(lambda s: s.obtener_uid() == uid, self.__articulos), None)
@@ -148,6 +150,10 @@ class LotesEnMemoria(Lotes):
 
     def buscar_por_uid(self, lote_uid: int) -> Lote:
         return next(filter(lambda l: l.obtener_uid() == lote_uid, self.__lotes), None)
+
+    def listar(self, subasta: Subasta) -> list[Lote]:
+        return sorted([lote for lote in self.__lotes if lote.obtener_subasta_uid() == subasta.obtener_uid()],
+                      key=lambda x: x.obtener_orden())
 
 
 class VentasEnMemoria(Ventas):
