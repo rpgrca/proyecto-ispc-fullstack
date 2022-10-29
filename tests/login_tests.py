@@ -1,7 +1,7 @@
 import unittest
 from ddt import ddt, data, unpack
 import tests.constantes as C
-from controller.login import ServicioLogin
+from controller.login import ControladorLogin, ServicioLogin
 from model.tipo_usuario import TipoDeUsuario
 from model.content_provider.memory import UsuariosEnMemoria, CreadorDeBasesDeDatosTemporales
 
@@ -24,7 +24,8 @@ class ServicioLoginTests(unittest.TestCase):
             .construir()
 
     def test_retornar_ok_cuando_usuario_y_clave_son_correctos(self):
-        sut = ServicioLogin(self.__db_con_usuario, C.NOMBRE_USUARIO, C.CLAVE_USUARIO)
+        sut = ControladorLogin(self.__db_con_usuario)
+        sut.login(C.NOMBRE_USUARIO, C.CLAVE_USUARIO)
         respuesta = sut.obtener_respuesta()
         self.assertEqual("ok", respuesta["status"])
         self.assertIn(C.NOMBRE_USUARIO, respuesta["mensaje"])
@@ -35,7 +36,8 @@ class ServicioLoginTests(unittest.TestCase):
     )
     @unpack
     def test_retornar_error_cuando_usuario_o_clave_incorrecta(self, usuario: str, clave: str):
-        sut = ServicioLogin(self.__db_con_usuario, usuario, clave)
+        sut = ControladorLogin(self.__db_con_usuario)
+        sut.login(usuario, clave)
         respuesta = sut.obtener_respuesta()
         self.assertEqual("error", respuesta["status"])
         self.assertEqual(ServicioLogin.LOGIN_INVALIDO, respuesta["mensaje"])
@@ -45,7 +47,8 @@ class ServicioLoginTests(unittest.TestCase):
             .con_usuarios(UsuariosEnMemoria({})) \
             .construir()
 
-        sut = ServicioLogin(db, C.NOMBRE_USUARIO, C.CLAVE_USUARIO)
+        sut = ControladorLogin(db)
+        sut.login(C.NOMBRE_USUARIO, C.CLAVE_USUARIO)
         respuesta = sut.obtener_respuesta()
         self.assertEqual("error", respuesta["status"])
         self.assertEqual(ServicioLogin.LOGIN_INVALIDO, respuesta["mensaje"])
@@ -61,7 +64,8 @@ class ServicioLoginTests(unittest.TestCase):
         db = CreadorDeBasesDeDatosTemporales() \
             .con_usuarios(UsuariosEnMemoria({})) \
             .construir()
-        sut = ServicioLogin(db, usuario, clave)
+        sut = ControladorLogin(db)
+        sut.login(usuario, clave)
         respuesta = sut.obtener_respuesta()
         self.assertEqual("error", respuesta["status"])
         self.assertIn(mensaje_error, respuesta["mensaje"])

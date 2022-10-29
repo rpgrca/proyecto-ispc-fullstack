@@ -1,13 +1,13 @@
 import unittest
 from ddt import ddt, data, unpack
 import tests.constantes as C
-from controller.subasta import ServicioSubasta
+from controller.subasta import ControladorSubasta, ServicioSubasta
 from model.articulos import Articulo
 from model.content_provider.memory import ArticulosEnMemoria, CreadorDeBasesDeDatosTemporales, SubastasEnMemoria
 
 
 @ddt
-class ServicioSubastaTests(unittest.TestCase):
+class ControladorSubastaTests(unittest.TestCase):
     def setUp(self):
         self.__db = CreadorDeBasesDeDatosTemporales() \
             .con_subastas(SubastasEnMemoria([])) \
@@ -26,7 +26,7 @@ class ServicioSubastaTests(unittest.TestCase):
     )
     @unpack
     def test_retornar_error_cuando_falta_un_dato_en_creacion(self, titulo, descripcion, imagen, fecha, error, mensaje_error):
-        sut = ServicioSubasta(self.__db)
+        sut = ControladorSubasta(self.__db)
         sut.crear(titulo, descripcion, imagen, fecha)
         respuesta = sut.obtener_respuesta()
         self.assertEqual("error", respuesta["status"])
@@ -34,7 +34,7 @@ class ServicioSubastaTests(unittest.TestCase):
         self.assertIn(error, respuesta["mensaje"])
 
     def test_crear_subasta_correctamente_cuando_datos_completos(self):
-        sut = ServicioSubasta(self.__db)
+        sut = ControladorSubasta(self.__db)
         sut.crear(C.TITULO_SUBASTA, C.DESCRIPCION_SUBASTA, C.IMAGEN_SUBASTA, C.FECHA_DE_SUBASTA)
         respuesta = sut.obtener_respuesta()
         self.assertEqual("ok", respuesta["status"])
@@ -42,7 +42,7 @@ class ServicioSubastaTests(unittest.TestCase):
         self.assertEqual(C.SUBASTA_UID, respuesta["id"])
 
     def test_completar_datos_subasta_correctamente(self):
-        sut = ServicioSubasta(self.__db)
+        sut = ControladorSubasta(self.__db)
         sut.crear(C.TITULO_SUBASTA, C.DESCRIPCION_SUBASTA, C.IMAGEN_SUBASTA, C.FECHA_DE_SUBASTA)
         subasta = self.__db.Subastas.buscar_por_uid(C.SUBASTA_UID)
         self.assertEqual(C.TITULO_SUBASTA, subasta.obtener_titulo())
@@ -56,7 +56,7 @@ class ServicioSubastaTests(unittest.TestCase):
             .con_subastas(SubastasEnMemoria(lista)) \
             .construir()
 
-        sut = ServicioSubasta(db)
+        sut = ControladorSubasta(db)
         sut.crear(C.TITULO_SUBASTA, C.DESCRIPCION_SUBASTA, C.IMAGEN_SUBASTA, C.FECHA_DE_SUBASTA)
         self.assertEqual(1, len(lista))
 

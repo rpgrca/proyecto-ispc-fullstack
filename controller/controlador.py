@@ -1,16 +1,8 @@
 from model.serialization import Serializable
 
-
-class Servicio:
+class Controlador:
     def __init__(self):
         self.__respuesta = {}
-
-    def _verificar(self, atributo: str, mensaje_de_error: str) -> bool:
-        if not atributo:
-            self.__respuesta = {"status": "error", "mensaje": mensaje_de_error}
-            return False
-
-        return True
 
     def _responder_bien_con(self, mensaje: str) -> None:
         self.__respuesta = {"status": "ok", "mensaje": mensaje}
