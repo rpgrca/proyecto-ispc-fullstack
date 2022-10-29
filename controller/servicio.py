@@ -6,5 +6,9 @@ class Servicio:
         if not atributo:
             raise ValueError(mensaje)
 
+    def _throw_if_true(self, condition: bool, mensaje: str) -> None:
+        if condition:
+            raise ValueError(mensaje)
+
     def _throw(self, mensaje: str) -> None:
         raise ValueError(mensaje)

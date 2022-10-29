@@ -1,10 +1,27 @@
 from datetime import date
 from controller.controlador import Controller
+from controller.servicio import Servicio
 from model.tipo_usuario import TipoDeUsuario
 from model.database import BaseDeDatos
 
 
-class ServicioUsuario(Controller):
+
+class ControladorUsuario(Controller):
+    CUENTA_CREADA = "La cuenta ha sido creada correctamente"
+
+    def __init__(self, db: BaseDeDatos):
+        self.__db = db
+
+    def agregar(self, nombre: str, apellido: str, email: str, usuario: str, clave: str, nacimiento: date,
+                tipo: TipoDeUsuario):
+        try:
+            ServicioUsuario(self.__db, nombre, apellido, email, usuario, clave, nacimiento, tipo)
+            self._responder_bien_con(self.CUENTA_CREADA)
+        except Exception as err:
+            self._responder_mal_con(str(err))
+
+
+class ServicioUsuario(Servicio):
     SIN_NOMBRE = "No se puede crear un usuario sin nombre"
     SIN_APELLIDO = "No se puede crear un usuario sin apellido"
     SIN_EMAIL = "No se puede crear un usuario sin e-mail"
@@ -12,24 +29,20 @@ class ServicioUsuario(Controller):
     SIN_CLAVE = "No se puede crear un usuario sin clave"
     SIN_NACIMIENTO = "No se puede crear un usuario sin fecha de nacimiento"
     CUENTA_YA_EXISTE = "La cuenta ya existe"
-    CUENTA_CREADA = "La cuenta ha sido creada correctamente"
 
     def __init__(self, db: BaseDeDatos, nombre: str, apellido: str, email: str, usuario: str, clave: str, nacimiento: date,
-                 tipo: TipoDeUsuario):
+                tipo: TipoDeUsuario):
         super().__init__()
-        if not self._verificar(nombre, self.SIN_NOMBRE) or \
-           not self._verificar(apellido, self.SIN_APELLIDO) or \
-           not self._verificar(email, self.SIN_EMAIL) or \
-           not self._verificar(usuario, self.SIN_USUARIO) or \
-           not self._verificar(clave, self.SIN_CLAVE) or \
-           not self._verificar(nacimiento, self.SIN_NACIMIENTO):
-            return
+        self._throw_if_invalid(nombre, self.SIN_NOMBRE)
+        self._throw_if_invalid(apellido, self.SIN_APELLIDO)
+        self._throw_if_invalid(email, self.SIN_EMAIL)
+        self._throw_if_invalid(usuario, self.SIN_USUARIO)
+        self._throw_if_invalid(clave, self.SIN_CLAVE)
+        self._throw_if_invalid(nacimiento, self.SIN_NACIMIENTO)
 
-        self._responder_mal_con(self.CUENTA_YA_EXISTE)
-        if not db.Usuarios.existe(usuario):
-            if not db.Usuarios.buscar_por_email(email):
-                db.Usuarios.agregar(nombre, apellido, email, usuario, clave, nacimiento, tipo)
-                self._responder_bien_con(self.CUENTA_CREADA)
+        self._throw_if_true(db.Usuarios.existe(usuario), self.CUENTA_YA_EXISTE)
+        self._throw_if_true(db.Usuarios.buscar_por_email(email), self.CUENTA_YA_EXISTE)
+        db.Usuarios.agregar(nombre, apellido, email, usuario, clave, nacimiento, tipo)
 
 
 class ConsignatarioController(ServicioUsuario):
