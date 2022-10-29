@@ -1,4 +1,5 @@
 import unittest
+from tests.articulo_tests import ControladorArticuloTests
 from tests.lote_tests import ControladorLoteTests
 from tests.puja_tests import ControladorPujaTests
 from tests.pujador_tests import ServicioPujadorTests
@@ -20,5 +21,6 @@ suite.addTest(unittest.TestLoader().loadTestsFromTestCase(ControladorConsignatar
 suite.addTest(unittest.TestLoader().loadTestsFromTestCase(ControladorSubastaTests))
 suite.addTest(unittest.TestLoader().loadTestsFromTestCase(ControladorLoteTests))
 suite.addTest(unittest.TestLoader().loadTestsFromTestCase(ControladorPujaTests))
+suite.addTest(unittest.TestLoader().loadTestsFromTestCase(ControladorArticuloTests))
 
 unittest.TextTestRunner(verbosity=3).run(suite)

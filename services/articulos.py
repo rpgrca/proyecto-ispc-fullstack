@@ -19,13 +19,13 @@ class ServicioArticulos(Servicio):
     def agregar(self, titulo: str, descripcion: str, valuacion: int, consignatario_uid: int) -> None:
         self._throw_if_invalid(titulo, self.TITULO_INVALIDO)
         self._throw_if_invalid(descripcion, self.DESCRIPCION_INVALIDA)
-        self._throw_if_invalid(valuacion, self.VALUACION_INVALIDA)
-        self._throw_if_invalid(consignatario_uid, self.CONSIGNATARIO_INVALIDO)
+        self._throw_if_true(valuacion <= 0, self.VALUACION_INVALIDA)
+        self._throw_if_true(consignatario_uid <= 0, self.CONSIGNATARIO_INVALIDO)
 
         consignatario = self.__db.Usuarios.buscar_consignatario_por_uid(consignatario_uid)
         self._throw_if_invalid(consignatario, self.CONSIGNATARIO_INEXISTENTE)
 
-        self.__db.Articulos.agregar(self.__db.Articulos.contar())
+        self.__db.Articulos.agregar(self.__db.Articulos.contar() + 1)
 
     def buscar_por_uid(self, uid: int) -> Articulo:
         self._throw_if_invalid(uid, self.UID_INVALIDO)

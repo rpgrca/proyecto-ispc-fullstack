@@ -7,6 +7,7 @@ from abc import ABC, abstractmethod
 from model.serialization import Serializable
 from model.usuarios import Consignatario
 
+# TODO: Cuando se complete articulo descomentar de los testeos
 
 class Articulo(Serializable):
     def __init__(self, uid: int):
