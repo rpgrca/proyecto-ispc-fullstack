@@ -62,7 +62,7 @@ class ControladorPujaTests(unittest.TestCase):
         self.assertEqual(ServicioPuja.PUJADOR_INEXISTENTE, respuesta["mensaje"])
 
     @data(TipoDeUsuario.Consignatario, TipoDeUsuario.Martillero)
-    def test_retornar_error_al_pujar_con_usuario_no_pujador(self, tipo: TipoDeUsuario):
+    def test_retornar_error_al_agregar_puja_con_usuario_no_pujador(self, tipo: TipoDeUsuario):
         sut = ControladorPuja(self.__db)
         self.__db.Usuarios.agregar(C.NOMBRE_USUARIO, C.APELLIDO_USUARIO, C.OTRO_EMAIL_USUARIO, C.OTRO_NOMBRE_USUARIO,
                                    C.CLAVE_USUARIO, C.FECHA_NACIMIENTO_USUARIO, tipo)
@@ -118,6 +118,13 @@ class ControladorPujaTests(unittest.TestCase):
         self.assertEqual("ok", respuesta["status"])
         self.assertEqual([{'lote': 1, 'monto': 500, 'pujador': 1}, {'lote': 1, 'monto': 600, 'pujador': 1}],
                          respuesta["items"])
+
+    def test_retornar_error_cuando_lote_no_existe(self):
+        sut = ControladorPuja(self.__db)
+        sut.listar(C.OTRO_LOTE_UID)
+        respuesta = sut.obtener_respuesta()
+        self.assertEqual("error", respuesta["status"])
+        self.assertEqual(ServicioPuja.LOTE_INEXISTENTE, respuesta["mensaje"])
 
 
 if __name__ == "__main__":
