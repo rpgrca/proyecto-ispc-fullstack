@@ -1,12 +1,12 @@
 from datetime import date
-from controller.controlador import Controller
+from controller.controlador import Controlador
 from controller.servicio import Servicio
 from model.tipo_usuario import TipoDeUsuario
 from model.database import BaseDeDatos
 
 
 
-class ControladorUsuario(Controller):
+class ControladorUsuario(Controlador):
     CUENTA_CREADA = "La cuenta ha sido creada correctamente"
 
     def __init__(self, db: BaseDeDatos):

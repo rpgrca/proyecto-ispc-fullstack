@@ -1,9 +1,9 @@
-from controller.controlador import Controller
+from controller.controlador import Controlador
 from controller.servicio import Servicio
 from model.database import BaseDeDatos
 
 
-class ControladorPuja(Controller):
+class ControladorPuja(Controlador):
     PUJA_REALIZADA = "Puja realizada con éxito"
 
     def __init__(self, db: BaseDeDatos):

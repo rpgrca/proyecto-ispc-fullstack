@@ -4,12 +4,12 @@
 # pujar(pujador, monto)
 # listar_pujas()
 from datetime import date
-from controller.controlador import Controller
+from controller.controlador import Controlador
 from controller.servicio import Servicio
 from model.database import BaseDeDatos
 
 
-class ControladorSubasta(Controller):
+class ControladorSubasta(Controlador):
     def __init__(self, db: BaseDeDatos):
         super().__init__()
         self.__db = db

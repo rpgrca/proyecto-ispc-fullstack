@@ -7,8 +7,8 @@ from model.content_provider.memory import CreadorDeBasesDeDatosTemporales
 from controller.subasta import ControladorSubasta
 from controller.lote import ControladorLote
 from controller.login import ServicioLogin
-from controller.registro import ServicioRegistro
-from controller.reestablecer import ServicioRecordatorio
+from controller.registro import ControladorRegistro
+from controller.reestablecer import ControladorRecordatorio
 
 app = FastAPI()
 origins = ["*"]
@@ -39,13 +39,13 @@ def ingresar(usuario: str = Form(), clave: str = Form(), response: Response = Re
 @app.post("/registrar/", status_code=status.HTTP_200_OK)
 def registrar(nombre: str = Form(), apellido: str = Form(), email: str = Form(), usuario: str = Form(), clave: str = Form(),
               nacimiento: date = Form(), response: Response = Response()):
-    controlador = ServicioRegistro(db, nombre, apellido, email, usuario, clave, nacimiento)
+    controlador = ControladorRegistro(db, nombre, apellido, email, usuario, clave, nacimiento)
     return __cambiar_status_code(controlador.obtener_respuesta(), response)
 
 
 @app.post("/reestablecer/", status_code=status.HTTP_200_OK)
 def reestablecer(email: str = Form(), response: Response = Response()):
-    controlador = ServicioRecordatorio(db, email)
+    controlador = ControladorRecordatorio(db, email)
     return __cambiar_status_code(controlador.obtener_respuesta(), response)
 
 

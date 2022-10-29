@@ -4,6 +4,6 @@ from model.database import BaseDeDatos
 from model.tipo_usuario import TipoDeUsuario
 
 
-class ServicioRegistro(ServicioUsuario):
+class ControladorRegistro(ServicioUsuario):
     def __init__(self, db: BaseDeDatos, nombre: str, apellido: str, email: str, usuario: str, clave: str, nacimiento: date):
         super().__init__(db, nombre, apellido, email, usuario, clave, nacimiento, TipoDeUsuario.Pujador)

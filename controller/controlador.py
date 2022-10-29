@@ -1,6 +1,6 @@
 from model.serialization import Serializable
 
-class Controller:
+class Controlador:
     def __init__(self):
         self.__respuesta = {}
 

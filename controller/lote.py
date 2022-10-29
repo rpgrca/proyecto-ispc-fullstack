@@ -1,10 +1,10 @@
 from controller.servicio import Servicio
-from controller.controlador import Controller
+from controller.controlador import Controlador
 from model.database import BaseDeDatos
 from model.lotes import Lote
 
 
-class ControladorLote(Controller):
+class ControladorLote(Controlador):
     LOTE_AGREGADO = "El lote ha sido agregado correctamente"
 
     def __init__(self, db: BaseDeDatos):
