@@ -5,7 +5,7 @@ from model.database import BaseDeDatos
 from model.lotes import Lote, Lotes
 from model.pujas import Puja, Pujas
 from model.tipo_usuario import TipoDeUsuario
-from model.usuarios import Pujador, Usuario, Usuarios
+from model.usuarios import Consignatario, Pujador, Usuario, Usuarios, UsuariosFactory
 from model.subastas import Subasta, Subastas
 from model.articulos import Articulo, Articulos
 
@@ -118,6 +118,22 @@ class MysqlDatabase:
 
         return None
 
+    def obtener_muchos(self, sql: str, valores=(), creador=lambda r: None):
+        try:
+            resultado = []
+            cursor = self.__connection.cursor()
+            cursor.execute(sql, valores)
+            self.__connection.commit()
+            records = cursor.fetchall()
+            for record in records:
+                resultado.append(creador(record))
+
+            return resultado
+        except:
+            pass
+
+        return []
+
     def insertar(self, sql: str, valores=(), creator=lambda i, v: None):
         try:
             cursor = self.__connection.cursor()
@@ -153,6 +169,8 @@ class TablaSubastas(Subastas):
 class TablaArticulos(Articulos):
     CREAR_ARTICULO = "INSERT INTO Articulos" # FIXME
     BUSCAR_ARTICULO = "SELECT id FROM Articulos" # FIXME
+    BUSCAR_POR_CONSIGNATARIO = "SELECT id FROM Articulos WHERE consignatario_id = %s"
+    CONTAR_ARTICULOS = "SELECT COUNT(id) FROM Articulos"
 
     def __init__(self, db: MysqlDatabase):
         self.__db = db
@@ -162,6 +180,13 @@ class TablaArticulos(Articulos):
 
     def buscar_por_uid(self, uid: int) -> Articulo:
         return self.__db.obtener_uno(self.BUSCAR_ARTICULO, (uid), lambda r: Articulo(r[0]))
+
+    def listar_articulos_propiedad_de(self, consignatario: Consignatario) -> list[Articulo]:
+        return self.__db.obtener_muchos(self.BUSCAR_POR_CONSIGNATARIO, (consignatario.obtener_uid()),
+                                        lambda r: Articulo(r[0]))
+
+    def contar(self) -> int:
+        return self.__db.contar(self.CONTAR_ARTICULOS)
 
 
 class TablaUsuarios(Usuarios):
@@ -173,6 +198,8 @@ class TablaUsuarios(Usuarios):
                             "WHERE usuario = %s"
     CREAR_USUARIO = "INSERT INTO Usuarios(nombre, apellido, email, usuario, clave, nacimiento, tipo) " \
                     "VALUES(%s,%s,%s,%s,%s,%s,%s)"
+    BUSCAR_USUARIO_POR_ID_Y_TIPO = "SELECT id, nombre, apellido, email, usuario, clave, nacimiento, tipo FROM Usuarios " \
+                                   "WHERE id = %s AND tipo = %s"
 
     def __init__(self, db: MysqlDatabase):
         self.__db = db
@@ -186,16 +213,23 @@ class TablaUsuarios(Usuarios):
 
     def buscar(self, usuario: str, clave: str) -> Usuario:
         return self.__db.obtener_uno(self.OBTENER_USUARIO, (usuario, clave),
-                                     lambda r: Usuario(r[0], r[1], r[2], r[3], r[4], r[1], r[6], r[7]))
+                                     lambda r: UsuariosFactory.crear(r[0], r[1], r[2], r[3], r[4], r[1], r[6], r[7]))
 
     def buscar_por_email(self, email: str) -> Usuario:
         return self.__db.obtener_uno(self.OBTENER_USUARIO_LOGIN, (email),
-                                     lambda r: Usuario(r[0], r[1], r[2], r[3], r[4], r[5], r[6]))
+                                     lambda r: UsuariosFactory.crear(r[0], r[1], r[2], r[3], r[4], r[5], r[6], r[7]))
 
     def existe_con_mail(self, email: str) -> bool:
         return self.__db.contar(self.EXISTE_USUARIO_CON_MAIL_SQL, (email)) > 0
 
+    def buscar_pujador_por_uid(self, uid: int) -> Pujador:
+        return self.__db.obtener_uno(self.BUSCAR_USUARIO_POR_ID_Y_TIPO, (uid, TipoDeUsuario.Pujador.value),
+                                     lambda r: UsuariosFactory.crear(r[0], r[1], r[2], r[3], r[4], r[5], r[6], r[7]))
 
+    def buscar_consignatario_por_uid(self, uid: int) -> Consignatario:
+        return self.__db.obtener_uno(self.BUSCAR_USUARIO_POR_ID_Y_TIPO, (uid, TipoDeUsuario.Consignatario.value),
+                                     lambda r: UsuariosFactory.crear(r[0], r[1], r[2], r[3], r[4], r[5], r[6], r[7]))
+ 
 class TablaLotes(Lotes):
     LOTES_POR_SUBASTA = "SELECT COUNT(id) FROM Lotes WHERE subasta_id = %s"
 

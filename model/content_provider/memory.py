@@ -1,7 +1,7 @@
 from datetime import date
 from model.articulos import Articulo
 from model.database import BaseDeDatos
-from model.usuarios import Pujador, Usuarios, Usuario, UsuariosFactory
+from model.usuarios import Consignatario, Pujador, Usuarios, Usuario, UsuariosFactory
 from model.subastas import Subastas, Subasta
 from model.articulos import Articulos
 from model.pujas import Puja, Pujas
@@ -49,8 +49,13 @@ class UsuariosEnMemoria(Usuarios):
         return None
 
     def buscar_pujador_por_uid(self, uid: int) -> Pujador:
-        registro = next(filter(lambda u: u["id"] == uid and u["tipo"] == TipoDeUsuario.Pujador.value,
-                               self.__usuarios.values()), None)
+        return self._buscar_por_uid_y_tipo(uid, TipoDeUsuario.Pujador)
+
+    def buscar_consignatario_por_uid(self, uid: int) -> Consignatario:
+        return self._buscar_por_uid_y_tipo(uid, TipoDeUsuario.Consignatario)
+
+    def _buscar_por_uid_y_tipo(self, uid: int, tipo: TipoDeUsuario) -> Usuario:
+        registro = next(filter(lambda u: u["id"] == uid and u["tipo"] == tipo.value, self.__usuarios.values()), None)
         if registro:
             return UsuariosFactory.crear(registro["id"], registro["nombre"], registro["apellido"], registro["email"],
                                          registro["usuario"], registro["clave"], registro["nacimiento"], registro["tipo"])
@@ -80,6 +85,12 @@ class ArticulosEnMemoria(Articulos):
 
     def buscar_por_uid(self, uid: int) -> Articulo:
         return next(filter(lambda s: s.obtener_uid() == uid, self.__articulos), None)
+
+    def listar_articulos_propiedad_de(self, consignatario: Consignatario) -> list[Articulo]:
+        return [art for art in self.__articulos if art.obtener_consignatario_uid() == consignatario.obtener_uid()]
+
+    def contar(self) -> int:
+        return len(self.__articulos)
 
 
 class PujasEnMemoria(Pujas):

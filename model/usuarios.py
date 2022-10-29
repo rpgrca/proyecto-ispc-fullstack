@@ -70,11 +70,15 @@ class Usuarios(ABC):
         pass
 
     @abstractmethod
-    def buscar_por_email(self, email: str, clave: str) -> Usuario:
+    def buscar_por_email(self, email: str) -> Usuario:
         pass
 
     @abstractmethod
     def buscar_pujador_por_uid(self, uid: int) -> Pujador:
+        pass
+
+    @abstractmethod
+    def buscar_consignatario_por_uid(Self, uid: int) -> Consignatario:
         pass
 
 
