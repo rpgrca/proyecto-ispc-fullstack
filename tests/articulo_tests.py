@@ -80,10 +80,10 @@ class ControladorArticuloTests(unittest.TestCase):
         self.assertEqual(1, articulo.obtener_uid())
 
 # TODO: cuando se complete articulo
-#self.assertEqual(C.TITULO_ARTICULO, articulo.obtener_titulo())
-#self.assertEqual(C.DESCRIPCION_ARTICULO, articulo.obtener_descripcion())
-#self.assertEqual(C.VALUACION_ARTICULO, articulo.obtener_valuacion())
-#self.assertEqual(1, articulo.obtener_consignatario_uid())
+# self.assertEqual(C.TITULO_ARTICULO, articulo.obtener_titulo())
+# self.assertEqual(C.DESCRIPCION_ARTICULO, articulo.obtener_descripcion())
+# self.assertEqual(C.VALUACION_ARTICULO, articulo.obtener_valuacion())
+# self.assertEqual(1, articulo.obtener_consignatario_uid())
 
     def test_retornar_articulo_al_buscar_articulo_creado(self):
         sut = ControladorArticulo(self.__db)

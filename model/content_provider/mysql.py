@@ -126,7 +126,7 @@ class MysqlDatabase:
 
             return resultado
         except Exception as err:
-            raise
+            raise err
 
     def insertar(self, sql: str, valores=(), creator=lambda i, v: None):
         try:
