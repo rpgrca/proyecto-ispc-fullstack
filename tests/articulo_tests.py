@@ -107,6 +107,39 @@ class ControladorArticuloTests(unittest.TestCase):
         self.assertEqual("error", respuesta["status"])
         self.assertEqual(ServicioArticulos.ARTICULO_INEXISTENTE, respuesta["mensaje"])
 
+    def test_retornar_articulos_al_buscar_por_consignatario_existente_con_articulos(self):
+        sut = ControladorArticulo(self.__db)
+        sut.agregar(C.TITULO_ARTICULO, C.DESCRIPCION_ARTICULO, C.VALUACION_ARTICULO, 1)
+        sut.agregar(C.OTRO_TITULO_ARTICULO, C.OTRA_DESCRIPCION_ARTICULO, C.OTRA_VALUACION_ARTICULO, 1)
+        sut.listar_articulos_propiedad_de(1)
+        respuesta = sut.obtener_respuesta()
+        self.assertEqual("ok", respuesta["status"])
+        self.assertEqual(2, len(respuesta["items"]))
+        self.assertIn({"consignatario_id": 1, "id": 1}, respuesta["items"])
+        self.assertIn({"consignatario_id": 1, "id": 2}, respuesta["items"])
+
+    def test_retonar_vacio_al_buscar_por_consignatario_existente_sin_articulos(self):
+        sut = ControladorArticulo(self.__db)
+        sut.listar_articulos_propiedad_de(1)
+        respuesta = sut.obtener_respuesta()
+        self.assertEqual("ok", respuesta["status"])
+        self.assertEqual([], respuesta["items"])
+
+    @data(-1, 0)
+    def test_retornar_error_al_buscar_por_consignatario_invalido(self, uid_invalido):
+        sut = ControladorArticulo(self.__db)
+        sut.listar_articulos_propiedad_de(uid_invalido)
+        respuesta = sut.obtener_respuesta()
+        self.assertEqual("error", respuesta["status"])
+        self.assertEqual(ServicioArticulos.LISTAR_CON_CONSIGNATARIO_INVALIDO, respuesta["mensaje"])
+
+    def test_retornar_error_al_buscar_por_consignatario_inexistente(self):
+        sut = ControladorArticulo(self.__db)
+        sut.listar_articulos_propiedad_de(2)
+        respuesta = sut.obtener_respuesta()
+        self.assertEqual("error", respuesta["status"])
+        self.assertEqual(ServicioArticulos.LISTAR_CON_CONSIGNATARIO_INEXISTENTE, respuesta["mensaje"])
+
 
 if __name__ == "__main__":
     unittest.main()
