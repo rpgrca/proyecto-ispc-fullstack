@@ -1,6 +1,6 @@
 import unittest
 import tests.constantes as C
-from controller.consignatario import ControladorConsignatario
+from controller.usuario import ControladorConsignatario
 from model.tipo_usuario import TipoDeUsuario
 from model.content_provider.memory import UsuariosEnMemoria, CreadorDeBasesDeDatosTemporales
 

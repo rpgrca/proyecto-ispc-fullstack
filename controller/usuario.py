@@ -1,9 +1,8 @@
 from datetime import date
 from controller.controlador import Controlador
-from controller.servicio import Servicio
+from services.usuarios import ServicioUsuario
 from model.tipo_usuario import TipoDeUsuario
 from model.database import BaseDeDatos
-
 
 
 class ControladorUsuario(Controlador):
@@ -13,7 +12,7 @@ class ControladorUsuario(Controlador):
         self.__db = db
 
     def agregar(self, nombre: str, apellido: str, email: str, usuario: str, clave: str, nacimiento: date,
-                tipo: TipoDeUsuario):
+                tipo: TipoDeUsuario) -> None:
         try:
             ServicioUsuario(self.__db, nombre, apellido, email, usuario, clave, nacimiento, tipo)
             self._responder_bien_con(self.CUENTA_CREADA)
@@ -21,35 +20,17 @@ class ControladorUsuario(Controlador):
             self._responder_mal_con(str(err))
 
 
-class ServicioUsuario(Servicio):
-    SIN_NOMBRE = "No se puede crear un usuario sin nombre"
-    SIN_APELLIDO = "No se puede crear un usuario sin apellido"
-    SIN_EMAIL = "No se puede crear un usuario sin e-mail"
-    SIN_USUARIO = "No se puede crear un usuario sin usuario"
-    SIN_CLAVE = "No se puede crear un usuario sin clave"
-    SIN_NACIMIENTO = "No se puede crear un usuario sin fecha de nacimiento"
-    CUENTA_YA_EXISTE = "La cuenta ya existe"
+class ControladorConsignatario(ControladorUsuario):
+    def __init__(self, db: BaseDeDatos):
+        super().__init__(db)
 
-    def __init__(self, db: BaseDeDatos, nombre: str, apellido: str, email: str, usuario: str, clave: str, nacimiento: date,
-                tipo: TipoDeUsuario):
-        super().__init__()
-        self._throw_if_invalid(nombre, self.SIN_NOMBRE)
-        self._throw_if_invalid(apellido, self.SIN_APELLIDO)
-        self._throw_if_invalid(email, self.SIN_EMAIL)
-        self._throw_if_invalid(usuario, self.SIN_USUARIO)
-        self._throw_if_invalid(clave, self.SIN_CLAVE)
-        self._throw_if_invalid(nacimiento, self.SIN_NACIMIENTO)
-
-        self._throw_if_true(db.Usuarios.existe(usuario), self.CUENTA_YA_EXISTE)
-        self._throw_if_true(db.Usuarios.buscar_por_email(email), self.CUENTA_YA_EXISTE)
-        db.Usuarios.agregar(nombre, apellido, email, usuario, clave, nacimiento, tipo)
+    def agregar(self, nombre: str, apellido: str, email: str, usuario: str, clave: str, nacimiento: str) -> None:
+        super().agregar(nombre, apellido, email, usuario, clave, nacimiento, TipoDeUsuario.Consignatario)
 
 
-class ConsignatarioController(ServicioUsuario):
-    def __init__(self, db: BaseDeDatos, nombre: str, apellido: str, email: str, usuario: str, clave: str, nacimiento: date):
-        super().__init__(db, nombre, apellido, email, usuario, clave, nacimiento, TipoDeUsuario.Consignatario)
+class ControladorPujador(ControladorUsuario):
+    def __init__(self, db: BaseDeDatos):
+        super().__init__(db)
 
-
-class PujadorController(ServicioUsuario):
-    def __init__(self, db: BaseDeDatos, nombre: str, apellido: str, email: str, usuario: str, clave: str, nacimiento: date):
-        super().__init__(db, nombre, apellido, email, usuario, clave, nacimiento, TipoDeUsuario.Pujador)
+    def agregar(self, nombre: str, apellido: str, email: str, usuario: str, clave: str, nacimiento: date) -> None:
+        super().agregar(nombre, apellido, email, usuario, clave, nacimiento, TipoDeUsuario.Pujador)
