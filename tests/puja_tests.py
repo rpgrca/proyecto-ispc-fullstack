@@ -14,7 +14,7 @@ from model.content_provider.memory import LotesEnMemoria, SubastasEnMemoria, Usu
 class ControladorPujaTests(unittest.TestCase):
     def setUp(self):
         subasta = Subasta(C.SUBASTA_UID, C.TITULO_SUBASTA, C.DESCRIPCION_SUBASTA, C.IMAGEN_SUBASTA, C.FECHA_DE_SUBASTA)
-        articulo = Articulo(C.ARTICULO_UID)
+        articulo = Articulo(C.ARTICULO_UID, C.TITULO_ARTICULO)
         self.__db = CreadorDeBasesDeDatosTemporales() \
             .con_usuarios(UsuariosEnMemoria({C.NOMBRE_USUARIO: {
                 "id": C.ID_USUARIO,
@@ -99,7 +99,7 @@ class ControladorPujaTests(unittest.TestCase):
         sut.agregar(C.LOTE_UID, C.ID_USUARIO, C.MONTO_PUJA)
         puja = self.__db.Pujas.buscar_por_uid(C.PUJA_UID)
         self.assertEqual(C.LOTE_UID, puja.obtener_lote_uid())
-        self.assertEqual(C.ID_USUARIO, puja.obtener_pujador_uid())
+        self.assertEqual(C.ID_USUARIO, puja.obtener_pujador().obtener_uid())
         self.assertEqual(C.MONTO_PUJA, puja.obtener_monto())
 
     def test_retornar_nada_cuando_no_hay_pujas_en_lote(self):

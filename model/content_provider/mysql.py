@@ -1,3 +1,4 @@
+from typing import Any
 import mysql.connector
 from mysql.connector import Error, errorcode
 from datetime import date
@@ -8,6 +9,7 @@ from model.tipo_usuario import TipoDeUsuario
 from model.usuarios import Consignatario, Pujador, Usuario, Usuarios, UsuariosFactory
 from model.subastas import Subasta, Subastas
 from model.articulos import Articulo, Articulos
+from model.ventas import Venta, Ventas
 
 
 class MysqlDatabase:
@@ -128,10 +130,9 @@ class MysqlDatabase:
         except Exception as err:
             raise err
 
-    def insertar(self, sql: str, valores=(), creator=lambda i, v: None):
+    def insertar(self, sql: str, valores=(), creator=lambda i, v: None) -> Any:
         try:
             cursor = self.__connection.cursor()
-            sql = "INSERT INTO Subastas VALUES (%s,%s,%s,%s)"
             cursor.execute(sql, valores)
             self.__connection.commit()
             return creator(cursor.lastrowid, valores)
@@ -167,11 +168,11 @@ class TablaArticulos(Articulos):
     def __init__(self, db: MysqlDatabase):
         self.__db = db
 
-    def agregar(self, uid: int):
-        return self.__db.insertar(self.CREAR_ARTICULO, (uid), lambda i, v: Articulo(i))  # FIXME: agregar campos
+    def crear(self, uid: int, titulo: str) -> Articulo:
+        return self.__db.insertar(self.CREAR_ARTICULO, (uid, titulo), lambda i, r: Articulo(i, r[0]))  # FIXME: agregar campos
 
     def buscar_por_uid(self, uid: int) -> Articulo:
-        return self.__db.obtener_uno(self.BUSCAR_ARTICULO, (uid), lambda r: Articulo(r[0]))  # FIXME: agregar campos
+        return self.__db.obtener_uno(self.BUSCAR_ARTICULO, (uid), lambda r: Articulo(r[0], r[1]))  # FIXME: agregar campos
 
     def listar_articulos_propiedad_de(self, consignatario: Consignatario) -> list[Articulo]:
         return self.__db.obtener_muchos(self.BUSCAR_POR_CONSIGNATARIO, (consignatario.obtener_uid()),
@@ -244,13 +245,13 @@ class TablaLotes(Lotes):
 
 class TablaPujas(Pujas):
     CREAR_PUJA = "INSERT INTO Pujas"  # FIXME
-    BUSCAR_PUJA = "SELECT id, monto, pujador_id, lote_id"  # FIXME
+    BUSCAR_PUJA = "SELECT id, pujador_id, lote_id, monto"  # FIXME
 
     def __init__(self, db: MysqlDatabase):
         self.__db = db
 
-    def agregar(self, monto: int, pujador: Pujador, lote: Lote):
-        self.__db.insertar(self.CREAR_PUJA, (monto, pujador.obtener_uid(), lote.obtener_uid()))
+    def agregar(self, pujador: Pujador, lote: Lote, monto: int):
+        self.__db.insertar(self.CREAR_PUJA, (pujador.obtener_uid(), lote.obtener_uid(), monto))
 
     def buscar_por_monto(self, monto: int) -> Puja:
         pass
@@ -265,6 +266,27 @@ class TablaPujas(Pujas):
         pass
 
 
+class TablaVentas(Ventas):
+    CREAR_VENTA = "INSERT INTO Ventas(id_puja, precio_final, comision, pago_consignatario) VALUES (%s,%s,%s,%s)"
+    BUSCAR_VENTA_CON_DATOS = "SELECT v.id, p.id, p.pujador_id, u.nombre, u.apellido, u.email, u.usuario, u.clave, " \
+                             "u.nacimiento, u.tipo, v.precio_final, v.comision, v.pago_consignatario " \
+                             "FROM Ventas v " \
+                             "INNER JOIN Pujas p on p.id = id_puja " \
+                             "INNER JOIN Usuarios u on u.id = p.id_pujador " \
+                             "WHERE v.id = %s"
+
+    def __init__(self, db: MysqlDatabase):
+        self.__db = db
+
+    def crear(self, puja: Puja, precio_final: float, comision: float, pago_a_consignatario: float) -> Venta:
+        return self.__db.insertar(self.CREAR_VENTA, (puja.obtener_lote_uid(), precio_final, comision, pago_a_consignatario),
+                                  lambda r: Venta(r[0], r[1], r[2], r[3]))
+
+    def buscar_por_uid(self, uid: int) -> Venta:
+        return self.__db.obtener_uno(self.BUSCAR_VENTA_CON_DATOS, (uid), lambda r: Venta(r[0], Puja(r[1], r[2], r[3], r[4]),
+                                     r[5], r[6], r[7]))
+
+
 class CreadorDeBasesDeDatosMySql:
     def __init__(self):
         self.__db = MysqlDatabase()
@@ -273,6 +295,7 @@ class CreadorDeBasesDeDatosMySql:
         self.__articulos = TablaArticulos(self.__db)
         self.__lotes = TablaLotes(self.__db)
         self.__pujas = TablaPujas(self.__db)
+        self.__ventas = TablaVentas(self.__db)
 
     def construir(self) -> BaseDeDatos:
-        return BaseDeDatos(self.__usuarios, self.__subastas, self.__articulos, self.__lotes, self.__pujas)
+        return BaseDeDatos(self.__usuarios, self.__subastas, self.__articulos, self.__lotes, self.__pujas, self.__ventas)

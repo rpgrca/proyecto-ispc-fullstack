@@ -39,6 +39,9 @@ class Usuario:
     def obtener_nacimiento(self) -> date:
         return self.__nacimiento
 
+    def obtener_tipo(self) -> TipoDeUsuario:
+        return self.__tipo
+
 
 class Pujador(Usuario):
     def __init__(self, uid: int, nombre: str, apellido: str, email: str, usuario: str, clave: str, nacimiento: date):
@@ -85,7 +88,7 @@ class Usuarios(ABC):
 class UsuariosFactory:
     @staticmethod
     def crear(uid: int, nombre: str, apellido: str, email: str, usuario: str, clave: str, nacimiento: date,
-              tipo: TipoDeUsuario):
+              tipo: TipoDeUsuario) -> Usuario:
         if tipo == TipoDeUsuario.Consignatario:
             return Consignatario(uid, nombre, apellido, email, usuario, clave, nacimiento)
         elif tipo == TipoDeUsuario.Pujador:

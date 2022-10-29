@@ -34,7 +34,7 @@ class ServicioPuja(Servicio):
         if puja and puja.obtener_monto() >= monto:
             self._throw(self.PUJA_BAJA)
 
-        self.__db.Pujas.agregar(monto, pujador, lote)
+        self.__db.Pujas.agregar(pujador, lote, monto)
 
     def listar(self, lote_uid: int) -> None:
         self._throw_if_not_positive(lote_uid, self.LOTE_INVALIDO)

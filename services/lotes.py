@@ -14,6 +14,8 @@ class ServicioLote(Servicio):
     SUBASTA_INEXISTENTE = "No se puede subastar un lote de una subasta inexistente"
     LOTE_INEXISTENTE = "No existe tal lote"
     BASE_INVALIDA = "No se puede agregar un artículo con base inválida"
+    LISTAR_SIN_SUBASTA = "No se puede listar lotes de una subasta inválida"
+    LISTAR_CON_SUBASTA_INEXISTENTE = "No se puede listar lotes de una subasta inexistente"
 
     def __init__(self, db: BaseDeDatos):
         super().__init__()
@@ -50,3 +52,11 @@ class ServicioLote(Servicio):
             self._throw(self.LOTE_INEXISTENTE)
 
         return self.__db.Lotes.obtener(subasta, orden)
+
+    def listar(self, subasta_uid: int) -> list[Lote]:
+        self._throw_if_not_positive(subasta_uid, self.LISTAR_SIN_SUBASTA)
+
+        subasta = self.__db.Subastas.buscar_por_uid(subasta_uid)
+        self._throw_if_invalid(subasta, self.LISTAR_CON_SUBASTA_INEXISTENTE)
+
+        return self.__db.Lotes.listar(subasta)
