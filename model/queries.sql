@@ -49,3 +49,7 @@ where u.id = %s
 -- Traer último registro de Subastas
 select * from Subastas
 order by Fecha  desc limit 1;
+
+-- LOGIN: Traer todos los usuarios según nombre de usuario y clave dados
+SELECT * FROM Usuarios
+WHERE usuario = %s AND clave = %s;
