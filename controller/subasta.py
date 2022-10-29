@@ -1,8 +1,3 @@
-# subasta.py
-#
-# cambiar_orden(articulo, orden)
-# pujar(pujador, monto)
-# listar_pujas()
 from datetime import date
 from controller.controlador import Controlador
 from controller.servicio import Servicio
