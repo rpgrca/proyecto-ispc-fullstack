@@ -4,8 +4,8 @@ from fastapi import FastAPI, Form, Response
 from fastapi.middleware.cors import CORSMiddleware
 from starlette import status
 from model.content_provider.memory import CreadorDeBasesDeDatosTemporales
-from controller.subasta import ServicioSubasta
-from controller.lote import ControladorLote, ServicioLote
+from controller.subasta import ControladorSubasta
+from controller.lote import ControladorLote
 from controller.login import ServicioLogin
 from controller.registro import ServicioRegistro
 from controller.reestablecer import ServicioRecordatorio
@@ -52,7 +52,7 @@ def reestablecer(email: str = Form(), response: Response = Response()):
 @app.post("/crear_subasta/", status_code=status.HTTP_200_OK)
 def crear_subasta(titulo: str = Form(), descripcion: str = Form(), imagen: str = Form(), fecha: date = Form(),
                   response: Response = Response()):
-    controlador = ServicioSubasta(db)
+    controlador = ControladorSubasta(db)
     controlador.crear(titulo, descripcion, imagen, fecha)
     return __cambiar_status_code(controlador.obtener_respuesta(), response)
 

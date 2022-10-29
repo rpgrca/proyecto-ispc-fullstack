@@ -70,7 +70,7 @@ class Usuarios(ABC):
         pass
 
     @abstractmethod
-    def buscar_por_email(self, email: str, clave: str) -> Usuario:
+    def buscar_por_email(self, email: str) -> Usuario:
         pass
 
     @abstractmethod

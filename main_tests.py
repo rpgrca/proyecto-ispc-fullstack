@@ -7,7 +7,7 @@ from tests.login_tests import ServicioLoginTests
 from tests.registro_tests import ServicioRegistroTests
 from tests.reestablecer_tests import ServicioReestablecerTests
 from tests.usuario_tests import ControladorUsuarioTests
-from tests.subasta_tests import ServicioSubastaTests
+from tests.subasta_tests import ControladorSubastaTests
 
 suite = unittest.TestSuite()
 
@@ -17,7 +17,7 @@ suite.addTest(unittest.TestLoader().loadTestsFromTestCase(ServicioRegistroTests)
 suite.addTest(unittest.TestLoader().loadTestsFromTestCase(ServicioReestablecerTests))
 suite.addTest(unittest.TestLoader().loadTestsFromTestCase(ServicioPujadorTests))
 suite.addTest(unittest.TestLoader().loadTestsFromTestCase(ServicioConsignatarioTests))
-suite.addTest(unittest.TestLoader().loadTestsFromTestCase(ServicioSubastaTests))
+suite.addTest(unittest.TestLoader().loadTestsFromTestCase(ControladorSubastaTests))
 suite.addTest(unittest.TestLoader().loadTestsFromTestCase(ControladorLoteTests))
 suite.addTest(unittest.TestLoader().loadTestsFromTestCase(ControladorPujaTests))
 
