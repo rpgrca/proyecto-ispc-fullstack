@@ -1,12 +1,13 @@
 import unittest
-from ddt import ddt
+from ddt import ddt, data
+import tests.constantes as C
 from controller.libro_diario import ControladorLibroDiario
 from model.articulos import Articulo
 from model.lotes import Lote
+from services.libro_diario import ServicioLibroDiario
 from model.pujas import Puja
 from model.subastas import Subasta
 from model.usuarios import UsuariosFactory
-import tests.constantes as C
 from model.tipo_usuario import TipoDeUsuario
 from model.content_provider.memory import ArticulosEnMemoria, LotesEnMemoria, PujasEnMemoria, SubastasEnMemoria
 from model.content_provider.memory import UsuariosCreadosEnMemoria, CreadorDeBasesDeDatosTemporales
@@ -46,3 +47,18 @@ class ControladorVentaTests(unittest.TestCase):
         self.assertEqual(485, venta.obtener_pago_a_consignatario())
         self.assertEqual(50, venta.obtener_precio_final())
         self.assertAlmostEqual(616, venta.obtener_comision())
+
+    @data(None, "", -1, 0)
+    def test_retornar_error_con_puja_invalida(self, puja_invalida):
+        sut = ControladorLibroDiario(self.__db)
+        sut.vender(puja_invalida)
+        respuesta = sut.obtener_respuesta()
+        self.assertEqual("error", respuesta["status"])
+        self.assertEqual(ServicioLibroDiario.PUJA_INVALIDA, respuesta["mensaje"])
+
+    def test_retornar_error_con_puja_inexistente(self):
+        sut = ControladorLibroDiario(self.__db)
+        sut.vender(C.OTRA_PUJA_UID)
+        respuesta = sut.obtener_respuesta()
+        self.assertEqual("error", respuesta["status"])
+        self.assertEqual(ServicioLibroDiario.PUJA_INEXISTENTE, respuesta["mensaje"])
