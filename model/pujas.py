@@ -5,7 +5,7 @@ from model.lotes import Lote
 
 
 class Puja(Serializable):
-    def __init__(self, uid: int, monto: int, pujador: Pujador, lote: Lote):
+    def __init__(self, uid: int, pujador: Pujador, lote: Lote, monto: int):
         self.__uid = uid
         self.__monto = monto
         self.__pujador = pujador
@@ -32,7 +32,7 @@ class Puja(Serializable):
 
 class Pujas(ABC):
     @abstractmethod
-    def agregar(self, monto: int, pujador: Pujador, lote: Lote):
+    def agregar(self, pujador: Pujador, lote: Lote, monto: int):
         pass
 
     @abstractmethod

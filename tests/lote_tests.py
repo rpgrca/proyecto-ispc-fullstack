@@ -13,7 +13,7 @@ class ControladorLoteTests(unittest.TestCase):
         self.__db = CreadorDeBasesDeDatosTemporales() \
             .con_subastas(SubastasEnMemoria([Subasta(C.SUBASTA_UID, C.TITULO_SUBASTA, C.DESCRIPCION_SUBASTA, C.IMAGEN_SUBASTA,
                                                      C.FECHA_DE_SUBASTA)])) \
-            .con_articulos(ArticulosEnMemoria([Articulo(C.ARTICULO_UID)])) \
+            .con_articulos(ArticulosEnMemoria([Articulo(C.ARTICULO_UID, C.TITULO_ARTICULO)])) \
             .construir()
 
     @data("", None, -1, 0)
@@ -118,7 +118,7 @@ class ControladorLoteTests(unittest.TestCase):
 
     def test_avanza_al_siguiente_lote_correctamente(self):
         sut = ControladorLote(self.__db)
-        self.__db.Articulos.agregar(C.OTRO_ARTICULO_UID)
+        self.__db.Articulos.agregar(C.OTRO_ARTICULO_UID, C.TITULO_ARTICULO)
         sut.agregar(C.SUBASTA_UID, C.ARTICULO_UID, 100)
         sut.agregar(C.SUBASTA_UID, C.OTRO_ARTICULO_UID, 200)
         sut.obtener(C.SUBASTA_UID, 2)

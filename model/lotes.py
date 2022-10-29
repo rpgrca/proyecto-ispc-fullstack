@@ -24,6 +24,9 @@ class Lote(Serializable):
     def obtener_orden(self) -> int:
         return self.__orden
 
+    def obtener_titulo_articulo(self) -> str:
+        return self.__articulo.obtener_titulo()
+
     def serialize(self):
         return {"articulo": self.__articulo.serialize(), "base": self.__base, "orden": self.__orden}
 

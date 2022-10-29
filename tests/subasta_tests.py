@@ -11,7 +11,7 @@ class ControladorSubastaTests(unittest.TestCase):
     def setUp(self):
         self.__db = CreadorDeBasesDeDatosTemporales() \
             .con_subastas(SubastasEnMemoria([])) \
-            .con_articulos(ArticulosEnMemoria([Articulo(C.ARTICULO_UID)])) \
+            .con_articulos(ArticulosEnMemoria([Articulo(C.ARTICULO_UID, C.TITULO_ARTICULO)])) \
             .construir()
 
     @data(

@@ -91,7 +91,7 @@ class ControladorArticuloTests(unittest.TestCase):
         sut.buscar_por_uid(1)
         respuesta = sut.obtener_respuesta()
         self.assertEqual("ok", respuesta["status"])
-        self.assertEqual({"consignatario_id": 1, "id": 1}, respuesta["item"])
+        self.assertEqual({"consignatario_id": 1, "id": 1, "titulo": "Sofa Antiguo"}, respuesta["item"])
 
     @data(None, "", -1, 0)
     def test_retornar_error_al_buscar_articulo_invalido(self, uid_invalido):
@@ -116,8 +116,8 @@ class ControladorArticuloTests(unittest.TestCase):
         respuesta = sut.obtener_respuesta()
         self.assertEqual("ok", respuesta["status"])
         self.assertEqual(2, len(respuesta["items"]))
-        self.assertIn({"consignatario_id": 1, "id": 1}, respuesta["items"])
-        self.assertIn({"consignatario_id": 1, "id": 2}, respuesta["items"])
+        self.assertIn({"id": 1, "consignatario_id": 1, "titulo": "Sofa Antiguo"}, respuesta["items"])
+        self.assertIn({"id": 2, "consignatario_id": 1, "titulo": "Reloj de Arena"}, respuesta["items"])
 
     def test_retonar_vacio_al_buscar_por_consignatario_existente_sin_articulos(self):
         sut = ControladorArticulo(self.__db)
