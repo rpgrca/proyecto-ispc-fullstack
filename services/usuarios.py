@@ -27,12 +27,3 @@ class ServicioUsuario(Servicio):
         self._throw_if_true(db.Usuarios.buscar_por_email(email), self.CUENTA_YA_EXISTE)
         db.Usuarios.agregar(nombre, apellido, email, usuario, clave, nacimiento, tipo)
 
-
-class ConsignatarioController(ServicioUsuario):
-    def __init__(self, db: BaseDeDatos, nombre: str, apellido: str, email: str, usuario: str, clave: str, nacimiento: date):
-        super().__init__(db, nombre, apellido, email, usuario, clave, nacimiento, TipoDeUsuario.Consignatario)
-
-
-class PujadorController(ServicioUsuario):
-    def __init__(self, db: BaseDeDatos, nombre: str, apellido: str, email: str, usuario: str, clave: str, nacimiento: date):
-        super().__init__(db, nombre, apellido, email, usuario, clave, nacimiento, TipoDeUsuario.Pujador)
