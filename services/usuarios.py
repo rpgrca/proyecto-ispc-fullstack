@@ -26,4 +26,3 @@ class ServicioUsuario(Servicio):
         self._throw_if_true(db.Usuarios.existe(usuario), self.CUENTA_YA_EXISTE)
         self._throw_if_true(db.Usuarios.buscar_por_email(email), self.CUENTA_YA_EXISTE)
         db.Usuarios.agregar(nombre, apellido, email, usuario, clave, nacimiento, tipo)
-

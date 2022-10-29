@@ -1,15 +1,15 @@
 import unittest
-from ddt import ddt, data, unpack
+from ddt import ddt
 from controller.libro_diario import ControladorLibroDiario
 from model.articulos import Articulo
 from model.lotes import Lote
 from model.pujas import Puja
 from model.subastas import Subasta
-from model.usuarios import Consignatario, Martillero, Pujador, UsuariosFactory
+from model.usuarios import UsuariosFactory
 import tests.constantes as C
-from controller.usuario import ControladorUsuario, ServicioUsuario
 from model.tipo_usuario import TipoDeUsuario
-from model.content_provider.memory import ArticulosEnMemoria, LotesEnMemoria, PujasEnMemoria, SubastasEnMemoria, UsuariosCreadosEnMemoria, UsuariosEnMemoria, CreadorDeBasesDeDatosTemporales
+from model.content_provider.memory import ArticulosEnMemoria, LotesEnMemoria, PujasEnMemoria, SubastasEnMemoria
+from model.content_provider.memory import UsuariosCreadosEnMemoria, CreadorDeBasesDeDatosTemporales
 
 
 @ddt
@@ -22,7 +22,8 @@ class ControladorVentaTests(unittest.TestCase):
 
         self.__db = CreadorDeBasesDeDatosTemporales() \
             .con_usuarios(UsuariosCreadosEnMemoria([pujador])) \
-            .con_subastas(SubastasEnMemoria([Subasta(C.SUBASTA_UID, C.TITULO_SUBASTA, C.DESCRIPCION_SUBASTA, C.IMAGEN_SUBASTA, C.FECHA_DE_SUBASTA)])) \
+            .con_subastas(SubastasEnMemoria([Subasta(C.SUBASTA_UID, C.TITULO_SUBASTA, C.DESCRIPCION_SUBASTA, C.IMAGEN_SUBASTA,
+                                                     C.FECHA_DE_SUBASTA)])) \
             .con_articulos(ArticulosEnMemoria([articulo])) \
             .con_lotes(LotesEnMemoria([lote])) \
             .con_pujas(PujasEnMemoria([Puja(C.PUJA_UID, pujador, lote, C.MONTO_PUJA)])) \

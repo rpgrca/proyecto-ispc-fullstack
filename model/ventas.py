@@ -31,8 +31,8 @@ class Venta:
 
     def obtener_pago_a_consignatario(self) -> float:
         return self.__pago_a_consignatario
- 
- 
+
+
 class Ventas(ABC):
     @abstractmethod
     def crear(self, puja: Puja, precio_final: float, comision: float, pago_a_consignatario: float) -> Venta:

@@ -7,7 +7,8 @@ from model.ventas import Ventas
 
 
 class BaseDeDatos:
-    def __init__(self, usuarios: Usuarios, subastas: Subastas, articulos: Articulos, lotes: Lotes, pujas: Pujas, ventas: Ventas):
+    def __init__(self, usuarios: Usuarios, subastas: Subastas, articulos: Articulos, lotes: Lotes, pujas: Pujas,
+                 ventas: Ventas):
         self.__usuarios = usuarios
         self.__subastas = subastas
         self.__articulos = articulos

@@ -268,8 +268,8 @@ class TablaPujas(Pujas):
 
 class TablaVentas(Ventas):
     CREAR_VENTA = "INSERT INTO Ventas(id_puja, precio_final, comision, pago_consignatario) VALUES (%s,%s,%s,%s)"
-    BUSCAR_VENTA_CON_DATOS = "SELECT v.id, p.id, p.pujador_id, u.nombre, u.apellido, u.email, u.usuario, u.clave, u.nacimiento," \
-                             "u.tipo, v.precio_final, v.comision, v.pago_consignatario " \
+    BUSCAR_VENTA_CON_DATOS = "SELECT v.id, p.id, p.pujador_id, u.nombre, u.apellido, u.email, u.usuario, u.clave, " \
+                             "u.nacimiento, u.tipo, v.precio_final, v.comision, v.pago_consignatario " \
                              "FROM Ventas v " \
                              "INNER JOIN Pujas p on p.id = id_puja " \
                              "INNER JOIN Usuarios u on u.id = p.id_pujador " \
@@ -283,8 +283,8 @@ class TablaVentas(Ventas):
                                   lambda r: Venta(r[0], r[1], r[2], r[3]))
 
     def buscar_por_uid(self, uid: int) -> Venta:
-        return self.__db.obtener_uno(self.BUSCAR_VENTA_CON_DATOS, (uid), lambda r: Venta(r[0], Puja(r[1], r[2], r[3], r[4]), r[5],
-                                     r[6], r[7]))
+        return self.__db.obtener_uno(self.BUSCAR_VENTA_CON_DATOS, (uid), lambda r: Venta(r[0], Puja(r[1], r[2], r[3], r[4]),
+                                     r[5], r[6], r[7]))
 
 
 class CreadorDeBasesDeDatosMySql:
