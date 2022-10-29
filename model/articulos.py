@@ -31,3 +31,7 @@ class Articulos(ABC):
     @abstractmethod
     def listar_articulos_propiedad_de(self, consignatario: Consignatario) -> list[Articulo]:
         pass
+
+    @abstractmethod
+    def contar(self) -> int:
+        pass
