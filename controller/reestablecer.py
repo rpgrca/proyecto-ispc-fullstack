@@ -1,9 +1,9 @@
-from controller.servicio import Servicio
+from controller.controlador import Controller
 from controller.email_sender import EmailSender, RealEmailSender
 from model.database import BaseDeDatos
 
 
-class ServicioRecordatorio(Servicio):
+class ServicioRecordatorio(Controller):
     RECORDATORIO_EXITOSO = "Si el correo está en nuestros registros se ha enviado un recordatorio a su cuenta"
 
     def __init__(self, db: BaseDeDatos, email: str, sender: EmailSender = RealEmailSender()):

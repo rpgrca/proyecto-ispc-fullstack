@@ -1,7 +1,7 @@
 import unittest
 from ddt import ddt, data
 import tests.constantes as C
-from controller.lote import ServicioLote
+from controller.lote import ControladorLote, ServicioLote
 from model.articulos import Articulo
 from model.subastas import Subasta
 from model.content_provider.memory import ArticulosEnMemoria, CreadorDeBasesDeDatosTemporales, SubastasEnMemoria
@@ -18,21 +18,21 @@ class ServicioLoteTests(unittest.TestCase):
 
     @data("", None)
     def test_retornar_error_cuando_la_subasta_es_invalida(self, subasta_invalida):
-        sut = ServicioLote(self.__db)
+        sut = ControladorLote(self.__db)
         sut.contar_lotes_en(subasta_invalida)
         respuesta = sut.obtener_respuesta()
         self.assertEqual("error", respuesta["status"])
         self.assertEqual(ServicioLote.CONTAR_SIN_SUBASTA, respuesta["mensaje"])
 
     def test_retornar_error_cuando_no_existe_subasta(self):
-        sut = ServicioLote(self.__db)
+        sut = ControladorLote(self.__db)
         sut.contar_lotes_en(C.OTRA_SUBASTA_UID)
         respuesta = sut.obtener_respuesta()
         self.assertEqual("error", respuesta["status"])
         self.assertEqual(ServicioLote.CONTAR_SUBASTA_INEXISTENTE, respuesta["mensaje"])
 
     def test_retorna_la_cantidad_de_lotes_correctamente(self):
-        sut = ServicioLote(self.__db)
+        sut = ControladorLote(self.__db)
         sut.agregar(C.SUBASTA_UID, C.ARTICULO_UID, 100)
         sut.contar_lotes_en(C.SUBASTA_UID)
         respuesta = sut.obtener_respuesta()
@@ -40,42 +40,42 @@ class ServicioLoteTests(unittest.TestCase):
         self.assertEqual(1, respuesta["total"])
 
     def test_retornar_error_cuando_falta_subasta_en_agregar(self):
-        sut = ServicioLote(self.__db)
+        sut = ControladorLote(self.__db)
         sut.agregar(None, C.ARTICULO_UID, 100)
         respuesta = sut.obtener_respuesta()
         self.assertEqual("error", respuesta["status"])
         self.assertEqual(ServicioLote.LOTE_SIN_SUBASTA, respuesta["mensaje"])
 
     def test_retornar_error_cuando_falta_articulo_en_agregar(self):
-        sut = ServicioLote(self.__db)
+        sut = ControladorLote(self.__db)
         sut.agregar(C.SUBASTA_UID, None, 100)
         respuesta = sut.obtener_respuesta()
         self.assertEqual("error", respuesta["status"])
         self.assertEqual(ServicioLote.ARTICULO_NULO_EN_SUBASTA, respuesta["mensaje"])
 
     def test_retornar_error_cuando_no_existe_articulo_para_agregar(self):
-        sut = ServicioLote(self.__db)
+        sut = ControladorLote(self.__db)
         sut.agregar(C.SUBASTA_UID, C.OTRO_ARTICULO_UID, 100)
         respuesta = sut.obtener_respuesta()
         self.assertEqual("error", respuesta["status"])
         self.assertEqual(ServicioLote.ARTICULO_INEXISTENTE, respuesta["mensaje"])
 
     def test_retornar_error_cuando_subasta_no_se_encuentra(self):
-        sut = ServicioLote(self.__db)
+        sut = ControladorLote(self.__db)
         sut.agregar(C.OTRA_SUBASTA_UID, C.ARTICULO_UID, 100)
         respuesta = sut.obtener_respuesta()
         self.assertEqual("error", respuesta["status"])
         self.assertEqual(ServicioLote.LOTE_SUBASTA_INEXISTENTE, respuesta["mensaje"])
 
     def test_agregar_lote_correctamente(self):
-        sut = ServicioLote(self.__db)
+        sut = ControladorLote(self.__db)
         sut.agregar(C.SUBASTA_UID, C.ARTICULO_UID, 100)
         respuesta = sut.obtener_respuesta()
         self.assertEqual("ok", respuesta["status"])
-        self.assertEqual(ServicioLote.LOTE_AGREGADO, respuesta["mensaje"])
+        self.assertEqual(ControladorLote.LOTE_AGREGADO, respuesta["mensaje"])
 
     def test_agregar_lote_correctamente_a_base_de_datos(self):
-        sut = ServicioLote(self.__db)
+        sut = ControladorLote(self.__db)
         sut.agregar(C.SUBASTA_UID, C.ARTICULO_UID, 234)
         lote = self.__db.Lotes.buscar_por_uid(C.LOTE_UID)
         self.assertEqual(234, lote.obtener_precio_base())
@@ -85,21 +85,21 @@ class ServicioLoteTests(unittest.TestCase):
 
     @data("", None)
     def test_retorna_error_con_subasta_invalida(self, subasta_invalida):
-        sut = ServicioLote(self.__db)
+        sut = ControladorLote(self.__db)
         sut.obtener(subasta_invalida, 1)
         respuesta = sut.obtener_respuesta()
         self.assertEqual("error", respuesta["status"])
         self.assertEqual(ServicioLote.BUSCAR_SIN_SUBASTA, respuesta["mensaje"])
 
     def test_retorna_error_con_subasta_inexistente(self):
-        sut = ServicioLote(self.__db)
+        sut = ControladorLote(self.__db)
         sut.obtener(C.OTRA_SUBASTA_UID, 1)
         respuesta = sut.obtener_respuesta()
         self.assertEqual("error", respuesta["status"])
         self.assertEqual(ServicioLote.SUBASTA_INEXISTENTE, respuesta["mensaje"])
 
     def test_comienza_con_el_primer_lote_correctamente(self):
-        sut = ServicioLote(self.__db)
+        sut = ControladorLote(self.__db)
         sut.agregar(C.SUBASTA_UID, C.ARTICULO_UID, 100)
         sut.obtener(C.SUBASTA_UID, 1)
         respuesta = sut.obtener_respuesta()
@@ -107,7 +107,7 @@ class ServicioLoteTests(unittest.TestCase):
         self.assertEqual(1, respuesta["item"]["orden"])
 
     def test_avanza_al_siguiente_lote_correctamente(self):
-        sut = ServicioLote(self.__db)
+        sut = ControladorLote(self.__db)
         self.__db.Articulos.agregar(C.OTRO_ARTICULO_UID)
         sut.agregar(C.SUBASTA_UID, C.ARTICULO_UID, 100)
         sut.agregar(C.SUBASTA_UID, C.OTRO_ARTICULO_UID, 200)
@@ -118,7 +118,7 @@ class ServicioLoteTests(unittest.TestCase):
 
     @data(-1, 1)
     def test_retorna_error_cuando_intenta_acceder_lote_invalido(self, orden: int):
-        sut = ServicioLote(self.__db)
+        sut = ControladorLote(self.__db)
         sut.obtener(C.SUBASTA_UID, orden)
         respuesta = sut.obtener_respuesta()
         self.assertEqual("error", respuesta["status"])

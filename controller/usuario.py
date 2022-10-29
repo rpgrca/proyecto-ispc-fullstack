@@ -1,10 +1,10 @@
 from datetime import date
-from controller.servicio import Servicio
+from controller.controlador import Controller
 from model.tipo_usuario import TipoDeUsuario
 from model.database import BaseDeDatos
 
 
-class ServicioUsuario(Servicio):
+class ServicioUsuario(Controller):
     SIN_NOMBRE = "No se puede crear un usuario sin nombre"
     SIN_APELLIDO = "No se puede crear un usuario sin apellido"
     SIN_EMAIL = "No se puede crear un usuario sin e-mail"

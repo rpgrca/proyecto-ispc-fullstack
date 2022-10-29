@@ -1,8 +1,8 @@
-from controller.servicio import Servicio
+from controller.controlador import Controller
 from model.database import BaseDeDatos
 
 
-class ServicioPuja(Servicio):
+class ServicioPuja(Controller):
     PUJAR_SIN_LOTE = "No se puede pujar sin lote"
     PUJAR_SIN_PUJADOR = "No se puede pujar sin un pujador"
     PUJAR_SIN_PUJA = "No se puede pujar sin un monto"

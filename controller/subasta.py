@@ -4,11 +4,11 @@
 # pujar(pujador, monto)
 # listar_pujas()
 from datetime import date
-from controller.servicio import Servicio
+from controller.controlador import Controller
 from model.database import BaseDeDatos
 
 
-class ServicioSubasta(Servicio):
+class ServicioSubasta(Controller):
     SIN_TITULO = "No se puede crear una subasta sin titulo"
     SIN_DESCRIPCION = "No se puede crear una subasta sin descripcion"
     SIN_IMAGEN = "No se puede crear una subasta sin imagen"
