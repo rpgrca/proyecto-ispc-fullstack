@@ -43,3 +43,9 @@ where u.id = %s
 -- Traer último registro de Subastas
 select * from Subastas
 order by Fecha  desc limit 1;
+
+
+-- Contar cantidad de uusrios con nombre
+select count(u.NOMBRE) as cantidad
+from USUARIOS u
+where u.NOMBRE is not null
