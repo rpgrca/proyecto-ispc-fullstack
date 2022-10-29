@@ -100,10 +100,8 @@ class MysqlDatabase:
             record = cursor.fetchone()
             if record is not None:
                 return record[0]
-        except:
-            pass
-        
-        return 0
+        except Exception as err:
+            raise err
 
     def obtener_uno(self, sql: str, valores=(), creator=lambda r: None):
         try:
@@ -113,10 +111,8 @@ class MysqlDatabase:
             record = cursor.fetchone()
             if record is not None:
                 return creator(record)
-        except:
-            pass
-
-        return None
+        except Exception as err:
+            raise err
 
     def obtener_muchos(self, sql: str, valores=(), creador=lambda r: None):
         try:
@@ -129,10 +125,8 @@ class MysqlDatabase:
                 resultado.append(creador(record))
 
             return resultado
-        except:
-            pass
-
-        return []
+        except Exception as err:
+            raise
 
     def insertar(self, sql: str, valores=(), creator=lambda i, v: None):
         try:
@@ -141,10 +135,8 @@ class MysqlDatabase:
             cursor.execute(sql, valores)
             self.__connection.commit()
             return creator(cursor.lastrowid, valores)
-        except:
-            pass
-
-        return None
+        except Exception as err:
+            raise err
 
     def obtener_conexion(self):
         return self.__connection
@@ -167,8 +159,8 @@ class TablaSubastas(Subastas):
 
 
 class TablaArticulos(Articulos):
-    CREAR_ARTICULO = "INSERT INTO Articulos" # FIXME
-    BUSCAR_ARTICULO = "SELECT id FROM Articulos" # FIXME
+    CREAR_ARTICULO = "INSERT INTO Articulos(titulo, descripcion, valuacion, consignatario_id) VALUES (%s,%s,%s,%s)"
+    BUSCAR_ARTICULO = "SELECT id, titulo, descripcion, valuacion, consignatario_id FROM Articulos WHERE id = %s"
     BUSCAR_POR_CONSIGNATARIO = "SELECT id FROM Articulos WHERE consignatario_id = %s"
     CONTAR_ARTICULOS = "SELECT COUNT(id) FROM Articulos"
 
@@ -176,14 +168,14 @@ class TablaArticulos(Articulos):
         self.__db = db
 
     def agregar(self, uid: int):
-        return self.__db.insertar(self.CREAR_ARTICULO, (uid), lambda i, v: Articulo(i))
+        return self.__db.insertar(self.CREAR_ARTICULO, (uid), lambda i, v: Articulo(i))  # FIXME: agregar campos
 
     def buscar_por_uid(self, uid: int) -> Articulo:
-        return self.__db.obtener_uno(self.BUSCAR_ARTICULO, (uid), lambda r: Articulo(r[0]))
+        return self.__db.obtener_uno(self.BUSCAR_ARTICULO, (uid), lambda r: Articulo(r[0]))  # FIXME: agregar campos
 
     def listar_articulos_propiedad_de(self, consignatario: Consignatario) -> list[Articulo]:
         return self.__db.obtener_muchos(self.BUSCAR_POR_CONSIGNATARIO, (consignatario.obtener_uid()),
-                                        lambda r: Articulo(r[0]))
+                                        lambda r: Articulo(r[0]))  # FIXME: agregar campos
 
     def contar(self) -> int:
         return self.__db.contar(self.CONTAR_ARTICULOS)
@@ -229,7 +221,8 @@ class TablaUsuarios(Usuarios):
     def buscar_consignatario_por_uid(self, uid: int) -> Consignatario:
         return self.__db.obtener_uno(self.BUSCAR_USUARIO_POR_ID_Y_TIPO, (uid, TipoDeUsuario.Consignatario.value),
                                      lambda r: UsuariosFactory.crear(r[0], r[1], r[2], r[3], r[4], r[5], r[6], r[7]))
- 
+
+
 class TablaLotes(Lotes):
     LOTES_POR_SUBASTA = "SELECT COUNT(id) FROM Lotes WHERE subasta_id = %s"
 
@@ -250,8 +243,8 @@ class TablaLotes(Lotes):
 
 
 class TablaPujas(Pujas):
-    CREAR_PUJA = "INSERT INTO Pujas" # FIXME
-    BUSCAR_PUJA = "SELECT id, monto, pujador_id, lote_id" # FIXME
+    CREAR_PUJA = "INSERT INTO Pujas"  # FIXME
+    BUSCAR_PUJA = "SELECT id, monto, pujador_id, lote_id"  # FIXME
 
     def __init__(self, db: MysqlDatabase):
         self.__db = db

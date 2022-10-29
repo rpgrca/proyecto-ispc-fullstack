@@ -1,6 +1,7 @@
 from .servicio import Servicio
 from model.database import BaseDeDatos
 
+
 class ServicioPuja(Servicio):
     PUJAR_SIN_LOTE = "No se puede pujar sin lote"
     PUJAR_SIN_PUJADOR = "No se puede pujar sin un pujador"

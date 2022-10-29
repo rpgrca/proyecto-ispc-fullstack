@@ -2,6 +2,7 @@ from .servicio import Servicio
 from model.database import BaseDeDatos
 from model.lotes import Lote
 
+
 class ServicioLote(Servicio):
     LOTE_SIN_SUBASTA = "No se puede agregar un lote sin subasta"
     ARTICULO_NULO_EN_SUBASTA = "No se puede agregar un articulo nulo a una subasta"
@@ -29,7 +30,6 @@ class ServicioLote(Servicio):
 
         self.__db.Lotes.agregar(subasta, articulo, base, self.__db.Lotes.contar_lotes(subasta) + 1)
 
-
     def contar_lotes_en(self, subasta_uid: int) -> int:
         self._throw_if_invalid(subasta_uid, self.CONTAR_SIN_SUBASTA)
 
@@ -37,7 +37,6 @@ class ServicioLote(Servicio):
         self._throw_if_invalid(subasta, self.CONTAR_SUBASTA_INEXISTENTE)
 
         return self.__db.Lotes.contar_lotes(subasta)
-
 
     def obtener(self, subasta_uid: int, orden: int) -> Lote:
         self._throw_if_invalid(subasta_uid, self.BUSCAR_SIN_SUBASTA)

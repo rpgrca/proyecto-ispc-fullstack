@@ -1,7 +1,7 @@
 from .servicio import Servicio
 from model.database import BaseDeDatos
 from model.articulos import Articulo
-from model.usuarios import Consignatario
+
 
 class ServicioArticulos(Servicio):
     UID_INVALIDO = "Artículo invalido"
@@ -37,7 +37,7 @@ class ServicioArticulos(Servicio):
 
     def listar_articulos_propiedad_de(self, consignatario_uid: int) -> list[Articulo]:
         self._throw_if_true(consignatario_uid <= 0, self.LISTAR_CON_CONSIGNATARIO_INVALIDO)
-        
+
         consignatario = self.__db.Usuarios.buscar_consignatario_por_uid(consignatario_uid)
         self._throw_if_invalid(consignatario, self.LISTAR_CON_CONSIGNATARIO_INEXISTENTE)
 

@@ -1,10 +1,10 @@
 import unittest
-from ddt import ddt, data, unpack
+from ddt import ddt, data
 import tests.constantes as C
 from controller.articulo import ControladorArticulo
 from services.articulos import ServicioArticulos
-from model.articulos import Articulo
-from model.content_provider.memory import ArticulosEnMemoria, CreadorDeBasesDeDatosTemporales, SubastasEnMemoria, UsuariosEnMemoria
+from model.content_provider.memory import CreadorDeBasesDeDatosTemporales
+from model.content_provider.memory import ArticulosEnMemoria, SubastasEnMemoria, UsuariosEnMemoria
 from model.tipo_usuario import TipoDeUsuario
 
 
@@ -78,11 +78,12 @@ class ControladorArticuloTests(unittest.TestCase):
         sut.agregar(C.TITULO_ARTICULO, C.DESCRIPCION_ARTICULO, C.VALUACION_ARTICULO, 1)
         articulo = self.__db.Articulos.buscar_por_uid(1)
         self.assertEqual(1, articulo.obtener_uid())
-        # TODO: cuando se complete articulo
-        #self.assertEqual(C.TITULO_ARTICULO, articulo.obtener_titulo())
-        #self.assertEqual(C.DESCRIPCION_ARTICULO, articulo.obtener_descripcion())
-        #self.assertEqual(C.VALUACION_ARTICULO, articulo.obtener_valuacion())
-        #self.assertEqual(1, articulo.obtener_consignatario_uid())
+
+# TODO: cuando se complete articulo
+#self.assertEqual(C.TITULO_ARTICULO, articulo.obtener_titulo())
+#self.assertEqual(C.DESCRIPCION_ARTICULO, articulo.obtener_descripcion())
+#self.assertEqual(C.VALUACION_ARTICULO, articulo.obtener_valuacion())
+#self.assertEqual(1, articulo.obtener_consignatario_uid())
 
     def test_retornar_articulo_al_buscar_articulo_creado(self):
         sut = ControladorArticulo(self.__db)
@@ -90,7 +91,7 @@ class ControladorArticuloTests(unittest.TestCase):
         sut.buscar_por_uid(1)
         respuesta = sut.obtener_respuesta()
         self.assertEqual("ok", respuesta["status"])
-        self.assertEqual({"consignatario_id": 1, "id" : 1}, respuesta["item"])
+        self.assertEqual({"consignatario_id": 1, "id": 1}, respuesta["item"])
 
     @data(-1, 0)
     def test_retornar_error_al_buscar_articulo_invalido(self, uid_invalido):

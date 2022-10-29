@@ -14,7 +14,7 @@ class ServicioUsuario(Servicio):
     CUENTA_YA_EXISTE = "La cuenta ya existe"
 
     def __init__(self, db: BaseDeDatos, nombre: str, apellido: str, email: str, usuario: str, clave: str, nacimiento: date,
-                tipo: TipoDeUsuario):
+                 tipo: TipoDeUsuario):
         super().__init__()
         self._throw_if_invalid(nombre, self.SIN_NOMBRE)
         self._throw_if_invalid(apellido, self.SIN_APELLIDO)
