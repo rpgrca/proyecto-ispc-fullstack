@@ -6,7 +6,7 @@ from starlette import status
 from model.content_provider.memory import CreadorDeBasesDeDatosTemporales
 from controller.subasta import ControladorSubasta
 from controller.lote import ControladorLote
-from controller.login import ServicioLogin
+from controller.login import ControladorLogin, ServicioLogin
 from controller.registro import ControladorRegistro
 from controller.reestablecer import ControladorRecordatorio
 
@@ -32,7 +32,7 @@ def __cambiar_status_code(respuesta: dict[str, str], response: Response, status_
 
 @app.post("/ingresar/", status_code=status.HTTP_200_OK)
 def ingresar(usuario: str = Form(), clave: str = Form(), response: Response = Response()):
-    controlador = ServicioLogin(db, usuario, clave)
+    controlador = ControladorLogin(db).login(usuario, clave)
     return __cambiar_status_code(controlador.obtener_respuesta(), response)
 
 
