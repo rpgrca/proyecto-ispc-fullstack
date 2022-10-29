@@ -66,7 +66,7 @@ class ControladorArticuloTests(unittest.TestCase):
         self.assertEqual("error", respuesta["status"])
         self.assertEqual(ServicioArticulos.CONSIGNATARIO_INEXISTENTE, respuesta["mensaje"])
 
-    def test_crear_articulo_correctamente(self):
+    def test_retornar_ok_al_crear_correctamente(self):
         sut = ControladorArticulo(self.__db)
         sut.agregar(C.TITULO_ARTICULO, C.DESCRIPCION_ARTICULO, C.VALUACION_ARTICULO, 1)
         respuesta = sut.obtener_respuesta()
@@ -83,6 +83,29 @@ class ControladorArticuloTests(unittest.TestCase):
         #self.assertEqual(C.DESCRIPCION_ARTICULO, articulo.obtener_descripcion())
         #self.assertEqual(C.VALUACION_ARTICULO, articulo.obtener_valuacion())
         #self.assertEqual(1, articulo.obtener_consignatario_uid())
+
+    def test_retornar_articulo_al_buscar_articulo_creado(self):
+        sut = ControladorArticulo(self.__db)
+        sut.agregar(C.TITULO_ARTICULO, C.DESCRIPCION_ARTICULO, C.VALUACION_ARTICULO, 1)
+        sut.buscar_por_uid(1)
+        respuesta = sut.obtener_respuesta()
+        self.assertEqual("ok", respuesta["status"])
+        self.assertEqual({"consignatario_id": 1, "id" : 1}, respuesta["item"])
+
+    @data(-1, 0)
+    def test_retornar_error_al_buscar_articulo_invalido(self, uid_invalido):
+        sut = ControladorArticulo(self.__db)
+        sut.buscar_por_uid(uid_invalido)
+        respuesta = sut.obtener_respuesta()
+        self.assertEqual("error", respuesta["status"])
+        self.assertEqual(ServicioArticulos.UID_INVALIDO, respuesta["mensaje"])
+
+    def test_retornar_error_al_buscar_articulo_inexistente(self):
+        sut = ControladorArticulo(self.__db)
+        sut.buscar_por_uid(2)
+        respuesta = sut.obtener_respuesta()
+        self.assertEqual("error", respuesta["status"])
+        self.assertEqual(ServicioArticulos.ARTICULO_INEXISTENTE, respuesta["mensaje"])
 
 
 if __name__ == "__main__":

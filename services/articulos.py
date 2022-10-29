@@ -12,6 +12,7 @@ class ServicioArticulos(Servicio):
     LISTAR_CON_CONSIGNATARIO_INVALIDO = "No se puede listar artículos de un consignatario inválido"
     CONSIGNATARIO_INEXISTENTE = "No se puede crear un artículo con un consignatario inexistente"
     LISTAR_CON_CONSIGNATARIO_INEXISTENTE = "No se puede listar artículos de un consignatario inexistente"
+    ARTICULO_INEXISTENTE = "El artículo no existe"
 
     def __init__(self, db: BaseDeDatos):
         self.__db = db
@@ -28,11 +29,14 @@ class ServicioArticulos(Servicio):
         self.__db.Articulos.agregar(self.__db.Articulos.contar() + 1)
 
     def buscar_por_uid(self, uid: int) -> Articulo:
-        self._throw_if_invalid(uid, self.UID_INVALIDO)
-        return self.__db.Articulos.buscar_por_uid(uid)
+        self._throw_if_true(uid <= 0, self.UID_INVALIDO)
+        articulo = self.__db.Articulos.buscar_por_uid(uid)
+        self._throw_if_invalid(articulo, self.ARTICULO_INEXISTENTE)
+
+        return articulo
 
     def listar_articulos_propiedad_de(self, consignatario_uid: int) -> list[Articulo]:
-        self._throw_if_invalid(consignatario_uid, self.LISTAR_CON_CONSIGNATARIO_INVALIDO)
+        self._throw_if_true(consignatario_uid <= 0, self.LISTAR_CON_CONSIGNATARIO_INVALIDO)
         
         consignatario = self.__db.Usuarios.buscar_consignatario_por_uid(consignatario_uid)
         self._throw_if_invalid(consignatario, self.LISTAR_CON_CONSIGNATARIO_INEXISTENTE)
