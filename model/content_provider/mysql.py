@@ -139,6 +139,14 @@ class MysqlDatabase:
         except Exception as err:
             raise err
 
+    def actualizar(self, sql: str, valores = ()) -> None:
+        try:
+            cursor = self.__connection.cursor()
+            cursor.execute(sql, valores)
+            self.__connection.commit()
+        except Exception as err:
+            raise err
+
     def obtener_conexion(self):
         return self.__connection
 
@@ -193,6 +201,10 @@ class TablaUsuarios(Usuarios):
                     "VALUES(%s,%s,%s,%s,%s,%s,%s)"
     BUSCAR_USUARIO_POR_ID_Y_TIPO = "SELECT id, nombre, apellido, email, usuario, clave, nacimiento, tipo FROM Usuarios " \
                                    "WHERE id = %s AND tipo = %s"
+    BUSCAR_USUARIO_POR_ID = "SELECT id, nombre, apellido, email, usuario, clave, nacimiento, tipo FROM Usuarios " \
+                            "WHERE id = %s"
+    ACTUALIZAR_USUARIO = "UPDATE Usuarios SET usuario = %s, email = %s, clave = %s WHERE id = %s"
+
 
     def __init__(self, db: MysqlDatabase):
         self.__db = db
@@ -222,6 +234,13 @@ class TablaUsuarios(Usuarios):
     def buscar_consignatario_por_uid(self, uid: int) -> Consignatario:
         return self.__db.obtener_uno(self.BUSCAR_USUARIO_POR_ID_Y_TIPO, (uid, TipoDeUsuario.Consignatario.value),
                                      lambda r: UsuariosFactory.crear(r[0], r[1], r[2], r[3], r[4], r[5], r[6], r[7]))
+
+    def buscar_usuario_por_uid(self, uid: int) -> Usuario:
+        return self.__db.obtener_uno(self.BUSCAR_USUARIO_POR_ID, (uid),
+                                     lambda  r: UsuariosFactory.crear(r[0], r[1], r[2], r[3], r[4], r[5], r[6], r[7]))
+
+    def actualizar(self, cuenta: Usuario, usuario: str, email: str, clave: str) -> None:
+        self.__db.actualizar(self.ACTUALIZAR_USUARIO, (usuario, email, clave, cuenta.obtener_uid()))
 
 
 class TablaLotes(Lotes):

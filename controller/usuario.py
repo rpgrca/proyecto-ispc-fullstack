@@ -20,9 +20,9 @@ class ControladorUsuario(Controlador):
         except Exception as err:
             self._responder_mal_con(str(err))
 
-    def actualizar(self, usuario_uid: int, usuario: str, email: str, password: str) -> None:
+    def actualizar(self, usuario_uid: int, usuario: str, email: str, clave: str) -> None:
         try:
-            ServicioUsuario(self.__db).actualizar(usuario_uid, usuario, email, password)
+            ServicioUsuario(self.__db).actualizar(usuario_uid, usuario, email, clave)
             self._responder_bien_con(self.CUENTA_ACTUALIZADA)
         except Exception as err:
             self._responder_mal_con(str(err))
