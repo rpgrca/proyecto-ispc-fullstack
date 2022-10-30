@@ -32,7 +32,8 @@ def __cambiar_status_code(respuesta: dict[str, str], response: Response, status_
 
 @app.post("/ingresar/", status_code=status.HTTP_200_OK)
 def ingresar(usuario: str = Form(), clave: str = Form(), response: Response = Response()):
-    controlador = ControladorLogin(db).login(usuario, clave)
+    controlador = ControladorLogin(db)
+    controlador.login(usuario, clave)
     return __cambiar_status_code(controlador.obtener_respuesta(), response)
 
 
