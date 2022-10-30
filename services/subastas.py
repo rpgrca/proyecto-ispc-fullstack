@@ -2,6 +2,7 @@ from datetime import date
 from .servicio import Servicio
 from model.database import BaseDeDatos
 
+
 class ServicioSubasta(Servicio):
     SIN_TITULO = "No se puede crear una subasta sin titulo"
     SIN_DESCRIPCION = "No se puede crear una subasta sin descripcion"

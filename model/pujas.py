@@ -5,7 +5,7 @@ from model.lotes import Lote
 
 
 class Puja(Serializable):
-    def __init__(self, uid: int, monto: int, pujador: Pujador, lote: Lote):
+    def __init__(self, uid: int, pujador: Pujador, lote: Lote, monto: int):
         self.__uid = uid
         self.__monto = monto
         self.__pujador = pujador
@@ -17,8 +17,11 @@ class Puja(Serializable):
     def obtener_monto(self) -> int:
         return self.__monto
 
-    def obtener_pujador_uid(self) -> int:
-        return self.__pujador.obtener_uid()
+    def obtener_pujador(self) -> Pujador:
+        return self.__pujador
+
+    def obtener_titulo_lote(self) -> str:
+        return self.__lote.obtener_titulo_articulo()
 
     def obtener_lote_uid(self) -> int:
         return self.__lote.obtener_uid()
@@ -29,11 +32,7 @@ class Puja(Serializable):
 
 class Pujas(ABC):
     @abstractmethod
-    def agregar(self, monto: int, pujador: Pujador, lote: Lote):
-        pass
-
-    @abstractmethod
-    def buscar_por_monto(self, monto: int) -> Puja:
+    def agregar(self, pujador: Pujador, lote: Lote, monto: int):
         pass
 
     @abstractmethod

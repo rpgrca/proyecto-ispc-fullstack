@@ -15,9 +15,6 @@ class Usuario:
         self.__nacimiento = nacimiento
         self.__tipo = tipo
 
-    def __str__(self):
-        return self.__usuario
-
     def obtener_uid(self) -> int:
         return self.__uid
 
@@ -38,6 +35,9 @@ class Usuario:
 
     def obtener_nacimiento(self) -> date:
         return self.__nacimiento
+
+    def obtener_tipo(self) -> TipoDeUsuario:
+        return self.__tipo
 
 
 class Pujador(Usuario):
@@ -78,14 +78,22 @@ class Usuarios(ABC):
         pass
 
     @abstractmethod
-    def buscar_consignatario_por_uid(Self, uid: int) -> Consignatario:
+    def buscar_consignatario_por_uid(self, uid: int) -> Consignatario:
+        pass
+
+    @abstractmethod
+    def buscar_usuario_por_uid(self, uid: int) -> Usuario:
+        pass
+
+    @abstractmethod
+    def actualizar(self, cuenta: Usuario, usuario: str, email: str, clave: str) -> None:
         pass
 
 
 class UsuariosFactory:
     @staticmethod
     def crear(uid: int, nombre: str, apellido: str, email: str, usuario: str, clave: str, nacimiento: date,
-              tipo: TipoDeUsuario):
+              tipo: TipoDeUsuario) -> Usuario:
         if tipo == TipoDeUsuario.Consignatario:
             return Consignatario(uid, nombre, apellido, email, usuario, clave, nacimiento)
         elif tipo == TipoDeUsuario.Pujador:

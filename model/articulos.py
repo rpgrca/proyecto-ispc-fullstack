@@ -9,24 +9,29 @@ from model.usuarios import Consignatario
 
 # TODO: Cuando se complete articulo descomentar de los testeos
 
+
 class Articulo(Serializable):
-    def __init__(self, uid: int):
+    def __init__(self, uid: int, titulo: str):
         self.__uid = uid
         self.__consignatario_uid = 1
+        self.__titulo = titulo
 
     def obtener_uid(self) -> int:
         return self.__uid
-    
+
     def obtener_consignatario_uid(self) -> int:
         return self.__consignatario_uid
 
+    def obtener_titulo(self) -> str:
+        return self.__titulo
+
     def serialize(self):
-        return {"id": self.__uid, "consignatario_id": self.__consignatario_uid}
+        return {"id": self.__uid, "consignatario_id": self.__consignatario_uid, "titulo": self.__titulo}
 
 
 class Articulos(ABC):
     @abstractmethod
-    def agregar(self, uid: int):
+    def crear(self, titulo: str) -> Articulo:
         pass
 
     @abstractmethod

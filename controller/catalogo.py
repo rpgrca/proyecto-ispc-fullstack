@@ -1,3 +1,0 @@
-# catalogo.py
-#
-# listar()

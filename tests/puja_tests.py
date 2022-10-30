@@ -14,7 +14,7 @@ from model.content_provider.memory import LotesEnMemoria, SubastasEnMemoria, Usu
 class ControladorPujaTests(unittest.TestCase):
     def setUp(self):
         subasta = Subasta(C.SUBASTA_UID, C.TITULO_SUBASTA, C.DESCRIPCION_SUBASTA, C.IMAGEN_SUBASTA, C.FECHA_DE_SUBASTA)
-        articulo = Articulo(C.ARTICULO_UID)
+        articulo = Articulo(C.ARTICULO_UID, C.TITULO_ARTICULO)
         self.__db = CreadorDeBasesDeDatosTemporales() \
             .con_usuarios(UsuariosEnMemoria({C.NOMBRE_USUARIO: {
                 "id": C.ID_USUARIO,
@@ -31,7 +31,7 @@ class ControladorPujaTests(unittest.TestCase):
             .con_articulos(ArticulosEnMemoria([articulo])) \
             .construir()
 
-    @data("", None)
+    @data("", None, -1, 0)
     def test_retornar_error_al_agregar_puja_con_lote_invalido(self, lote_invalido):
         sut = ControladorPuja(self.__db)
         sut.agregar(lote_invalido, C.ID_USUARIO, C.MONTO_PUJA)
@@ -39,7 +39,7 @@ class ControladorPujaTests(unittest.TestCase):
         self.assertEqual("error", respuesta["status"])
         self.assertEqual(ServicioPuja.PUJAR_SIN_LOTE, respuesta["mensaje"])
 
-    @data("", None)
+    @data("", None, -1, 0)
     def test_retornar_error_al_agregar_puja_con_pujador_invalido(self, pujador_invalido):
         sut = ControladorPuja(self.__db)
         sut.agregar(C.LOTE_UID, pujador_invalido, C.MONTO_PUJA)
@@ -99,7 +99,7 @@ class ControladorPujaTests(unittest.TestCase):
         sut.agregar(C.LOTE_UID, C.ID_USUARIO, C.MONTO_PUJA)
         puja = self.__db.Pujas.buscar_por_uid(C.PUJA_UID)
         self.assertEqual(C.LOTE_UID, puja.obtener_lote_uid())
-        self.assertEqual(C.ID_USUARIO, puja.obtener_pujador_uid())
+        self.assertEqual(C.ID_USUARIO, puja.obtener_pujador().obtener_uid())
         self.assertEqual(C.MONTO_PUJA, puja.obtener_monto())
 
     def test_retornar_nada_cuando_no_hay_pujas_en_lote(self):
@@ -118,6 +118,14 @@ class ControladorPujaTests(unittest.TestCase):
         self.assertEqual("ok", respuesta["status"])
         self.assertEqual([{'lote': 1, 'monto': 500, 'pujador': 1}, {'lote': 1, 'monto': 600, 'pujador': 1}],
                          respuesta["items"])
+
+    @data("", None, -1, 0)
+    def test_retornar_error_cuando_lote_es_invalido(self, lote_invalido):
+        sut = ControladorPuja(self.__db)
+        sut.listar(lote_invalido)
+        respuesta = sut.obtener_respuesta()
+        self.assertEqual("error", respuesta["status"])
+        self.assertEqual(ServicioPuja.LOTE_INVALIDO, respuesta["mensaje"])
 
     def test_retornar_error_cuando_lote_no_existe(self):
         sut = ControladorPuja(self.__db)

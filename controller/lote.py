@@ -1,7 +1,6 @@
 from services.lotes import ServicioLote
 from controller.controlador import Controlador
 from model.database import BaseDeDatos
-from model.lotes import Lote
 
 
 class ControladorLote(Controlador):
@@ -29,5 +28,12 @@ class ControladorLote(Controlador):
         try:
             lote = ServicioLote(self.__db).obtener(subasta_uid, orden)
             self._responder_bien_serializando_item(lote)
+        except Exception as err:
+            self._responder_mal_con(str(err))
+
+    def listar(self, subasta_uid: int) -> None:
+        try:
+            catalogo = ServicioLote(self.__db).listar(subasta_uid)
+            self._responder_bien_serializando_lista(catalogo)
         except Exception as err:
             self._responder_mal_con(str(err))

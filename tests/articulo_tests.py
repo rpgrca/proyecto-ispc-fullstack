@@ -1,10 +1,10 @@
 import unittest
-from ddt import ddt, data, unpack
+from ddt import ddt, data
 import tests.constantes as C
 from controller.articulo import ControladorArticulo
 from services.articulos import ServicioArticulos
-from model.articulos import Articulo
-from model.content_provider.memory import ArticulosEnMemoria, CreadorDeBasesDeDatosTemporales, SubastasEnMemoria, UsuariosEnMemoria
+from model.content_provider.memory import CreadorDeBasesDeDatosTemporales
+from model.content_provider.memory import ArticulosEnMemoria, SubastasEnMemoria, UsuariosEnMemoria
 from model.tipo_usuario import TipoDeUsuario
 
 
@@ -43,7 +43,7 @@ class ControladorArticuloTests(unittest.TestCase):
         self.assertEqual("error", respuesta["status"])
         self.assertEqual(ServicioArticulos.DESCRIPCION_INVALIDA, respuesta["mensaje"])
 
-    @data(-1, 0)
+    @data("", None, -1, 0)
     def test_retornar_error_creando_articulo_con_valuacion_invalida(self, valuacion_invalida):
         sut = ControladorArticulo(self.__db)
         sut.agregar(C.TITULO_ARTICULO, C.DESCRIPCION_ARTICULO, valuacion_invalida, 1)
@@ -51,7 +51,7 @@ class ControladorArticuloTests(unittest.TestCase):
         self.assertEqual("error", respuesta["status"])
         self.assertEqual(ServicioArticulos.VALUACION_INVALIDA, respuesta["mensaje"])
 
-    @data(-1, 0)
+    @data("", None, -1, 0)
     def test_retornar_error_creando_articulo_con_consignatario_invalido(self, consignatario_invalido):
         sut = ControladorArticulo(self.__db)
         sut.agregar(C.TITULO_ARTICULO, C.DESCRIPCION_ARTICULO, C.VALUACION_ARTICULO, consignatario_invalido)
@@ -78,11 +78,12 @@ class ControladorArticuloTests(unittest.TestCase):
         sut.agregar(C.TITULO_ARTICULO, C.DESCRIPCION_ARTICULO, C.VALUACION_ARTICULO, 1)
         articulo = self.__db.Articulos.buscar_por_uid(1)
         self.assertEqual(1, articulo.obtener_uid())
-        # TODO: cuando se complete articulo
-        #self.assertEqual(C.TITULO_ARTICULO, articulo.obtener_titulo())
-        #self.assertEqual(C.DESCRIPCION_ARTICULO, articulo.obtener_descripcion())
-        #self.assertEqual(C.VALUACION_ARTICULO, articulo.obtener_valuacion())
-        #self.assertEqual(1, articulo.obtener_consignatario_uid())
+
+# TODO: cuando se complete articulo
+# self.assertEqual(C.TITULO_ARTICULO, articulo.obtener_titulo())
+# self.assertEqual(C.DESCRIPCION_ARTICULO, articulo.obtener_descripcion())
+# self.assertEqual(C.VALUACION_ARTICULO, articulo.obtener_valuacion())
+# self.assertEqual(1, articulo.obtener_consignatario_uid())
 
     def test_retornar_articulo_al_buscar_articulo_creado(self):
         sut = ControladorArticulo(self.__db)
@@ -90,9 +91,9 @@ class ControladorArticuloTests(unittest.TestCase):
         sut.buscar_por_uid(1)
         respuesta = sut.obtener_respuesta()
         self.assertEqual("ok", respuesta["status"])
-        self.assertEqual({"consignatario_id": 1, "id" : 1}, respuesta["item"])
+        self.assertEqual({"consignatario_id": 1, "id": 1, "titulo": "Sofa Antiguo"}, respuesta["item"])
 
-    @data(-1, 0)
+    @data(None, "", -1, 0)
     def test_retornar_error_al_buscar_articulo_invalido(self, uid_invalido):
         sut = ControladorArticulo(self.__db)
         sut.buscar_por_uid(uid_invalido)
@@ -102,7 +103,7 @@ class ControladorArticuloTests(unittest.TestCase):
 
     def test_retornar_error_al_buscar_articulo_inexistente(self):
         sut = ControladorArticulo(self.__db)
-        sut.buscar_por_uid(2)
+        sut.buscar_por_uid(C.OTRO_ARTICULO_UID)
         respuesta = sut.obtener_respuesta()
         self.assertEqual("error", respuesta["status"])
         self.assertEqual(ServicioArticulos.ARTICULO_INEXISTENTE, respuesta["mensaje"])
@@ -115,8 +116,8 @@ class ControladorArticuloTests(unittest.TestCase):
         respuesta = sut.obtener_respuesta()
         self.assertEqual("ok", respuesta["status"])
         self.assertEqual(2, len(respuesta["items"]))
-        self.assertIn({"consignatario_id": 1, "id": 1}, respuesta["items"])
-        self.assertIn({"consignatario_id": 1, "id": 2}, respuesta["items"])
+        self.assertIn({"id": 1, "consignatario_id": 1, "titulo": "Sofa Antiguo"}, respuesta["items"])
+        self.assertIn({"id": 2, "consignatario_id": 1, "titulo": "Reloj de Arena"}, respuesta["items"])
 
     def test_retonar_vacio_al_buscar_por_consignatario_existente_sin_articulos(self):
         sut = ControladorArticulo(self.__db)
@@ -125,7 +126,7 @@ class ControladorArticuloTests(unittest.TestCase):
         self.assertEqual("ok", respuesta["status"])
         self.assertEqual([], respuesta["items"])
 
-    @data(-1, 0)
+    @data(None, "", -1, 0)
     def test_retornar_error_al_buscar_por_consignatario_invalido(self, uid_invalido):
         sut = ControladorArticulo(self.__db)
         sut.listar_articulos_propiedad_de(uid_invalido)
@@ -135,7 +136,7 @@ class ControladorArticuloTests(unittest.TestCase):
 
     def test_retornar_error_al_buscar_por_consignatario_inexistente(self):
         sut = ControladorArticulo(self.__db)
-        sut.listar_articulos_propiedad_de(2)
+        sut.listar_articulos_propiedad_de(C.OTRO_ID_USUARIO)
         respuesta = sut.obtener_respuesta()
         self.assertEqual("error", respuesta["status"])
         self.assertEqual(ServicioArticulos.LISTAR_CON_CONSIGNATARIO_INEXISTENTE, respuesta["mensaje"])
