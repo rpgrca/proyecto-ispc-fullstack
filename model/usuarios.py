@@ -78,7 +78,15 @@ class Usuarios(ABC):
         pass
 
     @abstractmethod
-    def buscar_consignatario_por_uid(Self, uid: int) -> Consignatario:
+    def buscar_consignatario_por_uid(self, uid: int) -> Consignatario:
+        pass
+
+    @abstractmethod
+    def buscar_usuario_por_uid(self, uid: int) -> Usuario:
+        pass
+
+    @abstractmethod
+    def actualizar(self, cuenta: Usuario, usuario: str, email: str, clave: str) -> None:
         pass
 
 

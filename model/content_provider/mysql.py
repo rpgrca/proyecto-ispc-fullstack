@@ -139,6 +139,14 @@ class MysqlDatabase:
         except Exception as err:
             raise err
 
+    def actualizar(self, sql: str, valores = ()) -> None:
+        try:
+            cursor = self.__connection.cursor()
+            cursor.execute(sql, valores)
+            self.__connection.commit()
+        except Exception as err:
+            raise err
+
     def obtener_conexion(self):
         return self.__connection
 
@@ -168,8 +176,8 @@ class TablaArticulos(Articulos):
     def __init__(self, db: MysqlDatabase):
         self.__db = db
 
-    def crear(self, uid: int, titulo: str) -> Articulo:
-        return self.__db.insertar(self.CREAR_ARTICULO, (uid, titulo), lambda i, r: Articulo(i, r[0]))  # FIXME: agregar campos
+    def crear(self, titulo: str) -> Articulo:
+        return self.__db.insertar(self.CREAR_ARTICULO, (titulo), lambda i, r: Articulo(i, r[0]))  # FIXME: agregar campos
 
     def buscar_por_uid(self, uid: int) -> Articulo:
         return self.__db.obtener_uno(self.BUSCAR_ARTICULO, (uid), lambda r: Articulo(r[0], r[1]))  # FIXME: agregar campos
@@ -193,6 +201,10 @@ class TablaUsuarios(Usuarios):
                     "VALUES(%s,%s,%s,%s,%s,%s,%s)"
     BUSCAR_USUARIO_POR_ID_Y_TIPO = "SELECT id, nombre, apellido, email, usuario, clave, nacimiento, tipo FROM Usuarios " \
                                    "WHERE id = %s AND tipo = %s"
+    BUSCAR_USUARIO_POR_ID = "SELECT id, nombre, apellido, email, usuario, clave, nacimiento, tipo FROM Usuarios " \
+                            "WHERE id = %s"
+    ACTUALIZAR_USUARIO = "UPDATE Usuarios SET usuario = %s, email = %s, clave = %s WHERE id = %s"
+
 
     def __init__(self, db: MysqlDatabase):
         self.__db = db
@@ -223,6 +235,13 @@ class TablaUsuarios(Usuarios):
         return self.__db.obtener_uno(self.BUSCAR_USUARIO_POR_ID_Y_TIPO, (uid, TipoDeUsuario.Consignatario.value),
                                      lambda r: UsuariosFactory.crear(r[0], r[1], r[2], r[3], r[4], r[5], r[6], r[7]))
 
+    def buscar_usuario_por_uid(self, uid: int) -> Usuario:
+        return self.__db.obtener_uno(self.BUSCAR_USUARIO_POR_ID, (uid),
+                                     lambda  r: UsuariosFactory.crear(r[0], r[1], r[2], r[3], r[4], r[5], r[6], r[7]))
+
+    def actualizar(self, cuenta: Usuario, usuario: str, email: str, clave: str) -> None:
+        self.__db.actualizar(self.ACTUALIZAR_USUARIO, (usuario, email, clave, cuenta.obtener_uid()))
+
 
 class TablaLotes(Lotes):
     LOTES_POR_SUBASTA = "SELECT COUNT(id) FROM Lotes WHERE subasta_id = %s"
@@ -244,8 +263,8 @@ class TablaLotes(Lotes):
 
 
 class TablaPujas(Pujas):
-    CREAR_PUJA = "INSERT INTO Pujas"  # FIXME
-    BUSCAR_PUJA = "SELECT id, pujador_id, lote_id, monto"  # FIXME
+    CREAR_PUJA = "INSERT INTO Pujas(pujador_id, lote_id, monto) VALUES (%s,%s,%s)"
+    BUSCAR_PUJA = "SELECT id, pujador_id, lote_id, monto FROM Pujas WHERE id = %s"
 
     def __init__(self, db: MysqlDatabase):
         self.__db = db

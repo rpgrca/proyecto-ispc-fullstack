@@ -63,7 +63,26 @@ class UsuariosEnMemoria(Usuarios):
 
         return None
 
+    def buscar_usuario_por_uid(self, uid: int) -> Usuario:
+        registro = next(filter(lambda u: u["id"] == uid, self.__usuarios.values()), None)
+        if registro:
+            return UsuariosFactory.crear(registro["id"], registro["nombre"], registro["apellido"], registro["email"],
+                                         registro["usuario"], registro["clave"], registro["nacimiento"], registro["tipo"])
 
+        return None
+
+    def actualizar(self, cuenta: Usuario, usuario: str, email: str, clave: str) -> None:
+        del self.__usuarios[cuenta.obtener_usuario()]
+        self.__usuarios[usuario] = {
+            "id": cuenta.obtener_uid(),
+            "nombre": cuenta.obtener_nombre(),
+            "apellido": cuenta.obtener_apellido(),
+            "usuario": usuario,
+            "clave": clave,
+            "email": email,
+            "nacimiento": cuenta.obtener_nacimiento(),
+            "tipo": cuenta.obtener_tipo()
+        }
 
 class SubastasEnMemoria(Subastas):
     def __init__(self, subastas: list[Subasta]):
@@ -82,8 +101,8 @@ class ArticulosEnMemoria(Articulos):
     def __init__(self, articulos: list[Articulo]):
         self.__articulos = articulos
 
-    def crear(self, uid: int, titulo: str) -> Articulo:
-        articulo = Articulo(uid, titulo)
+    def crear(self, titulo: str) -> Articulo:
+        articulo = Articulo(len(self.__articulos) + 1, titulo)
         self.__articulos.append(articulo)
         return articulo
 
