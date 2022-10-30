@@ -72,7 +72,7 @@ class UsuariosEnMemoria(Usuarios):
         return None
 
     def actualizar(self, cuenta: Usuario, usuario: str, email: str, clave: str) -> None:
-        del self.__usuarios[cuenta.obtener_nombre()]
+        del self.__usuarios[cuenta.obtener_usuario()]
         self.__usuarios[usuario] = {
             "id": cuenta.obtener_uid(),
             "nombre": cuenta.obtener_nombre(),

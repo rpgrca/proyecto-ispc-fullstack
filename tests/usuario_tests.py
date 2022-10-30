@@ -20,7 +20,7 @@ class ControladorUsuarioTests(unittest.TestCase):
                     "usuario": C.NOMBRE_USUARIO,
                     "clave": C.CLAVE_USUARIO,
                     "nacimiento": C.FECHA_NACIMIENTO_USUARIO,
-                    "tipo": TipoDeUsuario.Pujador.value
+                    "tipo": TipoDeUsuario.Pujador
                 }})) \
             .construir()
 
@@ -126,13 +126,25 @@ class ControladorUsuarioTests(unittest.TestCase):
                                         C.NOMBRE_USUARIO, C.CLAVE_USUARIO, C.FECHA_NACIMIENTO_USUARIO, tipo)
         self.assertIsInstance(usuario, clase)
 
-    def test_actualizar_datos_correctamente(self):
+    def test_retornar_ok_cuando_actualiza_usuario(self):
         sut = ControladorUsuario(self.__db_con_usuario)
         sut.actualizar(C.ID_USUARIO, C.OTRO_NOMBRE_USUARIO, C.OTRO_EMAIL_USUARIO, C.OTRA_CLAVE_USUARIO)
         respuesta = sut.obtener_respuesta()
         self.assertEqual("ok", respuesta["status"])
         self.assertEqual(ControladorUsuario.CUENTA_ACTUALIZADA, respuesta["mensaje"])
 
+    def test_actualizar_datos_correctamente(self):
+        sut = ControladorUsuario(self.__db_con_usuario)
+        sut.actualizar(C.ID_USUARIO, C.OTRO_NOMBRE_USUARIO, C.OTRO_EMAIL_USUARIO, C.OTRA_CLAVE_USUARIO)
+        usuario = self.__db_con_usuario.Usuarios.buscar_usuario_por_uid(C.ID_USUARIO)
+        self.assertEqual(C.ID_USUARIO, usuario.obtener_uid())
+        self.assertEqual(C.NOMBRE_USUARIO, usuario.obtener_nombre())
+        self.assertEqual(C.APELLIDO_USUARIO, usuario.obtener_apellido())
+        self.assertEqual(C.OTRO_EMAIL_USUARIO, usuario.obtener_email())
+        self.assertEqual(C.OTRO_NOMBRE_USUARIO, usuario.obtener_usuario())
+        self.assertEqual(C.OTRA_CLAVE_USUARIO, usuario.obtener_clave())
+        self.assertEqual(C.FECHA_NACIMIENTO_USUARIO, usuario.obtener_nacimiento())
+        self.assertEqual(TipoDeUsuario.Pujador, usuario.obtener_tipo())
 
 if __name__ == "__main__":
     unittest.main()
