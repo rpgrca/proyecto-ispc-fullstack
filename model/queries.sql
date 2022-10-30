@@ -77,5 +77,9 @@ select a.*
 from articulos a
 where a.id not in (select l.id_articulo from lotes l group by 1)
 
+-- lotes por una subasta especifica
+select l.*
+from lotes l
+where l.id_subasta=%s
 
  
