@@ -39,6 +39,10 @@ insert into Pujas (monto, id_pujador, id_lote)
 values
 (%s, %s, %s);
 
+-- Crear un registro de artículo
+INSERT INTO Articulos (titulo, descripcion, valuacion, id_consignatario)
+VALUES (%s, %s, %s, %s);
+
 -- Traer todas las ventas hechas para un comprador dado 
 select v.id v_id, precio_final, comision, pago_consignatario
 from Usuarios u
