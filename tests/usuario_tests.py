@@ -146,5 +146,93 @@ class ControladorUsuarioTests(unittest.TestCase):
         self.assertEqual(C.FECHA_NACIMIENTO_USUARIO, usuario.obtener_nacimiento())
         self.assertEqual(TipoDeUsuario.Pujador, usuario.obtener_tipo())
 
+    def test_actualizar_datos_correctamente_cuando_mantiene_usuario(self):
+        sut = ControladorUsuario(self.__db_con_usuario)
+        sut.actualizar(C.ID_USUARIO, C.NOMBRE_USUARIO, C.OTRO_EMAIL_USUARIO, C.OTRA_CLAVE_USUARIO)
+        usuario = self.__db_con_usuario.Usuarios.buscar_usuario_por_uid(C.ID_USUARIO)
+        self.assertEqual(C.ID_USUARIO, usuario.obtener_uid())
+        self.assertEqual(C.NOMBRE_USUARIO, usuario.obtener_nombre())
+        self.assertEqual(C.APELLIDO_USUARIO, usuario.obtener_apellido())
+        self.assertEqual(C.OTRO_EMAIL_USUARIO, usuario.obtener_email())
+        self.assertEqual(C.NOMBRE_USUARIO, usuario.obtener_usuario())
+        self.assertEqual(C.OTRA_CLAVE_USUARIO, usuario.obtener_clave())
+        self.assertEqual(C.FECHA_NACIMIENTO_USUARIO, usuario.obtener_nacimiento())
+        self.assertEqual(TipoDeUsuario.Pujador, usuario.obtener_tipo())
+
+    def test_actualizar_datos_correctamente_cuando_mantiene_email(self):
+        sut = ControladorUsuario(self.__db_con_usuario)
+        sut.actualizar(C.ID_USUARIO, C.OTRO_NOMBRE_USUARIO, C.EMAIL_USUARIO, C.OTRA_CLAVE_USUARIO)
+        usuario = self.__db_con_usuario.Usuarios.buscar_usuario_por_uid(C.ID_USUARIO)
+        self.assertEqual(C.ID_USUARIO, usuario.obtener_uid())
+        self.assertEqual(C.NOMBRE_USUARIO, usuario.obtener_nombre())
+        self.assertEqual(C.APELLIDO_USUARIO, usuario.obtener_apellido())
+        self.assertEqual(C.EMAIL_USUARIO, usuario.obtener_email())
+        self.assertEqual(C.OTRO_NOMBRE_USUARIO, usuario.obtener_usuario())
+        self.assertEqual(C.OTRA_CLAVE_USUARIO, usuario.obtener_clave())
+        self.assertEqual(C.FECHA_NACIMIENTO_USUARIO, usuario.obtener_nacimiento())
+        self.assertEqual(TipoDeUsuario.Pujador, usuario.obtener_tipo())
+
+    def test_actualizar_datos_correctamente_cuando_mantiene_password(self):
+        sut = ControladorUsuario(self.__db_con_usuario)
+        sut.actualizar(C.ID_USUARIO, C.OTRO_NOMBRE_USUARIO, C.EMAIL_USUARIO, C.CLAVE_USUARIO)
+        usuario = self.__db_con_usuario.Usuarios.buscar_usuario_por_uid(C.ID_USUARIO)
+        self.assertEqual(C.ID_USUARIO, usuario.obtener_uid())
+        self.assertEqual(C.NOMBRE_USUARIO, usuario.obtener_nombre())
+        self.assertEqual(C.APELLIDO_USUARIO, usuario.obtener_apellido())
+        self.assertEqual(C.EMAIL_USUARIO, usuario.obtener_email())
+        self.assertEqual(C.OTRO_NOMBRE_USUARIO, usuario.obtener_usuario())
+        self.assertEqual(C.CLAVE_USUARIO, usuario.obtener_clave())
+        self.assertEqual(C.FECHA_NACIMIENTO_USUARIO, usuario.obtener_nacimiento())
+        self.assertEqual(TipoDeUsuario.Pujador, usuario.obtener_tipo())
+
+    @data(None, "", -1, 0)
+    def test_retornar_error_cuando_usuario_es_invalido(self, usuario_invalido):
+        sut = ControladorUsuario(self.__db_con_usuario)
+        sut.actualizar(usuario_invalido, C.OTRO_NOMBRE_USUARIO, C.OTRO_EMAIL_USUARIO, C.OTRA_CLAVE_USUARIO)
+        respuesta = sut.obtener_respuesta()
+        self.assertEqual("error", respuesta["status"])
+        self.assertEqual(ServicioUsuario.USUARIO_UID_INVALIDO, respuesta["mensaje"])
+
+    @data(None, "")
+    def test_retornar_error_cuando_usuario_es_invalido(self, usuario_invalido):
+        sut = ControladorUsuario(self.__db_con_usuario)
+        sut.actualizar(C.ID_USUARIO, usuario_invalido, C.OTRO_EMAIL_USUARIO, C.OTRA_CLAVE_USUARIO)
+        respuesta = sut.obtener_respuesta()
+        self.assertEqual("error", respuesta["status"])
+        self.assertEqual(ServicioUsuario.USUARIO_INVALIDO, respuesta["mensaje"])
+
+    @data(None, "")
+    def test_retornar_error_cuando_usuario_es_invalido(self, email_invalido):
+        sut = ControladorUsuario(self.__db_con_usuario)
+        sut.actualizar(C.ID_USUARIO, C.OTRO_NOMBRE_USUARIO, email_invalido, C.OTRA_CLAVE_USUARIO)
+        respuesta = sut.obtener_respuesta()
+        self.assertEqual("error", respuesta["status"])
+        self.assertEqual(ServicioUsuario.EMAIL_INVALIDO, respuesta["mensaje"])
+
+    @data(None, "")
+    def test_retornar_error_cuando_usuario_es_invalido(self, clave_invalida):
+        sut = ControladorUsuario(self.__db_con_usuario)
+        sut.actualizar(C.ID_USUARIO, C.OTRO_NOMBRE_USUARIO, C.OTRO_EMAIL_USUARIO, clave_invalida)
+        respuesta = sut.obtener_respuesta()
+        self.assertEqual("error", respuesta["status"])
+        self.assertEqual(ServicioUsuario.CLAVE_INVALIDA, respuesta["mensaje"])
+
+    def test_retornar_error_cuando_usuario_no_existe(self):
+        sut = ControladorUsuario(self.__db_con_usuario)
+        sut.actualizar(C.OTRO_ID_USUARIO, C.OTRO_NOMBRE_USUARIO, C.OTRO_EMAIL_USUARIO, C.OTRA_CLAVE_USUARIO)
+        respuesta = sut.obtener_respuesta()
+        self.assertEqual("error", respuesta["status"])
+        self.assertEqual(ServicioUsuario.USUARIO_INEXISTENTE, respuesta["mensaje"])
+
+    def test_retornar_error_cuando_nombre_de_usuario_ya_existe(self):
+        sut = ControladorUsuario(self.__db_con_usuario)
+        sut.agregar(C.OTRO_NOMBRE_USUARIO, C.APELLIDO_USUARIO, C.OTRO_EMAIL_USUARIO, C.OTRO_NOMBRE_USUARIO,
+                    C.OTRA_CLAVE_USUARIO, C.FECHA_NACIMIENTO_USUARIO, TipoDeUsuario.Consignatario)
+        sut.actualizar(C.ID_USUARIO, C.OTRO_NOMBRE_USUARIO, C.OTRO_EMAIL_USUARIO, C.OTRA_CLAVE_USUARIO)
+        respuesta = sut.obtener_respuesta()
+        self.assertEqual("error", respuesta["status"])
+        self.assertEqual(ServicioUsuario.USUARIO_YA_EXISTE, respuesta["mensaje"])
+
+
 if __name__ == "__main__":
     unittest.main()

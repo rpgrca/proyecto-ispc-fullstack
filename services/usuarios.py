@@ -44,7 +44,7 @@ class ServicioUsuario(Servicio):
         cuenta = self.__db.Usuarios.buscar_usuario_por_uid(usuario_uid)
         self._throw_if_invalid(cuenta, self.USUARIO_INEXISTENTE)
 
-        if self.__db.Usuarios.existe(usuario):
+        if cuenta.obtener_usuario() != usuario and self.__db.Usuarios.existe(usuario):
             self._throw(self.USUARIO_YA_EXISTE)
 
         self.__db.Usuarios.actualizar(cuenta, usuario, email, clave)
