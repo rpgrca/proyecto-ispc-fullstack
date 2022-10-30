@@ -15,9 +15,6 @@ class Usuario:
         self.__nacimiento = nacimiento
         self.__tipo = tipo
 
-    def __str__(self):
-        return self.__usuario
-
     def obtener_uid(self) -> int:
         return self.__uid
 

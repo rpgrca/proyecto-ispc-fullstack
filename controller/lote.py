@@ -30,3 +30,10 @@ class ControladorLote(Controlador):
             self._responder_bien_serializando_item(lote)
         except Exception as err:
             self._responder_mal_con(str(err))
+
+    def listar(self, subasta_uid: int) -> None:
+        try:
+            catalogo = ServicioLote(self.__db).listar(subasta_uid)
+            self._responder_bien_serializando_lista(catalogo)
+        except Exception as err:
+            self._responder_mal_con(str(err))
