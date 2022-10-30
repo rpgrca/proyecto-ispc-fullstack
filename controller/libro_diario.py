@@ -15,3 +15,10 @@ class ControladorLibroDiario(Controlador):
             self._responder_bien_con(self.VENTA_EXITOSA)
         except Exception as err:
             self._responder_mal_con(str(err))
+
+    def listar_compras_de(self, pujador_uid: int) -> None:
+        try:
+            compras = ServicioLibroDiario(self.__db).listar_compras_de(pujador_uid)
+            self._responder_bien_serializando_lista(compras)
+        except Exception as err:
+            self._responder_mal_con(str(err))

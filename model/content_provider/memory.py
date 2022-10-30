@@ -1,11 +1,11 @@
 from datetime import date
-from model.articulos import Articulo
+from model.tipo_usuario import TipoDeUsuario
 from model.database import BaseDeDatos
+from model.articulos import Articulo
 from model.usuarios import Consignatario, Pujador, Usuarios, Usuario, UsuariosFactory
 from model.subastas import Subastas, Subasta
 from model.articulos import Articulos
 from model.pujas import Puja, Pujas
-from model.tipo_usuario import TipoDeUsuario
 from model.lotes import Lote, Lotes
 from model.ventas import Venta, Ventas
 
@@ -63,21 +63,6 @@ class UsuariosEnMemoria(Usuarios):
 
         return None
 
-
-class UsuariosCreadosEnMemoria(UsuariosEnMemoria):
-    def __init__(self, usuarios: list[Usuario]):
-        diccionario = {}
-        for usuario in usuarios:
-            diccionario[usuario.obtener_usuario()] = {
-                "id": usuario.obtener_uid(),
-                "nombre": usuario.obtener_nombre(),
-                "apellido": usuario.obtener_apellido(),
-                "email": usuario.obtener_email(),
-                "usuario": usuario.obtener_usuario(),
-                "clave": usuario.obtener_clave(),
-                "nacimiento": usuario.obtener_nacimiento(),
-                "tipo": usuario.obtener_tipo()
-            }
 
 
 class SubastasEnMemoria(Subastas):
@@ -165,6 +150,9 @@ class VentasEnMemoria(Ventas):
 
     def buscar_por_uid(self, uid: int) -> Venta:
         return next(filter(lambda v: v.obtener_uid() == uid, self.__ventas), None)
+
+    def listar_compras_de(self, pujador: Pujador):
+        return [venta for venta in self.__ventas if venta.obtener_ganador().obtener_uid() == pujador.obtener_uid()]
 
 
 class CreadorDeBasesDeDatosTemporales:
