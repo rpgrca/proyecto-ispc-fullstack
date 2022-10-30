@@ -106,9 +106,6 @@ class PujasEnMemoria(Pujas):
         self.__pujas.append(Puja(self.__next_id, monto, pujador, lote))
         self.__next_id += 1
 
-    def buscar_por_monto(self, monto: int) -> Puja:
-        pass
-
     def buscar_ultima_puja(self, lote: Lote) -> Puja:
         return next(filter(lambda p: p.obtener_lote_uid() == lote.obtener_uid(), reversed(self.__pujas)), None)
 

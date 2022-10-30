@@ -36,10 +36,6 @@ class Pujas(ABC):
         pass
 
     @abstractmethod
-    def buscar_por_monto(self, monto: int) -> Puja:
-        pass
-
-    @abstractmethod
     def buscar_ultima_puja(self, lote: Lote) -> Puja:
         pass
 

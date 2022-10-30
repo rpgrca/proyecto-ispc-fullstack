@@ -253,9 +253,6 @@ class TablaPujas(Pujas):
     def agregar(self, pujador: Pujador, lote: Lote, monto: int):
         self.__db.insertar(self.CREAR_PUJA, (pujador.obtener_uid(), lote.obtener_uid(), monto))
 
-    def buscar_por_monto(self, monto: int) -> Puja:
-        pass
-
     def buscar_ultima_puja(self, lote: Lote) -> Puja:
         pass
 
