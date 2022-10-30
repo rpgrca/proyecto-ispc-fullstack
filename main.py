@@ -3,7 +3,6 @@ from datetime import date
 from fastapi import FastAPI, Form, Response
 from fastapi.middleware.cors import CORSMiddleware
 from starlette import status
-from controller.catalogo import ControladorCatalogo
 from model.content_provider.memory import CreadorDeBasesDeDatosTemporales
 from controller.subasta import ControladorSubasta
 from controller.lote import ControladorLote
@@ -67,7 +66,7 @@ def agregar_lote(subasta_uid: str = Form(), articulo_uid: str = Form(), base: in
 
 @app.get("/lotes/{subasta_uid}", status_code=status.HTTP_200_OK)
 def obtener_lotes(subasta_uid: str, response: Response = Response()):
-    controlador = ControladorCatalogo(db)
+    controlador = ControladorLote(db)
     controlador.listar(subasta_uid)
     return __cambiar_status_code(controlador.obtener_respuesta(), response, status.HTTP_404_NOT_FOUND)
 

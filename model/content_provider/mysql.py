@@ -168,8 +168,8 @@ class TablaArticulos(Articulos):
     def __init__(self, db: MysqlDatabase):
         self.__db = db
 
-    def crear(self, uid: int, titulo: str) -> Articulo:
-        return self.__db.insertar(self.CREAR_ARTICULO, (uid, titulo), lambda i, r: Articulo(i, r[0]))  # FIXME: agregar campos
+    def crear(self, titulo: str) -> Articulo:
+        return self.__db.insertar(self.CREAR_ARTICULO, (titulo), lambda i, r: Articulo(i, r[0]))  # FIXME: agregar campos
 
     def buscar_por_uid(self, uid: int) -> Articulo:
         return self.__db.obtener_uno(self.BUSCAR_ARTICULO, (uid), lambda r: Articulo(r[0], r[1]))  # FIXME: agregar campos
@@ -244,8 +244,8 @@ class TablaLotes(Lotes):
 
 
 class TablaPujas(Pujas):
-    CREAR_PUJA = "INSERT INTO Pujas"  # FIXME
-    BUSCAR_PUJA = "SELECT id, pujador_id, lote_id, monto"  # FIXME
+    CREAR_PUJA = "INSERT INTO Pujas(pujador_id, lote_id, monto) VALUES (%s,%s,%s)"
+    BUSCAR_PUJA = "SELECT id, pujador_id, lote_id, monto FROM Pujas WHERE id = %s"
 
     def __init__(self, db: MysqlDatabase):
         self.__db = db

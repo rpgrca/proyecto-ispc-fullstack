@@ -13,7 +13,7 @@ class ControladorLoteTests(unittest.TestCase):
         self.__db = CreadorDeBasesDeDatosTemporales() \
             .con_subastas(SubastasEnMemoria([Subasta(C.SUBASTA_UID, C.TITULO_SUBASTA, C.DESCRIPCION_SUBASTA, C.IMAGEN_SUBASTA,
                                                      C.FECHA_DE_SUBASTA)])) \
-            .con_articulos(ArticulosEnMemoria([Articulo(C.ARTICULO_UID, C.TITULO_ARTICULO)])) \
+            .con_articulos(ArticulosEnMemoria([Articulo(1, C.TITULO_ARTICULO)])) \
             .construir()
 
     @data("", None, -1, 0)
@@ -118,7 +118,7 @@ class ControladorLoteTests(unittest.TestCase):
 
     def test_avanza_al_siguiente_lote_correctamente(self):
         sut = ControladorLote(self.__db)
-        self.__db.Articulos.crear(C.OTRO_ARTICULO_UID, C.TITULO_ARTICULO)
+        self.__db.Articulos.crear(C.TITULO_ARTICULO)
         sut.agregar(C.SUBASTA_UID, C.ARTICULO_UID, 100)
         sut.agregar(C.SUBASTA_UID, C.OTRO_ARTICULO_UID, 200)
         sut.obtener(C.SUBASTA_UID, 2)
@@ -158,18 +158,18 @@ class ControladorLoteTests(unittest.TestCase):
 
     def test_retornar_catalogo_ordenado_cuando_subasta_tiene_lotes(self):
         subasta = self.__db.Subastas.crear(C.TITULO_SUBASTA, C.DESCRIPCION_SUBASTA, C.IMAGEN_SUBASTA, C.FECHA_DE_SUBASTA)
-        articulo = self.__db.Articulos.crear(C.ARTICULO_UID, C.TITULO_ARTICULO)
+        articulo = self.__db.Articulos.crear(C.TITULO_ARTICULO)
         self.__db.Lotes.agregar(subasta, articulo, C.BASE_LOTE, C.OTRO_ORDEN_LOTE)
 
-        articulo = self.__db.Articulos.crear(C.OTRO_ARTICULO_UID, C.OTRO_TITULO_ARTICULO)
+        articulo = self.__db.Articulos.crear(C.OTRO_TITULO_ARTICULO)
         self.__db.Lotes.agregar(subasta, articulo, C.OTRA_BASE_LOTE, C.ORDEN_LOTE)
         sut = ControladorLote(self.__db)
         sut.listar(subasta.obtener_uid())
         respuesta = sut.obtener_respuesta()
         self.assertEqual("ok", respuesta["status"])
-        self.assertIn({"articulo": {"id": 20, "consignatario_id": 1, "titulo": "Reloj de Arena"}, "base": 5000, "orden": 1},
+        self.assertIn({"articulo": {"id": 3, "consignatario_id": 1, "titulo": "Reloj de Arena"}, "base": 5000, "orden": 1},
                       respuesta["items"])
-        self.assertIn({"articulo": {"id": 16, "consignatario_id": 1, "titulo": "Sofa Antiguo"}, "base": 100, "orden": 2},
+        self.assertIn({"articulo": {"id": 2, "consignatario_id": 1, "titulo": "Sofa Antiguo"}, "base": 100, "orden": 2},
                       respuesta["items"])
 
 

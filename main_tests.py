@@ -2,8 +2,6 @@ import unittest
 from tests.articulo_tests import ControladorArticuloTests
 from tests.lote_tests import ControladorLoteTests
 from tests.puja_tests import ControladorPujaTests
-from tests.pujador_tests import ServicioPujadorTests
-from tests.consignatario_tests import ControladorConsignatarioTests
 from tests.login_tests import ServicioLoginTests
 from tests.registro_tests import ControladorRegistroTests
 from tests.reestablecer_tests import ServicioReestablecerTests
@@ -17,8 +15,6 @@ suite.addTest(unittest.TestLoader().loadTestsFromTestCase(ServicioLoginTests))
 suite.addTest(unittest.TestLoader().loadTestsFromTestCase(ControladorUsuarioTests))
 suite.addTest(unittest.TestLoader().loadTestsFromTestCase(ControladorRegistroTests))
 suite.addTest(unittest.TestLoader().loadTestsFromTestCase(ServicioReestablecerTests))
-suite.addTest(unittest.TestLoader().loadTestsFromTestCase(ServicioPujadorTests))
-suite.addTest(unittest.TestLoader().loadTestsFromTestCase(ControladorConsignatarioTests))
 suite.addTest(unittest.TestLoader().loadTestsFromTestCase(ControladorSubastaTests))
 suite.addTest(unittest.TestLoader().loadTestsFromTestCase(ControladorLoteTests))
 suite.addTest(unittest.TestLoader().loadTestsFromTestCase(ControladorPujaTests))

@@ -26,7 +26,7 @@ class ServicioArticulos(Servicio):
         consignatario = self.__db.Usuarios.buscar_consignatario_por_uid(consignatario_uid)
         self._throw_if_invalid(consignatario, self.CONSIGNATARIO_INEXISTENTE)
 
-        self.__db.Articulos.crear(self.__db.Articulos.contar() + 1, titulo)
+        self.__db.Articulos.crear(titulo)
 
     def buscar_por_uid(self, uid: int) -> Articulo:
         self._throw_if_not_positive(uid, self.UID_INVALIDO)

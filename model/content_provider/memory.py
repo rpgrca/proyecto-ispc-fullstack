@@ -82,8 +82,8 @@ class ArticulosEnMemoria(Articulos):
     def __init__(self, articulos: list[Articulo]):
         self.__articulos = articulos
 
-    def crear(self, uid: int, titulo: str) -> Articulo:
-        articulo = Articulo(uid, titulo)
+    def crear(self, titulo: str) -> Articulo:
+        articulo = Articulo(len(self.__articulos) + 1, titulo)
         self.__articulos.append(articulo)
         return articulo
 
