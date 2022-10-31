@@ -236,21 +236,21 @@ class TablaUsuarios(Usuarios):
 
     def agregar(self, nombre: str, apellido: str, email: str, usuario: str, clave: str, nacimiento: date,
                 tipo: TipoDeUsuario) -> None:
-        self.__db.insertar(self.CREAR_USUARIO, (nombre, apellido, email, usuario, clave, nacimiento, tipo))
+        self.__db.insertar(self.CREAR_USUARIO, (nombre, apellido, email, usuario, clave, nacimiento, tipo.value))
 
     def existe(self, usuario: str) -> bool:
-        return self.__db.contar(self.EXISTE_USUARIO_SQL, tuple(usuario)) > 0
+        return self.__db.contar(self.EXISTE_USUARIO_SQL, (usuario,)) > 0
 
     def buscar(self, usuario: str, clave: str) -> Usuario:
         return self.__db.obtener_uno(self.OBTENER_USUARIO, (usuario, clave),
                                      lambda r: UsuariosFactory.crear(r[0], r[1], r[2], r[3], r[4], r[1], r[6], r[7]))
 
     def buscar_por_email(self, email: str) -> Usuario:
-        return self.__db.obtener_uno(self.OBTENER_USUARIO_LOGIN, (email),
+        return self.__db.obtener_uno(self.OBTENER_USUARIO_LOGIN, (email,),
                                      lambda r: UsuariosFactory.crear(r[0], r[1], r[2], r[3], r[4], r[5], r[6], r[7]))
 
     def existe_con_mail(self, email: str) -> bool:
-        return self.__db.contar(self.EXISTE_USUARIO_CON_MAIL_SQL, (email)) > 0
+        return self.__db.contar(self.EXISTE_USUARIO_CON_MAIL_SQL, (email,)) > 0
 
     def buscar_pujador_por_uid(self, uid: int) -> Pujador:
         return self.__db.obtener_uno(self.BUSCAR_USUARIO_POR_ID_Y_TIPO, (uid, TipoDeUsuario.Pujador.value),
@@ -261,7 +261,7 @@ class TablaUsuarios(Usuarios):
                                      lambda r: UsuariosFactory.crear(r[0], r[1], r[2], r[3], r[4], r[5], r[6], r[7]))
 
     def buscar_usuario_por_uid(self, uid: int) -> Usuario:
-        return self.__db.obtener_uno(self.BUSCAR_USUARIO_POR_ID, (uid),
+        return self.__db.obtener_uno(self.BUSCAR_USUARIO_POR_ID, (uid,),
                                      lambda r: UsuariosFactory.crear(r[0], r[1], r[2], r[3], r[4], r[5], r[6], r[7]))
 
     def buscar_martillero(self) -> Martillero:
@@ -308,7 +308,7 @@ class TablaPujas(Pujas):
         pass
 
     def buscar_por_uid(self, uid: int) -> Puja:
-        return self.__db.obtener_uno(self.BUSCAR_PUJA, (uid), lambda r: Puja(r[0], r[1], Pujador(r[2]), Lote(r[3])))
+        return self.__db.obtener_uno(self.BUSCAR_PUJA, (uid,), lambda r: Puja(r[0], r[1], Pujador(r[2]), Lote(r[3])))
 
     def buscar_por_lote(self, lote: Lote) -> list[Puja]:
         pass
@@ -337,11 +337,11 @@ class TablaVentas(Ventas):
                                   lambda r: Venta(r[0], r[1], r[2], r[3]))
 
     def buscar_por_uid(self, uid: int) -> Venta:
-        return self.__db.obtener_uno(self.BUSCAR_VENTA_CON_DATOS, (uid), lambda r: Venta(r[0], Puja(r[1], r[2], r[3], r[4]),
+        return self.__db.obtener_uno(self.BUSCAR_VENTA_CON_DATOS, (uid,), lambda r: Venta(r[0], Puja(r[1], r[2], r[3], r[4]),
                                      r[5], r[6], r[7]))
 
     def listar_compras_de(self, pujador: Pujador) -> list[Venta]:
-        return self.__db.obtener_muchos(self.LISTAR_COMPRAS, (pujador.obtener_uid())), lambda r: Venta(r[0], Puja(r[1], r[2],
+        return self.__db.obtener_muchos(self.LISTAR_COMPRAS, (pujador.obtener_uid(),)), lambda r: Venta(r[0], Puja(r[1], r[2],
                                         r[3], r[4]), r[5], r[6], r[7])
 
 
