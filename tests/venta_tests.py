@@ -9,8 +9,8 @@ from model.pujas import Puja
 from model.subastas import Subasta
 from model.usuarios import Usuario, UsuariosFactory
 from model.tipo_usuario import TipoDeUsuario
-from model.content_provider.memory import ArticulosEnMemoria, LotesEnMemoria, PujasEnMemoria, SubastasEnMemoria, UsuariosEnMemoria
-from model.content_provider.memory import CreadorDeBasesDeDatosTemporales
+from model.content_provider.memory import ArticulosEnMemoria, LotesEnMemoria, PujasEnMemoria, SubastasEnMemoria
+from model.content_provider.memory import UsuariosEnMemoria, CreadorDeBasesDeDatosTemporales
 
 
 @ddt
@@ -87,21 +87,21 @@ class ControladorVentaTests(unittest.TestCase):
         respuesta = sut.obtener_respuesta()
         self.assertEqual("error", respuesta["status"])
         self.assertEqual(ServicioLibroDiario.PUJADOR_INVALIDO, respuesta["mensaje"])
- 
+
     def test_retornar_error_listando_compras_de_pujador_inexistente(self):
         sut = ControladorLibroDiario(self.__db)
         sut.listar_compras_de(C.OTRO_ID_USUARIO)
         respuesta = sut.obtener_respuesta()
         self.assertEqual("error", respuesta["status"])
         self.assertEqual(ServicioLibroDiario.PUJADOR_INEXISTENTE, respuesta["mensaje"])
- 
+
     def test_retornar_lista_vacia_con_pujador_sin_compra(self):
         sut = ControladorLibroDiario(self.__db)
         sut.listar_compras_de(C.ID_USUARIO)
         respuesta = sut.obtener_respuesta()
         self.assertEqual("ok", respuesta["status"])
         self.assertEqual([], respuesta["items"])
- 
+
     def test_retornar_lista_con_compras_correctamente(self):
         sut = ControladorLibroDiario(self.__db)
         sut.vender(C.PUJA_UID)

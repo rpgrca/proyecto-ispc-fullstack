@@ -3,13 +3,11 @@ from datetime import date
 from fastapi import FastAPI, Form, Response
 from fastapi.middleware.cors import CORSMiddleware
 from starlette import status
-from controller.usuario import ControladorUsuario
 from model.content_provider.memory import CreadorDeBasesDeDatosTemporales
 from controller.subasta import ControladorSubasta
 from controller.lote import ControladorLote
 from controller.login import ControladorLogin
-from controller.registro import ControladorRegistro
-from controller.reestablecer import ControladorRecordatorio
+from controller.usuario import ControladorUsuario
 
 app = FastAPI()
 origins = ["*"]
@@ -41,7 +39,8 @@ def ingresar(usuario: str = Form(), clave: str = Form(), response: Response = Re
 @app.post("/registrar/", status_code=status.HTTP_200_OK)
 def registrar(nombre: str = Form(), apellido: str = Form(), email: str = Form(), usuario: str = Form(), clave: str = Form(),
               nacimiento: date = Form(), response: Response = Response()):
-    controlador = ControladorRegistro(db, nombre, apellido, email, usuario, clave, nacimiento)
+    controlador = ControladorUsuario(db)
+    controlador.agregar(nombre, apellido, email, usuario, clave, nacimiento)
     return __cambiar_status_code(controlador.obtener_respuesta(), response)
 
 

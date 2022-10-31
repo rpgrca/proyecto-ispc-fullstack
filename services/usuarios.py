@@ -30,7 +30,7 @@ class ServicioUsuario(Servicio):
         self.__db = db
 
     def agregar(self, nombre: str, apellido: str, email: str, usuario: str, clave: str, nacimiento: date,
-                 tipo: TipoDeUsuario) -> None:
+                tipo: TipoDeUsuario) -> None:
         self._throw_if_invalid(nombre, self.SIN_NOMBRE)
         self._throw_if_invalid(apellido, self.SIN_APELLIDO)
         self._throw_if_invalid(email, self.SIN_EMAIL)

@@ -1,6 +1,7 @@
 from model.usuarios import Usuario
 from services.email_sender import EmailSender
 
+
 class EmailSenderSpy(EmailSender):
     def __init__(self):
         self.__enviado = False

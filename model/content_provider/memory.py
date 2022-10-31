@@ -87,6 +87,7 @@ class UsuariosEnMemoria(Usuarios):
     def buscar_martillero(self) -> Martillero:
         return next(filter(lambda u: u["tipo"] == TipoDeUsuario.Martillero, self.__usuarios.values()), None)
 
+
 class SubastasEnMemoria(Subastas):
     def __init__(self, subastas: list[Subasta]):
         self.__subastas = subastas

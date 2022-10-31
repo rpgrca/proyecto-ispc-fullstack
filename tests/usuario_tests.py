@@ -198,7 +198,7 @@ class ControladorUsuarioTests(unittest.TestCase):
         self.assertEqual(TipoDeUsuario.Pujador, usuario.obtener_tipo())
 
     @data(None, "", -1, 0)
-    def test_retornar_error_cuando_usuario_es_invalido(self, usuario_invalido):
+    def test_retornar_error_actualizando_usuario_invalido(self, usuario_invalido):
         sut = ControladorUsuario(self.__db_con_usuario)
         sut.actualizar(usuario_invalido, C.OTRO_NOMBRE_USUARIO, C.OTRO_EMAIL_USUARIO, C.OTRA_CLAVE_USUARIO)
         respuesta = sut.obtener_respuesta()
@@ -206,7 +206,7 @@ class ControladorUsuarioTests(unittest.TestCase):
         self.assertEqual(ServicioUsuario.USUARIO_UID_INVALIDO, respuesta["mensaje"])
 
     @data(None, "")
-    def test_retornar_error_cuando_usuario_es_invalido(self, usuario_invalido):
+    def test_retornar_error_actualizando_usuario_con_nombre_invalido(self, usuario_invalido):
         sut = ControladorUsuario(self.__db_con_usuario)
         sut.actualizar(C.ID_USUARIO, usuario_invalido, C.OTRO_EMAIL_USUARIO, C.OTRA_CLAVE_USUARIO)
         respuesta = sut.obtener_respuesta()
@@ -214,7 +214,7 @@ class ControladorUsuarioTests(unittest.TestCase):
         self.assertEqual(ServicioUsuario.USUARIO_INVALIDO, respuesta["mensaje"])
 
     @data(None, "")
-    def test_retornar_error_cuando_usuario_es_invalido(self, email_invalido):
+    def test_retornar_error_actualizando_usuario_con_email_invalido(self, email_invalido):
         sut = ControladorUsuario(self.__db_con_usuario)
         sut.actualizar(C.ID_USUARIO, C.OTRO_NOMBRE_USUARIO, email_invalido, C.OTRA_CLAVE_USUARIO)
         respuesta = sut.obtener_respuesta()
@@ -222,7 +222,7 @@ class ControladorUsuarioTests(unittest.TestCase):
         self.assertEqual(ServicioUsuario.EMAIL_INVALIDO, respuesta["mensaje"])
 
     @data(None, "")
-    def test_retornar_error_cuando_usuario_es_invalido(self, clave_invalida):
+    def test_retornar_error_actualizando_usuario_con_clave_invalida(self, clave_invalida):
         sut = ControladorUsuario(self.__db_con_usuario)
         sut.actualizar(C.ID_USUARIO, C.OTRO_NOMBRE_USUARIO, C.OTRO_EMAIL_USUARIO, clave_invalida)
         respuesta = sut.obtener_respuesta()
