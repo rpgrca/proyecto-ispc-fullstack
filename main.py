@@ -8,6 +8,7 @@ from controller.subasta import ControladorSubasta
 from controller.lote import ControladorLote
 from controller.login import ControladorLogin
 from controller.usuario import ControladorUsuario
+from model.content_provider.mysql import CreadorDeBasesDeDatosMySql
 
 app = FastAPI()
 origins = ["*"]
@@ -19,7 +20,8 @@ app.add_middleware(
     allow_headers=["*"]
 )
 
-db = CreadorDeBasesDeDatosTemporales().construir()
+db = CreadorDeBasesDeDatosMySql(["localhost", "root", "gTp8xT2!", "bidon_subastas"]) \
+    .construir()
 
 
 def __cambiar_status_code(respuesta: dict[str, str], response: Response, status_code=status.HTTP_401_UNAUTHORIZED):

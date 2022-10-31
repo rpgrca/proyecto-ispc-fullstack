@@ -6,7 +6,7 @@ from model.database import BaseDeDatos
 from model.lotes import Lote, Lotes
 from model.pujas import Puja, Pujas
 from model.tipo_usuario import TipoDeUsuario
-from model.usuarios import Consignatario, Pujador, Usuario, Usuarios, UsuariosFactory
+from model.usuarios import Consignatario, Martillero, Pujador, Usuario, Usuarios, UsuariosFactory
 from model.subastas import Subasta, Subastas
 from model.articulos import Articulo, Articulos
 from model.ventas import Venta, Ventas
@@ -14,6 +14,7 @@ from model.ventas import Venta, Ventas
 
 class MysqlDatabase:
     def __init__(self, connection_string: list[str]):
+        self.__connection = None
         self.name = "bidon_subastas"
         self.extra_data = ["localhost", "root", "1234", "bidon_subastas"]
         self.configurar(connection_string)
@@ -47,8 +48,12 @@ class MysqlDatabase:
                                    "usuario varchar(20) not null,"
                                    "clave varchar(20) not null,"
                                    "nacimiento date not null,"
-                                   "tipo_usuario int not null,"
+                                   "tipo_usuario int not null"
                                    ") ENGINE=InnoDB")
+                    self.__connection.commit()
+                    cursor.close()
+
+                    cursor = self.__connection.cursor()
                     cursor.execute("CREATE TABLE IF NOT EXISTS Articulos ("
                                    "id INT NOT NULL UNIQUE AUTO_INCREMENT PRIMARY KEY,"
                                    "titulo varchar(50) NOT NULL,"
@@ -57,6 +62,10 @@ class MysqlDatabase:
                                    "id_consignatario int not null,"
                                    "CONSTRAINT fk_id_consignatario FOREIGN KEY(id_consignatario) REFERENCES Usuarios(id)"
                                    ") ENGINE=InnoDB")
+                    self.__connection.commit()
+                    cursor.close()
+
+                    cursor = self.__connection.cursor()
                     cursor.execute("CREATE TABLE IF NOT EXISTS Subastas ("
                                    "id int not null unique auto_increment primary key,"
                                    "fecha date not null,"
@@ -64,15 +73,23 @@ class MysqlDatabase:
                                    "description varchar(50) not null,"
                                    "imagen varchar(256) not null"
                                    ") ENGINE=InnoDB")
+                    self.__connection.commit()
+                    cursor.close()
+
+                    cursor = self.__connection.cursor()
                     cursor.execute("CREATE TABLE IF NOT EXISTS Lotes ("
                                    "id int not null unique auto_increment primary key,"
                                    "precio_base int not null,"
                                    "orden int not null,"
                                    "id_articulo int not null,"
                                    "id_subasta int not null,"
-                                   "constraint fk_id_articulo foreign key (id_articulo) references Articulo (id),"
+                                   "constraint fk_id_articulo foreign key (id_articulo) references Articulos (id),"
                                    "constraint fk_id_subasta foreign key (id_subasta) references Subastas (id)"
                                    ") ENGINE=InnoDB")
+                    self.__connection.commit()
+                    cursor.close()
+
+                    cursor = self.__connection.cursor()
                     cursor.execute("CREATE TABLE IF NOT EXISTS Pujas ("
                                    "id int not null unique auto_increment primary key,"
                                    "monto int not null,"
@@ -81,6 +98,10 @@ class MysqlDatabase:
                                    "constraint fk_id_pujador foreign key (id_pujador) references Usuarios(id),"
                                    "constraint fk_id_lote foreign key (id_lote) references Lotes(id)"
                                    ") ENGINE=InnoDB")
+                    self.__connection.commit()
+                    cursor.close()
+
+                    cursor = self.__connection.cursor()
                     cursor.execute("CREATE TABLE IF NOT EXISTS Ventas ("
                                    "id int not null unique auto_increment primary key,"
                                    "precio_final float not null,"
@@ -193,16 +214,18 @@ class TablaArticulos(Articulos):
 class TablaUsuarios(Usuarios):
     EXISTE_USUARIO_SQL = "SELECT COUNT(id) FROM Usuarios WHERE usuario LIKE %s"
     EXISTE_USUARIO_CON_MAIL_SQL = "SELECT COUNT(id) FROM Usuarios WHERE email LIKE %s"
-    OBTENER_USUARIO = "SELECT id, nombre, apellido, email, usuario, clave, nacimiento, tipo FROM Usuarios " \
+    OBTENER_USUARIO = "SELECT id, nombre, apellido, email, usuario, clave, nacimiento, tipo_usuario FROM Usuarios " \
                       "WHERE usuario = %s AND clave = %s"
-    OBTENER_USUARIO_LOGIN = "SELECT id, nombre, apellido, email, usuario, clave, nacimiento, tipo FROM Usuarios " \
+    OBTENER_USUARIO_LOGIN = "SELECT id, nombre, apellido, email, usuario, clave, nacimiento, tipo_usuario FROM Usuarios " \
                             "WHERE usuario = %s"
-    CREAR_USUARIO = "INSERT INTO Usuarios(nombre, apellido, email, usuario, clave, nacimiento, tipo) " \
+    CREAR_USUARIO = "INSERT INTO Usuarios(nombre, apellido, email, usuario, clave, nacimiento, tipo_usuario) " \
                     "VALUES(%s,%s,%s,%s,%s,%s,%s)"
-    BUSCAR_USUARIO_POR_ID_Y_TIPO = "SELECT id, nombre, apellido, email, usuario, clave, nacimiento, tipo FROM Usuarios " \
-                                   "WHERE id = %s AND tipo = %s"
-    BUSCAR_USUARIO_POR_ID = "SELECT id, nombre, apellido, email, usuario, clave, nacimiento, tipo FROM Usuarios " \
+    BUSCAR_USUARIO_POR_ID_Y_TIPO = "SELECT id, nombre, apellido, email, usuario, clave, nacimiento, tipo_usuario FROM Usuarios " \
+                                   "WHERE id = %s AND tipo_usuario = %s"
+    BUSCAR_USUARIO_POR_ID = "SELECT id, nombre, apellido, email, usuario, clave, nacimiento, tipo_usuario FROM Usuarios " \
                             "WHERE id = %s"
+    BUSCAR_MARTILLERO = "SELECT id, nombre, apellido, email, usuario, clave, nacimiento, tipo_usuario FROM Usuarios " \
+                        "WHERE tipo_usuario = 1"
     ACTUALIZAR_USUARIO = "UPDATE Usuarios SET usuario = %s, email = %s, clave = %s WHERE id = %s"
 
     def __init__(self, db: MysqlDatabase):
@@ -238,6 +261,10 @@ class TablaUsuarios(Usuarios):
         return self.__db.obtener_uno(self.BUSCAR_USUARIO_POR_ID, (uid),
                                      lambda r: UsuariosFactory.crear(r[0], r[1], r[2], r[3], r[4], r[5], r[6], r[7]))
 
+    def buscar_martillero(self) -> Martillero:
+        return self.__db.obtener_uno(self.BUSCAR_MARTILLERO, (),
+                                     lambda r: UsuariosFactory.crear(r[0], r[1], r[2], r[3], r[4], r[5], r[6], r[7]))
+
     def actualizar(self, cuenta: Usuario, usuario: str, email: str, clave: str) -> None:
         self.__db.actualizar(self.ACTUALIZAR_USUARIO, (usuario, email, clave, cuenta.obtener_uid()))
 
@@ -258,6 +285,9 @@ class TablaLotes(Lotes):
         pass
 
     def buscar_por_uid(self, lote_uid: int) -> Lote:
+        pass
+
+    def listar(self, subasta: Subasta) -> list[Lote]:
         pass
 
 
@@ -284,11 +314,17 @@ class TablaPujas(Pujas):
 class TablaVentas(Ventas):
     CREAR_VENTA = "INSERT INTO Ventas(id_puja, precio_final, comision, pago_consignatario) VALUES (%s,%s,%s,%s)"
     BUSCAR_VENTA_CON_DATOS = "SELECT v.id, p.id, p.pujador_id, u.nombre, u.apellido, u.email, u.usuario, u.clave, " \
-                             "u.nacimiento, u.tipo, v.precio_final, v.comision, v.pago_consignatario " \
+                             "u.nacimiento, u.tipo_usuario, v.precio_final, v.comision, v.pago_consignatario " \
                              "FROM Ventas v " \
                              "INNER JOIN Pujas p on p.id = id_puja " \
                              "INNER JOIN Usuarios u on u.id = p.id_pujador " \
                              "WHERE v.id = %s"
+    LISTAR_COMPRAS = "SELECT v.id, p.id, p.pujador_id, u.nombre, u.apellido, u.email, u.usuario, u.clave, " \
+                     "u.nacimiento, u.tipo_usuario, v.precio_final, v.comision, v.pago_consignatario " \
+                     "FROM Usuarios u " \
+                     "INNER JOIN Pujas p ON u.id = p.id_pujador " \
+                     "INNER JOIN Ventas v ON p.id = v.id_puja " \
+                     "WHERE u.id = %s"
 
     def __init__(self, db: MysqlDatabase):
         self.__db = db
@@ -301,10 +337,14 @@ class TablaVentas(Ventas):
         return self.__db.obtener_uno(self.BUSCAR_VENTA_CON_DATOS, (uid), lambda r: Venta(r[0], Puja(r[1], r[2], r[3], r[4]),
                                      r[5], r[6], r[7]))
 
+    def listar_compras_de(self, pujador: Pujador) -> list[Venta]:
+        return self.__db.obtener_muchos(self.LISTAR_COMPRAS, (pujador.obtener_uid())), lambda r: Venta(r[0], Puja(r[1], r[2],
+                                        r[3], r[4]), r[5], r[6], r[7])
+
 
 class CreadorDeBasesDeDatosMySql:
-    def __init__(self):
-        self.__db = MysqlDatabase()
+    def __init__(self, connection_string: list[str]):
+        self.__db = MysqlDatabase(connection_string)
         self.__usuarios = TablaUsuarios(self.__db)
         self.__subastas = TablaSubastas(self.__db)
         self.__articulos = TablaArticulos(self.__db)
