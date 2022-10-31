@@ -9,6 +9,7 @@ from controller.lote import ControladorLote
 from controller.login import ControladorLogin
 from controller.usuario import ControladorUsuario
 from model.content_provider.mysql import CreadorDeBasesDeDatosMySql
+from model.tipo_usuario import TipoDeUsuario
 
 app = FastAPI()
 origins = ["*"]
@@ -42,7 +43,7 @@ def ingresar(usuario: str = Form(), clave: str = Form(), response: Response = Re
 def registrar(nombre: str = Form(), apellido: str = Form(), email: str = Form(), usuario: str = Form(), clave: str = Form(),
               nacimiento: date = Form(), response: Response = Response()):
     controlador = ControladorUsuario(db)
-    controlador.agregar(nombre, apellido, email, usuario, clave, nacimiento)
+    controlador.agregar(nombre, apellido, email, usuario, clave, nacimiento, TipoDeUsuario.Pujador)
     return __cambiar_status_code(controlador.obtener_respuesta(), response)
 
 
