@@ -3,6 +3,7 @@ from datetime import date
 from fastapi import FastAPI, Form, Response
 from fastapi.middleware.cors import CORSMiddleware
 from starlette import status
+from controller.articulo import ControladorArticulo
 from model.content_provider.memory import CreadorDeBasesDeDatosTemporales
 from controller.subasta import ControladorSubasta
 from controller.lote import ControladorLote
@@ -21,8 +22,8 @@ app.add_middleware(
     allow_headers=["*"]
 )
 
-db = CreadorDeBasesDeDatosMySql(["localhost", "root", "gTp8xT2!", "bidon_subastas"]) \
-    .construir()
+db = CreadorDeBasesDeDatosMySql(["localhost", "root", "gTp8xT2!", "bidon_subastas"]).construir()
+#db = CreadorDeBasesDeDatosTemporales().construir()
 
 
 def __cambiar_status_code(respuesta: dict[str, str], response: Response, status_code=status.HTTP_401_UNAUTHORIZED):
@@ -54,7 +55,23 @@ def reestablecer(email: str = Form(), response: Response = Response()):
     return __cambiar_status_code(controlador.obtener_respuesta(), response)
 
 
-@app.post("/subasta/", status_code=status.HTTP_200_OK)
+@app.post("/consignatarios/", status_code=status.HTTP_200_OK)
+def crear_consignatario(nombre: str = Form(), apellido: str = Form(), email: str = Form(), usuario: str = Form(),
+                        clave: str = Form(), nacimiento: date = Form(), response: Response = Response()):
+    controlador = ControladorUsuario(db)
+    controlador.agregar(nombre, apellido, email, usuario, clave, nacimiento, TipoDeUsuario.Consignatario)
+    return __cambiar_status_code(controlador.obtener_respuesta(), response)
+
+
+@app.post("/articulos/", status_code=status.HTTP_200_OK)
+def crear_articulo(titulo: str = Form(), descripcion: str = Form(), valuacion: int = Form(), consignatario_uid: int = Form(),
+                   response: Response = Response()):
+    controlador = ControladorArticulo(db)
+    controlador.agregar(titulo, descripcion, valuacion, consignatario_uid)
+    return __cambiar_status_code(controlador.obtener_respuesta(), response)
+
+
+@app.post("/subastas/", status_code=status.HTTP_200_OK)
 def crear_subasta(titulo: str = Form(), descripcion: str = Form(), imagen: str = Form(), fecha: date = Form(),
                   response: Response = Response()):
     controlador = ControladorSubasta(db)
