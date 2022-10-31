@@ -239,7 +239,7 @@ class TablaUsuarios(Usuarios):
         self.__db.insertar(self.CREAR_USUARIO, (nombre, apellido, email, usuario, clave, nacimiento, tipo))
 
     def existe(self, usuario: str) -> bool:
-        return self.__db.contar(self.EXISTE_USUARIO_SQL, (usuario)) > 0
+        return self.__db.contar(self.EXISTE_USUARIO_SQL, tuple(usuario)) > 0
 
     def buscar(self, usuario: str, clave: str) -> Usuario:
         return self.__db.obtener_uno(self.OBTENER_USUARIO, (usuario, clave),
