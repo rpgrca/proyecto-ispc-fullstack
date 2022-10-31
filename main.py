@@ -3,6 +3,7 @@ from datetime import date
 from fastapi import FastAPI, Form, Response
 from fastapi.middleware.cors import CORSMiddleware
 from starlette import status
+from controller.usuario import ControladorUsuario
 from model.content_provider.memory import CreadorDeBasesDeDatosTemporales
 from controller.subasta import ControladorSubasta
 from controller.lote import ControladorLote
@@ -46,7 +47,8 @@ def registrar(nombre: str = Form(), apellido: str = Form(), email: str = Form(),
 
 @app.post("/reestablecer/", status_code=status.HTTP_200_OK)
 def reestablecer(email: str = Form(), response: Response = Response()):
-    controlador = ControladorRecordatorio(db, email)
+    controlador = ControladorLogin(db, email)
+    controlador.recordar(email)
     return __cambiar_status_code(controlador.obtener_respuesta(), response)
 
 

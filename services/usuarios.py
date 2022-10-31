@@ -2,6 +2,7 @@ from datetime import date
 from .servicio import Servicio
 from model.tipo_usuario import TipoDeUsuario
 from model.database import BaseDeDatos
+from services.email_sender import EmailSender
 
 
 class ServicioUsuario(Servicio):
@@ -18,6 +19,11 @@ class ServicioUsuario(Servicio):
     CLAVE_INVALIDA = "No se puede utilizar una clave inválida"
     USUARIO_INEXISTENTE = "No se puede actualizar un usuario inexistente"
     USUARIO_YA_EXISTE = "Nombre de usuario ya existe"
+    CONTACTO_SIN_NOMBRE = "No se puede contactar al martillero sin nombre"
+    CONTACTO_SIN_EMAIL = "No se puede contactar al martillero sin e-mail"
+    CONTACTO_SIN_ASUNTO = "No se puede contactar al martillero sin asunto"
+    CONTACTO_SIN_TEXTO = "No se puede contactar al martillero sin texto"
+    MARTILLERO_INEXISTENTE = "No se puede enviar mensaje a ningún martillero por el momento"
 
     def __init__(self, db: BaseDeDatos):
         self.__db = db
@@ -48,3 +54,14 @@ class ServicioUsuario(Servicio):
             self._throw(self.USUARIO_YA_EXISTE)
 
         self.__db.Usuarios.actualizar(cuenta, usuario, email, clave)
+
+    def contactar(self, nombre: str, email: str, asunto: str, texto: str, sender: EmailSender) -> None:
+        self._throw_if_invalid(nombre, self.CONTACTO_SIN_NOMBRE)
+        self._throw_if_invalid(email, self.CONTACTO_SIN_EMAIL)
+        self._throw_if_invalid(asunto, self.CONTACTO_SIN_ASUNTO)
+        self._throw_if_invalid(texto, self.CONTACTO_SIN_TEXTO)
+
+        martillero = self.__db.Usuarios.buscar_martillero()
+        self._throw_if_invalid(martillero, self.MARTILLERO_INEXISTENTE)
+
+        sender.enviar_mail_a(martillero, f"{nombre} te envió un mail titulado {asunto}. {texto}. Responde a {email}")

@@ -2,6 +2,7 @@ import unittest
 from ddt import ddt, data, unpack
 import tests.constantes as C
 from controller.login import ControladorLogin, ServicioLogin
+from .email_sender_spy import EmailSenderSpy
 from model.tipo_usuario import TipoDeUsuario
 from model.content_provider.memory import UsuariosEnMemoria, CreadorDeBasesDeDatosTemporales
 
@@ -19,7 +20,7 @@ class ServicioLoginTests(unittest.TestCase):
                     "usuario": C.NOMBRE_USUARIO,
                     "clave": C.CLAVE_USUARIO,
                     "nacimiento": C.FECHA_NACIMIENTO_USUARIO,
-                    "tipo": TipoDeUsuario.Pujador.value
+                    "tipo": TipoDeUsuario.Pujador
                 }})) \
             .construir()
 
@@ -69,6 +70,57 @@ class ServicioLoginTests(unittest.TestCase):
         respuesta = sut.obtener_respuesta()
         self.assertEqual("error", respuesta["status"])
         self.assertIn(mensaje_error, respuesta["mensaje"])
+
+    def test_retornar_ok_cuando_mail_existe_en_base_de_datos(self):
+        sut = ControladorLogin(self.__db_con_usuario)
+        sut.recordar(C.EMAIL_USUARIO, EmailSenderSpy())
+        respuesta = sut.obtener_respuesta()
+        self.assertEqual("ok", respuesta["status"])
+        self.assertEqual(ControladorLogin.RECORDATORIO_EXITOSO, respuesta["mensaje"])
+
+    def test_retornar_ok_cuando_mail_no_existe_en_base_de_datos(self):
+        sut = ControladorLogin(self.__db_con_usuario)
+        sut.recordar(C.OTRO_EMAIL_USUARIO, EmailSenderSpy())
+        respuesta = sut.obtener_respuesta()
+        self.assertEqual("ok", respuesta["status"])
+        self.assertIn(ControladorLogin.RECORDATORIO_EXITOSO, respuesta["mensaje"])
+
+    def test_retornar_ok_cuando_base_esta_vacia(self):
+        db = CreadorDeBasesDeDatosTemporales() \
+            .con_usuarios(UsuariosEnMemoria({})) \
+            .construir()
+        sut = ControladorLogin(db)
+        sut.recordar(C.OTRO_EMAIL_USUARIO, EmailSenderSpy())
+        respuesta = sut.obtener_respuesta()
+        self.assertEqual("ok", respuesta["status"])
+        self.assertIn(ControladorLogin.RECORDATORIO_EXITOSO, respuesta["mensaje"])
+
+    def test_enviar_mail_cuando_email_existe(self):
+        sut = EmailSenderSpy()
+        controlador = ControladorLogin(self.__db_con_usuario)
+        controlador.recordar(C.EMAIL_USUARIO, sut)
+        self.assertTrue(sut.envio_mail())
+
+    def test_no_enviar_mail_cuando_email_no_existe(self):
+        sut = EmailSenderSpy()
+        controlador = ControladorLogin(self.__db_con_usuario)
+        controlador.recordar(C.OTRO_EMAIL_USUARIO, sut)
+        self.assertFalse(sut.envio_mail())
+
+    @data(None, "")
+    def test_retornar_error_cuando_el_mail_es_invalido(self, mail_invalido):
+        sut = ControladorLogin(self.__db_con_usuario)
+        sut.recordar(mail_invalido, EmailSenderSpy())
+        respuesta = sut.obtener_respuesta()
+        self.assertEqual("error", respuesta["status"])
+        self.assertEqual(ServicioLogin.RECORDAR_SIN_MAIL, respuesta["mensaje"])
+
+    def test_retornar_error_cuando_el_sender_es_invalido(self):
+        sut = ControladorLogin(self.__db_con_usuario)
+        sut.recordar("mail@mail.com", None)
+        respuesta = sut.obtener_respuesta()
+        self.assertEqual("error", respuesta["status"])
+        self.assertEqual(ServicioLogin.RECORDAR_SIN_SENDER, respuesta["mensaje"])
 
 
 if __name__ == "__main__":

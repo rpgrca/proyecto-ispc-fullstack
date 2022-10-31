@@ -42,7 +42,7 @@ class ControladorVentaTests(unittest.TestCase):
                 "usuario": usuario.obtener_usuario(),
                 "clave": usuario.obtener_clave(),
                 "nacimiento": usuario.obtener_nacimiento(),
-                "tipo": usuario.obtener_tipo().value
+                "tipo": usuario.obtener_tipo()
             }
 
         return diccionario

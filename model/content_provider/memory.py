@@ -2,7 +2,7 @@ from datetime import date
 from model.tipo_usuario import TipoDeUsuario
 from model.database import BaseDeDatos
 from model.articulos import Articulo
-from model.usuarios import Consignatario, Pujador, Usuarios, Usuario, UsuariosFactory
+from model.usuarios import Consignatario, Martillero, Pujador, Usuarios, Usuario, UsuariosFactory
 from model.subastas import Subastas, Subasta
 from model.articulos import Articulos
 from model.pujas import Puja, Pujas
@@ -25,7 +25,7 @@ class UsuariosEnMemoria(Usuarios):
             "usuario": usuario,
             "clave": clave,
             "nacimiento": nacimiento,
-            "tipo": tipo.value
+            "tipo": tipo
         }
         self.__id += 1
 
@@ -56,7 +56,7 @@ class UsuariosEnMemoria(Usuarios):
         return self._buscar_por_uid_y_tipo(uid, TipoDeUsuario.Consignatario)
 
     def _buscar_por_uid_y_tipo(self, uid: int, tipo: TipoDeUsuario) -> Usuario:
-        registro = next(filter(lambda u: u["id"] == uid and u["tipo"] == tipo.value, self.__usuarios.values()), None)
+        registro = next(filter(lambda u: u["id"] == uid and u["tipo"] == tipo, self.__usuarios.values()), None)
         if registro:
             return UsuariosFactory.crear(registro["id"], registro["nombre"], registro["apellido"], registro["email"],
                                          registro["usuario"], registro["clave"], registro["nacimiento"], registro["tipo"])
@@ -83,6 +83,9 @@ class UsuariosEnMemoria(Usuarios):
             "nacimiento": cuenta.obtener_nacimiento(),
             "tipo": cuenta.obtener_tipo()
         }
+
+    def buscar_martillero(self) -> Martillero:
+        return next(filter(lambda u: u["tipo"] == TipoDeUsuario.Martillero, self.__usuarios.values()), None)
 
 class SubastasEnMemoria(Subastas):
     def __init__(self, subastas: list[Subasta]):

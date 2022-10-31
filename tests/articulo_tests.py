@@ -21,7 +21,7 @@ class ControladorArticuloTests(unittest.TestCase):
                     "usuario": C.NOMBRE_USUARIO,
                     "clave": C.CLAVE_USUARIO,
                     "nacimiento": C.FECHA_NACIMIENTO_USUARIO,
-                    "tipo": TipoDeUsuario.Consignatario.value
+                    "tipo": TipoDeUsuario.Consignatario
                 }})) \
             .con_subastas(SubastasEnMemoria([])) \
             .con_articulos(ArticulosEnMemoria([])) \

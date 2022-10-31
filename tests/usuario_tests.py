@@ -1,5 +1,6 @@
 import unittest
 from ddt import ddt, data, unpack
+from .email_sender_spy import EmailSenderSpy
 from model.usuarios import Consignatario, Martillero, Pujador, UsuariosFactory
 import tests.constantes as C
 from controller.usuario import ControladorUsuario, ServicioUsuario
@@ -76,6 +77,17 @@ class ControladorUsuarioTests(unittest.TestCase):
         respuesta = sut.obtener_respuesta()
         self.assertEqual("error", respuesta["status"])
         self.assertIn(mensaje_error, respuesta["mensaje"])
+
+    def test_graba_usuario_de_tipo_pujador(self):
+        diccionario = {}
+        db = CreadorDeBasesDeDatosTemporales() \
+            .con_usuarios(UsuariosEnMemoria(diccionario)) \
+            .construir()
+
+        sut = ControladorUsuario(db)
+        sut.agregar(C.NOMBRE_USUARIO, C.APELLIDO_USUARIO, C.OTRO_EMAIL_USUARIO, C.NOMBRE_USUARIO, C.CLAVE_USUARIO,
+                    C.FECHA_NACIMIENTO_USUARIO, TipoDeUsuario.Pujador)
+        self.assertEqual(TipoDeUsuario.Pujador, diccionario[C.NOMBRE_USUARIO]["tipo"])
 
     @data(TipoDeUsuario.Martillero, TipoDeUsuario.Consignatario, TipoDeUsuario.Pujador)
     def test_retornar_ok_cuando_ese_usuario_no_existe(self, tipo):
@@ -232,6 +244,15 @@ class ControladorUsuarioTests(unittest.TestCase):
         respuesta = sut.obtener_respuesta()
         self.assertEqual("error", respuesta["status"])
         self.assertEqual(ServicioUsuario.USUARIO_YA_EXISTE, respuesta["mensaje"])
+
+    def test_retornar_ok_al_contactar_correctamente_al_martillero(self):
+        sut = ControladorUsuario(self.__db_con_usuario)
+        sut.agregar(C.OTRO_NOMBRE_USUARIO, C.APELLIDO_USUARIO, C.OTRO_EMAIL_USUARIO, C.OTRO_NOMBRE_USUARIO,
+                    C.OTRA_CLAVE_USUARIO, C.FECHA_NACIMIENTO_USUARIO, TipoDeUsuario.Martillero)
+        sut.contactar(C.NOMBRE_USUARIO, C.EMAIL_USUARIO, "asunto corto", "texto largo", EmailSenderSpy())
+        respuesta = sut.obtener_respuesta()
+        self.assertEqual("ok", respuesta["status"])
+        self.assertEqual(ControladorUsuario.MENSAJE_ENVIADO, respuesta["mensaje"])
 
 
 if __name__ == "__main__":

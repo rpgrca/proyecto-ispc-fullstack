@@ -24,7 +24,7 @@ class ControladorPujaTests(unittest.TestCase):
                 "usuario": C.NOMBRE_USUARIO,
                 "clave": C.CLAVE_USUARIO,
                 "nacimiento": C.FECHA_NACIMIENTO_USUARIO,
-                "tipo": TipoDeUsuario.Pujador.value
+                "tipo": TipoDeUsuario.Pujador
             }})) \
             .con_subastas(SubastasEnMemoria([subasta])) \
             .con_lotes(LotesEnMemoria([Lote(C.LOTE_UID, subasta, articulo, C.BASE_LOTE, C.ORDEN_LOTE)])) \
