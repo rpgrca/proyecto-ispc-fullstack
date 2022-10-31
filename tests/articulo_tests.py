@@ -141,6 +141,15 @@ class ControladorArticuloTests(unittest.TestCase):
         self.assertEqual("error", respuesta["status"])
         self.assertEqual(ServicioArticulos.LISTAR_CON_CONSIGNATARIO_INEXISTENTE, respuesta["mensaje"])
 
+    def test_retornar_ok_cuando_se_cuenta(self):
+        sut = ControladorArticulo(self.__db)
+        sut.agregar(C.TITULO_ARTICULO, C.DESCRIPCION_ARTICULO, C.VALUACION_ARTICULO, 1)
+        sut.agregar(C.OTRO_TITULO_ARTICULO, C.OTRA_DESCRIPCION_ARTICULO, C.OTRA_VALUACION_ARTICULO, 1)
+        sut.contar()
+        respuesta = sut.obtener_respuesta()
+        self.assertEqual("ok", respuesta["status"])
+        self.assertEqual(2, respuesta["total"])
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -30,3 +30,10 @@ class ControladorArticulo(Controlador):
             self._responder_bien_serializando_lista(articulos)
         except Exception as err:
             self._responder_mal_con(str(err))
+
+    def contar(self) -> None:
+        try:
+            total = ServicioArticulos(self.__db).contar()
+            self._responder_bien_con_numero("total", total)
+        except Exception as err:
+            self._responder_mal_con(str(err))

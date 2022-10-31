@@ -42,3 +42,6 @@ class ServicioArticulos(Servicio):
         self._throw_if_invalid(consignatario, self.LISTAR_CON_CONSIGNATARIO_INEXISTENTE)
 
         return self.__db.Articulos.listar_articulos_propiedad_de(consignatario)
+
+    def contar(self) -> int:
+        return self.__db.Articulos.contar()
