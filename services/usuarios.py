@@ -24,6 +24,7 @@ class ServicioUsuario(Servicio):
     CONTACTO_SIN_ASUNTO = "No se puede contactar al martillero sin asunto"
     CONTACTO_SIN_TEXTO = "No se puede contactar al martillero sin texto"
     MARTILLERO_INEXISTENTE = "No se puede enviar mensaje a ningún martillero por el momento"
+    SENDER_INVALIDO = "No se puede contactar al martillero sin sender"
 
     def __init__(self, db: BaseDeDatos):
         self.__db = db
@@ -60,6 +61,7 @@ class ServicioUsuario(Servicio):
         self._throw_if_invalid(email, self.CONTACTO_SIN_EMAIL)
         self._throw_if_invalid(asunto, self.CONTACTO_SIN_ASUNTO)
         self._throw_if_invalid(texto, self.CONTACTO_SIN_TEXTO)
+        self._throw_if_invalid(sender, self.SENDER_INVALIDO)
 
         martillero = self.__db.Usuarios.buscar_martillero()
         self._throw_if_invalid(martillero, self.MARTILLERO_INEXISTENTE)
