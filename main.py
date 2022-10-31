@@ -22,8 +22,8 @@ app.add_middleware(
     allow_headers=["*"]
 )
 
-db = CreadorDeBasesDeDatosMySql(["localhost", "root", "gTp8xT2!", "bidon_subastas"]).construir()
-#db = CreadorDeBasesDeDatosTemporales().construir()
+#db = CreadorDeBasesDeDatosMySql(["localhost", "root", "gTp8xT2!", "bidon_subastas"]).construir()
+db = CreadorDeBasesDeDatosTemporales().construir()
 
 
 def __cambiar_status_code(respuesta: dict[str, str], response: Response, status_code=status.HTTP_401_UNAUTHORIZED):
