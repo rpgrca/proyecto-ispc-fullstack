@@ -1,5 +1,6 @@
 import unittest
 from ddt import ddt, data, unpack
+from .email_sender_spy import EmailSenderSpy
 from model.usuarios import Consignatario, Martillero, Pujador, UsuariosFactory
 import tests.constantes as C
 from controller.usuario import ControladorUsuario, ServicioUsuario
@@ -76,6 +77,17 @@ class ControladorUsuarioTests(unittest.TestCase):
         respuesta = sut.obtener_respuesta()
         self.assertEqual("error", respuesta["status"])
         self.assertIn(mensaje_error, respuesta["mensaje"])
+
+    def test_graba_usuario_de_tipo_pujador(self):
+        diccionario = {}
+        db = CreadorDeBasesDeDatosTemporales() \
+            .con_usuarios(UsuariosEnMemoria(diccionario)) \
+            .construir()
+
+        sut = ControladorUsuario(db)
+        sut.agregar(C.NOMBRE_USUARIO, C.APELLIDO_USUARIO, C.OTRO_EMAIL_USUARIO, C.NOMBRE_USUARIO, C.CLAVE_USUARIO,
+                    C.FECHA_NACIMIENTO_USUARIO, TipoDeUsuario.Pujador)
+        self.assertEqual(TipoDeUsuario.Pujador, diccionario[C.NOMBRE_USUARIO]["tipo"])
 
     @data(TipoDeUsuario.Martillero, TipoDeUsuario.Consignatario, TipoDeUsuario.Pujador)
     def test_retornar_ok_cuando_ese_usuario_no_existe(self, tipo):
@@ -232,6 +244,83 @@ class ControladorUsuarioTests(unittest.TestCase):
         respuesta = sut.obtener_respuesta()
         self.assertEqual("error", respuesta["status"])
         self.assertEqual(ServicioUsuario.USUARIO_YA_EXISTE, respuesta["mensaje"])
+
+    def test_retornar_ok_al_contactar_correctamente_al_martillero(self):
+        sut = ControladorUsuario(self.__db_con_usuario)
+        sut.agregar(C.OTRO_NOMBRE_USUARIO, C.APELLIDO_USUARIO, C.OTRO_EMAIL_USUARIO, C.OTRO_NOMBRE_USUARIO,
+                    C.OTRA_CLAVE_USUARIO, C.FECHA_NACIMIENTO_USUARIO, TipoDeUsuario.Martillero)
+        sut.contactar(C.NOMBRE_USUARIO, C.EMAIL_USUARIO, "asunto corto", "texto largo", EmailSenderSpy())
+        respuesta = sut.obtener_respuesta()
+        self.assertEqual("ok", respuesta["status"])
+        self.assertEqual(ControladorUsuario.MENSAJE_ENVIADO, respuesta["mensaje"])
+
+    def test_enviar_mail_correctamente(self):
+        spy = EmailSenderSpy()
+        sut = ControladorUsuario(self.__db_con_usuario)
+        sut.agregar(C.OTRO_NOMBRE_USUARIO, C.APELLIDO_USUARIO, C.OTRO_EMAIL_USUARIO, C.OTRO_NOMBRE_USUARIO,
+                    C.OTRA_CLAVE_USUARIO, C.FECHA_NACIMIENTO_USUARIO, TipoDeUsuario.Martillero)
+        sut.contactar(C.NOMBRE_USUARIO, C.EMAIL_USUARIO, C.ASUNTO_MENSAJE, C.TEXTO_MENSAJE, spy)
+        self.assertTrue(spy.envio_mail())
+        self.assertIn(C.NOMBRE_USUARIO, spy.mensaje_enviado())
+        self.assertIn(C.EMAIL_USUARIO, spy.mensaje_enviado())
+        self.assertIn(C.ASUNTO_MENSAJE, spy.mensaje_enviado())
+        self.assertIn(C.TEXTO_MENSAJE, spy.mensaje_enviado())
+
+    def test_retornar_error_cuando_sender_es_invalido(self):
+        sut = ControladorUsuario(self.__db_con_usuario)
+        sut.agregar(C.OTRO_NOMBRE_USUARIO, C.APELLIDO_USUARIO, C.OTRO_EMAIL_USUARIO, C.OTRO_NOMBRE_USUARIO,
+                    C.OTRA_CLAVE_USUARIO, C.FECHA_NACIMIENTO_USUARIO, TipoDeUsuario.Martillero)
+        sut.contactar(C.NOMBRE_USUARIO, C.EMAIL_USUARIO, C.ASUNTO_MENSAJE, C.TEXTO_MENSAJE, None)
+        respuesta = sut.obtener_respuesta()
+        self.assertEqual("error", respuesta["status"])
+        self.assertEqual(ServicioUsuario.SENDER_INVALIDO, respuesta["mensaje"])
+
+    @data(None, "")
+    def test_retornar_error_cuando_usuario_es_invalido(self, usuario_invalido):
+        sut = ControladorUsuario(self.__db_con_usuario)
+        sut.agregar(C.OTRO_NOMBRE_USUARIO, C.APELLIDO_USUARIO, C.OTRO_EMAIL_USUARIO, C.OTRO_NOMBRE_USUARIO,
+                    C.OTRA_CLAVE_USUARIO, C.FECHA_NACIMIENTO_USUARIO, TipoDeUsuario.Martillero)
+        sut.contactar(usuario_invalido, C.EMAIL_USUARIO, C.ASUNTO_MENSAJE, C.TEXTO_MENSAJE, EmailSenderSpy())
+        respuesta = sut.obtener_respuesta()
+        self.assertEqual("error", respuesta["status"])
+        self.assertEqual(ServicioUsuario.CONTACTO_SIN_NOMBRE, respuesta["mensaje"])
+
+    @data(None, "")
+    def test_retornar_error_cuando_email_es_invalido(self, email_invalido):
+        sut = ControladorUsuario(self.__db_con_usuario)
+        sut.agregar(C.OTRO_NOMBRE_USUARIO, C.APELLIDO_USUARIO, C.OTRO_EMAIL_USUARIO, C.OTRO_NOMBRE_USUARIO,
+                    C.OTRA_CLAVE_USUARIO, C.FECHA_NACIMIENTO_USUARIO, TipoDeUsuario.Martillero)
+        sut.contactar(C.NOMBRE_USUARIO, email_invalido, C.ASUNTO_MENSAJE, C.TEXTO_MENSAJE, EmailSenderSpy())
+        respuesta = sut.obtener_respuesta()
+        self.assertEqual("error", respuesta["status"])
+        self.assertEqual(ServicioUsuario.CONTACTO_SIN_EMAIL, respuesta["mensaje"])
+
+    @data(None, "")
+    def test_retornar_error_cuando_asunto_es_invalido(self, asunto_invalido):
+        sut = ControladorUsuario(self.__db_con_usuario)
+        sut.agregar(C.OTRO_NOMBRE_USUARIO, C.APELLIDO_USUARIO, C.OTRO_EMAIL_USUARIO, C.OTRO_NOMBRE_USUARIO,
+                    C.OTRA_CLAVE_USUARIO, C.FECHA_NACIMIENTO_USUARIO, TipoDeUsuario.Martillero)
+        sut.contactar(C.NOMBRE_USUARIO, C.EMAIL_USUARIO, asunto_invalido, C.TEXTO_MENSAJE, EmailSenderSpy())
+        respuesta = sut.obtener_respuesta()
+        self.assertEqual("error", respuesta["status"])
+        self.assertEqual(ServicioUsuario.CONTACTO_SIN_ASUNTO, respuesta["mensaje"])
+
+    @data(None, "")
+    def test_retornar_error_cuando_texto_es_invalido(self, texto_invalido):
+        sut = ControladorUsuario(self.__db_con_usuario)
+        sut.agregar(C.OTRO_NOMBRE_USUARIO, C.APELLIDO_USUARIO, C.OTRO_EMAIL_USUARIO, C.OTRO_NOMBRE_USUARIO,
+                    C.OTRA_CLAVE_USUARIO, C.FECHA_NACIMIENTO_USUARIO, TipoDeUsuario.Martillero)
+        sut.contactar(C.NOMBRE_USUARIO, C.EMAIL_USUARIO, C.ASUNTO_MENSAJE, texto_invalido, EmailSenderSpy())
+        respuesta = sut.obtener_respuesta()
+        self.assertEqual("error", respuesta["status"])
+        self.assertEqual(ServicioUsuario.CONTACTO_SIN_TEXTO, respuesta["mensaje"])
+
+    def test_retornar_error_cuando_martillero_no_existe(self):
+        sut = ControladorUsuario(self.__db_con_usuario)
+        sut.contactar(C.NOMBRE_USUARIO, C.EMAIL_USUARIO, C.ASUNTO_MENSAJE, C.TEXTO_MENSAJE, EmailSenderSpy())
+        respuesta = sut.obtener_respuesta()
+        self.assertEqual("error", respuesta["status"])
+        self.assertEqual(ServicioUsuario.MARTILLERO_INEXISTENTE, respuesta["mensaje"])
 
 
 if __name__ == "__main__":

@@ -89,6 +89,10 @@ class Usuarios(ABC):
     def actualizar(self, cuenta: Usuario, usuario: str, email: str, clave: str) -> None:
         pass
 
+    @abstractmethod
+    def buscar_martillero(self) -> Martillero:
+        pass
+
 
 class UsuariosFactory:
     @staticmethod
