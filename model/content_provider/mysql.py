@@ -200,11 +200,12 @@ class TablaArticulos(Articulos):
     def __init__(self, db: MysqlDatabase):
         self.__db = db
 
-    def crear(self, titulo: str) -> Articulo:
-        return self.__db.insertar(self.CREAR_ARTICULO, (titulo), lambda i, r: Articulo(i, r[0]))  # FIXME: agregar campos
+    def crear(self, titulo: str, descripcion: str, valuacion: int, consignatario: Consignatario) -> Articulo:
+        return self.__db.insertar(self.CREAR_ARTICULO, (titulo, descripcion, valuacion, consignatario.obtener_uid()),
+                                  lambda i, r: Articulo(i, r[0], r[1], r[2], r[3]))
 
     def buscar_por_uid(self, uid: int) -> Articulo:
-        return self.__db.obtener_uno(self.BUSCAR_ARTICULO, (uid), lambda r: Articulo(r[0], r[1]))  # FIXME: agregar campos
+        return self.__db.obtener_uno(self.BUSCAR_ARTICULO, (uid,), lambda r: Articulo(r[0], r[1], r[2], r[3], r[4]))
 
     def listar_articulos_propiedad_de(self, consignatario: Consignatario) -> list[Articulo]:
         return self.__db.obtener_muchos(self.BUSCAR_POR_CONSIGNATARIO, (consignatario.obtener_uid()),

@@ -11,27 +11,29 @@ from model.usuarios import Consignatario
 
 
 class Articulo(Serializable):
-    def __init__(self, uid: int, titulo: str):
+    def __init__(self, uid: int, titulo: str, descripcion: str, valuacion: int, consignatario: Consignatario):
         self.__uid = uid
-        self.__consignatario_uid = 1
+        self.__consignatario = consignatario
         self.__titulo = titulo
+        self.__descripcion = descripcion
+        self.__valuacion = valuacion
 
     def obtener_uid(self) -> int:
         return self.__uid
 
     def obtener_consignatario_uid(self) -> int:
-        return self.__consignatario_uid
+        return self.__consignatario.obtener_uid()
 
     def obtener_titulo(self) -> str:
         return self.__titulo
 
     def serialize(self):
-        return {"id": self.__uid, "consignatario_id": self.__consignatario_uid, "titulo": self.__titulo}
+        return {"id": self.__uid, "consignatario_id": self.__consignatario.obtener_uid(), "titulo": self.__titulo}
 
 
 class Articulos(ABC):
     @abstractmethod
-    def crear(self, titulo: str) -> Articulo:
+    def crear(self, titulo: str, descripcion: str, valuacion: int, consignatario: Consignatario) -> Articulo:
         pass
 
     @abstractmethod

@@ -1,19 +1,36 @@
 import unittest
 from ddt import ddt, data
+from model.tipo_usuario import TipoDeUsuario
+from model.usuarios import UsuariosFactory
 import tests.constantes as C
 from controller.lote import ControladorLote, ServicioLote
 from model.articulos import Articulo
 from model.subastas import Subasta
-from model.content_provider.memory import ArticulosEnMemoria, CreadorDeBasesDeDatosTemporales, SubastasEnMemoria
+from model.content_provider.memory import ArticulosEnMemoria, CreadorDeBasesDeDatosTemporales, SubastasEnMemoria, UsuariosEnMemoria
 
 
 @ddt
 class ControladorLoteTests(unittest.TestCase):
     def setUp(self):
+        
+        usuarios = UsuariosEnMemoria({
+                "Consignatario": {
+                    "id": 1,
+                    "nombre": C.NOMBRE_USUARIO,
+                    "apellido": C.APELLIDO_USUARIO,
+                    "email": C.EMAIL_USUARIO,
+                    "usuario": "Consignatario",
+                    "clave": C.CLAVE_USUARIO,
+                    "nacimiento": C.FECHA_NACIMIENTO_USUARIO,
+                    "tipo": TipoDeUsuario.Consignatario} \
+            })
+
         self.__db = CreadorDeBasesDeDatosTemporales() \
+            .con_usuarios(usuarios) \
             .con_subastas(SubastasEnMemoria([Subasta(C.SUBASTA_UID, C.TITULO_SUBASTA, C.DESCRIPCION_SUBASTA, C.IMAGEN_SUBASTA,
                                                      C.FECHA_DE_SUBASTA)])) \
-            .con_articulos(ArticulosEnMemoria([Articulo(1, C.TITULO_ARTICULO)])) \
+            .con_articulos(ArticulosEnMemoria([Articulo(1, C.TITULO_ARTICULO, C.DESCRIPCION_ARTICULO, C.VALUACION_ARTICULO,
+                                                        usuarios.buscar_usuario_por_uid(1))])) \
             .construir()
 
     @data("", None, -1, 0)
@@ -118,7 +135,8 @@ class ControladorLoteTests(unittest.TestCase):
 
     def test_avanza_al_siguiente_lote_correctamente(self):
         sut = ControladorLote(self.__db)
-        self.__db.Articulos.crear(C.TITULO_ARTICULO)
+        self.__db.Articulos.crear(C.TITULO_ARTICULO, C.DESCRIPCION_ARTICULO, C.VALUACION_ARTICULO,
+                                  self.__db.Usuarios.buscar_usuario_por_uid(1))
         sut.agregar(C.SUBASTA_UID, C.ARTICULO_UID, 100)
         sut.agregar(C.SUBASTA_UID, C.OTRO_ARTICULO_UID, 200)
         sut.obtener(C.SUBASTA_UID, 2)
@@ -157,11 +175,14 @@ class ControladorLoteTests(unittest.TestCase):
         self.assertEqual([], respuesta["items"])
 
     def test_retornar_catalogo_ordenado_cuando_subasta_tiene_lotes(self):
+        consignatario = self.__db.Usuarios.buscar_usuario_por_uid(1)
         subasta = self.__db.Subastas.crear(C.TITULO_SUBASTA, C.DESCRIPCION_SUBASTA, C.IMAGEN_SUBASTA, C.FECHA_DE_SUBASTA)
-        articulo = self.__db.Articulos.crear(C.TITULO_ARTICULO)
+        articulo = self.__db.Articulos.crear(C.TITULO_ARTICULO, C.DESCRIPCION_ARTICULO, C.VALUACION_ARTICULO,
+                                             consignatario)
         self.__db.Lotes.agregar(subasta, articulo, C.BASE_LOTE, C.OTRO_ORDEN_LOTE)
 
-        articulo = self.__db.Articulos.crear(C.OTRO_TITULO_ARTICULO)
+        articulo = self.__db.Articulos.crear(C.OTRO_TITULO_ARTICULO, C.OTRA_DESCRIPCION_ARTICULO, C.OTRA_VALUACION_ARTICULO,
+                                             consignatario)
         self.__db.Lotes.agregar(subasta, articulo, C.OTRA_BASE_LOTE, C.ORDEN_LOTE)
         sut = ControladorLote(self.__db)
         sut.listar(subasta.obtener_uid())

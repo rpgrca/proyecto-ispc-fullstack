@@ -16,11 +16,14 @@ from model.content_provider.memory import UsuariosEnMemoria, CreadorDeBasesDeDat
 @ddt
 class ControladorVentaTests(unittest.TestCase):
     def setUp(self):
-        articulo = Articulo(C.ARTICULO_UID, C.TITULO_ARTICULO)
-        lote = Lote(C.LOTE_UID, C.SUBASTA_UID, articulo, C.BASE_LOTE, C.ORDEN_LOTE)
         pujador = UsuariosFactory.crear(C.ID_USUARIO, C.NOMBRE_USUARIO, C.APELLIDO_USUARIO, C.EMAIL_USUARIO, C.NOMBRE_USUARIO,
                                         C.CLAVE_USUARIO, C.FECHA_NACIMIENTO_USUARIO, TipoDeUsuario.Pujador)
-        usuarios = UsuariosEnMemoria(self._list_to_dictionary([pujador]))
+        consignatario = UsuariosFactory.crear(C.OTRO_ID_USUARIO, C.OTRO_NOMBRE_USUARIO, C.APELLIDO_USUARIO,
+                                              C.OTRO_EMAIL_USUARIO, C.OTRO_NOMBRE_USUARIO, C.OTRA_CLAVE_USUARIO,
+                                              C.FECHA_NACIMIENTO_USUARIO, TipoDeUsuario.Consignatario)
+        usuarios = UsuariosEnMemoria(self._list_to_dictionary([pujador, consignatario]))
+        articulo = Articulo(C.ARTICULO_UID, C.TITULO_ARTICULO, C.DESCRIPCION_ARTICULO, C.VALUACION_ARTICULO, consignatario)
+        lote = Lote(C.LOTE_UID, C.SUBASTA_UID, articulo, C.BASE_LOTE, C.ORDEN_LOTE)
 
         self.__db = CreadorDeBasesDeDatosTemporales() \
             .con_usuarios(usuarios) \

@@ -15,6 +15,9 @@ class UsuariosEnMemoria(Usuarios):
         self.__usuarios = usuarios
         self.__id = len(self.__usuarios) + 1
 
+    def __getitem__(self, key):
+        return self.__usuarios[key]
+
     def agregar(self, nombre: str, apellido: str, email: str, usuario: str, clave: str, nacimiento: str,
                 tipo: TipoDeUsuario) -> None:
         self.__usuarios[usuario] = {
@@ -105,8 +108,8 @@ class ArticulosEnMemoria(Articulos):
     def __init__(self, articulos: list[Articulo]):
         self.__articulos = articulos
 
-    def crear(self, titulo: str) -> Articulo:
-        articulo = Articulo(len(self.__articulos) + 1, titulo)
+    def crear(self, titulo: str, descripcion: str, valuacion: int, consignatario: Consignatario) -> Articulo:
+        articulo = Articulo(len(self.__articulos) + 1, titulo, descripcion, valuacion, consignatario)
         self.__articulos.append(articulo)
         return articulo
 
@@ -230,7 +233,7 @@ class CreadorDeBasesDeDatosTemporales:
             }
         })
         self.__subastas = SubastasEnMemoria([Subasta(1, "Gran subasta!", "Nos vemos pronto!", "sofa.jpg", 17/10/2022)])
-        self.__articulos = ArticulosEnMemoria([Articulo(1, "Sofa Antiguo")])
+        self.__articulos = ArticulosEnMemoria([Articulo(1, "Sofa Antiguo", "Sofa de tres cuerpos, 2 metros de largo.", 13000, self.__usuarios["Estela"])])
         self.__lotes = LotesEnMemoria([])
         self.__pujas = PujasEnMemoria([])
         self.__ventas = VentasEnMemoria([])
