@@ -141,7 +141,14 @@ class ControladorArticuloTests(unittest.TestCase):
         self.assertEqual("error", respuesta["status"])
         self.assertEqual(ServicioArticulos.LISTAR_CON_CONSIGNATARIO_INEXISTENTE, respuesta["mensaje"])
 
-    def test_retornar_ok_cuando_se_cuenta(self):
+    def test_retornar_ok_cuando_se_cuenta_sin_articulos(self):
+        sut = ControladorArticulo(self.__db)
+        sut.contar()
+        respuesta = sut.obtener_respuesta()
+        self.assertEqual("ok", respuesta["status"])
+        self.assertEqual(0, respuesta["total"])
+
+    def test_retornar_ok_cuando_se_cuenta_con_articulos(self):
         sut = ControladorArticulo(self.__db)
         sut.agregar(C.TITULO_ARTICULO, C.DESCRIPCION_ARTICULO, C.VALUACION_ARTICULO, 1)
         sut.agregar(C.OTRO_TITULO_ARTICULO, C.OTRA_DESCRIPCION_ARTICULO, C.OTRA_VALUACION_ARTICULO, 1)
@@ -149,6 +156,16 @@ class ControladorArticuloTests(unittest.TestCase):
         respuesta = sut.obtener_respuesta()
         self.assertEqual("ok", respuesta["status"])
         self.assertEqual(2, respuesta["total"])
+
+    def test_retornar_error_cuando_hay_error_interno_al_contar(self):
+        db = CreadorDeBasesDeDatosTemporales() \
+            .con_articulos(None) \
+            .construir()
+        sut = ControladorArticulo(db)
+        sut.contar()
+        respuesta = sut.obtener_respuesta()
+        self.assertEqual("error", respuesta["status"])
+        self.assertNotEqual("", respuesta["mensaje"])
 
 
 if __name__ == "__main__":
