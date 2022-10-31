@@ -115,9 +115,12 @@ class MysqlDatabase:
                 else:
                     raise ValueError(err)
 
+    def obtener_cursor(self):
+        return self.__connection.cursor(buffered=True)
+
     def contar(self, sql: str, valores=()) -> int:
         try:
-            cursor = self.__connection.cursor()
+            cursor = self.obtener_cursor()
             cursor.execute(sql, valores)
             self.__connection.commit()
             record = cursor.fetchone()
@@ -128,7 +131,7 @@ class MysqlDatabase:
 
     def obtener_uno(self, sql: str, valores=(), creator=lambda r: None):
         try:
-            cursor = self.__connection.cursor()
+            cursor = self.obtener_cursor()
             cursor.execute(sql, valores)
             self.__connection.commit()
             record = cursor.fetchone()
@@ -140,7 +143,7 @@ class MysqlDatabase:
     def obtener_muchos(self, sql: str, valores=(), creador=lambda r: None):
         try:
             resultado = []
-            cursor = self.__connection.cursor()
+            cursor = self.obtener_cursor()
             cursor.execute(sql, valores)
             self.__connection.commit()
             records = cursor.fetchall()
@@ -153,7 +156,7 @@ class MysqlDatabase:
 
     def insertar(self, sql: str, valores=(), creator=lambda i, v: None) -> Any:
         try:
-            cursor = self.__connection.cursor()
+            cursor = self.obtener_cursor()
             cursor.execute(sql, valores)
             self.__connection.commit()
             return creator(cursor.lastrowid, valores)
@@ -162,7 +165,7 @@ class MysqlDatabase:
 
     def actualizar(self, sql: str, valores=()) -> None:
         try:
-            cursor = self.__connection.cursor()
+            cursor = self.obtener_cursor()
             cursor.execute(sql, valores)
             self.__connection.commit()
         except Exception as err:
