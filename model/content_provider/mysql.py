@@ -57,7 +57,7 @@ class MysqlDatabase:
                     cursor.execute("CREATE TABLE IF NOT EXISTS Articulos ("
                                    "id INT NOT NULL UNIQUE AUTO_INCREMENT PRIMARY KEY,"
                                    "titulo varchar(50) NOT NULL,"
-                                   "description VARCHAR(512) NOT NULL,"
+                                   "descripcion VARCHAR(512) NOT NULL,"
                                    "valuacion int not null,"
                                    "id_consignatario int not null,"
                                    "CONSTRAINT fk_id_consignatario FOREIGN KEY(id_consignatario) REFERENCES Usuarios(id)"
@@ -192,9 +192,9 @@ class TablaSubastas(Subastas):
 
 
 class TablaArticulos(Articulos):
-    CREAR_ARTICULO = "INSERT INTO Articulos(titulo, descripcion, valuacion, consignatario_id) VALUES (%s,%s,%s,%s)"
-    BUSCAR_ARTICULO = "SELECT id, titulo, descripcion, valuacion, consignatario_id FROM Articulos WHERE id = %s"
-    BUSCAR_POR_CONSIGNATARIO = "SELECT id FROM Articulos WHERE consignatario_id = %s"
+    CREAR_ARTICULO = "INSERT INTO Articulos(titulo, descripcion, valuacion, id_consignatario) VALUES (%s,%s,%s,%s)"
+    BUSCAR_ARTICULO = "SELECT id, titulo, descripcion, valuacion, id_consignatario FROM Articulos WHERE id = %s"
+    BUSCAR_POR_CONSIGNATARIO = "SELECT id FROM Articulos WHERE id_consignatario = %s"
     CONTAR_ARTICULOS = "SELECT COUNT(id) FROM Articulos"
 
     def __init__(self, db: MysqlDatabase):
