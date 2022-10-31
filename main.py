@@ -49,12 +49,12 @@ def registrar(nombre: str = Form(), apellido: str = Form(), email: str = Form(),
 
 @app.post("/reestablecer/", status_code=status.HTTP_200_OK)
 def reestablecer(email: str = Form(), response: Response = Response()):
-    controlador = ControladorLogin(db, email)
+    controlador = ControladorLogin(db)
     controlador.recordar(email)
     return __cambiar_status_code(controlador.obtener_respuesta(), response)
 
 
-@app.post("/crear_subasta/", status_code=status.HTTP_200_OK)
+@app.post("/subasta/", status_code=status.HTTP_200_OK)
 def crear_subasta(titulo: str = Form(), descripcion: str = Form(), imagen: str = Form(), fecha: date = Form(),
                   response: Response = Response()):
     controlador = ControladorSubasta(db)

@@ -219,12 +219,12 @@ class TablaUsuarios(Usuarios):
     EXISTE_USUARIO_CON_MAIL_SQL = "SELECT COUNT(id) FROM Usuarios WHERE email LIKE %s"
     OBTENER_USUARIO = "SELECT id, nombre, apellido, email, usuario, clave, nacimiento, tipo_usuario FROM Usuarios " \
                       "WHERE usuario = %s AND clave = %s"
-    OBTENER_USUARIO_LOGIN = "SELECT id, nombre, apellido, email, usuario, clave, nacimiento, tipo_usuario FROM Usuarios " \
-                            "WHERE usuario = %s"
+    OBTENER_USUARIO_POR_EMAIL = "SELECT id, nombre, apellido, email, usuario, clave, nacimiento, tipo_usuario " \
+                                "FROM Usuarios WHERE email LIKE %s"
     CREAR_USUARIO = "INSERT INTO Usuarios(nombre, apellido, email, usuario, clave, nacimiento, tipo_usuario) " \
                     "VALUES(%s,%s,%s,%s,%s,%s,%s)"
-    BUSCAR_USUARIO_POR_ID_Y_TIPO = "SELECT id, nombre, apellido, email, usuario, clave, nacimiento, tipo_usuario FROM Usuarios " \
-                                   "WHERE id = %s AND tipo_usuario = %s"
+    BUSCAR_USUARIO_POR_ID_Y_TIPO = "SELECT id, nombre, apellido, email, usuario, clave, nacimiento, tipo_usuario " \
+                                   "FROM Usuarios WHERE id = %s AND tipo_usuario = %s"
     BUSCAR_USUARIO_POR_ID = "SELECT id, nombre, apellido, email, usuario, clave, nacimiento, tipo_usuario FROM Usuarios " \
                             "WHERE id = %s"
     BUSCAR_MARTILLERO = "SELECT id, nombre, apellido, email, usuario, clave, nacimiento, tipo_usuario FROM Usuarios " \
@@ -246,7 +246,7 @@ class TablaUsuarios(Usuarios):
                                      lambda r: UsuariosFactory.crear(r[0], r[1], r[2], r[3], r[4], r[1], r[6], r[7]))
 
     def buscar_por_email(self, email: str) -> Usuario:
-        return self.__db.obtener_uno(self.OBTENER_USUARIO_LOGIN, (email,),
+        return self.__db.obtener_uno(self.OBTENER_USUARIO_POR_EMAIL, (email,),
                                      lambda r: UsuariosFactory.crear(r[0], r[1], r[2], r[3], r[4], r[5], r[6], r[7]))
 
     def existe_con_mail(self, email: str) -> bool:
