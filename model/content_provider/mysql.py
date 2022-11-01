@@ -400,7 +400,7 @@ class TablaVentas(LibroDiario):
 
     def crear(self, puja: Puja, precio_final: float, comision: float, pago_a_consignatario: float) -> Venta:
         return self.__db.insertar(self.CREAR_VENTA, (puja.obtener_lote_uid(), precio_final, comision, pago_a_consignatario),
-                                  lambda r: Venta(r[0], r[1], r[2], r[3]))
+                                  lambda i, r: Venta(i, r[0], r[1], r[2], r[3]))
 
     def buscar_por_uid(self, uid: int) -> Venta:
         return self.__db.obtener_uno(self.BUSCAR_VENTA_CON_DATOS, (uid,), lambda r: Venta(r[0], Puja(r[1], r[2], r[3], r[4]),

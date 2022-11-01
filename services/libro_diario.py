@@ -27,7 +27,7 @@ class ServicioLibroDiario(Servicio):
         puja = self.__db.Pujas.buscar_por_uid(puja_uid)
         self._throw_if_invalid(puja, self.PUJA_INEXISTENTE)
 
-        self._agregar(puja)
+        self._vender_a(puja)
 
     def listar_compras_de(self, pujador_uid: int) -> list[Venta]:
         self._throw_if_not_positive(pujador_uid, self.PUJADOR_INVALIDO)
@@ -47,11 +47,11 @@ class ServicioLibroDiario(Servicio):
         if not puja:
             return None
 
-        return self._agregar(puja)
+        return self._vender_a(puja)
 
-    def _agregar(self, puja: Puja) -> Venta:
+    def _vender_a(self, puja: Puja) -> Venta:
         comision = round(puja.obtener_monto() * self.COMISION_POR_VENTA, 2)
         precio_final = round((puja.obtener_monto() + comision) * self.PRECIO_FINAL_MAS_IMPUESTOS, 2)
         pago_consignatario = round(puja.obtener_monto() * self.COMISION_A_CONSIGNATARIO, 2)
 
-        return self.__db.Ventas.crear(puja, comision, precio_final, pago_consignatario)
+        return self.__db.Ventas.crear(puja, precio_final, comision, pago_consignatario)
