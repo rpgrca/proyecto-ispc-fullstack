@@ -65,8 +65,8 @@ class ControladorLibroDiarioTests(unittest.TestCase):
         self.assertEqual(1, venta.obtener_uid())
         self.assertEqual(C.TITULO_ARTICULO, venta.obtener_nombre_lote())
         self.assertEqual(485, venta.obtener_pago_a_consignatario())
-        self.assertEqual(50, venta.obtener_precio_final())
-        self.assertEqual(616, venta.obtener_comision())
+        self.assertEqual(616, venta.obtener_precio_final())
+        self.assertEqual(50, venta.obtener_comision())
 
     @data(None, "", -1, 0)
     def test_retornar_error_con_puja_invalida(self, puja_invalida):
@@ -111,7 +111,7 @@ class ControladorLibroDiarioTests(unittest.TestCase):
         sut.listar_compras_de(C.ID_USUARIO)
         respuesta = sut.obtener_respuesta()
         self.assertEqual("ok", respuesta["status"])
-        self.assertEqual([{"id": 1, "titulo": "Sofa Antiguo", "ganador": "Roberto", "precio": 50.0, "comision": 616.0,
+        self.assertEqual([{"id": 1, "titulo": "Sofa Antiguo", "ganador": "Roberto", "precio": 616.0, "comision": 50.0,
                            "pago consignatario": 485.0}], respuesta["items"])
 
     @data(None, "", -1)
@@ -148,7 +148,7 @@ class ControladorLibroDiarioTests(unittest.TestCase):
         sut.registrar_venta_en(C.LOTE_UID)
         respuesta = sut.obtener_respuesta()
         self.assertEqual("ok", respuesta["status"])
-        self.assertEqual(50, respuesta["precio_final"])
+        self.assertEqual(616, respuesta["precio_final"])
 
 
 if __name__ == "__main__":
