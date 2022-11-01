@@ -307,11 +307,10 @@ class TablaLotes(Lotes):
                a.descripcion, valuacion, id_consignatario, nombre, apellido, email, usuario, clave, nacimiento,
                tipo_usuario, precio_base, orden
           FROM Lotes, Articulos a, Usuarios, Subastas s
-         WHERE id_subasta = %s
-           AND id_subasta = s.id
-           AND orden = %s
+         WHERE Lotes.id = %s
+           AND s.id = id_subasta
            AND Usuarios.id = id_consignatario
-           AND Articulos.id = id_articulo"""
+           AND id_articulo = a.id"""
 
     def __init__(self, db: MysqlDatabase):
         self.__db = db

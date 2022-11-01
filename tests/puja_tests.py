@@ -106,6 +106,13 @@ class ControladorPujaTests(unittest.TestCase):
         self.assertEqual("error", respuesta["status"])
         self.assertEqual(ServicioPuja.PUJA_BAJA, respuesta["mensaje"])
 
+    def test_retornar_error_al_pujar_por_menos_de_la_base(self):
+        sut = ControladorPuja(self.__db)
+        sut.agregar(C.LOTE_UID, C.ID_USUARIO, 50)
+        respuesta = sut.obtener_respuesta()
+        self.assertEqual("error", respuesta["status"])
+        self.assertEqual(ServicioPuja.PUJA_MENOR_QUE_BASE, respuesta["mensaje"])
+
     def test_agregar_puja_correctamente(self):
         sut = ControladorPuja(self.__db)
         sut.agregar(C.LOTE_UID, C.ID_USUARIO, C.MONTO_PUJA)

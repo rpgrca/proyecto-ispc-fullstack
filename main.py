@@ -11,6 +11,7 @@ from controller.subasta import ControladorSubasta
 from controller.lote import ControladorLote
 from controller.login import ControladorLogin
 from controller.usuario import ControladorUsuario
+from controller.puja import ControladorPuja
 
 app = FastAPI()
 origins = ["*"]
@@ -120,6 +121,12 @@ def obtener_lote(subasta_uid: int, orden: int, response: Response = Response()):
     controlador = ControladorLote(db)
     controlador.obtener(subasta_uid, orden)
     return __cambiar_status_code(controlador.obtener_respuesta(), response, status.HTTP_404_NOT_FOUND)
+
+@app.post("/pujas", status_code=status.HTTP_200_OK)
+def pujar(lote_uid: int = Form(), pujador_uid: int = Form(), monto: int = Form(), response: Response = Response()):
+    controlador = ControladorPuja(db)
+    controlador.agregar(lote_uid, pujador_uid, monto)
+    return __cambiar_status_code(controlador.obtener_respuesta(), response)
 
 
 if __name__ == "__main__":
