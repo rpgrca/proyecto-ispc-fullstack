@@ -7,7 +7,7 @@ from model.subastas import Subastas, Subasta
 from model.articulos import Articulos
 from model.pujas import Puja, Pujas
 from model.lotes import Lote, Lotes
-from model.ventas import Venta, Ventas
+from model.libro_diario import Venta, LibroDiario
 
 
 class UsuariosEnMemoria(Usuarios):
@@ -164,12 +164,14 @@ class LotesEnMemoria(Lotes):
                       key=lambda x: x.obtener_orden())
 
 
-class VentasEnMemoria(Ventas):
+class LibroDiarioEnMemoria(LibroDiario):
     def __init__(self, ventas: list[Venta]):
         self.__ventas = ventas
 
     def crear(self, puja: Puja, precio_final: float, comision: float, pago_a_consignatario: float) -> Venta:
-        self.__ventas.append(Venta(len(self.__ventas) + 1, puja, precio_final, comision, pago_a_consignatario))
+        venta = Venta(len(self.__ventas) + 1, puja, precio_final, comision, pago_a_consignatario)
+        self.__ventas.append(venta)
+        return venta
 
     def buscar_por_uid(self, uid: int) -> Venta:
         return next(filter(lambda v: v.obtener_uid() == uid, self.__ventas), None)
@@ -237,7 +239,7 @@ class CreadorDeBasesDeDatosTemporales:
                                               self.__usuarios["Estela"])])
         self.__lotes = LotesEnMemoria([])
         self.__pujas = PujasEnMemoria([])
-        self.__ventas = VentasEnMemoria([])
+        self.__ventas = LibroDiarioEnMemoria([])
 
     def con_usuarios(self, usuarios: Usuarios):
         self.__usuarios = usuarios
@@ -259,7 +261,7 @@ class CreadorDeBasesDeDatosTemporales:
         self.__pujas = pujas
         return self
 
-    def con_ventas(self, ventas: Ventas):
+    def con_ventas(self, ventas: LibroDiario):
         self.__ventas = ventas
         return self
 

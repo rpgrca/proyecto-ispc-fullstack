@@ -9,7 +9,7 @@ from model.tipo_usuario import TipoDeUsuario
 from model.usuarios import Consignatario, Martillero, Pujador, Usuario, Usuarios, UsuariosFactory
 from model.subastas import Subasta, Subastas
 from model.articulos import Articulo, Articulos
-from model.ventas import Venta, Ventas
+from model.libro_diario import Venta, LibroDiario
 
 
 class MysqlDatabase:
@@ -342,12 +342,13 @@ class TablaLotes(Lotes):
 
 class TablaPujas(Pujas):
     CREAR_PUJA = "INSERT INTO Pujas(id_pujador, id_lote, monto) VALUES (%s,%s,%s)"
-    BUSCAR_PUJA = "SELECT id, pujador_id, lote_id, monto FROM Pujas WHERE id = %s"
+    BUSCAR_PUJA = "SELECT id, id_pujador, id_lote, monto FROM Pujas WHERE id = %s"
     BUSCAR_POR_LOTE = """
         SELECT Pujas.id, id_pujador, nombre, apellido, email, usuario, clave, nacimiento, tipo_usuario, monto
           FROM Pujas, Usuarios
          WHERE id_lote = %s
-           AND id_pujador = Usuarios.id"""
+           AND id_pujador = Usuarios.id
+      ORDER BY Pujas.id ASC"""
     BUSCAR_ULTIMA_PUJA = """
         SELECT Pujas.id, id_pujador, nombre, apellido, email, usuario, clave, nacimiento, tipo_usuario, monto
           FROM Pujas, Usuarios
@@ -377,17 +378,17 @@ class TablaPujas(Pujas):
                                                                                    r[8]), lote, r[9]))
 
 
-class TablaVentas(Ventas):
+class TablaVentas(LibroDiario):
     CREAR_VENTA = "INSERT INTO Ventas(id_puja, precio_final, comision, pago_consignatario) VALUES (%s,%s,%s,%s)"
     BUSCAR_VENTA_CON_DATOS = """
-            SELECT v.id, p.id, p.pujador_id, u.nombre, u.apellido, u.email, u.usuario, u.clave,
+            SELECT v.id, p.id, p.id_pujador, u.nombre, u.apellido, u.email, u.usuario, u.clave,
                    u.nacimiento, u.tipo_usuario, v.precio_final, v.comision, v.pago_consignatario
               FROM Ventas v
         INNER JOIN Pujas p on p.id = id_puja
         INNER JOIN Usuarios u on u.id = p.id_pujador
              WHERE v.id = %s"""
     LISTAR_COMPRAS = """
-            SELECT v.id, p.id, p.pujador_id, u.nombre, u.apellido, u.email, u.usuario, u.clave,
+            SELECT v.id, p.id, p.id_pujador, u.nombre, u.apellido, u.email, u.usuario, u.clave,
                    u.nacimiento, u.tipo_usuario, v.precio_final, v.comision, v.pago_consignatario
               FROM Usuarios u
         INNER JOIN Pujas p ON u.id = p.id_pujador

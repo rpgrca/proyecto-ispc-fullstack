@@ -1,6 +1,8 @@
+from services.libro_diario import ServicioLibroDiario
 from .servicio import Servicio
 from model.database import BaseDeDatos
 from model.lotes import Lote
+from model.libro_diario import Venta
 
 
 class ServicioLote(Servicio):
