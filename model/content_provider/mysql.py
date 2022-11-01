@@ -218,18 +218,29 @@ class TablaArticulos(Articulos):
 class TablaUsuarios(Usuarios):
     EXISTE_USUARIO_SQL = "SELECT COUNT(id) FROM Usuarios WHERE usuario LIKE %s"
     EXISTE_USUARIO_CON_MAIL_SQL = "SELECT COUNT(id) FROM Usuarios WHERE email LIKE %s"
-    OBTENER_USUARIO = "SELECT id, nombre, apellido, email, usuario, clave, nacimiento, tipo_usuario FROM Usuarios " \
-                      "WHERE usuario = %s AND clave = %s"
-    OBTENER_USUARIO_POR_EMAIL = "SELECT id, nombre, apellido, email, usuario, clave, nacimiento, tipo_usuario " \
-                                "FROM Usuarios WHERE email LIKE %s"
-    CREAR_USUARIO = "INSERT INTO Usuarios(nombre, apellido, email, usuario, clave, nacimiento, tipo_usuario) " \
-                    "VALUES(%s,%s,%s,%s,%s,%s,%s)"
-    BUSCAR_USUARIO_POR_ID_Y_TIPO = "SELECT id, nombre, apellido, email, usuario, clave, nacimiento, tipo_usuario " \
-                                   "FROM Usuarios WHERE id = %s AND tipo_usuario = %s"
-    BUSCAR_USUARIO_POR_ID = "SELECT id, nombre, apellido, email, usuario, clave, nacimiento, tipo_usuario FROM Usuarios " \
-                            "WHERE id = %s"
-    BUSCAR_MARTILLERO = "SELECT id, nombre, apellido, email, usuario, clave, nacimiento, tipo_usuario FROM Usuarios " \
-                        "WHERE tipo_usuario = 1"
+    OBTENER_USUARIO = """
+        SELECT id, nombre, apellido, email, usuario, clave, nacimiento, tipo_usuario
+          FROM Usuarios
+         WHERE usuario = %s AND clave = %s"""
+    OBTENER_USUARIO_POR_EMAIL = """
+        SELECT id, nombre, apellido, email, usuario, clave, nacimiento, tipo_usuario
+          FROM Usuarios
+         WHERE email LIKE %s"""
+    CREAR_USUARIO = """
+        INSERT INTO Usuarios(nombre, apellido, email, usuario, clave, nacimiento, tipo_usuario)
+             VALUES(%s,%s,%s,%s,%s,%s,%s)"""
+    BUSCAR_USUARIO_POR_ID_Y_TIPO = """
+        SELECT id, nombre, apellido, email, usuario, clave, nacimiento, tipo_usuario
+          FROM Usuarios
+         WHERE id = %s AND tipo_usuario = %s"""
+    BUSCAR_USUARIO_POR_ID = """
+        SELECT id, nombre, apellido, email, usuario, clave, nacimiento, tipo_usuario
+          FROM Usuarios
+         WHERE id = %s"""
+    BUSCAR_MARTILLERO = """
+        SELECT id, nombre, apellido, email, usuario, clave, nacimiento, tipo_usuario
+          FROM Usuarios
+         WHERE tipo_usuario = 1"""
     ACTUALIZAR_USUARIO = "UPDATE Usuarios SET usuario = %s, email = %s, clave = %s WHERE id = %s"
 
     def __init__(self, db: MysqlDatabase):
@@ -276,16 +287,31 @@ class TablaUsuarios(Usuarios):
 class TablaLotes(Lotes):
     CONTAR_LOTES_POR_SUBASTA = "SELECT COUNT(id) FROM Lotes WHERE id_subasta = %s"
     CREAR_LOTE = "INSERT INTO Lotes(id_subasta, id_articulo, precio_base, orden) VALUES(%s,%s,%s,%s)"
-    LOTES_POR_SUBASTA = "SELECT Lotes.id, id_articulo, titulo, descripcion, valuacion, id_consignatario, nombre, apellido, " \
-                        "email, usuario, clave, nacimiento, tipo_usuario, precio_base, orden FROM Lotes, Articulos, " \
-                        "Usuarios WHERE id_subasta = %s AND Usuarios.id = id_consignatario AND Articulos.id = id_articulo"
-    LOTE_DE_SUBASTA = "SELECT Lotes.id, id_articulo, titulo, descripcion, valuacion, id_consignatario, nombre, apellido, " \
-                      "email, usuario, clave, nacimiento, tipo_usuario, precio_base, orden FROM Lotes, Articulos, Usuarios " \
-                      "WHERE id_subasta = %s AND orden = %s AND Usuarios.id = id_consignatario AND Articulos.id = id_articulo"
-    BUSCAR_LOTE = "SELECT Lotes.id, id_subasta, s.titulo, s.descripcion, s.imagen, s.fecha, id_articulo, a.titulo, " \
-                  "a.descripcion, valuacion, id_consignatario, nombre, apellido, email, usuario, clave, nacimiento, " \
-                  "tipo_usuario, precio_base, orden FROM Lotes, Articulos a, Usuarios, Subastas s WHERE id_subasta = %s " \
-                  "AND id_subasta = s.id AND orden = %s AND Usuarios.id = id_consignatario AND Articulos.id = id_articulo"
+    LOTES_POR_SUBASTA = """
+        SELECT Lotes.id, id_articulo, titulo, descripcion, valuacion, id_consignatario, nombre, apellido,
+               email, usuario, clave, nacimiento, tipo_usuario, precio_base, orden
+          FROM Lotes, Articulos, Usuarios
+         WHERE id_subasta = %s
+           AND Usuarios.id = id_consignatario
+           AND Articulos.id = id_articulo"""
+    LOTE_DE_SUBASTA = """
+        SELECT Lotes.id, id_articulo, titulo, descripcion, valuacion, id_consignatario, nombre, apellido,
+               email, usuario, clave, nacimiento, tipo_usuario, precio_base, orden
+          FROM Lotes, Articulos, Usuarios
+         WHERE id_subasta = %s
+           AND orden = %s
+           AND Usuarios.id = id_consignatario
+           AND Articulos.id = id_articulo"""
+    BUSCAR_LOTE = """
+        SELECT Lotes.id, id_subasta, s.titulo, s.descripcion, s.imagen, s.fecha, id_articulo, a.titulo,
+               a.descripcion, valuacion, id_consignatario, nombre, apellido, email, usuario, clave, nacimiento,
+               tipo_usuario, precio_base, orden
+          FROM Lotes, Articulos a, Usuarios, Subastas s
+         WHERE id_subasta = %s
+           AND id_subasta = s.id
+           AND orden = %s
+           AND Usuarios.id = id_consignatario
+           AND Articulos.id = id_articulo"""
 
     def __init__(self, db: MysqlDatabase):
         self.__db = db
@@ -316,8 +342,21 @@ class TablaLotes(Lotes):
 
 
 class TablaPujas(Pujas):
-    CREAR_PUJA = "INSERT INTO Pujas(pujador_id, lote_id, monto) VALUES (%s,%s,%s)"
+    CREAR_PUJA = "INSERT INTO Pujas(id_pujador, id_lote, monto) VALUES (%s,%s,%s)"
     BUSCAR_PUJA = "SELECT id, pujador_id, lote_id, monto FROM Pujas WHERE id = %s"
+    BUSCAR_POR_LOTE = """
+        SELECT Pujas.id, id_pujador, nombre, apellido, email, usuario, clave, nacimiento, tipo_usuario, monto
+          FROM Pujas, Usuarios
+         WHERE id_lote = %s
+           AND id_pujador = Usuarios.id"""
+    BUSCAR_ULTIMA_PUJA = """
+        SELECT Pujas.id, id_pujador, nombre, apellido, email, usuario, clave, nacimiento, tipo_usuario, monto
+          FROM Pujas, Usuarios
+         WHERE id_lote = %s
+           AND id_pujador = Usuarios.id
+      ORDER BY Pujas.id DESC
+         LIMIT 1
+    """
 
     def __init__(self, db: MysqlDatabase):
         self.__db = db
@@ -326,29 +365,35 @@ class TablaPujas(Pujas):
         self.__db.insertar(self.CREAR_PUJA, (pujador.obtener_uid(), lote.obtener_uid(), monto))
 
     def buscar_ultima_puja(self, lote: Lote) -> Puja:
-        pass
+        return self.__db.obtener_uno(self.BUSCAR_ULTIMA_PUJA, (lote.obtener_uid(),),
+                                     lambda r: Puja(r[0], UsuariosFactory.crear(r[1], r[2], r[3], r[4], r[5], r[6], r[7],
+                                                                                r[8]), lote, r[9]))
 
     def buscar_por_uid(self, uid: int) -> Puja:
         return self.__db.obtener_uno(self.BUSCAR_PUJA, (uid,), lambda r: Puja(r[0], r[1], Pujador(r[2]), Lote(r[3])))
 
     def buscar_por_lote(self, lote: Lote) -> list[Puja]:
-        pass
+        return self.__db.obtener_muchos(self.BUSCAR_POR_LOTE, (lote.obtener_uid(),),
+                                        lambda r: Puja(r[0], UsuariosFactory.crear(r[1], r[2], r[3], r[4], r[5], r[6], r[7],
+                                                                                   r[8]), lote, r[9]))
 
 
 class TablaVentas(Ventas):
     CREAR_VENTA = "INSERT INTO Ventas(id_puja, precio_final, comision, pago_consignatario) VALUES (%s,%s,%s,%s)"
-    BUSCAR_VENTA_CON_DATOS = "SELECT v.id, p.id, p.pujador_id, u.nombre, u.apellido, u.email, u.usuario, u.clave, " \
-                             "u.nacimiento, u.tipo_usuario, v.precio_final, v.comision, v.pago_consignatario " \
-                             "FROM Ventas v " \
-                             "INNER JOIN Pujas p on p.id = id_puja " \
-                             "INNER JOIN Usuarios u on u.id = p.id_pujador " \
-                             "WHERE v.id = %s"
-    LISTAR_COMPRAS = "SELECT v.id, p.id, p.pujador_id, u.nombre, u.apellido, u.email, u.usuario, u.clave, " \
-                     "u.nacimiento, u.tipo_usuario, v.precio_final, v.comision, v.pago_consignatario " \
-                     "FROM Usuarios u " \
-                     "INNER JOIN Pujas p ON u.id = p.id_pujador " \
-                     "INNER JOIN Ventas v ON p.id = v.id_puja " \
-                     "WHERE u.id = %s"
+    BUSCAR_VENTA_CON_DATOS = """
+            SELECT v.id, p.id, p.pujador_id, u.nombre, u.apellido, u.email, u.usuario, u.clave,
+                   u.nacimiento, u.tipo_usuario, v.precio_final, v.comision, v.pago_consignatario
+              FROM Ventas v
+        INNER JOIN Pujas p on p.id = id_puja
+        INNER JOIN Usuarios u on u.id = p.id_pujador
+             WHERE v.id = %s"""
+    LISTAR_COMPRAS = """
+            SELECT v.id, p.id, p.pujador_id, u.nombre, u.apellido, u.email, u.usuario, u.clave,
+                   u.nacimiento, u.tipo_usuario, v.precio_final, v.comision, v.pago_consignatario
+              FROM Usuarios u
+        INNER JOIN Pujas p ON u.id = p.id_pujador
+        INNER JOIN Ventas v ON p.id = v.id_puja
+             WHERE u.id = %s"""
 
     def __init__(self, db: MysqlDatabase):
         self.__db = db
