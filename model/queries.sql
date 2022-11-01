@@ -57,3 +57,29 @@ order by Fecha  desc limit 1;
 -- LOGIN: Traer todos los usuarios según nombre de usuario y clave dados
 SELECT * FROM Usuarios
 WHERE usuario = %s AND clave = %s;
+
+-- Contar cantidad de usuarios con nombre
+select count(u.NOMBRE) as cantidad
+from USUARIOS u
+where u.NOMBRE is not null;
+
+-- insertar usuario
+INSERT INTO usuarios (nombre, apellido, email, usuario, clave, nacimineto, tipo_usuario) 
+            VALUES ('Juan Pablo','Garcia','jpg@gmail.com','juan22','12_jpg_h21','10-10-2000',1 );
+
+-- contar usuarios con email
+select count(u.NOMBRE) as cantidad
+from USUARIOS u
+where u.EMAIL is not null
+
+-- articulos sin ventas
+select a.*
+from articulos a
+where a.id not in (select l.id_articulo from lotes l group by 1)
+
+-- lotes por una subasta especifica
+select l.*
+from lotes l
+where l.id_subasta=%s
+
+ 
