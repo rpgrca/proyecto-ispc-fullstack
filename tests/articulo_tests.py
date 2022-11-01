@@ -78,12 +78,10 @@ class ControladorArticuloTests(unittest.TestCase):
         sut.agregar(C.TITULO_ARTICULO, C.DESCRIPCION_ARTICULO, C.VALUACION_ARTICULO, 1)
         articulo = self.__db.Articulos.buscar_por_uid(1)
         self.assertEqual(1, articulo.obtener_uid())
-
-# TODO: cuando se complete articulo
-# self.assertEqual(C.TITULO_ARTICULO, articulo.obtener_titulo())
-# self.assertEqual(C.DESCRIPCION_ARTICULO, articulo.obtener_descripcion())
-# self.assertEqual(C.VALUACION_ARTICULO, articulo.obtener_valuacion())
-# self.assertEqual(1, articulo.obtener_consignatario_uid())
+        self.assertEqual(C.TITULO_ARTICULO, articulo.obtener_titulo())
+#        self.assertEqual(C.DESCRIPCION_ARTICULO, articulo.obtener_descripcion())
+#        self.assertEqual(C.VALUACION_ARTICULO, articulo.obtener_valuacion())
+        self.assertEqual(1, articulo.obtener_consignatario_uid())
 
     def test_retornar_articulo_al_buscar_articulo_creado(self):
         sut = ControladorArticulo(self.__db)
@@ -91,7 +89,8 @@ class ControladorArticuloTests(unittest.TestCase):
         sut.buscar_por_uid(1)
         respuesta = sut.obtener_respuesta()
         self.assertEqual("ok", respuesta["status"])
-        self.assertEqual({"consignatario_id": 1, "id": 1, "titulo": "Sofa Antiguo"}, respuesta["item"])
+        self.assertEqual({"consignatario_id": 1, "id": 1, "titulo": "Sofa Antiguo",
+                          "descripcion": "Un sofa de principios de siglo.", "valuacion": 15000}, respuesta["item"])
 
     @data(None, "", -1, 0)
     def test_retornar_error_al_buscar_articulo_invalido(self, uid_invalido):
@@ -116,8 +115,10 @@ class ControladorArticuloTests(unittest.TestCase):
         respuesta = sut.obtener_respuesta()
         self.assertEqual("ok", respuesta["status"])
         self.assertEqual(2, len(respuesta["items"]))
-        self.assertIn({"id": 1, "consignatario_id": 1, "titulo": "Sofa Antiguo"}, respuesta["items"])
-        self.assertIn({"id": 2, "consignatario_id": 1, "titulo": "Reloj de Arena"}, respuesta["items"])
+        self.assertIn({"id": 1, "consignatario_id": 1, "titulo": "Sofa Antiguo", "descripcion": "Un sofa de principios de siglo.",
+                       "valuacion": 15000}, respuesta["items"])
+        self.assertIn({"id": 2, "consignatario_id": 1, "titulo": "Reloj de Arena", "descripcion": "Un reloj de arena que atrasa.",
+                       "valuacion": 3000}, respuesta["items"])
 
     def test_retonar_vacio_al_buscar_por_consignatario_existente_sin_articulos(self):
         sut = ControladorArticulo(self.__db)

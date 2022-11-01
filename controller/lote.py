@@ -10,9 +10,9 @@ class ControladorLote(Controlador):
         super().__init__()
         self.__db = db
 
-    def agregar(self, subasta_uid: int, articulo_uid: str, base: int):
+    def agregar(self, subasta_uid: int, articulo_uid: str, base: int, orden: int):
         try:
-            ServicioLote(self.__db).agregar(subasta_uid, articulo_uid, base)
+            ServicioLote(self.__db).agregar(subasta_uid, articulo_uid, base, orden)
             self._responder_bien_con(self.LOTE_AGREGADO)
         except Exception as err:
             self._responder_mal_con(str(err))

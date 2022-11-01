@@ -3,14 +3,14 @@ from datetime import date
 from fastapi import FastAPI, Form, Response
 from fastapi.middleware.cors import CORSMiddleware
 from starlette import status
-from controller.articulo import ControladorArticulo
+from model.tipo_usuario import TipoDeUsuario
+from model.content_provider.mysql import CreadorDeBasesDeDatosMySql
 from model.content_provider.memory import CreadorDeBasesDeDatosTemporales
+from controller.articulo import ControladorArticulo
 from controller.subasta import ControladorSubasta
 from controller.lote import ControladorLote
 from controller.login import ControladorLogin
 from controller.usuario import ControladorUsuario
-from model.content_provider.mysql import CreadorDeBasesDeDatosMySql
-from model.tipo_usuario import TipoDeUsuario
 
 app = FastAPI()
 origins = ["*"]
@@ -22,8 +22,8 @@ app.add_middleware(
     allow_headers=["*"]
 )
 
-#db = CreadorDeBasesDeDatosMySql(["localhost", "root", "gTp8xT2!", "bidon_subastas"]).construir()
-db = CreadorDeBasesDeDatosTemporales().construir()
+db = CreadorDeBasesDeDatosMySql(["localhost", "root", "gTp8xT2!", "bidon_subastas"]).construir()
+#db = CreadorDeBasesDeDatosTemporales().construir()
 
 
 def __cambiar_status_code(respuesta: dict[str, str], response: Response, status_code=status.HTTP_401_UNAUTHORIZED):
@@ -71,6 +71,20 @@ def crear_articulo(titulo: str = Form(), descripcion: str = Form(), valuacion: i
     return __cambiar_status_code(controlador.obtener_respuesta(), response)
 
 
+@app.get("/articulos/contar", status_code=status.HTTP_200_OK)
+def contar_articulos(response: Response = Response()):
+    controlador = ControladorArticulo(db)
+    controlador.contar()
+    return __cambiar_status_code(controlador.obtener_respuesta(), response)
+
+
+@app.get("/articulos/listar/{consignatario_uid}", status_code=status.HTTP_200_OK)
+def listar_articulos(consignatario_uid: int, response: Response = Response()):
+    controlador = ControladorArticulo(db)
+    controlador.listar_articulos_propiedad_de(consignatario_uid)
+    return __cambiar_status_code(controlador.obtener_respuesta(), response)
+
+
 @app.post("/subastas/", status_code=status.HTTP_200_OK)
 def crear_subasta(titulo: str = Form(), descripcion: str = Form(), imagen: str = Form(), fecha: date = Form(),
                   response: Response = Response()):
@@ -80,30 +94,31 @@ def crear_subasta(titulo: str = Form(), descripcion: str = Form(), imagen: str =
 
 
 @app.post("/lotes", status_code=status.HTTP_200_OK)
-def agregar_lote(subasta_uid: str = Form(), articulo_uid: str = Form(), base: int = Form(), response: Response = Response()):
+def agregar_lote(subasta_uid: int = Form(), articulo_uid: int = Form(), base: int = Form(), orden: int = Form(),
+                 response: Response = Response()):
     controlador = ControladorLote(db)
-    controlador.agregar(subasta_uid, articulo_uid, base)
+    controlador.agregar(subasta_uid, articulo_uid, base, orden)
     return __cambiar_status_code(controlador.obtener_respuesta(), response)
 
 
 @app.get("/lotes/{subasta_uid}", status_code=status.HTTP_200_OK)
-def obtener_lotes(subasta_uid: str, response: Response = Response()):
+def obtener_lotes(subasta_uid: int, response: Response = Response()):
     controlador = ControladorLote(db)
     controlador.listar(subasta_uid)
     return __cambiar_status_code(controlador.obtener_respuesta(), response, status.HTTP_404_NOT_FOUND)
 
 
-@app.get("/lotes/{subasta_uid}/{orden}", status_code=status.HTTP_200_OK)
-def obtener_lote(subasta_uid: str, orden: int, response: Response = Response()):
+@app.get("/lotes/contar/{subasta_uid}", status_code=status.HTTP_200_OK)
+def contar_lotes(subasta_uid: int, response: Response = Response()):
     controlador = ControladorLote(db)
-    controlador.obtener(subasta_uid, orden)
+    controlador.contar_lotes_en(subasta_uid)
     return __cambiar_status_code(controlador.obtener_respuesta(), response, status.HTTP_404_NOT_FOUND)
 
 
-@app.get("/lotes/contar/{subasta_uid}", status_code=status.HTTP_200_OK)
-def contar_lotes(subasta_uid: str, response: Response = Response()):
+@app.get("/lotes/{subasta_uid}/{orden}", status_code=status.HTTP_200_OK)
+def obtener_lote(subasta_uid: int, orden: int, response: Response = Response()):
     controlador = ControladorLote(db)
-    controlador.contar_lotes_en(subasta_uid)
+    controlador.obtener(subasta_uid, orden)
     return __cambiar_status_code(controlador.obtener_respuesta(), response, status.HTTP_404_NOT_FOUND)
 
 

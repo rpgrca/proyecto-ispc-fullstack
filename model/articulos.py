@@ -7,8 +7,6 @@ from abc import ABC, abstractmethod
 from model.serialization import Serializable
 from model.usuarios import Consignatario
 
-# TODO: Cuando se complete articulo descomentar de los testeos
-
 
 class Articulo(Serializable):
     def __init__(self, uid: int, titulo: str, descripcion: str, valuacion: int, consignatario: Consignatario):
@@ -28,7 +26,8 @@ class Articulo(Serializable):
         return self.__titulo
 
     def serialize(self):
-        return {"id": self.__uid, "consignatario_id": self.__consignatario.obtener_uid(), "titulo": self.__titulo}
+        return {"id": self.__uid, "consignatario_id": self.__consignatario.obtener_uid(), "titulo": self.__titulo,
+                "descripcion": self.__descripcion, "valuacion": self.__valuacion}
 
 
 class Articulos(ABC):
