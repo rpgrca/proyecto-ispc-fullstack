@@ -277,16 +277,15 @@ class TablaLotes(Lotes):
     CONTAR_LOTES_POR_SUBASTA = "SELECT COUNT(id) FROM Lotes WHERE id_subasta = %s"
     CREAR_LOTE = "INSERT INTO Lotes(id_subasta, id_articulo, precio_base, orden) VALUES(%s,%s,%s,%s)"
     LOTES_POR_SUBASTA = "SELECT Lotes.id, id_articulo, titulo, descripcion, valuacion, id_consignatario, nombre, apellido, " \
-                        "email, usuario, clave, nacimiento, tipo_usuario, precio_base, orden FROM Lotes, Articulos, Usuarios " \
-                        "WHERE id_subasta = %s AND Usuarios.id = id_consignatario AND Articulos.id = id_articulo"
+                        "email, usuario, clave, nacimiento, tipo_usuario, precio_base, orden FROM Lotes, Articulos, " \
+                        "Usuarios WHERE id_subasta = %s AND Usuarios.id = id_consignatario AND Articulos.id = id_articulo"
     LOTE_DE_SUBASTA = "SELECT Lotes.id, id_articulo, titulo, descripcion, valuacion, id_consignatario, nombre, apellido, " \
                       "email, usuario, clave, nacimiento, tipo_usuario, precio_base, orden FROM Lotes, Articulos, Usuarios " \
-                      "WHERE id_subasta = %s AND orden = %s AND Usuarios.id = id_consignatario AND Articulos.id = id_articulo"    
+                      "WHERE id_subasta = %s AND orden = %s AND Usuarios.id = id_consignatario AND Articulos.id = id_articulo"
     BUSCAR_LOTE = "SELECT Lotes.id, id_subasta, s.titulo, s.descripcion, s.imagen, s.fecha, id_articulo, a.titulo, " \
                   "a.descripcion, valuacion, id_consignatario, nombre, apellido, email, usuario, clave, nacimiento, " \
                   "tipo_usuario, precio_base, orden FROM Lotes, Articulos a, Usuarios, Subastas s WHERE id_subasta = %s " \
-                  "AND id_subasta = s.id AND orden = %s AND Usuarios.id = id_consignatario AND Articulos.id = id_articulo"    
- 
+                  "AND id_subasta = s.id AND orden = %s AND Usuarios.id = id_consignatario AND Articulos.id = id_articulo"
 
     def __init__(self, db: MysqlDatabase):
         self.__db = db
@@ -305,9 +304,9 @@ class TablaLotes(Lotes):
 
     def buscar_por_uid(self, lote_uid: int) -> Lote:
         return self.__db.obtener_uno(self.BUSCAR_LOTE, (lote_uid,),
-                                     lambda r: Lote(r[0], Subasta(r[1], r[2], r[3], r[4], r[5]), Articulo(r[6], r[7], r[8], r[9],
-                                                    UsuariosFactory.crear(r[10], r[11], r[12], r[13], r[14], r[15], r[16],
-                                                    r[17])), r[18], r[19]))
+                                     lambda r: Lote(r[0], Subasta(r[1], r[2], r[3], r[4], r[5]), Articulo(r[6], r[7], r[8],
+                                                    r[9], UsuariosFactory.crear(r[10], r[11], r[12], r[13], r[14], r[15],
+                                                    r[16], r[17])), r[18], r[19]))
 
     def listar(self, subasta: Subasta) -> list[Lote]:
         return self.__db.obtener_muchos(self.LOTES_POR_SUBASTA, (subasta.obtener_uid(),),
@@ -363,8 +362,8 @@ class TablaVentas(Ventas):
                                      r[5], r[6], r[7]))
 
     def listar_compras_de(self, pujador: Pujador) -> list[Venta]:
-        return self.__db.obtener_muchos(self.LISTAR_COMPRAS, (pujador.obtener_uid(),)), lambda r: Venta(r[0], Puja(r[1], r[2],
-                                        r[3], r[4]), r[5], r[6], r[7])
+        return self.__db.obtener_muchos(self.LISTAR_COMPRAS, (pujador.obtener_uid(),),
+                                        lambda r: Venta(r[0], Puja(r[1], r[2], r[3], r[4]), r[5], r[6], r[7]))
 
 
 class CreadorDeBasesDeDatosMySql:

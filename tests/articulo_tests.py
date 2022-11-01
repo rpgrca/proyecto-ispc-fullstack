@@ -115,10 +115,10 @@ class ControladorArticuloTests(unittest.TestCase):
         respuesta = sut.obtener_respuesta()
         self.assertEqual("ok", respuesta["status"])
         self.assertEqual(2, len(respuesta["items"]))
-        self.assertIn({"id": 1, "consignatario_id": 1, "titulo": "Sofa Antiguo", "descripcion": "Un sofa de principios de siglo.",
-                       "valuacion": 15000}, respuesta["items"])
-        self.assertIn({"id": 2, "consignatario_id": 1, "titulo": "Reloj de Arena", "descripcion": "Un reloj de arena que atrasa.",
-                       "valuacion": 3000}, respuesta["items"])
+        self.assertIn({"id": 1, "consignatario_id": 1, "titulo": "Sofa Antiguo",
+                       "descripcion": "Un sofa de principios de siglo.", "valuacion": 15000}, respuesta["items"])
+        self.assertIn({"id": 2, "consignatario_id": 1, "titulo": "Reloj de Arena",
+                       "descripcion": "Un reloj de arena que atrasa.", "valuacion": 3000}, respuesta["items"])
 
     def test_retonar_vacio_al_buscar_por_consignatario_existente_sin_articulos(self):
         sut = ControladorArticulo(self.__db)

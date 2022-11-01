@@ -24,17 +24,18 @@ class ControladorPujaTests(unittest.TestCase):
                     "nacimiento": C.FECHA_NACIMIENTO_USUARIO,
                     "tipo": TipoDeUsuario.Pujador},
                 "Consignatario": {
-                     "id": 2,
+                    "id": 2,
                     "nombre": C.NOMBRE_USUARIO,
                     "apellido": C.APELLIDO_USUARIO,
                     "email": C.EMAIL_USUARIO,
                     "usuario": "Consignatario",
                     "clave": C.CLAVE_USUARIO,
                     "nacimiento": C.FECHA_NACIMIENTO_USUARIO,
-                    "tipo": TipoDeUsuario.Consignatario} \
+                    "tipo": TipoDeUsuario.Consignatario}
             })
         subasta = Subasta(C.SUBASTA_UID, C.TITULO_SUBASTA, C.DESCRIPCION_SUBASTA, C.IMAGEN_SUBASTA, C.FECHA_DE_SUBASTA)
-        articulo = Articulo(C.ARTICULO_UID, C.TITULO_ARTICULO, C.DESCRIPCION_ARTICULO, C.VALUACION_ARTICULO, usuarios["Consignatario"])
+        articulo = Articulo(C.ARTICULO_UID, C.TITULO_ARTICULO, C.DESCRIPCION_ARTICULO, C.VALUACION_ARTICULO,
+                            usuarios["Consignatario"])
         self.__db = CreadorDeBasesDeDatosTemporales() \
             .con_usuarios(usuarios) \
             .con_subastas(SubastasEnMemoria([subasta])) \

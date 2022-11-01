@@ -1,18 +1,17 @@
 import unittest
 from ddt import ddt, data
-from model.tipo_usuario import TipoDeUsuario
-from model.usuarios import UsuariosFactory
 import tests.constantes as C
+from model.tipo_usuario import TipoDeUsuario
 from controller.lote import ControladorLote, ServicioLote
 from model.articulos import Articulo
 from model.subastas import Subasta
-from model.content_provider.memory import ArticulosEnMemoria, CreadorDeBasesDeDatosTemporales, SubastasEnMemoria, UsuariosEnMemoria
+from model.content_provider.memory import CreadorDeBasesDeDatosTemporales, ArticulosEnMemoria
+from model.content_provider.memory import SubastasEnMemoria, UsuariosEnMemoria
 
 
 @ddt
 class ControladorLoteTests(unittest.TestCase):
     def setUp(self):
-        
         usuarios = UsuariosEnMemoria({
                 "Consignatario": {
                     "id": 1,
@@ -22,7 +21,7 @@ class ControladorLoteTests(unittest.TestCase):
                     "usuario": "Consignatario",
                     "clave": C.CLAVE_USUARIO,
                     "nacimiento": C.FECHA_NACIMIENTO_USUARIO,
-                    "tipo": TipoDeUsuario.Consignatario} \
+                    "tipo": TipoDeUsuario.Consignatario}
             })
 
         self.__db = CreadorDeBasesDeDatosTemporales() \

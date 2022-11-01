@@ -233,7 +233,8 @@ class CreadorDeBasesDeDatosTemporales:
             }
         })
         self.__subastas = SubastasEnMemoria([Subasta(1, "Gran subasta!", "Nos vemos pronto!", "sofa.jpg", 17/10/2022)])
-        self.__articulos = ArticulosEnMemoria([Articulo(1, "Sofa Antiguo", "Sofa de tres cuerpos, 2 metros de largo.", 13000, self.__usuarios["Estela"])])
+        self.__articulos = ArticulosEnMemoria([Articulo(1, "Sofa Antiguo", "Sofa de tres cuerpos, 2 metros de largo.", 13000,
+                                              self.__usuarios["Estela"])])
         self.__lotes = LotesEnMemoria([])
         self.__pujas = PujasEnMemoria([])
         self.__ventas = VentasEnMemoria([])
