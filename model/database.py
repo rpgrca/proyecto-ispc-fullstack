@@ -3,12 +3,12 @@ from model.subastas import Subastas
 from model.usuarios import Usuarios
 from model.articulos import Articulos
 from model.lotes import Lotes
-from model.ventas import Ventas
+from model.libro_diario import LibroDiario
 
 
 class BaseDeDatos:
     def __init__(self, usuarios: Usuarios, subastas: Subastas, articulos: Articulos, lotes: Lotes, pujas: Pujas,
-                 ventas: Ventas):
+                 ventas: LibroDiario):
         self.__usuarios = usuarios
         self.__subastas = subastas
         self.__articulos = articulos
@@ -37,5 +37,5 @@ class BaseDeDatos:
         return self.__pujas
 
     @property
-    def Ventas(self) -> Ventas:
+    def Ventas(self) -> LibroDiario:
         return self.__ventas

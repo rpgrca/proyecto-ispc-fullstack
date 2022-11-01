@@ -10,6 +10,7 @@ class ServicioPuja(Servicio):
     LOTE_INVALIDO = "No se puede pujar por un lote inválido"
     PUJADOR_INEXISTENTE = "No se puede pujar con un pujador inexistente"
     PUJA_BAJA = "No se puede pujar por menos de la última puja"
+    PUJA_MENOR_QUE_BASE = "No se puede iniciar pujando menos que la base"
     MONTO_INVALIDO = "No se puede pujar por montos menores o iguales a cero"
 
     def __init__(self, db: BaseDeDatos):
@@ -31,7 +32,10 @@ class ServicioPuja(Servicio):
             self._throw(self.MONTO_INVALIDO)
 
         puja = self.__db.Pujas.buscar_ultima_puja(lote)
-        if puja and puja.obtener_monto() >= monto:
+        if not puja:
+            if monto < lote.obtener_precio_base():
+                self._throw(self.PUJA_MENOR_QUE_BASE)
+        elif puja.obtener_monto() >= monto:
             self._throw(self.PUJA_BAJA)
 
         self.__db.Pujas.agregar(pujador, lote, monto)

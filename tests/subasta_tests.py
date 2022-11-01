@@ -16,7 +16,8 @@ class ControladorSubastaTests(unittest.TestCase):
                                               TipoDeUsuario.Consignatario)
         self.__db = CreadorDeBasesDeDatosTemporales() \
             .con_subastas(SubastasEnMemoria([])) \
-            .con_articulos(ArticulosEnMemoria([Articulo(C.ARTICULO_UID, C.TITULO_ARTICULO, C.DESCRIPCION_ARTICULO, C.VALUACION_ARTICULO, consignatario)])) \
+            .con_articulos(ArticulosEnMemoria([Articulo(C.ARTICULO_UID, C.TITULO_ARTICULO, C.DESCRIPCION_ARTICULO,
+                           C.VALUACION_ARTICULO, consignatario)])) \
             .construir()
 
     @data(

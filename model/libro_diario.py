@@ -40,7 +40,7 @@ class Venta(Serializable):
                 "pago consignatario": self.obtener_pago_a_consignatario()}
 
 
-class Ventas(ABC):
+class LibroDiario(ABC):
     @abstractmethod
     def crear(self, puja: Puja, precio_final: float, comision: float, pago_a_consignatario: float) -> Venta:
         pass

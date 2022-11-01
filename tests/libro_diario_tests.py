@@ -14,7 +14,7 @@ from model.content_provider.memory import UsuariosEnMemoria, CreadorDeBasesDeDat
 
 
 @ddt
-class ControladorVentaTests(unittest.TestCase):
+class ControladorLibroDiarioTests(unittest.TestCase):
     def setUp(self):
         pujador = UsuariosFactory.crear(C.ID_USUARIO, C.NOMBRE_USUARIO, C.APELLIDO_USUARIO, C.EMAIL_USUARIO, C.NOMBRE_USUARIO,
                                         C.CLAVE_USUARIO, C.FECHA_NACIMIENTO_USUARIO, TipoDeUsuario.Pujador)
@@ -52,33 +52,33 @@ class ControladorVentaTests(unittest.TestCase):
 
     def test_retornar_ok_con_venta_exitosa(self):
         sut = ControladorLibroDiario(self.__db)
-        sut.vender(C.PUJA_UID)
+        sut.convertir_en_venta(C.PUJA_UID)
         respuesta = sut.obtener_respuesta()
         self.assertEqual("ok", respuesta["status"])
         self.assertEqual(ControladorLibroDiario.VENTA_EXITOSA, respuesta["mensaje"])
 
     def test_crear_subasta_con_datos_correctos(self):
         sut = ControladorLibroDiario(self.__db)
-        sut.vender(C.PUJA_UID)
+        sut.convertir_en_venta(C.PUJA_UID)
         venta = self.__db.Ventas.buscar_por_uid(1)
         self.assertEqual(C.ID_USUARIO, venta.obtener_ganador().obtener_uid())
         self.assertEqual(1, venta.obtener_uid())
         self.assertEqual(C.TITULO_ARTICULO, venta.obtener_nombre_lote())
         self.assertEqual(485, venta.obtener_pago_a_consignatario())
-        self.assertEqual(50, venta.obtener_precio_final())
-        self.assertEqual(616, venta.obtener_comision())
+        self.assertEqual(616, venta.obtener_precio_final())
+        self.assertEqual(50, venta.obtener_comision())
 
     @data(None, "", -1, 0)
     def test_retornar_error_con_puja_invalida(self, puja_invalida):
         sut = ControladorLibroDiario(self.__db)
-        sut.vender(puja_invalida)
+        sut.convertir_en_venta(puja_invalida)
         respuesta = sut.obtener_respuesta()
         self.assertEqual("error", respuesta["status"])
         self.assertEqual(ServicioLibroDiario.PUJA_INVALIDA, respuesta["mensaje"])
 
     def test_retornar_error_con_puja_inexistente(self):
         sut = ControladorLibroDiario(self.__db)
-        sut.vender(C.OTRA_PUJA_UID)
+        sut.convertir_en_venta(C.OTRA_PUJA_UID)
         respuesta = sut.obtener_respuesta()
         self.assertEqual("error", respuesta["status"])
         self.assertEqual(ServicioLibroDiario.PUJA_INEXISTENTE, respuesta["mensaje"])
@@ -107,9 +107,49 @@ class ControladorVentaTests(unittest.TestCase):
 
     def test_retornar_lista_con_compras_correctamente(self):
         sut = ControladorLibroDiario(self.__db)
-        sut.vender(C.PUJA_UID)
+        sut.convertir_en_venta(C.PUJA_UID)
         sut.listar_compras_de(C.ID_USUARIO)
         respuesta = sut.obtener_respuesta()
         self.assertEqual("ok", respuesta["status"])
-        self.assertEqual([{"id": 1, "titulo": "Sofa Antiguo", "ganador": "Roberto", "precio": 50.0, "comision": 616.0,
+        self.assertEqual([{"id": 1, "titulo": "Sofa Antiguo", "ganador": "Roberto", "precio": 616.0, "comision": 50.0,
                            "pago consignatario": 485.0}], respuesta["items"])
+
+    @data(None, "", -1)
+    def test_retornar_error_al_cerrar_lote_invalido(self, lote_invalido):
+        sut = ControladorLibroDiario(self.__db)
+        sut.registrar_venta_en(lote_invalido)
+        respuesta = sut.obtener_respuesta()
+        self.assertEqual("error", respuesta["status"])
+        self.assertEqual("No se puede cerrar un lote inválido", respuesta["mensaje"])
+
+    def test_retornar_error_al_cerrar_lote_inexistente(self):
+        sut = ControladorLibroDiario(self.__db)
+        sut.registrar_venta_en(100)
+        respuesta = sut.obtener_respuesta()
+        self.assertEqual("error", respuesta["status"])
+        self.assertEqual("No se puede cerrar un lote inexistente", respuesta["mensaje"])
+
+    def test_retornar_ok_al_cerrar_lote_sin_pujas(self):
+        db = CreadorDeBasesDeDatosTemporales() \
+            .con_articulos(self.__db.Articulos) \
+            .con_lotes(self.__db.Lotes) \
+            .con_subastas(self.__db.Subastas) \
+            .con_usuarios(self.__db.Usuarios) \
+            .construir()
+
+        sut = ControladorLibroDiario(db)
+        sut.registrar_venta_en(C.LOTE_UID)
+        respuesta = sut.obtener_respuesta()
+        self.assertEqual("ok", respuesta["status"])
+        self.assertEqual("El lote ha quedado desierto", respuesta["mensaje"])
+
+    def test_retornar_ok_al_cerrar_lote_con_pujas(self):
+        sut = ControladorLibroDiario(self.__db)
+        sut.registrar_venta_en(C.LOTE_UID)
+        respuesta = sut.obtener_respuesta()
+        self.assertEqual("ok", respuesta["status"])
+        self.assertEqual(616, respuesta["precio_final"])
+
+
+if __name__ == "__main__":
+    unittest.main()

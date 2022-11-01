@@ -24,17 +24,18 @@ class ControladorPujaTests(unittest.TestCase):
                     "nacimiento": C.FECHA_NACIMIENTO_USUARIO,
                     "tipo": TipoDeUsuario.Pujador},
                 "Consignatario": {
-                     "id": 2,
+                    "id": 2,
                     "nombre": C.NOMBRE_USUARIO,
                     "apellido": C.APELLIDO_USUARIO,
                     "email": C.EMAIL_USUARIO,
                     "usuario": "Consignatario",
                     "clave": C.CLAVE_USUARIO,
                     "nacimiento": C.FECHA_NACIMIENTO_USUARIO,
-                    "tipo": TipoDeUsuario.Consignatario} \
+                    "tipo": TipoDeUsuario.Consignatario}
             })
         subasta = Subasta(C.SUBASTA_UID, C.TITULO_SUBASTA, C.DESCRIPCION_SUBASTA, C.IMAGEN_SUBASTA, C.FECHA_DE_SUBASTA)
-        articulo = Articulo(C.ARTICULO_UID, C.TITULO_ARTICULO, C.DESCRIPCION_ARTICULO, C.VALUACION_ARTICULO, usuarios["Consignatario"])
+        articulo = Articulo(C.ARTICULO_UID, C.TITULO_ARTICULO, C.DESCRIPCION_ARTICULO, C.VALUACION_ARTICULO,
+                            usuarios["Consignatario"])
         self.__db = CreadorDeBasesDeDatosTemporales() \
             .con_usuarios(usuarios) \
             .con_subastas(SubastasEnMemoria([subasta])) \
@@ -104,6 +105,13 @@ class ControladorPujaTests(unittest.TestCase):
         respuesta = sut.obtener_respuesta()
         self.assertEqual("error", respuesta["status"])
         self.assertEqual(ServicioPuja.PUJA_BAJA, respuesta["mensaje"])
+
+    def test_retornar_error_al_pujar_por_menos_de_la_base(self):
+        sut = ControladorPuja(self.__db)
+        sut.agregar(C.LOTE_UID, C.ID_USUARIO, 50)
+        respuesta = sut.obtener_respuesta()
+        self.assertEqual("error", respuesta["status"])
+        self.assertEqual(ServicioPuja.PUJA_MENOR_QUE_BASE, respuesta["mensaje"])
 
     def test_agregar_puja_correctamente(self):
         sut = ControladorPuja(self.__db)

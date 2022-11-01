@@ -1,6 +1,8 @@
+from services.libro_diario import ServicioLibroDiario
 from .servicio import Servicio
 from model.database import BaseDeDatos
 from model.lotes import Lote
+from model.libro_diario import Venta
 
 
 class ServicioLote(Servicio):
@@ -14,6 +16,7 @@ class ServicioLote(Servicio):
     SUBASTA_INEXISTENTE = "No se puede subastar un lote de una subasta inexistente"
     LOTE_INEXISTENTE = "No existe tal lote"
     BASE_INVALIDA = "No se puede agregar un artículo con base inválida"
+    ORDEN_INVALIDO = "No se puede agregar un artículo con orden inválido"
     LISTAR_SIN_SUBASTA = "No se puede listar lotes de una subasta inválida"
     LISTAR_CON_SUBASTA_INEXISTENTE = "No se puede listar lotes de una subasta inexistente"
 
@@ -21,10 +24,11 @@ class ServicioLote(Servicio):
         super().__init__()
         self.__db = db
 
-    def agregar(self, subasta_uid: int, articulo_uid: str, base: int) -> None:
+    def agregar(self, subasta_uid: int, articulo_uid: str, base: int, orden: int) -> None:
         self._throw_if_not_positive(subasta_uid, self.LOTE_SIN_SUBASTA)
         self._throw_if_not_positive(articulo_uid, self.ARTICULO_NULO_EN_SUBASTA)
         self._throw_if_not_positive(base, self.BASE_INVALIDA)
+        self._throw_if_invalid(orden, self.ORDEN_INVALIDO)
 
         subasta = self.__db.Subastas.buscar_por_uid(subasta_uid)
         self._throw_if_invalid(subasta, self.LOTE_SUBASTA_INEXISTENTE)
@@ -32,7 +36,7 @@ class ServicioLote(Servicio):
         articulo = self.__db.Articulos.buscar_por_uid(articulo_uid)
         self._throw_if_invalid(articulo, self.ARTICULO_INEXISTENTE)
 
-        self.__db.Lotes.agregar(subasta, articulo, base, self.__db.Lotes.contar_lotes(subasta) + 1)
+        self.__db.Lotes.agregar(subasta, articulo, base, orden)
 
     def contar_lotes_en(self, subasta_uid: int) -> int:
         self._throw_if_not_positive(subasta_uid, self.CONTAR_SIN_SUBASTA)

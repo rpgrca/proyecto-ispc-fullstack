@@ -3,14 +3,16 @@ from datetime import date
 from fastapi import FastAPI, Form, Response
 from fastapi.middleware.cors import CORSMiddleware
 from starlette import status
-from controller.articulo import ControladorArticulo
+from model.tipo_usuario import TipoDeUsuario
+from model.content_provider.mysql import CreadorDeBasesDeDatosMySql
 from model.content_provider.memory import CreadorDeBasesDeDatosTemporales
+from controller.articulo import ControladorArticulo
 from controller.subasta import ControladorSubasta
 from controller.lote import ControladorLote
 from controller.login import ControladorLogin
 from controller.usuario import ControladorUsuario
-from model.content_provider.mysql import CreadorDeBasesDeDatosMySql
-from model.tipo_usuario import TipoDeUsuario
+from controller.puja import ControladorPuja
+from controller.libro_diario import ControladorLibroDiario
 
 app = FastAPI()
 origins = ["*"]
@@ -22,8 +24,8 @@ app.add_middleware(
     allow_headers=["*"]
 )
 
-#db = CreadorDeBasesDeDatosMySql(["localhost", "root", "gTp8xT2!", "bidon_subastas"]).construir()
-db = CreadorDeBasesDeDatosTemporales().construir()
+db = CreadorDeBasesDeDatosMySql(["localhost", "root", "gTp8xT2!", "bidon_subastas"]).construir()
+# db = CreadorDeBasesDeDatosTemporales().construir()
 
 
 def __cambiar_status_code(respuesta: dict[str, str], response: Response, status_code=status.HTTP_401_UNAUTHORIZED):
@@ -71,6 +73,20 @@ def crear_articulo(titulo: str = Form(), descripcion: str = Form(), valuacion: i
     return __cambiar_status_code(controlador.obtener_respuesta(), response)
 
 
+@app.get("/articulos/contar", status_code=status.HTTP_200_OK)
+def contar_articulos(response: Response = Response()):
+    controlador = ControladorArticulo(db)
+    controlador.contar()
+    return __cambiar_status_code(controlador.obtener_respuesta(), response)
+
+
+@app.get("/articulos/listar/{consignatario_uid}", status_code=status.HTTP_200_OK)
+def listar_articulos(consignatario_uid: int, response: Response = Response()):
+    controlador = ControladorArticulo(db)
+    controlador.listar_articulos_propiedad_de(consignatario_uid)
+    return __cambiar_status_code(controlador.obtener_respuesta(), response)
+
+
 @app.post("/subastas/", status_code=status.HTTP_200_OK)
 def crear_subasta(titulo: str = Form(), descripcion: str = Form(), imagen: str = Form(), fecha: date = Form(),
                   response: Response = Response()):
@@ -80,31 +96,60 @@ def crear_subasta(titulo: str = Form(), descripcion: str = Form(), imagen: str =
 
 
 @app.post("/lotes", status_code=status.HTTP_200_OK)
-def agregar_lote(subasta_uid: str = Form(), articulo_uid: str = Form(), base: int = Form(), response: Response = Response()):
+def agregar_lote(subasta_uid: int = Form(), articulo_uid: int = Form(), base: int = Form(), orden: int = Form(),
+                 response: Response = Response()):
     controlador = ControladorLote(db)
-    controlador.agregar(subasta_uid, articulo_uid, base)
+    controlador.agregar(subasta_uid, articulo_uid, base, orden)
     return __cambiar_status_code(controlador.obtener_respuesta(), response)
 
 
 @app.get("/lotes/{subasta_uid}", status_code=status.HTTP_200_OK)
-def obtener_lotes(subasta_uid: str, response: Response = Response()):
+def obtener_lotes(subasta_uid: int, response: Response = Response()):
     controlador = ControladorLote(db)
     controlador.listar(subasta_uid)
     return __cambiar_status_code(controlador.obtener_respuesta(), response, status.HTTP_404_NOT_FOUND)
 
 
+@app.get("/lotes/contar/{subasta_uid}", status_code=status.HTTP_200_OK)
+def contar_lotes(subasta_uid: int, response: Response = Response()):
+    controlador = ControladorLote(db)
+    controlador.contar_lotes_en(subasta_uid)
+    return __cambiar_status_code(controlador.obtener_respuesta(), response, status.HTTP_404_NOT_FOUND)
+
+
+@app.post("/lotes/cerrar", status_code=status.HTTP_200_OK)
+def cerrar(lote_uid: int = Form(), response: Response = Response()):
+    controlador = ControladorLibroDiario(db)
+    controlador.registrar_venta_en(lote_uid)
+    return __cambiar_status_code(controlador.obtener_respuesta(), response)
+
+
 @app.get("/lotes/{subasta_uid}/{orden}", status_code=status.HTTP_200_OK)
-def obtener_lote(subasta_uid: str, orden: int, response: Response = Response()):
+def obtener_lote(subasta_uid: int, orden: int, response: Response = Response()):
     controlador = ControladorLote(db)
     controlador.obtener(subasta_uid, orden)
     return __cambiar_status_code(controlador.obtener_respuesta(), response, status.HTTP_404_NOT_FOUND)
 
 
-@app.get("/lotes/contar/{subasta_uid}", status_code=status.HTTP_200_OK)
-def contar_lotes(subasta_uid: str, response: Response = Response()):
-    controlador = ControladorLote(db)
-    controlador.contar_lotes_en(subasta_uid)
-    return __cambiar_status_code(controlador.obtener_respuesta(), response, status.HTTP_404_NOT_FOUND)
+@app.post("/pujas", status_code=status.HTTP_200_OK)
+def pujar(lote_uid: int = Form(), pujador_uid: int = Form(), monto: int = Form(), response: Response = Response()):
+    controlador = ControladorPuja(db)
+    controlador.agregar(lote_uid, pujador_uid, monto)
+    return __cambiar_status_code(controlador.obtener_respuesta(), response)
+
+
+@app.get("/pujas/{lote_uid}", status_code=status.HTTP_200_OK)
+def obtener_pujas(lote_uid: int, response: Response = Response()):
+    controlador = ControladorPuja(db)
+    controlador.listar(lote_uid)
+    return __cambiar_status_code(controlador.obtener_respuesta(), response)
+
+
+@app.post("/vender", status_code=status.HTTP_200_OK)
+def vender(puja_uid: int = Form(), response: Response = Response()):
+    controlador = ControladorLibroDiario(db)
+    controlador.convertir_en_venta(puja_uid)
+    return __cambiar_status_code(controlador.obtener_respuesta(), response)
 
 
 if __name__ == "__main__":
