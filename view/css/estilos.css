@@ -236,3 +236,46 @@ body {
     font-size: 17px;
     font-weight: bold;
 }
+
+
+.scroll-top-btn{
+    position: fixed;
+    z-index: 997;
+    bottom: 1vh;
+    right: calc(4.30rem + 1vw);
+    width: 4rem;
+    height: 4rem;
+    border-radius: 50%;
+    font-size: 2rem;
+    font-weight: bold;
+    background-color: #f17228;
+    color: #161615;
+    cursor: pointer;
+    outline: 0;
+    border: 0;
+    transition: all 0.3s ease-out;
+  }
+  
+  .scroll-top-btn:hover{
+    background-color: #161615;
+    color: #f17228;
+  }
+  
+  .hidden{
+    visibility: hidden;
+    opacity: 0;
+  }
+  
+  .btnJump{
+    animation: scrollbtn 0.5s linear;
+  }
+  
+  @keyframes scrollbtn {
+    0%{
+      bottom: 1vh;
+    }
+    45%, 55%{
+      bottom: 4vh;
+    }
+  }
+  
