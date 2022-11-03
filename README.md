@@ -55,7 +55,7 @@ Para ejecutar las pruebas unitarias de a un módulo hay que adjuntar el PATH de 
 PYTHONPATH=$PYTHONPATH:controller pytest tests/usuario_tests.py
 ```
 
-
+![image](https://user-images.githubusercontent.com/15602473/199630504-dc9ad666-bca2-4f2b-a65c-bf34a2dfb664.png)
 
 ## Información para el Sprint 1
 ### Front-end
