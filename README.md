@@ -63,6 +63,8 @@ PYTHONPATH=$PYTHONPATH:controller pytest tests/usuario_tests.py
 
 En la sección de documentación se adjunta un archivo con pruebas de Postman para realizar. Las pruebas se realizan sobre una base vacía de MySQL.
 
+![image](https://user-images.githubusercontent.com/15602473/199632889-6e69fe97-7183-48de-9362-689a7cbdd052.png)
+
 ## Información para el Sprint 1
 ### Front-end
 
