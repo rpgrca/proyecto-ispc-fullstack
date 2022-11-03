@@ -33,6 +33,8 @@ uvicorn main:app
 
 ![image](https://user-images.githubusercontent.com/15602473/197442544-6658bf45-fadf-4aae-8e76-3dddb0835cb9.png)
 
+Si se configura para ejecutar en MySQL creará la base de datos y las tablas necesarias si no existen.
+
 ### Ejecutar pruebas unitarias
 Para ejecutar las pruebas unitarias desde una consola o shell:
 ```
@@ -56,6 +58,10 @@ PYTHONPATH=$PYTHONPATH:controller pytest tests/usuario_tests.py
 ```
 
 ![image](https://user-images.githubusercontent.com/15602473/199630504-dc9ad666-bca2-4f2b-a65c-bf34a2dfb664.png)
+
+### Ejecutar pruebas de integración con Postman
+
+En la sección de documentación se adjunta un archivo con pruebas de Postman para realizar. Las pruebas se realizan sobre una base vacía de MySQL.
 
 ## Información para el Sprint 1
 ### Front-end
