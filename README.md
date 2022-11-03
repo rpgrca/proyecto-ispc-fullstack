@@ -19,7 +19,7 @@ python -m pip install -r requirements.txt
 pip install -r requirements.txt
 ```
 
-En algunos sistemas es _python3_ y _pip3_, en otros _python_ y _pip_. La versión mínima es 3.9.
+En algunos sistemas (por ejemplo Linux Ubuntu) es _python3_ y _pip3_, en otros _python_ y _pip_. La versión mínima es 3.9.
 
 ### Ejecutar servidor
 Para levantar el servidor del back-end desde una consola o shell:
@@ -39,9 +39,23 @@ Para ejecutar las pruebas unitarias desde una consola o shell:
 pytest main_tests.py
 ```
 
-Esto ejecutará todas las pruebas unitarias que se encuentren dentro del suite (que incluyen todas las del directorio _tests_).
+Esto ejecutará todas las pruebas unitarias que se encuentren dentro del suite (que incluyen todas las del directorio _tests_). El pipeline utiliza una línea un poco más larga que también se puede utilizar manualmente:
+
+```
+pytest main_tests.py --cov-config=coverage.ini --doctest-modules --junitxml=main.coverage.xml --cov-append --cov . --cov-report xml --cov-report html
+```
+
+lo que genera un archivo *coverage.xml* con la información de cobertura y un archivo *main.coverage.xml* con información de pruebas ejecutadas en formato Junit.
 
 ![image](https://user-images.githubusercontent.com/15602473/197442599-4c2e61cc-db61-4c3a-9f20-0617e2b67513.png)
+
+Para ejecutar las pruebas unitarias de a un módulo hay que adjuntar el PATH de los módulos por delante de la línea de comando, por ejemplo para ejecutar las pruebas del controlador de *usuario*:
+
+```
+PYTHONPATH=$PYTHONPATH:controller pytest tests/usuario_tests.py
+```
+
+
 
 ## Información para el Sprint 1
 ### Front-end

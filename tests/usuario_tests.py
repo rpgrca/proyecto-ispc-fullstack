@@ -1,8 +1,8 @@
 import unittest
 from ddt import ddt, data, unpack
-from .email_sender_spy import EmailSenderSpy
-from model.usuarios import Consignatario, Martillero, Pujador, UsuariosFactory
 import tests.constantes as C
+from tests.email_sender_spy import EmailSenderSpy
+from model.usuarios import Consignatario, Martillero, Pujador, UsuariosFactory
 from controller.usuario import ControladorUsuario, ServicioUsuario
 from model.tipo_usuario import TipoDeUsuario
 from model.content_provider.memory import UsuariosEnMemoria, CreadorDeBasesDeDatosTemporales

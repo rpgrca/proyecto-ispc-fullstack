@@ -2,7 +2,7 @@ import unittest
 from ddt import ddt, data, unpack
 import tests.constantes as C
 from controller.login import ControladorLogin, ServicioLogin
-from .email_sender_spy import EmailSenderSpy
+from tests.email_sender_spy import EmailSenderSpy
 from model.tipo_usuario import TipoDeUsuario
 from model.content_provider.memory import UsuariosEnMemoria, CreadorDeBasesDeDatosTemporales
 
