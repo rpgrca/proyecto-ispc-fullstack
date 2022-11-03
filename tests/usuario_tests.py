@@ -2,7 +2,7 @@ import unittest
 from ddt import ddt, data, unpack
 import tests.constantes as C
 from tests.email_sender_spy import EmailSenderSpy
-from model.usuarios import Consignatario, Martillero, Pujador, UsuariosFactory
+from model.usuarios import Consignatario, Martillero, Pujador, Usuarios
 from controller.usuario import ControladorUsuario, ServicioUsuario
 from model.tipo_usuario import TipoDeUsuario
 from model.content_provider.memory import UsuariosEnMemoria, CreadorDeBasesDeDatosTemporales
@@ -134,8 +134,8 @@ class ControladorUsuarioTests(unittest.TestCase):
     )
     @unpack
     def test_retorna_instancia_martillero_cuando_se_pide_crear_martillero(self, tipo: TipoDeUsuario, clase: type):
-        usuario = UsuariosFactory.crear(C.ID_USUARIO, C.NOMBRE_USUARIO, C.APELLIDO_USUARIO, C.EMAIL_USUARIO,
-                                        C.NOMBRE_USUARIO, C.CLAVE_USUARIO, C.FECHA_NACIMIENTO_USUARIO, tipo)
+        usuario = Usuarios.crear(C.ID_USUARIO, C.NOMBRE_USUARIO, C.APELLIDO_USUARIO, C.EMAIL_USUARIO,
+                                 C.NOMBRE_USUARIO, C.CLAVE_USUARIO, C.FECHA_NACIMIENTO_USUARIO, tipo)
         self.assertIsInstance(usuario, clase)
 
     def test_retornar_ok_cuando_actualiza_usuario(self):

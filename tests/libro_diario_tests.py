@@ -7,7 +7,7 @@ from model.lotes import Lote
 from services.libro_diario import ServicioLibroDiario
 from model.pujas import Puja
 from model.subastas import Subasta
-from model.usuarios import Usuario, UsuariosFactory
+from model.usuarios import Usuario, Usuarios
 from model.tipo_usuario import TipoDeUsuario
 from model.content_provider.memory import ArticulosEnMemoria, LotesEnMemoria, PujasEnMemoria, SubastasEnMemoria
 from model.content_provider.memory import UsuariosEnMemoria, CreadorDeBasesDeDatosTemporales
@@ -16,11 +16,11 @@ from model.content_provider.memory import UsuariosEnMemoria, CreadorDeBasesDeDat
 @ddt
 class ControladorLibroDiarioTests(unittest.TestCase):
     def setUp(self):
-        pujador = UsuariosFactory.crear(C.ID_USUARIO, C.NOMBRE_USUARIO, C.APELLIDO_USUARIO, C.EMAIL_USUARIO, C.NOMBRE_USUARIO,
-                                        C.CLAVE_USUARIO, C.FECHA_NACIMIENTO_USUARIO, TipoDeUsuario.Pujador)
-        consignatario = UsuariosFactory.crear(C.OTRO_ID_USUARIO, C.OTRO_NOMBRE_USUARIO, C.APELLIDO_USUARIO,
-                                              C.OTRO_EMAIL_USUARIO, C.OTRO_NOMBRE_USUARIO, C.OTRA_CLAVE_USUARIO,
-                                              C.FECHA_NACIMIENTO_USUARIO, TipoDeUsuario.Consignatario)
+        pujador = Usuarios.crear(C.ID_USUARIO, C.NOMBRE_USUARIO, C.APELLIDO_USUARIO, C.EMAIL_USUARIO, C.NOMBRE_USUARIO,
+                                 C.CLAVE_USUARIO, C.FECHA_NACIMIENTO_USUARIO, TipoDeUsuario.Pujador)
+        consignatario = Usuarios.crear(C.OTRO_ID_USUARIO, C.OTRO_NOMBRE_USUARIO, C.APELLIDO_USUARIO,
+                                       C.OTRO_EMAIL_USUARIO, C.OTRO_NOMBRE_USUARIO, C.OTRA_CLAVE_USUARIO,
+                                       C.FECHA_NACIMIENTO_USUARIO, TipoDeUsuario.Consignatario)
         usuarios = UsuariosEnMemoria(self._list_to_dictionary([pujador, consignatario]))
         articulo = Articulo(C.ARTICULO_UID, C.TITULO_ARTICULO, C.DESCRIPCION_ARTICULO, C.VALUACION_ARTICULO, consignatario)
         lote = Lote(C.LOTE_UID, C.SUBASTA_UID, articulo, C.BASE_LOTE, C.ORDEN_LOTE)
@@ -28,7 +28,7 @@ class ControladorLibroDiarioTests(unittest.TestCase):
         self.__db = CreadorDeBasesDeDatosTemporales() \
             .con_usuarios(usuarios) \
             .con_subastas(SubastasEnMemoria([Subasta(C.SUBASTA_UID, C.TITULO_SUBASTA, C.DESCRIPCION_SUBASTA, C.IMAGEN_SUBASTA,
-                                                     C.FECHA_DE_SUBASTA)])) \
+                                            C.FECHA_DE_SUBASTA)])) \
             .con_articulos(ArticulosEnMemoria([articulo])) \
             .con_lotes(LotesEnMemoria([lote])) \
             .con_pujas(PujasEnMemoria([Puja(C.PUJA_UID, pujador, lote, C.MONTO_PUJA)])) \

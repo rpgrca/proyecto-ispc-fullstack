@@ -1,7 +1,7 @@
 import unittest
 from ddt import ddt, data, unpack
 from model.tipo_usuario import TipoDeUsuario
-from model.usuarios import UsuariosFactory
+from model.usuarios import Usuarios
 import tests.constantes as C
 from controller.subasta import ControladorSubasta, ServicioSubasta
 from model.articulos import Articulo
@@ -11,9 +11,9 @@ from model.content_provider.memory import ArticulosEnMemoria, CreadorDeBasesDeDa
 @ddt
 class ControladorSubastaTests(unittest.TestCase):
     def setUp(self):
-        consignatario = UsuariosFactory.crear(C.ID_USUARIO, C.NOMBRE_USUARIO, C.APELLIDO_USUARIO, C.EMAIL_USUARIO,
-                                              C.NOMBRE_USUARIO, C.CLAVE_USUARIO, C.FECHA_NACIMIENTO_USUARIO,
-                                              TipoDeUsuario.Consignatario)
+        consignatario = Usuarios.crear(C.ID_USUARIO, C.NOMBRE_USUARIO, C.APELLIDO_USUARIO, C.EMAIL_USUARIO,
+                                       C.NOMBRE_USUARIO, C.CLAVE_USUARIO, C.FECHA_NACIMIENTO_USUARIO,
+                                       TipoDeUsuario.Consignatario)
         self.__db = CreadorDeBasesDeDatosTemporales() \
             .con_subastas(SubastasEnMemoria([])) \
             .con_articulos(ArticulosEnMemoria([Articulo(C.ARTICULO_UID, C.TITULO_ARTICULO, C.DESCRIPCION_ARTICULO,

@@ -2,7 +2,7 @@ from datetime import date
 from model.tipo_usuario import TipoDeUsuario
 from model.database import BaseDeDatos
 from model.articulos import Articulo
-from model.usuarios import Consignatario, Martillero, Pujador, Usuarios, Usuario, UsuariosFactory
+from model.usuarios import Consignatario, Martillero, Pujador, Usuarios, Usuario
 from model.subastas import Subastas, Subasta
 from model.articulos import Articulos
 from model.pujas import Puja, Pujas
@@ -39,16 +39,16 @@ class UsuariosEnMemoria(Usuarios):
         if usuario in self.__usuarios:
             registro = self.__usuarios[usuario]
             if registro["clave"] == clave:
-                return UsuariosFactory.crear(registro["id"], registro["nombre"], registro["apellido"], registro["email"],
-                                             registro["usuario"], registro["clave"], registro["nacimiento"], registro["tipo"])
+                return Usuarios.crear(registro["id"], registro["nombre"], registro["apellido"], registro["email"],
+                                      registro["usuario"], registro["clave"], registro["nacimiento"], registro["tipo"])
 
         return None
 
     def buscar_por_email(self, email: str) -> Usuario:
         registro = next(filter(lambda u: u["email"] == email, self.__usuarios.values()), None)
         if registro:
-            return UsuariosFactory.crear(registro["id"], registro["nombre"], registro["apellido"], registro["email"],
-                                         registro["usuario"], registro["clave"], registro["nacimiento"], registro["tipo"])
+            return Usuarios.crear(registro["id"], registro["nombre"], registro["apellido"], registro["email"],
+                                  registro["usuario"], registro["clave"], registro["nacimiento"], registro["tipo"])
 
         return None
 
@@ -61,16 +61,16 @@ class UsuariosEnMemoria(Usuarios):
     def _buscar_por_uid_y_tipo(self, uid: int, tipo: TipoDeUsuario) -> Usuario:
         registro = next(filter(lambda u: u["id"] == uid and u["tipo"] == tipo, self.__usuarios.values()), None)
         if registro:
-            return UsuariosFactory.crear(registro["id"], registro["nombre"], registro["apellido"], registro["email"],
-                                         registro["usuario"], registro["clave"], registro["nacimiento"], registro["tipo"])
+            return Usuarios.crear(registro["id"], registro["nombre"], registro["apellido"], registro["email"],
+                                  registro["usuario"], registro["clave"], registro["nacimiento"], registro["tipo"])
 
         return None
 
     def buscar_usuario_por_uid(self, uid: int) -> Usuario:
         registro = next(filter(lambda u: u["id"] == uid, self.__usuarios.values()), None)
         if registro:
-            return UsuariosFactory.crear(registro["id"], registro["nombre"], registro["apellido"], registro["email"],
-                                         registro["usuario"], registro["clave"], registro["nacimiento"], registro["tipo"])
+            return Usuarios.crear(registro["id"], registro["nombre"], registro["apellido"], registro["email"],
+                                  registro["usuario"], registro["clave"], registro["nacimiento"], registro["tipo"])
 
         return None
 

@@ -6,7 +6,7 @@ from model.database import BaseDeDatos
 from model.lotes import Lote, Lotes
 from model.pujas import Puja, Pujas
 from model.tipo_usuario import TipoDeUsuario
-from model.usuarios import Consignatario, Martillero, Pujador, Usuario, Usuarios, UsuariosFactory
+from model.usuarios import Consignatario, Martillero, Pujador, Usuario, Usuarios
 from model.subastas import Subasta, Subastas
 from model.articulos import Articulo, Articulos
 from model.libro_diario import Venta, LibroDiario
@@ -255,30 +255,30 @@ class TablaUsuarios(Usuarios):
 
     def buscar(self, usuario: str, clave: str) -> Usuario:
         return self.__db.obtener_uno(self.OBTENER_USUARIO, (usuario, clave),
-                                     lambda r: UsuariosFactory.crear(r[0], r[1], r[2], r[3], r[4], r[1], r[6], r[7]))
+                                     lambda r: Usuarios.crear(r[0], r[1], r[2], r[3], r[4], r[1], r[6], r[7]))
 
     def buscar_por_email(self, email: str) -> Usuario:
         return self.__db.obtener_uno(self.OBTENER_USUARIO_POR_EMAIL, (email,),
-                                     lambda r: UsuariosFactory.crear(r[0], r[1], r[2], r[3], r[4], r[5], r[6], r[7]))
+                                     lambda r: Usuarios.crear(r[0], r[1], r[2], r[3], r[4], r[5], r[6], r[7]))
 
     def existe_con_mail(self, email: str) -> bool:
         return self.__db.contar(self.EXISTE_USUARIO_CON_MAIL_SQL, (email,)) > 0
 
     def buscar_pujador_por_uid(self, uid: int) -> Pujador:
         return self.__db.obtener_uno(self.BUSCAR_USUARIO_POR_ID_Y_TIPO, (uid, TipoDeUsuario.Pujador.value),
-                                     lambda r: UsuariosFactory.crear(r[0], r[1], r[2], r[3], r[4], r[5], r[6], r[7]))
+                                     lambda r: Usuarios.crear(r[0], r[1], r[2], r[3], r[4], r[5], r[6], r[7]))
 
     def buscar_consignatario_por_uid(self, uid: int) -> Consignatario:
         return self.__db.obtener_uno(self.BUSCAR_USUARIO_POR_ID_Y_TIPO, (uid, TipoDeUsuario.Consignatario.value),
-                                     lambda r: UsuariosFactory.crear(r[0], r[1], r[2], r[3], r[4], r[5], r[6], r[7]))
+                                     lambda r: Usuarios.crear(r[0], r[1], r[2], r[3], r[4], r[5], r[6], r[7]))
 
     def buscar_usuario_por_uid(self, uid: int) -> Usuario:
         return self.__db.obtener_uno(self.BUSCAR_USUARIO_POR_ID, (uid,),
-                                     lambda r: UsuariosFactory.crear(r[0], r[1], r[2], r[3], r[4], r[5], r[6], r[7]))
+                                     lambda r: Usuarios.crear(r[0], r[1], r[2], r[3], r[4], r[5], r[6], r[7]))
 
     def buscar_martillero(self) -> Martillero:
         return self.__db.obtener_uno(self.BUSCAR_MARTILLERO, (),
-                                     lambda r: UsuariosFactory.crear(r[0], r[1], r[2], r[3], r[4], r[5], r[6], r[7]))
+                                     lambda r: Usuarios.crear(r[0], r[1], r[2], r[3], r[4], r[5], r[6], r[7]))
 
     def actualizar(self, cuenta: Usuario, usuario: str, email: str, clave: str) -> None:
         self.__db.actualizar(self.ACTUALIZAR_USUARIO, (usuario, email, clave, cuenta.obtener_uid()))
@@ -324,19 +324,19 @@ class TablaLotes(Lotes):
     def obtener(self, subasta: Subasta, orden: int) -> Lote:
         return self.__db.obtener_uno(self.LOTE_DE_SUBASTA, (subasta.obtener_uid(), orden),
                                      lambda r: Lote(r[0], subasta, Articulo(r[1], r[2], r[3], r[4],
-                                                    UsuariosFactory.crear(r[5], r[6], r[7], r[8], r[9], r[10], r[11],
+                                                    Usuarios.crear(r[5], r[6], r[7], r[8], r[9], r[10], r[11],
                                                     r[12])), r[13], r[14]))
 
     def buscar_por_uid(self, lote_uid: int) -> Lote:
         return self.__db.obtener_uno(self.BUSCAR_LOTE, (lote_uid,),
                                      lambda r: Lote(r[0], Subasta(r[1], r[2], r[3], r[4], r[5]), Articulo(r[6], r[7], r[8],
-                                                    r[9], UsuariosFactory.crear(r[10], r[11], r[12], r[13], r[14], r[15],
+                                                    r[9], Usuarios.crear(r[10], r[11], r[12], r[13], r[14], r[15],
                                                     r[16], r[17])), r[18], r[19]))
 
     def listar(self, subasta: Subasta) -> list[Lote]:
         return self.__db.obtener_muchos(self.LOTES_POR_SUBASTA, (subasta.obtener_uid(),),
                                         lambda r: Lote(r[0], subasta, Articulo(r[1], r[2], r[3], r[4],
-                                                       UsuariosFactory.crear(r[5], r[6], r[7], r[8], r[9], r[10], r[11],
+                                                       Usuarios.crear(r[5], r[6], r[7], r[8], r[9], r[10], r[11],
                                                        r[12])), r[13], r[14]))
 
 
@@ -366,16 +366,16 @@ class TablaPujas(Pujas):
 
     def buscar_ultima_puja(self, lote: Lote) -> Puja:
         return self.__db.obtener_uno(self.BUSCAR_ULTIMA_PUJA, (lote.obtener_uid(),),
-                                     lambda r: Puja(r[0], UsuariosFactory.crear(r[1], r[2], r[3], r[4], r[5], r[6], r[7],
-                                                                                r[8]), lote, r[9]))
+                                     lambda r: Puja(r[0], Usuarios.crear(r[1], r[2], r[3], r[4], r[5], r[6], r[7],
+                                                                         r[8]), lote, r[9]))
 
     def buscar_por_uid(self, uid: int) -> Puja:
         return self.__db.obtener_uno(self.BUSCAR_PUJA, (uid,), lambda r: Puja(r[0], r[1], Pujador(r[2]), Lote(r[3])))
 
     def buscar_por_lote(self, lote: Lote) -> list[Puja]:
         return self.__db.obtener_muchos(self.BUSCAR_POR_LOTE, (lote.obtener_uid(),),
-                                        lambda r: Puja(r[0], UsuariosFactory.crear(r[1], r[2], r[3], r[4], r[5], r[6], r[7],
-                                                                                   r[8]), lote, r[9]))
+                                        lambda r: Puja(r[0], Usuarios.crear(r[1], r[2], r[3], r[4], r[5], r[6], r[7],
+                                                                            r[8]), lote, r[9]))
 
 
 class TablaVentas(LibroDiario):

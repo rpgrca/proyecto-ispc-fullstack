@@ -56,6 +56,18 @@ class Martillero(Usuario):
 
 
 class Usuarios(ABC):
+    @staticmethod
+    def crear(uid: int, nombre: str, apellido: str, email: str, usuario: str, clave: str, nacimiento: date,
+              tipo: TipoDeUsuario) -> Usuario:
+        # Si el metodo se llama desde MySQL a traves de un query el tipo llega como un numero, por eso
+        # tengo que validar si tipo es el enum o el valor
+        if tipo == TipoDeUsuario.Consignatario or tipo == TipoDeUsuario.Consignatario.value:
+            return Consignatario(uid, nombre, apellido, email, usuario, clave, nacimiento)
+        elif tipo == TipoDeUsuario.Pujador or tipo == TipoDeUsuario.Pujador.value:
+            return Pujador(uid, nombre, apellido, email, usuario, clave, nacimiento)
+        else:
+            return Martillero(uid, nombre, apellido, email, usuario, clave, nacimiento)
+
     @abstractmethod
     def agregar(self, nombre: str, apellido: str, email: str, usuario: str, clave: str, nacimiento: date,
                 tipo: TipoDeUsuario) -> None:
@@ -92,17 +104,3 @@ class Usuarios(ABC):
     @abstractmethod
     def buscar_martillero(self) -> Martillero:
         pass
-
-
-class UsuariosFactory:
-    @staticmethod
-    def crear(uid: int, nombre: str, apellido: str, email: str, usuario: str, clave: str, nacimiento: date,
-              tipo: TipoDeUsuario) -> Usuario:
-        # Si el metodo se llama desde MySQL a traves de un query el tipo llega como un numero, por eso
-        # tengo que validar si tipo es el enum o el valor
-        if tipo == TipoDeUsuario.Consignatario or tipo == TipoDeUsuario.Consignatario.value:
-            return Consignatario(uid, nombre, apellido, email, usuario, clave, nacimiento)
-        elif tipo == TipoDeUsuario.Pujador or tipo == TipoDeUsuario.Pujador.value:
-            return Pujador(uid, nombre, apellido, email, usuario, clave, nacimiento)
-        else:
-            return Martillero(uid, nombre, apellido, email, usuario, clave, nacimiento)
