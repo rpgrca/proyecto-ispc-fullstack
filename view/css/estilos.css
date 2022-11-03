@@ -29,7 +29,6 @@ body {
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
-    font-family: "calibri";
 }
 
 .form-register {
@@ -42,7 +41,7 @@ body {
     border-radius: 10px;
     font-size: 19px;
     color: black;
-    box-shadow: 7px 13px 37px #161615;
+    box-shadow: 7px 5px 27px #272726;
 }
 
 @media only screen and (max-width: 768px) {
@@ -66,7 +65,7 @@ body {
     height: 25px;
     width: 100%;
     background-color: #ffba26;
-    padding: 10px;
+    padding: 15px;
     border-radius: 5px;
     margin: auto;
     margin-bottom: 14px;
@@ -101,13 +100,14 @@ body {
     text-align: center;
     font-size: 15px;
     line-height: 40px;
+    padding: 10px;
 }
 .form-register a {
     color: black;
     text-decoration: none;
-    font-size: 18px;
+    font-size: 16px;
     font-weight: bold;
-    
+    padding: 10px;
 }
 .form-register a:hover {
     color: white;
@@ -119,7 +119,7 @@ body {
     background-color: #f77409;
     border-radius: 10px;
     border: none;
-    padding: 14px;
+    padding: 10px;
     color: white;
     text-align: center;
     font-size: 22px;
@@ -210,4 +210,29 @@ body {
 
 .link-en-fondo-naranja {
     color: rgb(15, 15, 255);
+}
+
+
+.footer{
+    background-color: #3a3939;
+    color: #e8e8e8;
+    text-align: center;
+    text-decoration: none;
+}
+
+.footer .col ul a:hover{
+    text-decoration: underline;
+}
+
+.footer .col .nav{
+    
+    font-size: 17px;
+    font-weight:bolder;
+   
+}
+
+.footer p{
+    text-align: center;
+    font-size: 17px;
+    font-weight: bold;
 }
