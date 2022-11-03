@@ -63,7 +63,7 @@ class ControladorLibroDiarioTests(unittest.TestCase):
         venta = self.__db.Ventas.buscar_por_uid(1)
         self.assertEqual(C.ID_USUARIO, venta.obtener_ganador().obtener_uid())
         self.assertEqual(1, venta.obtener_uid())
-        self.assertEqual(C.TITULO_ARTICULO, venta.obtener_nombre_lote())
+        self.assertEqual(C.TITULO_ARTICULO, venta.obtener_titulo_lote())
         self.assertEqual(485, venta.obtener_pago_a_consignatario())
         self.assertEqual(616, venta.obtener_precio_final())
         self.assertEqual(50, venta.obtener_comision())

@@ -19,7 +19,7 @@ class Venta(Serializable):
     def obtener_uid(self) -> int:
         return self.__uid
 
-    def obtener_nombre_lote(self) -> str:
+    def obtener_titulo_lote(self) -> str:
         return self.__puja.obtener_lote().obtener_titulo_articulo()
 
     def obtener_ganador(self) -> Pujador:
@@ -35,7 +35,7 @@ class Venta(Serializable):
         return self.__pago_a_consignatario
 
     def serialize(self):
-        return {"id": self.__uid, "titulo": self.obtener_nombre_lote(), "ganador": self.obtener_ganador().obtener_nombre(),
+        return {"id": self.__uid, "titulo": self.obtener_titulo_lote(), "ganador": self.obtener_ganador().obtener_nombre(),
                 "precio": self.obtener_precio_final(), "comision": self.obtener_comision(),
                 "pago consignatario": self.obtener_pago_a_consignatario()}
 

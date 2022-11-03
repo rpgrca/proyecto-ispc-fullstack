@@ -1,8 +1,3 @@
-# articulos.py
-#
-# - crear(titulo, descripcion, valuacion, consignatario)
-# - listar()
-# - listar_para(consignatario)
 from abc import ABC, abstractmethod
 from model.serialization import Serializable
 from model.usuarios import Consignatario

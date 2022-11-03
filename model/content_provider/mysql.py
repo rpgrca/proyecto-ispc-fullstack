@@ -14,30 +14,29 @@ from model.libro_diario import Venta, LibroDiario
 
 class MysqlDatabase:
     def __init__(self, connection_string: list[str]):
-        self.__connection = None
-        self.name = "bidon_subastas"
-        self.extra_data = ["localhost", "root", "1234", "bidon_subastas"]
-        self.configurar(connection_string)
-        self.open()
+        self.__conexion = None
+        self.__default = ["localhost", "root", "1234", "bidon_subastas"]
+        self._configurar(connection_string)
+        self._open()
 
-    def configurar(self, connection_string: list[str]):
-        self.__host = connection_string[0] if connection_string and connection_string[0] else self.extra_data[0]
-        self.__user = connection_string[1] if connection_string and connection_string[1] else self.extra_data[1]
-        self.__password = connection_string[2] if connection_string and connection_string[2] else self.extra_data[2]
-        self.__database = connection_string[3] if connection_string and connection_string[3] else self.extra_data[3]
-        self.extra_data = [self.__host, self.__user, self.__password, self.__database]
+    def _configurar(self, connection_string: list[str]):
+        self.__host = connection_string[0] if connection_string and connection_string[0] else self.__default[0]
+        self.__user = connection_string[1] if connection_string and connection_string[1] else self.__default[1]
+        self.__password = connection_string[2] if connection_string and connection_string[2] else self.__default[2]
+        self.__database = connection_string[3] if connection_string and connection_string[3] else self.__default[3]
+        self.__default = [self.__host, self.__user, self.__password, self.__database]
 
-    def open(self):
-        if not self.__connection:
+    def _open(self):
+        if not self.__conexion:
             try:
-                self.__connection = mysql.connector.connect(user=self.__user, password=self.__password, host=self.__host,
+                self.__conexion = mysql.connector.connect(user=self.__user, password=self.__password, host=self.__host,
                                                             database=self.__database, connection_timeout=5)
             except Error as err:
                 if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
                     raise ValueError("Error en el usuario o password")
                 elif err.errno == errorcode.ER_BAD_DB_ERROR:
-                    self.__connection = mysql.connector.connect(user=self.__user, password=self.__password, host=self.__host)
-                    cursor = self.__connection.cursor()
+                    self.__conexion = mysql.connector.connect(user=self.__user, password=self.__password, host=self.__host)
+                    cursor = self.__conexion.cursor()
                     cursor.execute("CREATE DATABASE IF NOT EXISTS " + self.__database)
                     cursor.execute("USE " + self.__database)
                     cursor.execute("CREATE TABLE IF NOT EXISTS Usuarios ("
@@ -50,10 +49,10 @@ class MysqlDatabase:
                                    "nacimiento date not null,"
                                    "tipo_usuario int not null"
                                    ") ENGINE=InnoDB")
-                    self.__connection.commit()
+                    self.__conexion.commit()
                     cursor.close()
 
-                    cursor = self.__connection.cursor()
+                    cursor = self.__conexion.cursor()
                     cursor.execute("CREATE TABLE IF NOT EXISTS Articulos ("
                                    "id INT NOT NULL UNIQUE AUTO_INCREMENT PRIMARY KEY,"
                                    "titulo varchar(50) NOT NULL,"
@@ -62,10 +61,10 @@ class MysqlDatabase:
                                    "id_consignatario int not null,"
                                    "CONSTRAINT fk_id_consignatario FOREIGN KEY(id_consignatario) REFERENCES Usuarios(id)"
                                    ") ENGINE=InnoDB")
-                    self.__connection.commit()
+                    self.__conexion.commit()
                     cursor.close()
 
-                    cursor = self.__connection.cursor()
+                    cursor = self.__conexion.cursor()
                     cursor.execute("CREATE TABLE IF NOT EXISTS Subastas ("
                                    "id int not null unique auto_increment primary key,"
                                    "fecha date not null,"
@@ -73,10 +72,10 @@ class MysqlDatabase:
                                    "descripcion varchar(50) not null,"
                                    "imagen varchar(256) not null"
                                    ") ENGINE=InnoDB")
-                    self.__connection.commit()
+                    self.__conexion.commit()
                     cursor.close()
 
-                    cursor = self.__connection.cursor()
+                    cursor = self.__conexion.cursor()
                     cursor.execute("CREATE TABLE IF NOT EXISTS Lotes ("
                                    "id int not null unique auto_increment primary key,"
                                    "precio_base int not null,"
@@ -86,10 +85,10 @@ class MysqlDatabase:
                                    "constraint fk_id_articulo foreign key (id_articulo) references Articulos (id),"
                                    "constraint fk_id_subasta foreign key (id_subasta) references Subastas (id)"
                                    ") ENGINE=InnoDB")
-                    self.__connection.commit()
+                    self.__conexion.commit()
                     cursor.close()
 
-                    cursor = self.__connection.cursor()
+                    cursor = self.__conexion.cursor()
                     cursor.execute("CREATE TABLE IF NOT EXISTS Pujas ("
                                    "id int not null unique auto_increment primary key,"
                                    "monto int not null,"
@@ -98,10 +97,10 @@ class MysqlDatabase:
                                    "constraint fk_id_pujador foreign key (id_pujador) references Usuarios(id),"
                                    "constraint fk_id_lote foreign key (id_lote) references Lotes(id)"
                                    ") ENGINE=InnoDB")
-                    self.__connection.commit()
+                    self.__conexion.commit()
                     cursor.close()
 
-                    cursor = self.__connection.cursor()
+                    cursor = self.__conexion.cursor()
                     cursor.execute("CREATE TABLE IF NOT EXISTS Ventas ("
                                    "id int not null unique auto_increment primary key,"
                                    "precio_final float not null,"
@@ -110,42 +109,42 @@ class MysqlDatabase:
                                    "id_puja int not null,"
                                    "constraint fk_id_puja foreign key(id_puja) references Pujas (id)"
                                    ") ENGINE=InnoDB")
-                    self.__connection.commit()
+                    self.__conexion.commit()
                     cursor.close()
                 else:
                     raise ValueError(err)
 
     def obtener_cursor(self):
-        return self.__connection.cursor(buffered=True)
+        return self.__conexion.cursor(buffered=True)
 
     def contar(self, sql: str, valores=()) -> int:
         try:
             cursor = self.obtener_cursor()
             cursor.execute(sql, valores)
-            self.__connection.commit()
+            self.__conexion.commit()
             record = cursor.fetchone()
             if record is not None:
                 return record[0]
         except Exception as err:
             raise err
 
-    def obtener_uno(self, sql: str, valores=(), creator=lambda r: None):
+    def obtener_uno(self, sql: str, valores=(), creator=lambda r: None) -> Any:
         try:
             cursor = self.obtener_cursor()
             cursor.execute(sql, valores)
-            self.__connection.commit()
+            self.__conexion.commit()
             record = cursor.fetchone()
             if record is not None:
                 return creator(record)
         except Exception as err:
             raise err
 
-    def obtener_muchos(self, sql: str, valores=(), creador=lambda r: None):
+    def obtener_muchos(self, sql: str, valores=(), creador=lambda r: None) -> list[Any]:
         try:
             resultado = []
             cursor = self.obtener_cursor()
             cursor.execute(sql, valores)
-            self.__connection.commit()
+            self.__conexion.commit()
             records = cursor.fetchall()
             for record in records:
                 resultado.append(creador(record))
@@ -158,7 +157,7 @@ class MysqlDatabase:
         try:
             cursor = self.obtener_cursor()
             cursor.execute(sql, valores)
-            self.__connection.commit()
+            self.__conexion.commit()
             return creator(cursor.lastrowid, valores)
         except Exception as err:
             raise err
@@ -167,12 +166,9 @@ class MysqlDatabase:
         try:
             cursor = self.obtener_cursor()
             cursor.execute(sql, valores)
-            self.__connection.commit()
+            self.__conexion.commit()
         except Exception as err:
             raise err
-
-    def obtener_conexion(self):
-        return self.__connection
 
 
 class TablaSubastas(Subastas):
