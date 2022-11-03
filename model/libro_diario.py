@@ -20,7 +20,7 @@ class Venta(Serializable):
         return self.__uid
 
     def obtener_nombre_lote(self) -> str:
-        return self.__puja.obtener_titulo_lote()
+        return self.__puja.obtener_lote().obtener_titulo_articulo()
 
     def obtener_ganador(self) -> Pujador:
         return self.__puja.obtener_pujador()

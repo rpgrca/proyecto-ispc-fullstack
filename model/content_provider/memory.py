@@ -133,13 +133,13 @@ class PujasEnMemoria(Pujas):
         self.__next_id += 1
 
     def buscar_ultima_puja(self, lote: Lote) -> Puja:
-        return next(filter(lambda p: p.obtener_lote_uid() == lote.obtener_uid(), reversed(self.__pujas)), None)
+        return next(filter(lambda p: p.obtener_lote().obtener_uid() == lote.obtener_uid(), reversed(self.__pujas)), None)
 
     def buscar_por_uid(self, uid: int) -> Puja:
         return next(filter(lambda p: p.obtener_uid() == uid, self.__pujas), None)
 
     def buscar_por_lote(self, lote: Lote) -> list[Puja]:
-        return [puja for puja in self.__pujas if puja.obtener_lote_uid() == lote.obtener_uid()]
+        return [puja for puja in self.__pujas if puja.obtener_lote().obtener_uid() == lote.obtener_uid()]
 
 
 class LotesEnMemoria(Lotes):
