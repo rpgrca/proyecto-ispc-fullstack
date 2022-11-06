@@ -20,6 +20,12 @@ class Articulo(Serializable):
     def obtener_titulo(self) -> str:
         return self.__titulo
 
+    def obtener_valuacion(self) -> int:
+        return self.__valuacion
+
+    def obtener_descripcion(self) -> str:
+        return self.__descripcion
+
     def serialize(self):
         return {"id": self.__uid, "consignatario_id": self.__consignatario.obtener_uid(), "titulo": self.__titulo,
                 "descripcion": self.__descripcion, "valuacion": self.__valuacion}
@@ -48,4 +54,8 @@ class Articulos(ABC):
 
     @abstractmethod
     def borrar(self, uid: int) -> None:
+        pass
+
+    @abstractmethod
+    def actualizar(self, uid: int, titulo: str, descripcion: str, valuacion: int, consignatario: Consignatario) -> None:
         pass

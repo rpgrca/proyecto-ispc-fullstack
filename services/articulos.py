@@ -16,6 +16,7 @@ class ServicioArticulos(Servicio):
     BORRAR_ARTICULO_INVALIDO = "No se puede borrar artículo inválido"
     BORRAR_ARTICULO_INEXISTENTE = "No se puede borrar artículo inexistente"
     BORRAR_ARTICULO_EN_LOTE = "No se puede borrar un artículo que pertenece a un lote"
+    ACTUALIZANDO_ARTICULO_INEXISTENTE = "No se puede actualizar un artículo inexistente"
 
     def __init__(self, db: BaseDeDatos):
         self.__db = db
@@ -62,3 +63,19 @@ class ServicioArticulos(Servicio):
             self._throw(self.BORRAR_ARTICULO_EN_LOTE)
 
         self.__db.Articulos.borrar(uid)
+
+    def actualizar(self, uid: int, titulo: str, descripcion: str, valuacion: str, consignatario_uid: int) -> None:
+        self._throw_if_not_positive(uid, self.UID_INVALIDO)
+        self._throw_if_not_positive(consignatario_uid, self.CONSIGNATARIO_INVALIDO)
+
+        self._throw_if_invalid(titulo, self.TITULO_INVALIDO)
+        self._throw_if_invalid(descripcion, self.DESCRIPCION_INVALIDA)
+        self._throw_if_not_positive(valuacion, self.VALUACION_INVALIDA)
+
+        articulo = self.__db.Articulos.buscar_por_uid(uid)
+        self._throw_if_invalid(articulo, self.ACTUALIZANDO_ARTICULO_INEXISTENTE)
+
+        consignatario = self.__db.Usuarios.buscar_consignatario_por_uid(consignatario_uid)
+        self._throw_if_invalid(consignatario, self.CONSIGNATARIO_INEXISTENTE)
+
+        self.__db.Articulos.actualizar(articulo, titulo, descripcion, valuacion, consignatario)

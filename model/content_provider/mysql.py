@@ -203,6 +203,11 @@ class TablaArticulos(Articulos):
      WHERE id_consignatario = Usuarios.id
     """
     BORRAR_ARTICULO = "DELETE FROM Articulos WHERE id = %s"
+    ACTUALIZAR_ARTICULO = """
+    UPDATE Articulos
+       SET titulo = %s, descripcion= %s, valuacion = %s, id_consignatario = %s
+     WHERE id = %s
+    """
 
     def __init__(self, db: MysqlDatabase):
         self.__db = db
@@ -228,6 +233,11 @@ class TablaArticulos(Articulos):
 
     def borrar(self, uid: int) -> None:
         self.__db.borrar(self.BORRAR_ARTICULO, (uid,))
+
+    def actualizar(self, articulo: Articulo, titulo: str, descripcion: str, valuacion: int,
+                   consignatario: Consignatario) -> None:
+        self.__db.actualizar(self.ACTUALIZAR_ARTICULO, (titulo, descripcion, valuacion, consignatario.obtener_uid(),
+                                                        articulo.obtener_uid()))
 
 
 class TablaUsuarios(Usuarios):

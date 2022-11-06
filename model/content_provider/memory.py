@@ -128,6 +128,16 @@ class ArticulosEnMemoria(Articulos):
     def borrar(self, uid: int) -> None:
         self.__articulos = [articulo for articulo in self.__articulos if articulo.obtener_uid() != uid]
 
+    def actualizar(self, articulo: Articulo, titulo: str, descripcion: str, valuacion: str, consignatario: Consignatario) -> None:
+        articulos = []
+        for actual in self.__articulos:
+            if actual.obtener_uid() != articulo.obtener_uid():
+                articulos.append(actual)
+            else:
+                articulos.append(Articulo(actual.obtener_uid(), titulo, descripcion, valuacion, consignatario))
+
+        self.__articulos = articulos
+
 
 class PujasEnMemoria(Pujas):
     def __init__(self, pujas: list[Puja]):
