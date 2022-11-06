@@ -50,10 +50,14 @@ class ServicioLote(Servicio):
         subasta = self.__db.Subastas.buscar_por_uid(subasta_uid)
         self._throw_if_invalid(subasta, self.SUBASTA_INEXISTENTE)
 
-        if orden < 1 or orden > self.__db.Lotes.contar_lotes(subasta):
+        if orden < 1:
             self._throw(self.LOTE_INEXISTENTE)
 
-        return self.__db.Lotes.obtener(subasta, orden)
+        lote = self.__db.Lotes.obtener(subasta, orden)
+        if not lote:
+            self._throw(self.LOTE_INEXISTENTE)
+
+        return lote
 
     def listar(self, subasta_uid: int) -> list[Lote]:
         self._throw_if_not_positive(subasta_uid, self.LISTAR_SIN_SUBASTA)

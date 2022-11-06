@@ -55,5 +55,6 @@ class Lotes(ABC):
     def listar(self, subasta: Subasta) -> list[Lote]:
         pass
 
+    @abstractmethod
     def existe_con_articulo(self, articulo: Articulo) -> bool:
         pass

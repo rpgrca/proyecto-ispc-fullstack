@@ -151,6 +151,19 @@ class ControladorLoteTests(unittest.TestCase):
         self.assertEqual("ok", respuesta["status"])
         self.assertEqual(2, respuesta["item"]["orden"])
 
+    def test_retorna_error_cuando_lote_no_existe_en_lista(self):
+        consignatario = self.__db.Usuarios.buscar_usuario_por_uid(1)
+        sut = ControladorLote(self.__db)
+        self.__db.Articulos.crear(C.TITULO_ARTICULO, C.DESCRIPCION_ARTICULO, C.VALUACION_ARTICULO, consignatario)
+        self.__db.Articulos.crear(C.OTRO_TITULO_ARTICULO, C.OTRA_DESCRIPCION_ARTICULO, C.OTRA_VALUACION_ARTICULO,
+                                  consignatario)
+        sut.agregar(C.SUBASTA_UID, C.ARTICULO_UID, 100, 1)
+        sut.agregar(C.SUBASTA_UID, C.OTRO_ARTICULO_UID, 200, 5)
+        sut.obtener(C.SUBASTA_UID, 3)
+        respuesta = sut.obtener_respuesta()
+        self.assertEqual("error", respuesta["status"])
+        self.assertEqual(ServicioLote.LOTE_INEXISTENTE, respuesta["mensaje"])
+
     @data(-1, 1)
     def test_retorna_error_cuando_intenta_acceder_lote_invalido(self, orden: int):
         sut = ControladorLote(self.__db)
@@ -207,7 +220,6 @@ class ControladorLoteTests(unittest.TestCase):
             "titulo": "Sofa Antiguo",
             "descripcion": "Un sofa de principios de siglo.",
             "valuacion": 15000}, "base": 100, "orden": 2}, respuesta["items"])
-
 
 if __name__ == "__main__":
     unittest.main()

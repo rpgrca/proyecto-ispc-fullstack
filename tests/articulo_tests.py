@@ -195,11 +195,21 @@ class ControladorArticuloTests(unittest.TestCase):
         self.assertEqual("error", respuesta["status"])
         self.assertEqual(ServicioArticulos.BORRAR_ARTICULO_EN_LOTE, respuesta["mensaje"])
 
-
-    def test_borrar_articulo_correctamente(self):
+    def test_borrar_articulo_correctamente_cuando_no_hay_lotes(self):
         sut = ControladorArticulo(self.__db)
         sut.agregar(C.TITULO_ARTICULO, C.DESCRIPCION_ARTICULO, C.VALUACION_ARTICULO, 1)
         sut.borrar(C.ARTICULO_UID)
+        respuesta = sut.obtener_respuesta()
+        self.assertEqual("ok", respuesta["status"])
+        self.assertEqual(ControladorArticulo.ARTICULO_BORRADO, respuesta["mensaje"])
+
+    def test_borrar_articulo_correctamente_cuando_no_esta_en_ningun_lote(self):
+        sut = ControladorArticulo(self.__db)
+        sut.agregar(C.TITULO_ARTICULO, C.DESCRIPCION_ARTICULO, C.VALUACION_ARTICULO, 1)
+        subasta_uid = ServicioSubasta(self.__db).crear(C.TITULO_SUBASTA, C.DESCRIPCION_SUBASTA, C.IMAGEN_SUBASTA, C.FECHA_DE_SUBASTA)
+        ServicioLote(self.__db).agregar(subasta_uid, C.ARTICULO_UID, C.BASE_LOTE, C.ORDEN_LOTE)
+        sut.agregar(C.OTRO_TITULO_ARTICULO, C.OTRA_DESCRIPCION_ARTICULO, C.OTRA_VALUACION_ARTICULO, 1)
+        sut.borrar(C.OTRO_ARTICULO_UID)
         respuesta = sut.obtener_respuesta()
         self.assertEqual("ok", respuesta["status"])
         self.assertEqual(ControladorArticulo.ARTICULO_BORRADO, respuesta["mensaje"])

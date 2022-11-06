@@ -25,6 +25,10 @@ TITULO_SUBASTA = "Subasta!"
 DESCRIPCION_SUBASTA = "Nos vemos en la subasta!"
 IMAGEN_SUBASTA = "gransubasta.jpg"
 FECHA_DE_SUBASTA = 9/17/2000
+OTRO_TITULO_SUBASTA = "Otra gran barata!"
+OTRA_DESCRIPCION_SUBASTA = "Nos vemos la próxima semana!"
+OTRA_IMAGEN_SUBASTA = "barata.gif"
+OTRA_FECHA_SUBASTA = 9/23/2000
 
 LOTE_UID = 1
 OTRO_LOTE_UID = 2
