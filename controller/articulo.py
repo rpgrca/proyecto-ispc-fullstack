@@ -5,6 +5,7 @@ from model.database import BaseDeDatos
 
 class ControladorArticulo(Controlador):
     ARTICULO_CREADO = "El artículo ha sido creado correctamente"
+    ARTICULO_BORRADO = "El artículo ha sido borrado correctamente"
 
     def __init__(self, db: BaseDeDatos):
         super().__init__()
@@ -35,5 +36,19 @@ class ControladorArticulo(Controlador):
         try:
             total = ServicioArticulos(self.__db).contar()
             self._responder_bien_con_numero("total", total)
+        except Exception as err:
+            self._responder_mal_con(str(err))
+
+    def listar(self) -> None:
+        try:
+            lista = ServicioArticulos(self.__db).listar()
+            self._responder_bien_serializando_lista(lista)
+        except Exception as err:
+            self._responder_mal_con(str(err))
+
+    def borrar(self, uid: int) -> None:
+        try:
+            ServicioArticulos(self.__db).borrar(uid)
+            self._responder_bien_con(self.ARTICULO_BORRADO)
         except Exception as err:
             self._responder_mal_con(str(err))

@@ -27,6 +27,9 @@ class Lote(Serializable):
     def obtener_titulo_articulo(self) -> str:
         return self.__articulo.obtener_titulo()
 
+    def obtener_articulo_uid(self) -> int:
+        return self.__articulo.obtener_uid()
+
     def serialize(self):
         return {"articulo": self.__articulo.serialize(), "base": self.__base, "orden": self.__orden}
 
@@ -50,4 +53,7 @@ class Lotes(ABC):
 
     @abstractmethod
     def listar(self, subasta: Subasta) -> list[Lote]:
+        pass
+
+    def existe_con_articulo(self, articulo: Articulo) -> bool:
         pass

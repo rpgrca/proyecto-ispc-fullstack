@@ -41,3 +41,11 @@ class Articulos(ABC):
     @abstractmethod
     def contar(self) -> int:
         pass
+
+    @abstractmethod
+    def listar(self) -> list[Articulo]:
+        pass
+
+    @abstractmethod
+    def borrar(self, uid: int) -> None:
+        pass

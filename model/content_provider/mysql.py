@@ -189,9 +189,20 @@ class TablaSubastas(Subastas):
 
 class TablaArticulos(Articulos):
     CREAR_ARTICULO = "INSERT INTO Articulos(titulo, descripcion, valuacion, id_consignatario) VALUES (%s,%s,%s,%s)"
-    BUSCAR_ARTICULO = "SELECT id, titulo, descripcion, valuacion, id_consignatario FROM Articulos WHERE id = %s"
+    BUSCAR_ARTICULO = """
+    SELECT id, titulo, descripcion, valuacion, id_consignatario, nombre, apellido, email, usuario, clave, nacimiento
+      FROM Articulos, Usuarios
+      WHERE id = %s
+        AND id_consignatario = Usuarios.id"""
     BUSCAR_POR_CONSIGNATARIO = "SELECT id, titulo, descripcion, valuacion FROM Articulos WHERE id_consignatario = %s"
     CONTAR_ARTICULOS = "SELECT COUNT(id) FROM Articulos"
+    LISTAR_ARTICULOS = """
+    SELECT id, titulo, descripcion, valuacion, id_consignatario, nombre, apellido, email, usuario, clave, nacimiento,
+           tipo_usuario
+      FROM Articulos, Usuarios
+     WHERE id_consignatario = Usuarios.id
+    """
+    BORRAR_ARTICULO = "DELETE FROM Articulos WHERE id = %s"
 
     def __init__(self, db: MysqlDatabase):
         self.__db = db
@@ -201,7 +212,8 @@ class TablaArticulos(Articulos):
                                   lambda i, r: Articulo(i, r[0], r[1], r[2], r[3]))
 
     def buscar_por_uid(self, uid: int) -> Articulo:
-        return self.__db.obtener_uno(self.BUSCAR_ARTICULO, (uid,), lambda r: Articulo(r[0], r[1], r[2], r[3], r[4]))
+        return self.__db.obtener_uno(self.BUSCAR_ARTICULO, (uid,), lambda r: Articulo(r[0], r[1], r[2], r[3],
+                                     Consignatario(r[4], r[5], r[6], r[7], r[8], r[9], r[10])))
 
     def listar_articulos_propiedad_de(self, consignatario: Consignatario) -> list[Articulo]:
         return self.__db.obtener_muchos(self.BUSCAR_POR_CONSIGNATARIO, (consignatario.obtener_uid(),),
@@ -209,6 +221,13 @@ class TablaArticulos(Articulos):
 
     def contar(self) -> int:
         return self.__db.contar(self.CONTAR_ARTICULOS)
+
+    def listar(self) -> list[Articulo]:
+        return self.__db.obtener_muchos(self.LISTAR_ARTICULOS, (), lambda r: Articulo(r[0], r[1], r[2], r[3],
+                                        Usuarios.crear(r[4], r[5], r[6], r[7], r[8], r[9], r[10], r[11])))
+
+    def borrar(self, uid: int) -> None:
+        self.__db.borrar(self.BORRAR_ARTICULO, (uid,))
 
 
 class TablaUsuarios(Usuarios):
@@ -308,6 +327,8 @@ class TablaLotes(Lotes):
            AND Usuarios.id = id_consignatario
            AND id_articulo = a.id"""
 
+    EXISTE_CON_ARTICULO = "SELECT COUNT(*) FROM Lotes WHERE id_articulo = %s"
+
     def __init__(self, db: MysqlDatabase):
         self.__db = db
 
@@ -335,6 +356,8 @@ class TablaLotes(Lotes):
                                                        Usuarios.crear(r[5], r[6], r[7], r[8], r[9], r[10], r[11],
                                                        r[12])), r[13], r[14]))
 
+    def existe_con_articulo(self, articulo: Articulo) -> bool:
+        return self.__db.contar(self.EXISTE_CON_ARTICULO, (articulo.obtener_uid(),)) > 0
 
 class TablaPujas(Pujas):
     CREAR_PUJA = "INSERT INTO Pujas(id_pujador, id_lote, monto) VALUES (%s,%s,%s)"

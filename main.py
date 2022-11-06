@@ -24,8 +24,8 @@ app.add_middleware(
     allow_headers=["*"]
 )
 
-db = CreadorDeBasesDeDatosMySql(["localhost", "root", "gTp8xT2!", "bidon_subastas"]).construir()
-# db = CreadorDeBasesDeDatosTemporales().construir()
+# db = CreadorDeBasesDeDatosMySql(["localhost", "root", "gTp8xT2!", "bidon_subastas"]).construir()
+db = CreadorDeBasesDeDatosTemporales().construir()
 
 
 def __cambiar_status_code(respuesta: dict[str, str], response: Response, status_code=status.HTTP_401_UNAUTHORIZED):
@@ -73,6 +73,13 @@ def crear_articulo(titulo: str = Form(), descripcion: str = Form(), valuacion: i
     return __cambiar_status_code(controlador.obtener_respuesta(), response)
 
 
+@app.get("/articulos", status_code=status.HTTP_200_OK)
+def listar_articulos(response: Response = Response()):
+    controlador = ControladorArticulo(db)
+    controlador.listar()
+    return __cambiar_status_code(controlador.obtener_respuesta(), response)
+
+
 @app.get("/articulos/contar", status_code=status.HTTP_200_OK)
 def contar_articulos(response: Response = Response()):
     controlador = ControladorArticulo(db)
@@ -81,7 +88,7 @@ def contar_articulos(response: Response = Response()):
 
 
 @app.get("/articulos/listar/{consignatario_uid}", status_code=status.HTTP_200_OK)
-def listar_articulos(consignatario_uid: int, response: Response = Response()):
+def listar_articulos_de(consignatario_uid: int, response: Response = Response()):
     controlador = ControladorArticulo(db)
     controlador.listar_articulos_propiedad_de(consignatario_uid)
     return __cambiar_status_code(controlador.obtener_respuesta(), response)

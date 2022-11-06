@@ -13,6 +13,9 @@ class ServicioArticulos(Servicio):
     CONSIGNATARIO_INEXISTENTE = "No se puede crear un artículo con un consignatario inexistente"
     LISTAR_CON_CONSIGNATARIO_INEXISTENTE = "No se puede listar artículos de un consignatario inexistente"
     ARTICULO_INEXISTENTE = "El artículo no existe"
+    BORRAR_ARTICULO_INVALIDO = "No se puede borrar artículo inválido"
+    BORRAR_ARTICULO_INEXISTENTE = "No se puede borrar artículo inexistente"
+    BORRAR_ARTICULO_EN_LOTE = "No se puede borrar un artículo que pertenece a un lote"
 
     def __init__(self, db: BaseDeDatos):
         self.__db = db
@@ -45,3 +48,17 @@ class ServicioArticulos(Servicio):
 
     def contar(self) -> int:
         return self.__db.Articulos.contar()
+
+    def listar(self) -> list[Articulo]:
+        return self.__db.Articulos.listar()
+
+    def borrar(self, uid: int) -> None:
+        self._throw_if_not_positive(uid, self.BORRAR_ARTICULO_INVALIDO)
+
+        articulo = self.__db.Articulos.buscar_por_uid(uid)
+        self._throw_if_invalid(articulo, self.BORRAR_ARTICULO_INEXISTENTE)
+
+        if self.__db.Lotes.existe_con_articulo(articulo):
+            self._throw(self.BORRAR_ARTICULO_EN_LOTE)
+
+        self.__db.Articulos.borrar(uid)

@@ -3,6 +3,8 @@ from ddt import ddt, data
 import tests.constantes as C
 from controller.articulo import ControladorArticulo
 from services.articulos import ServicioArticulos
+from services.subastas import ServicioSubasta
+from services.lotes import ServicioLote
 from model.content_provider.memory import CreadorDeBasesDeDatosTemporales
 from model.content_provider.memory import ArticulosEnMemoria, SubastasEnMemoria, UsuariosEnMemoria
 from model.tipo_usuario import TipoDeUsuario
@@ -164,6 +166,78 @@ class ControladorArticuloTests(unittest.TestCase):
             .construir()
         sut = ControladorArticulo(db)
         sut.contar()
+        respuesta = sut.obtener_respuesta()
+        self.assertEqual("error", respuesta["status"])
+        self.assertNotEqual("", respuesta["mensaje"])
+
+    @data(None, "", -1, 0)
+    def test_retornar_error_cuando_se_borra_articulo_invalido(self, articulo_invalido):
+        sut = ControladorArticulo(self.__db)
+        sut.borrar(articulo_invalido)
+        respuesta = sut.obtener_respuesta()
+        self.assertEqual("error", respuesta["status"])
+        self.assertEqual(ServicioArticulos.BORRAR_ARTICULO_INVALIDO, respuesta["mensaje"])
+
+    def test_retornar_error_cuando_se_borra_articulo_inexistente(self):
+        sut = ControladorArticulo(self.__db)
+        sut.borrar(C.ARTICULO_UID)
+        respuesta = sut.obtener_respuesta()
+        self.assertEqual("error", respuesta["status"])
+        self.assertEqual(ServicioArticulos.BORRAR_ARTICULO_INEXISTENTE, respuesta["mensaje"])
+
+    def test_retornar_error_cuando_se_borra_articulo_en_lote(self):
+        sut = ControladorArticulo(self.__db)
+        sut.agregar(C.TITULO_ARTICULO, C.DESCRIPCION_ARTICULO, C.VALUACION_ARTICULO, 1)
+        subasta_uid = ServicioSubasta(self.__db).crear(C.TITULO_SUBASTA, C.DESCRIPCION_SUBASTA, C.IMAGEN_SUBASTA, C.FECHA_DE_SUBASTA)
+        ServicioLote(self.__db).agregar(subasta_uid, C.ARTICULO_UID, C.BASE_LOTE, C.ORDEN_LOTE)
+        sut.borrar(C.ARTICULO_UID)
+        respuesta = sut.obtener_respuesta()
+        self.assertEqual("error", respuesta["status"])
+        self.assertEqual(ServicioArticulos.BORRAR_ARTICULO_EN_LOTE, respuesta["mensaje"])
+
+
+    def test_borrar_articulo_correctamente(self):
+        sut = ControladorArticulo(self.__db)
+        sut.agregar(C.TITULO_ARTICULO, C.DESCRIPCION_ARTICULO, C.VALUACION_ARTICULO, 1)
+        sut.borrar(C.ARTICULO_UID)
+        respuesta = sut.obtener_respuesta()
+        self.assertEqual("ok", respuesta["status"])
+        self.assertEqual(ControladorArticulo.ARTICULO_BORRADO, respuesta["mensaje"])
+
+    def test_listar_vacio_cuando_no_hay_articulos(self):
+        sut = ControladorArticulo(self.__db)
+        sut.listar()
+        respuesta = sut.obtener_respuesta()
+        self.assertEqual("ok", respuesta["status"])
+        self.assertEqual([], respuesta["items"])
+
+    def test_listar_elementos_cuando_hay_articulos(self):
+        sut = ControladorArticulo(self.__db)
+        sut.agregar(C.TITULO_ARTICULO, C.DESCRIPCION_ARTICULO, C.VALUACION_ARTICULO, 1)
+        sut.agregar(C.OTRO_ARTICULO_UID, C.OTRA_DESCRIPCION_ARTICULO, C.OTRA_VALUACION_ARTICULO, 1)
+        sut.listar()
+        respuesta = sut.obtener_respuesta()
+        self.assertEqual("ok", respuesta["status"])
+        self.assertEqual(2, len(respuesta["items"]))
+        self.assertIn({
+            "consignatario_id": 1,
+            "descripcion": "Un sofa de principios de siglo.",
+            "id": 1,
+            "titulo": "Sofa Antiguo",
+            "valuacion": 15000 }, respuesta["items"])
+        self.assertIn({"consignatario_id": 1,
+            "descripcion": "Un reloj de arena que atrasa.",
+            "id": 2,
+            "titulo": 2,
+            "valuacion": 3000}, respuesta["items"])
+        sut.listar()
+
+    def test_retornar_error_cuando_ocurre_un_error_interno(self):
+        db = CreadorDeBasesDeDatosTemporales() \
+            .con_articulos(None) \
+            .construir()
+        sut = ControladorArticulo(db)
+        sut.listar()
         respuesta = sut.obtener_respuesta()
         self.assertEqual("error", respuesta["status"])
         self.assertNotEqual("", respuesta["mensaje"])

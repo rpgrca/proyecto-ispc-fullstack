@@ -122,6 +122,12 @@ class ArticulosEnMemoria(Articulos):
     def contar(self) -> int:
         return len(self.__articulos)
 
+    def listar(self) -> list[Articulo]:
+        return self.__articulos
+
+    def borrar(self, uid: int) -> None:
+        self.__articulos = [articulo for articulo in self.__articulos if articulo.obtener_uid() != uid]
+
 
 class PujasEnMemoria(Pujas):
     def __init__(self, pujas: list[Puja]):
@@ -162,6 +168,9 @@ class LotesEnMemoria(Lotes):
     def listar(self, subasta: Subasta) -> list[Lote]:
         return sorted([lote for lote in self.__lotes if lote.obtener_subasta_uid() == subasta.obtener_uid()],
                       key=lambda x: x.obtener_orden())
+
+    def existe_con_articulo(self, articulo: Articulo) -> bool:
+        return any(lote.obtener_articulo_uid() == articulo.obtener_uid() for lote in self.__lotes) > 0
 
 
 class LibroDiarioEnMemoria(LibroDiario):
