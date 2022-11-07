@@ -57,7 +57,7 @@ def reestablecer(email: str = Form(), response: Response = Response()):
     return __cambiar_status_code(controlador.obtener_respuesta(), response)
 
 
-@app.post("/consignatarios/", status_code=status.HTTP_200_OK)
+@app.post("/consignatarios", status_code=status.HTTP_200_OK)
 def crear_consignatario(nombre: str = Form(), apellido: str = Form(), email: str = Form(), usuario: str = Form(),
                         clave: str = Form(), nacimiento: date = Form(), response: Response = Response()):
     controlador = ControladorUsuario(db)
@@ -65,18 +65,11 @@ def crear_consignatario(nombre: str = Form(), apellido: str = Form(), email: str
     return __cambiar_status_code(controlador.obtener_respuesta(), response)
 
 
-@app.post("/articulos/", status_code=status.HTTP_200_OK)
+@app.post("/articulos", status_code=status.HTTP_200_OK)
 def crear_articulo(titulo: str = Form(), descripcion: str = Form(), valuacion: int = Form(), consignatario_uid: int = Form(),
                    response: Response = Response()):
     controlador = ControladorArticulo(db)
     controlador.agregar(titulo, descripcion, valuacion, consignatario_uid)
-    return __cambiar_status_code(controlador.obtener_respuesta(), response)
-
-
-@app.get("/articulos", status_code=status.HTTP_200_OK)
-def listar_articulos(response: Response = Response()):
-    controlador = ControladorArticulo(db)
-    controlador.listar()
     return __cambiar_status_code(controlador.obtener_respuesta(), response)
 
 
@@ -91,6 +84,28 @@ def contar_articulos(response: Response = Response()):
 def listar_articulos_de(consignatario_uid: int, response: Response = Response()):
     controlador = ControladorArticulo(db)
     controlador.listar_articulos_propiedad_de(consignatario_uid)
+    return __cambiar_status_code(controlador.obtener_respuesta(), response)
+
+
+@app.get("/articulos", status_code=status.HTTP_200_OK)
+def listar_articulos(response: Response = Response()):
+    controlador = ControladorArticulo(db)
+    controlador.listar()
+    return __cambiar_status_code(controlador.obtener_respuesta(), response)
+
+
+@app.delete("/articulos", status_code=status.HTTP_200_OK)
+def borrar_articulo(uid: int = Form(), response: Response = Response()):
+    controlador = ControladorArticulo(db)
+    controlador.borrar(uid)
+    return __cambiar_status_code(controlador.obtener_respuesta(), response)
+
+
+@app.put("/articulos", status_code=status.HTTP_200_OK)
+def actualizar_articulo(uid: int = Form(), titulo: str = Form(), descripcion: str = Form(), valuacion: int = Form(),
+                        consignatario_uid: int = Form(), response: Response = Response()):
+    controlador = ControladorArticulo(db)
+    controlador.actualizar(uid, titulo, descripcion, valuacion, consignatario_uid)
     return __cambiar_status_code(controlador.obtener_respuesta(), response)
 
 
