@@ -325,6 +325,17 @@ class ControladorArticuloTests(unittest.TestCase):
         self.assertEqual("ok", respuesta["status"])
         self.assertEqual(ControladorArticulo.ARTICULO_ACTUALIZADO, respuesta["mensaje"])
 
+    def test_retornar_ok_cuando_se_actualiza_correctamente_entre_varios_articulos(self):
+        self.__db.Usuarios.agregar(C.OTRO_NOMBRE_USUARIO, C.APELLIDO_USUARIO, C.OTRO_EMAIL_USUARIO, C.OTRO_NOMBRE_USUARIO,
+                                   C.OTRA_CLAVE_USUARIO, C.OTRA_FECHA_SUBASTA, TipoDeUsuario.Consignatario)
+        sut = ControladorArticulo(self.__db)
+        sut.agregar(C.TITULO_ARTICULO, C.DESCRIPCION_ARTICULO, C.VALUACION_ARTICULO, 1)
+        sut.agregar("Cama estilo Imperio", "Cama estilo Imperio de 3 plazas y media", 12400, 1)
+        sut.actualizar(C.ARTICULO_UID, C.OTRO_TITULO_ARTICULO, C.OTRA_DESCRIPCION_ARTICULO, C.OTRA_VALUACION_ARTICULO, 2)
+        respuesta = sut.obtener_respuesta()
+        self.assertEqual("ok", respuesta["status"])
+        self.assertEqual(ControladorArticulo.ARTICULO_ACTUALIZADO, respuesta["mensaje"])
+
     def test_actualizar_datos_correctamente(self):
         self.__db.Usuarios.agregar(C.OTRO_NOMBRE_USUARIO, C.OTRO_APELLIDO_USUARIO, C.OTRO_EMAIL_USUARIO, C.OTRO_NOMBRE_USUARIO,
                                    C.OTRA_CLAVE_USUARIO, C.OTRA_FECHA_SUBASTA, TipoDeUsuario.Consignatario)
