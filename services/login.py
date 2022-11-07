@@ -13,7 +13,7 @@ class ServicioLogin(Servicio):
     def __init__(self, db: BaseDeDatos):
         self.__db = db
 
-    def login(self, usuario: str, clave: str):
+    def login(self, usuario: str, clave: str) -> None:
         self._throw_if_invalid(usuario, self.SIN_USUARIO)
         self._throw_if_invalid(clave, self.SIN_CLAVE)
 

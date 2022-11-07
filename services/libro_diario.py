@@ -21,13 +21,13 @@ class ServicioLibroDiario(Servicio):
     def __init__(self, db: BaseDeDatos):
         self.__db = db
 
-    def convertir_en_venta(self, puja_uid: int):
+    def convertir_en_venta(self, puja_uid: int) -> Venta:
         self._throw_if_not_positive(puja_uid, self.PUJA_INVALIDA)
 
         puja = self.__db.Pujas.buscar_por_uid(puja_uid)
         self._throw_if_invalid(puja, self.PUJA_INEXISTENTE)
 
-        self._vender_a(puja)
+        return self._vender_a(puja)
 
     def listar_compras_de(self, pujador_uid: int) -> list[Venta]:
         self._throw_if_not_positive(pujador_uid, self.PUJADOR_INVALIDO)
