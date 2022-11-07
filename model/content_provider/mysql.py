@@ -170,6 +170,14 @@ class MysqlDatabase:
         except Exception as err:
             raise err
 
+    def borrar(self, sql: str, valores=()) -> None:
+        try:
+            cursor = self.obtener_cursor()
+            cursor.execute(sql, valores)
+            self.__conexion.commit()
+        except Exception as err:
+            raise err
+
 
 class TablaSubastas(Subastas):
     BUSCAR_SUBASTA = "SELECT id, titulo, descripcion, imagen, fecha FROM Subastas WHERE id = %s"
@@ -190,9 +198,9 @@ class TablaSubastas(Subastas):
 class TablaArticulos(Articulos):
     CREAR_ARTICULO = "INSERT INTO Articulos(titulo, descripcion, valuacion, id_consignatario) VALUES (%s,%s,%s,%s)"
     BUSCAR_ARTICULO = """
-    SELECT id, titulo, descripcion, valuacion, id_consignatario, nombre, apellido, email, usuario, clave, nacimiento
+    SELECT Articulos.id, titulo, descripcion, valuacion, id_consignatario, nombre, apellido, email, usuario, clave, nacimiento
       FROM Articulos, Usuarios
-      WHERE id = %s
+      WHERE Articulos.id = %s
         AND id_consignatario = Usuarios.id"""
     BUSCAR_POR_CONSIGNATARIO = "SELECT id, titulo, descripcion, valuacion FROM Articulos WHERE id_consignatario = %s"
     CONTAR_ARTICULOS = "SELECT COUNT(id) FROM Articulos"
