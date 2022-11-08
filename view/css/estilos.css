@@ -138,6 +138,10 @@ body {
     text-align: center;
 
 }
+.anotacion{
+    
+    font-size: 12px;
+}
 
 .navbar-header .menu{
     list-style: none;
