@@ -1,5 +1,5 @@
 .container {
-    padding: 10px 50px;
+  padding: 10px 50px;
 }
 
 /* inputs */
@@ -13,7 +13,15 @@ input[type=text], input[type=email], select, textarea {
   margin-bottom: 16px;
   resize: vertical;
   color: #212121;
-  font-family: Helvetica, Arial, sans-serif;
+  font-family: 'Roboto', Helvetica, Arial, sans-serif;
+}
+
+select {
+  color:gray;
+}
+
+option:not(first-child) {
+  color: #212121;
 }
 
 label {
@@ -25,7 +33,7 @@ label {
 input[type=submit] {
   background-color: #f17228;
   color: white;
-  font-weight: 900;
+  font-weight: 700;
   padding: 12px 20px;
   border: none;
   border-radius: 5px;
@@ -68,9 +76,19 @@ input[type=submit]:hover {
   border-radius: 10px;
 }
 
-small {
+small, #contador {
   font-size: 0.8rem;
   color: #616161;
+}
+
+#contador {
+  text-align: right;
+  padding: 0;
+  margin: 0 0 16px 0;
+}
+
+.no-margin-bottom {
+  margin-bottom: 0;
 }
 
 .location-info {
@@ -90,7 +108,7 @@ small {
   align-items: center; 
   justify-content: center; 
 }
-/* cómo ajustar img a contenedor y ocultar exedente: https://stackoverflow.com/a/55271265 */
+/* cómo ajustar img a contenedor y ocultar excedente: https://stackoverflow.com/a/55271265 */
 
 /* Clear floats after columns */
 .row:after {
@@ -100,7 +118,7 @@ small {
 }
 
 /* diseño responsivo */
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 768px) {
   .column, input[type=submit] {
     width: 100%;
     margin-top: 0;

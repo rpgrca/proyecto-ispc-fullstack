@@ -4,11 +4,16 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="bs/css/bootstrap.min.css">
-  <link rel="stylesheet" href="css/contacto2.css">
-  <link rel="stylesheet" href="css/estilos.css">
-  <link rel="shortcut icon" href="images/favicon.png" type="image/png">
+
+  <!-- CSS terceros -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer">
+  <link rel="stylesheet" href="bs/css/bootstrap.min.css">
+
+  <!-- CSS propio -->
+  <link rel="stylesheet" href="css/estilos.css">
+  <link rel="stylesheet" href="css/contacto2.css">
+
+  <link rel="shortcut icon" href="images/favicon.png" type="image/png">
   <title>Contacto</title>
 </head>
 <body>
@@ -39,7 +44,7 @@
         </div>
     </header>
 
-  <section class="container">
+  <main class="container">
     <div class="section-title">
       <p>Enviános tu consulta o comentario. Te responderemos lo antes posible, en horario laboral.</p>
     </div>
@@ -51,25 +56,27 @@
         <form name="contacto" method="post" action="http://ec2-18-219-83-7.us-east-2.compute.amazonaws.com:8000/contactar">
           <p>
             <label for="nombre">Nombre*</label>
-            <input type="text" id="nombre" name="nombre" placeholder="Nombre" required>
+            <input type="text" id="nombre" name="nombre" placeholder="Tu nombre..." maxlength="50" required>
           </p>
           <p>
             <label for="email">Mail*</label>
-            <input type="email" id="mail" name="email" placeholder="Mail" required>
+            <input type="email" id="mail" name="email" placeholder="Tu mail..." maxlength="50" required>
           </p>
           <p>
-            <label for="asunto">Asunto</label>
-            <select id="asunto" name="asunto">
-              <option value="otro">Consulta general</option>
+            <label for="asunto">Asunto*</label>
+            <select id="asunto" name="asunto" required>
+              <option hidden selected>Selecciona el asunto...</option>
+              <option value="general">Consulta general</option>
               <option value="vender">Vender en subasta</option>
               <option value="coomprar">Comprar en subasta</option>
             </select>
           </p>
-          <p>
+          <p class="no-margin-bottom">
             <label for="mensaje">Mensaje*</label>
-            <textarea id="mensaje" name="mensaje" placeholder="Mensaje" required></textarea>
-            <small>* Campos obligatorios</small>
+            <textarea id="mensaje" class="no-margin-bottom" name="mensaje" placeholder="Tu mensaje..." maxlength="500" required></textarea>
           </p>
+          <p id="contador">0-500</p>
+          <p><small>* Campos obligatorios</small></p>
           <p class="btn-right">
             <input type="submit" value="Enviar">
           </p>
@@ -88,7 +95,7 @@
       </div>
 
     </div>
-  </section>
+  </main>
 
   <footer class="footer">
     <div class="container-fluid pt-1 mt-4">
@@ -131,11 +138,12 @@
             </div>
         </div>
     </div>
-</footer>
+  </footer>
 
+  <script src="js/textarea_char_counter.js"></script>
 
-<script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
-<script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 
   <script src="bs/js/popper.min.js"></script>
   <script src="bs/js/bootstrap.min.js"></script>
