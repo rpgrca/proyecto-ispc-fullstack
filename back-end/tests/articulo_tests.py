@@ -261,7 +261,7 @@ class ControladorArticuloTests(unittest.TestCase):
         sut.actualizar(articulo_invalido, C.OTRO_TITULO_ARTICULO, C.OTRA_DESCRIPCION_ARTICULO, C.OTRA_VALUACION_ARTICULO, 1)
         respuesta = sut.obtener_respuesta()
         self.assertEqual("error", respuesta["status"])
-        self.assertNotEqual(ServicioArticulos.UID_INVALIDO, respuesta["mensaje"])
+        self.assertEqual(ServicioArticulos.UID_INVALIDO, respuesta["mensaje"])
 
     def test_retornar_error_actualizando_articulo_inexistente(self):
         sut = ControladorArticulo(self.__db)
