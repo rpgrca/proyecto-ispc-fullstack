@@ -8,7 +8,7 @@
 # Proyecto Full-Stack ISPC
 
 ## Instalación
-Instalar las dependencias (fastapi, pytest, etc) desde el directorio raíz:
+Instalar las dependencias (fastapi, pytest, etc) desde el directorio *back-end:*
 ```
 python -m pip install -r requirements.txt
 ```
@@ -22,7 +22,7 @@ pip install -r requirements.txt
 En algunos sistemas (por ejemplo Linux Ubuntu) es _python3_ y _pip3_, en otros _python_ y _pip_. La versión mínima es 3.9.
 
 ### Ejecutar servidor
-Para levantar el servidor del back-end desde una consola o shell:
+Para levantar el servidor del back-end desde una consola o shell dentro de dicho directorio:
 ```
 python main.py
 ```
@@ -36,7 +36,7 @@ uvicorn main:app
 Si se configura para ejecutar en MySQL creará la base de datos y las tablas necesarias si no existen.
 
 ### Ejecutar pruebas unitarias
-Para ejecutar las pruebas unitarias desde una consola o shell:
+Para ejecutar las pruebas unitarias desde una consola o shell desde dentro del directorio *back-end:*
 ```
 pytest main_tests.py
 ```
