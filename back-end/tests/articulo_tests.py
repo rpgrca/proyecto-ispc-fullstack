@@ -253,7 +253,7 @@ class ControladorArticuloTests(unittest.TestCase):
         self.assertNotEqual("", respuesta["mensaje"])
 
     @data(None, "", -1, 0)
-    def test_retornar_error_actualizando_articulo_inexistente(self, articulo_invalido):
+    def test_retornar_error_actualizando_articulo_invalido(self, articulo_invalido):
         sut = ControladorArticulo(self.__db)
         sut.actualizar(articulo_invalido, C.OTRO_TITULO_ARTICULO, C.OTRA_DESCRIPCION_ARTICULO, C.OTRA_VALUACION_ARTICULO, 1)
         respuesta = sut.obtener_respuesta()
@@ -276,7 +276,7 @@ class ControladorArticuloTests(unittest.TestCase):
         self.assertEqual(ServicioArticulos.TITULO_INVALIDO, respuesta["mensaje"])
 
     @data(None, "")
-    def test_retornar_error_actualizando_con_titulo_invalido(self, descripcion_invalida):
+    def test_retornar_error_actualizando_con_descripcion_invalida(self, descripcion_invalida):
         sut = ControladorArticulo(self.__db)
         sut.actualizar(C.OTRO_ARTICULO_UID, C.OTRO_TITULO_ARTICULO, descripcion_invalida, C.OTRA_VALUACION_ARTICULO, 1)
         respuesta = sut.obtener_respuesta()
@@ -299,13 +299,6 @@ class ControladorArticuloTests(unittest.TestCase):
         respuesta = sut.obtener_respuesta()
         self.assertEqual("error", respuesta["status"])
         self.assertEqual(ServicioArticulos.CONSIGNATARIO_INVALIDO, respuesta["mensaje"])
-
-    def test_retornar_error_actualizando_articulo_inexistente(self):
-        sut = ControladorArticulo(self.__db)
-        sut.actualizar(C.ARTICULO_UID, C.OTRO_TITULO_ARTICULO, C.OTRA_DESCRIPCION_ARTICULO, C.OTRA_VALUACION_ARTICULO, 1)
-        respuesta = sut.obtener_respuesta()
-        self.assertEqual("error", respuesta["status"])
-        self.assertEqual(ServicioArticulos.ACTUALIZANDO_ARTICULO_INEXISTENTE, respuesta["mensaje"])
 
     def test_retornar_error_actualizando_con_consignatario_inexistente(self):
         sut = ControladorArticulo(self.__db)
