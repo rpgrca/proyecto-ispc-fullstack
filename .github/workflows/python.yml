@@ -37,7 +37,9 @@ jobs:
         flake8 ./back-end --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
     - name: Test with pytest
       run: |
-        pytest back-end/main_tests.py --cov-config=back-end/coverage.ini --doctest-modules --junitxml=main.coverage.xml --cov-append --cov back-end --cov-report xml
+        cd back-end
+        pytest main_tests.py --cov-config=coverage.ini --doctest-modules --junitxml=../main.coverage.xml --cov-append --cov . --cov-report xml
+        mv coverage.xml ..
 
     - name: Upload coverage to CodeCov
       run: bash <(curl -s https://codecov.io/bash)
