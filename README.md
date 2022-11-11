@@ -21,17 +21,19 @@ pip install -r requirements.txt
 
 En algunos sistemas (por ejemplo Linux Ubuntu) es _python3_ y _pip3_, en otros _python_ y _pip_. La versión mínima es 3.9.
 
+![image](https://user-images.githubusercontent.com/15602473/201264090-09e4e986-26aa-4809-9f9e-64ade8aaa3e1.png)
+
 ### Ejecutar servidor
 Para levantar el servidor del back-end desde una consola o shell dentro de dicho directorio:
 ```
 python main.py
 ```
-El servidor utiliza el puerto 8000. También es posible ejecutarlo de la siguiente manera:
+(o _python3 main.py_ en algunas distribuciones de Linux). El servidor utiliza el puerto 8000. También es posible ejecutarlo de la siguiente manera:
 ```
 uvicorn main:app
 ```
 
-![image](https://user-images.githubusercontent.com/15602473/197442544-6658bf45-fadf-4aae-8e76-3dddb0835cb9.png)
+![image](https://user-images.githubusercontent.com/15602473/201264171-16ecb154-c388-421f-83e5-4328b31ffe4b.png)
 
 Si se configura para ejecutar en MySQL creará la base de datos y las tablas necesarias si no existen.
 
@@ -49,15 +51,7 @@ pytest main_tests.py --cov-config=coverage.ini --doctest-modules --junitxml=main
 
 lo que genera un archivo *coverage.xml* con la información de cobertura y un archivo *main.coverage.xml* con información de pruebas ejecutadas en formato Junit.
 
-![image](https://user-images.githubusercontent.com/15602473/197442599-4c2e61cc-db61-4c3a-9f20-0617e2b67513.png)
-
-Para ejecutar las pruebas unitarias de a un módulo hay que adjuntar el PATH de los módulos por delante de la línea de comando, por ejemplo para ejecutar las pruebas del controlador de *usuario*:
-
-```
-PYTHONPATH=$PYTHONPATH:controller pytest tests/usuario_tests.py
-```
-
-![image](https://user-images.githubusercontent.com/15602473/199630504-dc9ad666-bca2-4f2b-a65c-bf34a2dfb664.png)
+![image](https://user-images.githubusercontent.com/15602473/201264210-37ab8560-078a-4aaf-923a-3e63ff3a6fa2.png)
 
 ### Ejecutar pruebas de integración con Postman
 
@@ -84,26 +78,7 @@ descripciones ya disponibles en internet.
 - [Diagrama de clases](https://github.com/rpgrca/proyecto-ispc-fullstack/wiki/Diagrama-de-clases)
 - [Diagrama relacional](https://github.com/rpgrca/proyecto-ispc-fullstack/wiki/Diagrama-relacional)
 - [Diagrama entidad relación](https://github.com/rpgrca/proyecto-ispc-fullstack/wiki/Diagrama-entidad-relaci%C3%B3n)
-
-### Notas
-
-- Nosotros utilizamos sitio como base para el html, cuando se nos
-informó que debíamos tener un directorio llamado view en su lugar lo
-renombramos lo que ocasionó que el historial del directorio se volviese
-inaccesible. Sin embargo es posible revisar el historial de cada uno de
-los archivos html para ver los autores de las versiones más antiguas.
-
-- Tuvimos un problema de merging de un commit y sobreescribió algunos
-historiales con un commit erróneo. Afectó principalmente a los archivos
-Python, si se revisa el historial el commit de la creación fue
-reemplazado por un commit de un renombre como si todos los archivos
-hubiesen sido creados a partir del mismo archivo. No sabemos cómo pasó.
-
-- No tenemos una distribución uno a uno entre páginas web en la vista y
-modelos o controladores. Existen páginas que reusarán controladores,
-habrán páginas que no tendrán controladores ni modelos asociados (como
-las de Quiénes somos o la de Cómo funciona), existen controladores que
-utilizarán distintos modelos y otros que utilizarán los mismos.
+- [Diagramas de casos de uso](https://github.com/rpgrca/proyecto-ispc-fullstack/wiki/Diagrama-de-casos-de-uso)
 
 [commit-img]: https://img.shields.io/github/commit-activity/w/rpgrca/proyecto-ispc-fullstack/dev
 [commit-url]: https://github.com/rpgrca/proyecto-ispc-fullstack/graphs/code-frequency
