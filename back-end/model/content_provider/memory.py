@@ -128,7 +128,8 @@ class ArticulosEnMemoria(Articulos):
     def borrar(self, uid: int) -> None:
         self.__articulos = [articulo for articulo in self.__articulos if articulo.obtener_uid() != uid]
 
-    def actualizar(self, articulo: Articulo, titulo: str, descripcion: str, valuacion: str, consignatario: Consignatario) -> None:
+    def actualizar(self, articulo: Articulo, titulo: str, descripcion: str, valuacion: str,
+                   consignatario: Consignatario) -> None:
         articulos = []
         for actual in self.__articulos:
             if actual.obtener_uid() != articulo.obtener_uid():
@@ -201,61 +202,6 @@ class LibroDiarioEnMemoria(LibroDiario):
 
 class CreadorDeBasesDeDatosTemporales:
     def __init__(self):
-#        self.__usuarios = UsuariosEnMemoria({
-#            "Roberto": {
-#                "id": 1,
-#                "nombre": "Roberto",
-#                "apellido": "Perez",
-#                "usuario": "Roberto",
-#                "clave": "123456",
-#                "email": "roberto.carlos.alfonso@gmail.com",
-#                "nacimiento": 17/9/2000,
-#                "tipo": TipoDeUsuario.Pujador
-#            },
-#            "Martin": {
-#                "id": 2,
-#                "nombre": "Martin",
-#                "apellido": "Rodriguez",
-#                "usuario": "Martin",
-#                "clave": "654321",
-#                "email": "martin@gmail.com",
-#                "nacimiento": 10/5/2000,
-#                "tipo": TipoDeUsuario.Pujador
-#            },
-#            "Julia": {
-#                "id": 3,
-#                "nombre": "Julia",
-#                "apellido": "Gonzalez",
-#                "usuario": "Julia",
-#                "clave": "109283",
-#                "email": "julia@gmail.com",
-#                "nacimiento": 12/12/2000,
-#                "tipo": TipoDeUsuario.Pujador
-#            },
-#            "Estela": {
-#                "id": 4,
-#                "nombre": "Estela",
-#                "apellido": "Flores",
-#                "usuario": "Estela",
-#                "clave": "777777",
-#                "email": "estela@gmail.com",
-#                "nacimiento": 6/6/2000,
-#                "tipo": TipoDeUsuario.Consignatario
-#            },
-#            "Adrian": {
-#                "id": 5,
-#                "nombre": "Adrian",
-#                "apellido": "Acosta",
-#                "usuario": "Adrian",
-#                "clave": "martillero",
-#                "email": "martillero@gmail.com",
-#                "nacimiento": 4/20/2000,
-#                "tipo": TipoDeUsuario.Martillero
-#            }
-#        })
-#        self.__subastas = SubastasEnMemoria([Subasta(1, "Gran subasta!", "Nos vemos pronto!", "sofa.jpg", 17/10/2022)])
-#        self.__articulos = ArticulosEnMemoria([Articulo(1, "Sofa Antiguo", "Sofa de tres cuerpos, 2 metros de largo.", 13000,
-#                                              self.__usuarios["Estela"])])
         self.__usuarios = UsuariosEnMemoria({})
         self.__subastas = SubastasEnMemoria([])
         self.__articulos = ArticulosEnMemoria([])

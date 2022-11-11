@@ -30,7 +30,7 @@ class MysqlDatabase:
         if not self.__conexion:
             try:
                 self.__conexion = mysql.connector.connect(user=self.__user, password=self.__password, host=self.__host,
-                                                            database=self.__database, connection_timeout=5)
+                                                          database=self.__database, connection_timeout=5)
             except Error as err:
                 if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
                     raise ValueError("Error en el usuario o password")
@@ -377,6 +377,7 @@ class TablaLotes(Lotes):
     def existe_con_articulo(self, articulo: Articulo) -> bool:
         return self.__db.contar(self.EXISTE_CON_ARTICULO, (articulo.obtener_uid(),)) > 0
 
+
 class TablaPujas(Pujas):
     CREAR_PUJA = "INSERT INTO Pujas(id_pujador, id_lote, monto) VALUES (%s,%s,%s)"
     BUSCAR_PUJA = "SELECT id, id_pujador, id_lote, monto FROM Pujas WHERE id = %s"
@@ -436,8 +437,8 @@ class TablaVentas(LibroDiario):
         self.__db = db
 
     def crear(self, puja: Puja, precio_final: float, comision: float, pago_a_consignatario: float) -> Venta:
-        return self.__db.insertar(self.CREAR_VENTA, (puja.obtener_lote().obtener_uid(), precio_final, comision, pago_a_consignatario),
-                                  lambda i, r: Venta(i, r[0], r[1], r[2], r[3]))
+        return self.__db.insertar(self.CREAR_VENTA, (puja.obtener_lote().obtener_uid(), precio_final, comision,
+                                  pago_a_consignatario), lambda i, r: Venta(i, r[0], r[1], r[2], r[3]))
 
     def buscar_por_uid(self, uid: int) -> Venta:
         return self.__db.obtener_uno(self.BUSCAR_VENTA_CON_DATOS, (uid,), lambda r: Venta(r[0], Puja(r[1], r[2], r[3], r[4]),

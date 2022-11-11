@@ -188,7 +188,8 @@ class ControladorArticuloTests(unittest.TestCase):
     def test_retornar_error_cuando_se_borra_articulo_en_lote(self):
         sut = ControladorArticulo(self.__db)
         sut.agregar(C.TITULO_ARTICULO, C.DESCRIPCION_ARTICULO, C.VALUACION_ARTICULO, 1)
-        subasta_uid = ServicioSubasta(self.__db).crear(C.TITULO_SUBASTA, C.DESCRIPCION_SUBASTA, C.IMAGEN_SUBASTA, C.FECHA_DE_SUBASTA)
+        subasta_uid = ServicioSubasta(self.__db).crear(C.TITULO_SUBASTA, C.DESCRIPCION_SUBASTA, C.IMAGEN_SUBASTA,
+                                                       C.FECHA_DE_SUBASTA)
         ServicioLote(self.__db).agregar(subasta_uid, C.ARTICULO_UID, C.BASE_LOTE, C.ORDEN_LOTE)
         sut.borrar(C.ARTICULO_UID)
         respuesta = sut.obtener_respuesta()
@@ -206,7 +207,8 @@ class ControladorArticuloTests(unittest.TestCase):
     def test_borrar_articulo_correctamente_cuando_no_esta_en_ningun_lote(self):
         sut = ControladorArticulo(self.__db)
         sut.agregar(C.TITULO_ARTICULO, C.DESCRIPCION_ARTICULO, C.VALUACION_ARTICULO, 1)
-        subasta_uid = ServicioSubasta(self.__db).crear(C.TITULO_SUBASTA, C.DESCRIPCION_SUBASTA, C.IMAGEN_SUBASTA, C.FECHA_DE_SUBASTA)
+        subasta_uid = ServicioSubasta(self.__db).crear(C.TITULO_SUBASTA, C.DESCRIPCION_SUBASTA, C.IMAGEN_SUBASTA,
+                                                       C.FECHA_DE_SUBASTA)
         ServicioLote(self.__db).agregar(subasta_uid, C.ARTICULO_UID, C.BASE_LOTE, C.ORDEN_LOTE)
         sut.agregar(C.OTRO_TITULO_ARTICULO, C.OTRA_DESCRIPCION_ARTICULO, C.OTRA_VALUACION_ARTICULO, 1)
         sut.borrar(C.OTRO_ARTICULO_UID)
@@ -234,8 +236,9 @@ class ControladorArticuloTests(unittest.TestCase):
             "descripcion": "Un sofa de principios de siglo.",
             "id": 1,
             "titulo": "Sofa Antiguo",
-            "valuacion": 15000 }, respuesta["items"])
-        self.assertIn({"consignatario_id": 1,
+            "valuacion": 15000}, respuesta["items"])
+        self.assertIn({
+            "consignatario_id": 1,
             "descripcion": "Un reloj de arena que atrasa.",
             "id": 2,
             "titulo": 2,
@@ -307,7 +310,7 @@ class ControladorArticuloTests(unittest.TestCase):
         respuesta = sut.obtener_respuesta()
         self.assertEqual("error", respuesta["status"])
         self.assertEqual(ServicioArticulos.CONSIGNATARIO_INEXISTENTE, respuesta["mensaje"])
-    
+
     def test_retornar_ok_cuando_se_actualiza_correctamente(self):
         self.__db.Usuarios.agregar(C.OTRO_NOMBRE_USUARIO, C.APELLIDO_USUARIO, C.OTRO_EMAIL_USUARIO, C.OTRO_NOMBRE_USUARIO,
                                    C.OTRA_CLAVE_USUARIO, C.OTRA_FECHA_SUBASTA, TipoDeUsuario.Consignatario)

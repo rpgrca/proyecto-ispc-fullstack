@@ -24,7 +24,7 @@ app.add_middleware(
     allow_headers=["*"]
 )
 
-#db = CreadorDeBasesDeDatosMySql(["localhost", "root", "gTp8xT2!", "bidon_subastas"]).construir()
+# db = CreadorDeBasesDeDatosMySql(["localhost", "root", "gTp8xT2!", "bidon_subastas"]).construir()
 db = CreadorDeBasesDeDatosTemporales().construir()
 
 

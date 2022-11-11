@@ -221,5 +221,6 @@ class ControladorLoteTests(unittest.TestCase):
             "descripcion": "Un sofa de principios de siglo.",
             "valuacion": 15000}, "base": 100, "orden": 2}, respuesta["items"])
 
+
 if __name__ == "__main__":
     unittest.main()
