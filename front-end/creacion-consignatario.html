@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="bs/css/bootstrap.min.css">
+        <link rel="stylesheet" href="css/estilos.css">
+        <link rel="shortcut icon" href="images/favicon.png" type="image/x-icon">
+        <title>Creación de consignatario</title>
+    </head>
+
+    <body>
+        <header>
+            <nav class="navbar navbar-expand-lg bg-light navbar-header">
+                <div class="container-fluid">
+                    <a class="navbar-brand nav-logo" href="index.html"><img src="images/bidon_logo.svg" alt="Logo Bidon" width="150" height="100"></a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navegacion" aria-controls="navegacion" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navegacion">
+                        <ul class="navbar-nav me-auto mb-2 mb-lg-0 menu">
+                            <li class="nav-item"><a class="nav-link" href="acerca.html">Quiénes somos</a></li>
+                            <li class="nav-item"><a class="nav-link" href="funcionamiento.html">Cómo funciona</a></li>
+                            <li class="nav-item"><a class="nav-link" href="catalogo.html">Catálogo</a></li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="herramientas" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Herramientas</a>
+                                <div class="dropdown-menu" aria-labelledby="herramientas">
+                                <a class="dropdown-item" href="#">Crear un consignatario</a>
+                                <a class="dropdown-item" href="creacion-articulo.html">Crear un artículo</a>
+                                <a class="dropdown-item" href="creacion-subasta.html">Crear una subasta</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="subasta-martillero.html">Empezar la subasta</a>
+                                </div>
+                            </li>
+                            <li class="nav-item"><a class="nav-link" href="perfil.html">Perfil</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+            <div class="col-md-12 mt-auto pb-4">
+                <div class="container mt-5 p-2">
+                    <div class="text-center">
+                        <h1 class="text-white">Creación de consignatario</h1>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <div class="container p-3">
+            <section class="seccion-form">
+                <form method="post" class="form-register" action="http://ec2-18-219-83-7.us-east-2.compute.amazonaws.com:8000/consignatario">
+                    <label for="nombre">Nombre:</label><br>
+                    <input class="menu"  type="text" name="nombre" id="nombre" placeholder="Ingrese nombre"><br>
+                    <label for="apellido">Apellido:</label><br>
+                    <input class="menu"  type="text" name="apellido" id="apellido" placeholder="Ingrese apellido"><br>
+                    <label for="email">Correo electrónico:</label><br>
+                    <input class="menu"  type="email" name="email" id="email" placeholder="email" required><br>
+                    <label for="usuario">Nombre de usuario:</label><br>
+                    <input class="menu"  type="text" name="usuario" id="usuario" placeholder="Nombre de Usuario" required><br>
+                    <input class="buton" type="submit" value="Crear">
+                </form>
+            </section>
+        </div>
+
+        <footer class="footer">
+            <div class="container-fluid pt-1 mt-4">
+                <div class="row align-items-center row-cols-1 row-cols-sm-2 row-cols-md-5 p-4 py-2 my-4">
+                    <div class="col col-sm-auto">
+                        <a class="d-flex align-items-center mb-3"><img src="images/bidon_logo.svg" alt="Logo Bidon" width="100" height=""></a>
+                    </div>
+                    <div class="col mb-3">
+                        <h5>Nosotros</h5>
+                        <ul class="nav flex-column py-2">
+                            <li class="nav-item mb-2"><a href="acerca.html" class="nav-link p-0 text-muted">Quienes somos</a></li>
+                            <li class="nav-item mb-2"><a href="funcionamiento.html" class="nav-link p-0 text-muted">Como funciona</a></li>
+                            
+                        </ul>
+                    </div>
+                    <div class="col mb-3">
+                        <h5>Secciones</h5>
+                        <ul class="nav flex-column py-2">
+                            <li class="nav-item mb-2"><a href="catalogo.html" class="nav-link p-0 text-muted">Catálogo</a></li>
+                            <li class="nav-item mb-2"><a href="contacto-visitante.html" class="nav-link p-0 text-muted">Contacto</a></li>
+                            
+                        </ul>
+                    </div>
+        
+                    <div class="col mb-3">
+                        <h5>Seguinos en redes</h5>
+                        <ul class="nav d-flex flex-column flex-sm-row justify-content-around my-1 border-top">
+                            <li class="nav-item mb-2 ms-0 my-3 py-2"><a href="#" class="nav-link p-0 text-light" ><ion-icon name="logo-facebook"></ion-icon></a></li>
+                            <li class="nav-item mb-2 ms-0 my-3 py-2"><a href="#" class="nav-link p-0 text-light"><ion-icon name="logo-twitter"></ion-icon></a></li>
+                            <li class="nav-item mb-2 ms-0 my-3 py-2"><a href="#" class="nav-link p-0 text-light"><ion-icon name="logo-instagram"></ion-icon></a></li>
+                        </ul>
+                    </div>
+            
+                </div>    
+            
+                <div class="container bg-light text-dark">
+                    <div class="d-flex flex-column flex-sm-row justify-content-center pt-3">
+                        <p>@2022 - <a href="https://almoneda.online">Almoneda</a> - Todos los derechos reservados</p>
+                    
+                    </div>
+                </div>
+            </div>
+        </footer>
+        
+        
+        <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+        <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+        <script src="bs/js/popper.min.js"></script>
+        <script src="bs/js/bootstrap.min.js"></script>
+    </body>
+</html>

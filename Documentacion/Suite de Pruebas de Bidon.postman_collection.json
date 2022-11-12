@@ -1,0 +1,1880 @@
+{
+	"info": {
+		"_postman_id": "d201158f-0214-4d19-a422-67db76e802c3",
+		"name": "Suite de Pruebas de Bidon",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "6965401"
+	},
+	"item": [
+		{
+			"name": "1 - Registración",
+			"item": [
+				{
+					"name": "Registración sin datos",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"verificar que el codigo de estado sea 422\", () => {",
+									"    pm.response.to.have.status(422)",
+									"})",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": []
+						},
+						"url": {
+							"raw": "localhost:8000/registrar",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"registrar"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Solo nombre",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"verificar que el codigo de estado sea 422\", () => {",
+									"    pm.response.to.have.status(422)",
+									"})",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "nombre",
+									"value": "Carlos",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:8000/registrar",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"registrar"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Registración correcta",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.response.to.have.jsonBody()",
+									"pm.response.to.have.status(200)",
+									"jsonData = pm.response.json()",
+									"",
+									"pm.test(\"verificar que status sea ok\", () => {",
+									"    pm.expect(jsonData.status).to.equal(\"ok\")",
+									"})",
+									"",
+									"pm.test(\"verificar que mensaje sea el esperado\", () => {",
+									"    pm.expect(jsonData.mensaje).to.equal(\"La cuenta ha sido creada correctamente\")",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "nombre",
+									"value": "Juan",
+									"type": "text"
+								},
+								{
+									"key": "apellido",
+									"value": "Perez",
+									"type": "text"
+								},
+								{
+									"key": "usuario",
+									"value": "jperez",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "juan@perez.com",
+									"type": "text"
+								},
+								{
+									"key": "clave",
+									"value": "123123",
+									"type": "text"
+								},
+								{
+									"key": "nacimiento",
+									"value": "2000-12-31",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:8000/registrar",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"registrar"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "2 - Login",
+			"item": [
+				{
+					"name": "Login sin datos",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"verificar que el codigo de estado sea 422\", () => {",
+									"    pm.response.to.have.status(422)",
+									"})",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "localhost:8000/ingresar",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"ingresar"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login con únicamente usuario",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"verificar que el codigo de estado sea 422\", () => {",
+									"    pm.response.to.have.status(422)",
+									"})",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "usuario",
+									"value": "Roberto",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:8000/ingresar",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"ingresar"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login con únicamente clave",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"verificar que el codigo de estado sea 422\", () => {",
+									"    pm.response.to.have.status(422)",
+									"})",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "clave",
+									"value": "Roberto",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:8000/ingresar",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"ingresar"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Solo usuario correcto",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.response.to.have.jsonBody()",
+									"pm.response.to.have.status(401)",
+									"jsonData = pm.response.json()",
+									"",
+									"pm.test(\"verificar que status sea error\", () => {",
+									"    pm.expect(jsonData.status).to.equal(\"error\")",
+									"})",
+									"",
+									"pm.test(\"verificar que mensaje sea el esperado\", () => {",
+									"    pm.expect(jsonData.mensaje).to.equal(\"Usuario o contraseña inválida\")",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "usuario",
+									"value": "Roberto",
+									"type": "text"
+								},
+								{
+									"key": "clave",
+									"value": "123",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:8000/ingresar",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"ingresar"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login correcto",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.response.to.have.jsonBody()",
+									"pm.response.to.have.status(200)",
+									"jsonData = pm.response.json()",
+									"",
+									"pm.test(\"verificar que status sea ok\", () => {",
+									"    pm.expect(jsonData.status).to.equal(\"ok\")",
+									"})",
+									"",
+									"pm.test(\"verificar que mensaje sea el esperado\", () => {",
+									"    pm.expect(jsonData.mensaje).to.equal(\"Bienvenido/a, jperez!\")",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "usuario",
+									"value": "jperez",
+									"type": "text"
+								},
+								{
+									"key": "clave",
+									"value": "123123",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:8000/ingresar",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"ingresar"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "3 - Recuperar",
+			"item": [
+				{
+					"name": "Recuperar sin email",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"verificar que el codigo de estado sea 422\", () => {",
+									"    pm.response.to.have.status(422)",
+									"})",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "email",
+									"value": "",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:8000/reestablecer",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"reestablecer"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Recuperar con e-mail inexistente",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.response.to.have.jsonBody()",
+									"pm.response.to.have.status(200)",
+									"jsonData = pm.response.json()",
+									"",
+									"pm.test(\"verificar que status sea ok\", () => {",
+									"    pm.expect(jsonData.status).to.equal(\"ok\")",
+									"})",
+									"",
+									"pm.test(\"verificar que mensaje sea el esperado\", () => {",
+									"    pm.expect(jsonData.mensaje).to.equal(\"Si el correo está en nuestros registros se ha enviado un recordatorio a su cuenta\")",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "email",
+									"value": "cualquier@email.com",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:8000/reestablecer",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"reestablecer"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Recuperar con e-mail correcto",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.response.to.have.jsonBody()",
+									"pm.response.to.have.status(200)",
+									"jsonData = pm.response.json()",
+									"",
+									"pm.test(\"verificar que status sea ok\", () => {",
+									"    pm.expect(jsonData.status).to.equal(\"ok\")",
+									"})",
+									"",
+									"pm.test(\"verificar que mensaje sea el esperado\", () => {",
+									"    pm.expect(jsonData.mensaje).to.equal(\"Si el correo está en nuestros registros se ha enviado un recordatorio a su cuenta\")",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "email",
+									"value": "juan@perez.com",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:8000/reestablecer",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"reestablecer"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "4 - Consignatarios",
+			"item": [
+				{
+					"name": "Creación sin datos",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"verificar que el codigo de estado sea 422\", () => {",
+									"    pm.response.to.have.status(422)",
+									"})",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": []
+						},
+						"url": {
+							"raw": "localhost:8000/consignatarios",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"consignatarios"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Creación correcta",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.response.to.have.jsonBody()",
+									"pm.response.to.have.status(200)",
+									"jsonData = pm.response.json()",
+									"",
+									"pm.test(\"verificar que status sea ok\", () => {",
+									"    pm.expect(jsonData.status).to.equal(\"ok\")",
+									"})",
+									"",
+									"pm.test(\"verificar que mensaje sea el esperado\", () => {",
+									"    pm.expect(jsonData.mensaje).to.equal(\"La cuenta ha sido creada correctamente\")",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "nombre",
+									"value": "Graciela",
+									"type": "text"
+								},
+								{
+									"key": "apellido",
+									"value": "Borges",
+									"type": "text"
+								},
+								{
+									"key": "usuario",
+									"value": "gborges",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "graciela@borges.com",
+									"type": "text"
+								},
+								{
+									"key": "clave",
+									"value": "7777777",
+									"type": "text"
+								},
+								{
+									"key": "nacimiento",
+									"value": "1945-09-13",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:8000/consignatarios",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"consignatarios"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "5 - Articulos",
+			"item": [
+				{
+					"name": "Contar articulos sin ninguno",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.response.to.have.jsonBody()",
+									"pm.response.to.have.status(200)",
+									"jsonData = pm.response.json()",
+									"",
+									"pm.test(\"verificar que status sea ok\", () => {",
+									"    pm.expect(jsonData.status).to.equal(\"ok\")",
+									"})",
+									"",
+									"pm.test(\"verificar que mensaje sea el esperado\", () => {",
+									"    pm.expect(jsonData.total).to.equal(0)",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8000/articulos/contar",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"articulos",
+								"contar"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Crear correctamente",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.response.to.have.jsonBody()",
+									"pm.response.to.have.status(200)",
+									"jsonData = pm.response.json()",
+									"",
+									"pm.test(\"verificar que status sea ok\", () => {",
+									"    pm.expect(jsonData.status).to.equal(\"ok\")",
+									"})",
+									"",
+									"pm.test(\"verificar que mensaje sea el esperado\", () => {",
+									"    pm.expect(jsonData.mensaje).to.equal(\"El artículo ha sido creado correctamente\")",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "titulo",
+									"value": "Gran Sofa",
+									"type": "text"
+								},
+								{
+									"key": "descripcion",
+									"value": "Sofa de 3 cuerpos, 3 metros de largo.",
+									"type": "text"
+								},
+								{
+									"key": "valuacion",
+									"value": "31000",
+									"type": "text"
+								},
+								{
+									"key": "consignatario_uid",
+									"value": "2",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:8000/articulos",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"articulos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Contar articulos",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.response.to.have.jsonBody()",
+									"pm.response.to.have.status(200)",
+									"jsonData = pm.response.json()",
+									"",
+									"pm.test(\"verificar que status sea ok\", () => {",
+									"    pm.expect(jsonData.status).to.equal(\"ok\")",
+									"})",
+									"",
+									"pm.test(\"verificar que mensaje sea el esperado\", () => {",
+									"    pm.expect(jsonData.total).to.equal(1)",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8000/articulos/contar",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"articulos",
+								"contar"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Actualizar articulo que no existe",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.response.to.have.jsonBody()",
+									"pm.response.to.have.status(401)",
+									"jsonData = pm.response.json()",
+									"",
+									"pm.test(\"verificar que status sea ok\", () => {",
+									"    pm.expect(jsonData.status).to.equal(\"error\")",
+									"})",
+									"",
+									"pm.test(\"verificar que mensaje sea el esperado\", () => {",
+									"    pm.expect(jsonData.mensaje).to.equal(\"No se puede actualizar un artículo inexistente\")",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "uid",
+									"value": "1001",
+									"type": "text"
+								},
+								{
+									"key": "titulo",
+									"value": "Sofa más chico",
+									"type": "text"
+								},
+								{
+									"key": "descripcion",
+									"value": "Sofa de 2 cuerpos nomás",
+									"type": "text"
+								},
+								{
+									"key": "valuacion",
+									"value": "15000",
+									"type": "text"
+								},
+								{
+									"key": "consignatario_uid",
+									"value": "2",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:8000/articulos",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"articulos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Listar articulos de pujador",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.response.to.have.jsonBody()",
+									"pm.response.to.have.status(401)",
+									"jsonData = pm.response.json()",
+									"",
+									"pm.test(\"verificar que status sea error\", () => {",
+									"    pm.expect(jsonData.status).to.equal(\"error\")",
+									"})",
+									"",
+									"pm.test(\"verificar que mensaje sea el esperado\", () => {",
+									"    pm.expect(jsonData.mensaje).to.equal(\"No se puede listar artículos de un consignatario inexistente\")",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8000/articulos/listar/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"articulos",
+								"listar",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Listar articulos de consignatario existente",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.response.to.have.jsonBody()",
+									"pm.response.to.have.status(200)",
+									"jsonData = pm.response.json()",
+									"",
+									"pm.test(\"verificar que status sea ok\", () => {",
+									"    pm.expect(jsonData.status).to.equal(\"ok\")",
+									"})",
+									"",
+									"pm.test(\"verificar que mensaje sea el esperado\", () => {",
+									"    pm.expect(jsonData.items[0].id).to.equal(1)",
+									"    pm.expect(jsonData.items[0].consignatario_id).to.equal(2)",
+									"    pm.expect(jsonData.items[0].titulo).to.equal(\"Gran Sofa\")",
+									"    pm.expect(jsonData.items[0].descripcion).to.equal(\"Sofa de 3 cuerpos, 3 metros de largo.\")",
+									"    pm.expect(jsonData.items[0].valuacion).to.equal(31000)",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8000/articulos/listar/2",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"articulos",
+								"listar",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Actualizar articulo que existe",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.response.to.have.jsonBody()",
+									"pm.response.to.have.status(200)",
+									"jsonData = pm.response.json()",
+									"",
+									"pm.test(\"verificar que status sea ok\", () => {",
+									"    pm.expect(jsonData.status).to.equal(\"ok\")",
+									"})",
+									"",
+									"pm.test(\"verificar que mensaje sea el esperado\", () => {",
+									"    pm.expect(jsonData.mensaje).to.equal(\"El artículo ha sido actualizado correctamente\")",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "uid",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "titulo",
+									"value": "Sofa más chico",
+									"type": "text"
+								},
+								{
+									"key": "descripcion",
+									"value": "Sofa de 2 cuerpos nomás",
+									"type": "text"
+								},
+								{
+									"key": "valuacion",
+									"value": "15000",
+									"type": "text"
+								},
+								{
+									"key": "consignatario_uid",
+									"value": "2",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:8000/articulos",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"articulos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Listar articulos después de actualizarlos",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.response.to.have.jsonBody()",
+									"pm.response.to.have.status(200)",
+									"jsonData = pm.response.json()",
+									"",
+									"pm.test(\"verificar que status sea ok\", () => {",
+									"    pm.expect(jsonData.status).to.equal(\"ok\")",
+									"})",
+									"",
+									"pm.test(\"verificar que mensaje sea el esperado\", () => {",
+									"    pm.expect(jsonData.items[0].id).to.equal(1)",
+									"    pm.expect(jsonData.items[0].consignatario_id).to.equal(2)",
+									"    pm.expect(jsonData.items[0].titulo).to.equal(\"Sofa más chico\")",
+									"    pm.expect(jsonData.items[0].descripcion).to.equal(\"Sofa de 2 cuerpos nomás\")",
+									"    pm.expect(jsonData.items[0].valuacion).to.equal(15000)",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8000/articulos/listar/2",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"articulos",
+								"listar",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Crear segundo artículo",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.response.to.have.jsonBody()",
+									"pm.response.to.have.status(200)",
+									"jsonData = pm.response.json()",
+									"",
+									"pm.test(\"verificar que status sea ok\", () => {",
+									"    pm.expect(jsonData.status).to.equal(\"ok\")",
+									"})",
+									"",
+									"pm.test(\"verificar que mensaje sea el esperado\", () => {",
+									"    pm.expect(jsonData.mensaje).to.equal(\"El artículo ha sido creado correctamente\")",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "titulo",
+									"value": "Gran Sofa",
+									"type": "text"
+								},
+								{
+									"key": "descripcion",
+									"value": "Sofa de 3 cuerpos, 3 metros de largo.",
+									"type": "text"
+								},
+								{
+									"key": "valuacion",
+									"value": "31000",
+									"type": "text"
+								},
+								{
+									"key": "consignatario_uid",
+									"value": "2",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:8000/articulos",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"articulos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Borrar segundo artículo creado",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.response.to.have.jsonBody()",
+									"pm.response.to.have.status(200)",
+									"jsonData = pm.response.json()",
+									"",
+									"pm.test(\"verificar que status sea ok\", () => {",
+									"    pm.expect(jsonData.status).to.equal(\"ok\")",
+									"})",
+									"",
+									"pm.test(\"verificar que mensaje sea el esperado\", () => {",
+									"    pm.expect(jsonData.mensaje).to.equal(\"El artículo ha sido borrado correctamente\")",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "uid",
+									"value": "2",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:8000/articulos",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"articulos"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "6 - Subastas",
+			"item": [
+				{
+					"name": "Crear subasta correctamente",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.response.to.have.jsonBody()",
+									"pm.response.to.have.status(200)",
+									"jsonData = pm.response.json()",
+									"",
+									"pm.test(\"verificar que status sea ok\", () => {",
+									"    pm.expect(jsonData.status).to.equal(\"ok\")",
+									"})",
+									"",
+									"pm.test(\"verificar que mensaje sea el esperado\", () => {",
+									"    pm.expect(jsonData.id).to.equal(1)",
+									"    pm.expect(jsonData.mensaje).to.equal(\"La subasta ha sido agendada para 2022-10-31\")",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "titulo",
+									"value": "Gran Subasta",
+									"type": "text"
+								},
+								{
+									"key": "descripcion",
+									"value": "Próximo martes!",
+									"type": "text"
+								},
+								{
+									"key": "imagen",
+									"value": "sofaantiguo.jpg",
+									"type": "text"
+								},
+								{
+									"key": "fecha",
+									"value": "2022-10-31",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:8000/subastas",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"subastas"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "7 - Lotes",
+			"item": [
+				{
+					"name": "Agregar lote a subasta",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.response.to.have.jsonBody()",
+									"jsonData = pm.response.json()",
+									"",
+									"pm.test(\"verificar que la respuesta sea la esperada\", () => {",
+									"    pm.response.to.have.status(200)",
+									"    pm.expect(jsonData.status).to.equal(\"ok\")",
+									"    pm.expect(jsonData.mensaje).to.equal(\"El lote ha sido agregado correctamente\")",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "subasta_uid",
+								"value": "b8758e7c-008a-475b-93f4-7ad01064307a",
+								"type": "text",
+								"disabled": true
+							},
+							{
+								"key": "articulo_uid",
+								"value": "d3e6d89f-617b-4063-8561-20405ae1c759",
+								"type": "text",
+								"disabled": true
+							},
+							{
+								"key": "base",
+								"value": "150",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "subasta_uid",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "articulo_uid",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "base",
+									"value": "5000",
+									"type": "text"
+								},
+								{
+									"key": "orden",
+									"value": "1",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:8000/lotes",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"lotes"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": null,
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener lotes de subasta",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.response.to.have.jsonBody()",
+									"pm.response.to.have.status(200)",
+									"jsonData = pm.response.json()",
+									"",
+									"pm.test(\"verificar que la respuesta sea la esperada\", () => {",
+									"    pm.expect(jsonData.status).to.equal(\"ok\")",
+									"    pm.expect(jsonData.items[0].articulo.id).to.equal(1)",
+									"    pm.expect(jsonData.items[0].articulo.consignatario_id).to.equal(2)",
+									"    pm.expect(jsonData.items[0].articulo.titulo).to.equal(\"Sofa más chico\")",
+									"    pm.expect(jsonData.items[0].articulo.descripcion).to.equal(\"Sofa de 2 cuerpos nomás\")",
+									"    pm.expect(jsonData.items[0].articulo.valuacion).to.equal(15000)",
+									"    pm.expect(jsonData.items[0].base).to.equal(5000)",
+									"    pm.expect(jsonData.items[0].orden).to.equal(1)",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8000/lotes/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"lotes",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener un lote de subasta",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.response.to.have.jsonBody()",
+									"pm.response.to.have.status(200)",
+									"jsonData = pm.response.json()",
+									"",
+									"pm.test(\"verificar que la respuesta sea la esperada\", () => {",
+									"    pm.expect(jsonData.status).to.equal(\"ok\")",
+									"    pm.expect(jsonData.item.articulo.id).to.equal(1)",
+									"    pm.expect(jsonData.item.articulo.consignatario_id).to.equal(2)",
+									"    pm.expect(jsonData.item.articulo.titulo).to.equal(\"Sofa más chico\")",
+									"    pm.expect(jsonData.item.articulo.descripcion).to.equal(\"Sofa de 2 cuerpos nomás\")",
+									"    pm.expect(jsonData.item.articulo.valuacion).to.equal(15000)",
+									"    pm.expect(jsonData.item.base).to.equal(5000)",
+									"    pm.expect(jsonData.item.orden).to.equal(1)",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8000/lotes/1/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"lotes",
+								"1",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener lote inexistente",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.response.to.have.jsonBody()",
+									"pm.response.to.have.status(404)",
+									"jsonData = pm.response.json()",
+									"",
+									"pm.test(\"verificar que la respuesta sea la esperada\", () => {",
+									"    pm.expect(jsonData.status).to.equal(\"error\")",
+									"    pm.expect(jsonData.mensaje).to.equal(\"No se puede listar lotes de una subasta inexistente\")",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8000/lotes/2",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"lotes",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Contar lotes",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.response.to.have.jsonBody()",
+									"pm.response.to.have.status(200)",
+									"jsonData = pm.response.json()",
+									"",
+									"pm.test(\"verificar que la respuesta sea la esperada\", () => {",
+									"    pm.expect(jsonData.status).to.equal(\"ok\")",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8000/lotes/contar/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"lotes",
+								"contar",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "8 - Pujas",
+			"item": [
+				{
+					"name": "Ofrecer menos que base",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.response.to.have.jsonBody()",
+									"pm.response.to.have.status(401)",
+									"jsonData = pm.response.json()",
+									"",
+									"pm.test(\"verificar que la respuesta sea la esperada\", () => {",
+									"    pm.expect(jsonData.status).to.equal(\"error\")",
+									"    pm.expect(jsonData.mensaje).to.equal(\"No se puede iniciar pujando menos que la base\")",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "lote_uid",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "pujador_uid",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "monto",
+									"value": "50",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:8000/pujas",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"pujas"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Pujar con consignatario",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.response.to.have.jsonBody()",
+									"pm.response.to.have.status(401)",
+									"jsonData = pm.response.json()",
+									"",
+									"pm.test(\"verificar que la respuesta sea la esperada\", () => {",
+									"    pm.expect(jsonData.status).to.equal(\"error\")",
+									"    pm.expect(jsonData.mensaje).to.equal(\"No se puede pujar con un pujador inexistente\")",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "lote_uid",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "pujador_uid",
+									"value": "2",
+									"type": "text"
+								},
+								{
+									"key": "monto",
+									"value": "50",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:8000/pujas",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"pujas"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Ofrecer mas que base",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.response.to.have.jsonBody()",
+									"pm.response.to.have.status(200)",
+									"jsonData = pm.response.json()",
+									"",
+									"pm.test(\"verificar que la respuesta sea la esperada\", () => {",
+									"    pm.expect(jsonData.status).to.equal(\"ok\")",
+									"    pm.expect(jsonData.mensaje).to.equal(\"Puja realizada con éxito\")",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "lote_uid",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "pujador_uid",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "monto",
+									"value": "5100",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:8000/pujas",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"pujas"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Ofrecer mas que otra oferta",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.response.to.have.jsonBody()",
+									"pm.response.to.have.status(200)",
+									"jsonData = pm.response.json()",
+									"",
+									"pm.test(\"verificar que la respuesta sea la esperada\", () => {",
+									"    pm.expect(jsonData.status).to.equal(\"ok\")",
+									"    pm.expect(jsonData.mensaje).to.equal(\"Puja realizada con éxito\")",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "lote_uid",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "pujador_uid",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "monto",
+									"value": "7500",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:8000/pujas",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"pujas"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Listar pujas de un lote",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.response.to.have.jsonBody()",
+									"pm.response.to.have.status(200)",
+									"jsonData = pm.response.json()",
+									"",
+									"pm.test(\"verificar que la respuesta sea la esperada\", () => {",
+									"    pm.expect(jsonData.status).to.equal(\"ok\")",
+									"    pm.expect(jsonData.items[0].monto).to.equal(5100)",
+									"    pm.expect(jsonData.items[0].lote).to.equal(1)",
+									"    pm.expect(jsonData.items[0].pujador).to.equal(1)",
+									"    pm.expect(jsonData.items[1].monto).to.equal(7500)",
+									"    pm.expect(jsonData.items[1].lote).to.equal(1)",
+									"    pm.expect(jsonData.items[1].pujador).to.equal(1)",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8000/pujas/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"pujas",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "9 - Vender",
+			"item": [
+				{
+					"name": "Vender a puja inexistente",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.response.to.have.jsonBody()",
+									"pm.response.to.have.status(401)",
+									"jsonData = pm.response.json()",
+									"",
+									"pm.test(\"verificar que la respuesta sea la esperada\", () => {",
+									"    pm.expect(jsonData.status).to.equal(\"error\")",
+									"    pm.expect(jsonData.mensaje).to.equal(\"No se puede cerrar un lote inexistente\")",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "lote_uid",
+									"value": "100",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:8000/lotes/cerrar",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"lotes",
+								"cerrar"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Vender a puja más alta",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.response.to.have.jsonBody()",
+									"pm.response.to.have.status(200)",
+									"jsonData = pm.response.json()",
+									"",
+									"pm.test(\"verificar que la respuesta sea la esperada\", () => {",
+									"    pm.expect(jsonData.status).to.equal(\"ok\")",
+									"    pm.expect(jsonData.precio_final).to.equal(9240)",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "lote_uid",
+									"value": "1",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:8000/lotes/cerrar",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"lotes",
+								"cerrar"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

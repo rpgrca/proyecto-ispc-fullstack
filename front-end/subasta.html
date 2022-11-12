@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="bs/css/bootstrap.min.css">
+        <link rel="stylesheet" href="css/estilos.css">
+        <link rel="shortcut icon" href="images/favicon.png" type="image/x-icon">
+        <title>Subasta</title>
+    </head>
+
+    <body>
+        <header>
+            <nav class="navbar navbar-expand-lg bg-light navbar-header">
+                <div class="container-fluid">
+                    <a class="navbar-brand nav-logo" href="index.html"><img src="images/bidon_logo.svg" alt="Logo Bidon" width="150" height="100"></a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navegacion" aria-controls="navegacion" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navegacion">
+                        <ul class="navbar-nav me-auto mb-2 mb-lg-0 menu">
+                            <li class="nav-item"><a class="nav-link" href="acerca.html">Quiénes somos</a></li>
+                            <li class="nav-item"><a class="nav-link" href="funcionamiento.html">Cómo funciona</a></li>
+                            <li class="nav-item"><a class="nav-link active" aria-current="page" href="#">Subasta</a></li>
+                            <li class="nav-item"><a class="nav-link" href="catalogo.html">Catálogo</a></li>
+                            <li class="nav-item"><a class="nav-link" href="compras.html">Mis compras</a></li>
+                            <li class="nav-item"><a class="nav-link" href="contacto.html">Contacto</a></li>
+                            <li class="nav-item"><a class="nav-link" href="perfil.html">Perfil</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+            <div class="col-md-12 mt-auto pb-4">
+                <div class="container mt-5 p-2">
+                    <div class="text-center">
+                        <h1 class="text-white">Subasta</h1>
+                    </div>
+                </div>
+            </div>
+        </header>
+ 
+        <section>
+            <div class="container p-3">
+                <div class="row">
+                    <article class="col-lg-4 col-md-4">
+                        <div class="card border-dark">
+                            <img src="images/mesita-auxiliar-francesa.jpg" class="card-img-top" alt="mesita auxiliar francesa">
+                            <div class="card-body">
+                                <h5 class="card-title">Mesita auxiliar francesa</h5>
+                                <p class="card-text">Mesita auxiliar francesa con madera lavada y protegida realizada en caoba rayada con herrajes y regatones en bronce. Movimientos delicdados. 73 cm de alto, 40 cm de ancho y 30 cm de profundidad.</p>
+                            </div>
+                        </div>
+                    </article>
+                    <article class="col-lg-6 col-md-8">
+                        <div class="card border-dark">
+                            <div class="card-body">
+                                <h5 class="card-title">Últimas pujas</h5>
+                                <p class="card-text">$66.000 (Martín hace 5 segundos)</p>
+                                <p class="card-text">$65.000 (Julia hace 20 segundos)</p>
+                                <p class="card-text">$64.500 (El Sastre hace 33 segundos)</p>
+                                <p class="card-text">$63.500 (Lobo hace 40 segundos)</p>
+                                <p class="card-text">$62.500 (Cafecito hace 59 segundos)</p>
+                                <p class="card-text">$60.000 (base)</p>
+                            </div>
+                        </div>
+                    </article>
+                    <div class="col-lg-2">
+                        <div class="d-grid gap-2">
+                            <button type="button" onclick="sube_puja()" class="btn btn-lg btn-secondary">+ $500</button>
+                            <button type="button" onclick="sube_puja_un_poco()"  class="btn btn-lg btn-primary">+ $1.000</button>
+                            <button type="button" onclick="sube_puja_un_poco_mas()" class="btn btn-lg btn-danger">+ $2.500</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <footer class="footer">
+            <div class="container-fluid pt-1 mt-4">
+                <div class="row align-items-center row-cols-1 row-cols-sm-2 row-cols-md-5 p-4 py-2 my-4">
+                    <div class="col col-sm-auto">
+                        <a class="d-flex align-items-center mb-3"><img src="images/bidon_logo.svg" alt="Logo Bidon" width="100" height=""></a>
+                    </div>
+                    <div class="col mb-3">
+                        <h5>Nosotros</h5>
+                        <ul class="nav flex-column py-2">
+                            <li class="nav-item mb-2"><a href="acerca.html" class="nav-link p-0 text-muted">Quienes somos</a></li>
+                            <li class="nav-item mb-2"><a href="funcionamiento.html" class="nav-link p-0 text-muted">Como funciona</a></li>
+                            
+                        </ul>
+                    </div>
+                    <div class="col mb-3">
+                        <h5>Secciones</h5>
+                        <ul class="nav flex-column py-2">
+                            <li class="nav-item mb-2"><a href="catalogo.html" class="nav-link p-0 text-muted">Catálogo</a></li>
+                            <li class="nav-item mb-2"><a href="contacto-visitante.html" class="nav-link p-0 text-muted">Contacto</a></li>
+                            
+                        </ul>
+                    </div>
+        
+                    <div class="col mb-3">
+                        <h5>Seguinos en redes</h5>
+                        <ul class="nav d-flex flex-column flex-sm-row justify-content-around my-1 border-top">
+                            <li class="nav-item mb-2 ms-0 my-3 py-2"><a href="#" class="nav-link p-0 text-light" ><ion-icon name="logo-facebook"></ion-icon></a></li>
+                            <li class="nav-item mb-2 ms-0 my-3 py-2"><a href="#" class="nav-link p-0 text-light"><ion-icon name="logo-twitter"></ion-icon></a></li>
+                            <li class="nav-item mb-2 ms-0 my-3 py-2"><a href="#" class="nav-link p-0 text-light"><ion-icon name="logo-instagram"></ion-icon></a></li>
+                        </ul>
+                    </div>
+            
+                </div>    
+            
+                <div class="container bg-light text-dark">
+                    <div class="d-flex flex-column flex-sm-row justify-content-center pt-3">
+                        <p>@2022 - <a href="https://almoneda.online">Almoneda</a> - Todos los derechos reservados</p>
+                    
+                    </div>
+                </div>
+            </div>
+        </footer>
+        
+        
+        <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+        <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+        <script src="bs/js/popper.min.js"></script>
+        <script src="bs/js/bootstrap.min.js"></script>
+        <script src="js/funciones.js "></script>
+    </body>
+</html>

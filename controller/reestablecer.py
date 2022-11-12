@@ -1,3 +1,0 @@
-# reestablecer.py
-#
-# recuperar(email)

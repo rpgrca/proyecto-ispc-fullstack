@@ -1,0 +1,126 @@
+.container {
+  padding: 10px 50px;
+}
+
+/* inputs */
+input[type=text], input[type=email], select, textarea {
+  background-color: #f5f5f5;
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #f17228;
+  border-radius: 5px;
+  margin-top: 6px;
+  margin-bottom: 16px;
+  resize: vertical;
+  color: #212121;
+  font-family: 'Roboto', Helvetica, Arial, sans-serif;
+}
+
+select {
+  color:gray;
+}
+
+option:not(first-child) {
+  color: #212121;
+}
+
+label {
+  font-weight: 700;
+  font-size: 0.8rem;
+  color: #f17228;
+}
+
+input[type=submit] {
+  background-color: #f17228;
+  color: white;
+  font-weight: 700;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+input[type=submit]:hover {
+  background-color: #cd6122;
+}
+
+.btn-right {
+  text-align: right;
+}
+
+.section-title {
+  text-align: center;
+  padding-top: 10px;
+}
+
+.section-title h1 {
+  color: #fff;
+  font-size: 2rem;
+}
+
+.section-title p {
+  color: #616161;
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+
+.column {
+  float: left;
+  width: 46%;
+  margin: 2%;
+  padding: 10px 2%; 
+}
+
+.my-form {
+  background-color: #fff;
+  border-radius: 10px;
+}
+
+small, #contador {
+  font-size: 0.8rem;
+  color: #616161;
+}
+
+#contador {
+  text-align: right;
+  padding: 0;
+  margin: 0 0 16px 0;
+}
+
+.no-margin-bottom {
+  margin-bottom: 0;
+}
+
+.location-info {
+  color: #616161;
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+.location-info i {
+  color: #f17228;
+}
+
+.location-map {
+  border-radius: 10px;
+  overflow: hidden;
+  display: flex;
+  align-items: center; 
+  justify-content: center; 
+}
+/* cómo ajustar img a contenedor y ocultar excedente: https://stackoverflow.com/a/55271265 */
+
+/* Clear floats after columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/* diseño responsivo */
+@media screen and (max-width: 768px) {
+  .column, input[type=submit] {
+    width: 100%;
+    margin-top: 0;
+  }
+}
