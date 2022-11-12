@@ -19,7 +19,7 @@ python -m pip install -r requirements.txt
 pip install -r requirements.txt
 ```
 
-En algunos sistemas (por ejemplo Linux Ubuntu) es _python3_ y _pip3_, en otros _python_ y _pip_. La versión mínima es 3.9.
+En algunos sistemas (por ejemplo Linux Ubuntu) es _python3_ y _pip3_, en otros _python_ y _pip_. La versión mínima es 3.9. En otros sistemas como las variantes de SUSE python3 es Python 3.6 por lo que hay que instalar primero una versión más moderna, por ejemplo con _sudo zypper install python310-base_ y luego utilizar _python3.10_ en lugar de _python3_.
 
 ![image](https://user-images.githubusercontent.com/15602473/201264090-09e4e986-26aa-4809-9f9e-64ade8aaa3e1.png)
 
