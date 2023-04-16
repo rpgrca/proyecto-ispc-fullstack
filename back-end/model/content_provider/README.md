@@ -2,7 +2,7 @@
 
 ## Content Provider
 
-En este directorio se encuentran la representación de los repositorios
+En este directorio se encuentran las representaciones de los repositorios
 soportados por el sistema.
 
 El repositorio de MySQL implementa las abstracciones de los modelos
