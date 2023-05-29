@@ -17,7 +17,7 @@ typing_extensions==4.6.2
 uvicorn==0.22.0
 zipp==3.15.0
 pytest==7.3.1
-pytest-cov==4.0.0
+pytest-cov==4.1.0
 mysql-connector==2.2.9
 mysql-connector-python==8.0.33
 ddt==1.6.0
