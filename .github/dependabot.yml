@@ -4,5 +4,6 @@ updates:
     directory: "/back-end"
     schedule:
       interval: "weekly"
+      day: "wednesday"
     labels:
       - "pip dependencies"
