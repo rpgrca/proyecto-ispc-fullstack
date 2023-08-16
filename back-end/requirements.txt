@@ -6,7 +6,7 @@ contextvars==2.4
 fastapi==0.101.0
 h11==0.14.0
 idna==3.4
-immutables==0.19
+immutables==0.20
 importlib-metadata==6.8.0
 pydantic==2.1.1
 python-multipart==0.0.6
