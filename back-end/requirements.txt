@@ -16,7 +16,7 @@ starlette==0.35.1
 typing_extensions==4.9.0
 uvicorn==0.27.0
 zipp==3.17.0
-pytest==7.4.4
+pytest==8.0.0
 pytest-cov==4.1.0
 mysql-connector==2.2.9
 mysql-connector-python==8.3.0
