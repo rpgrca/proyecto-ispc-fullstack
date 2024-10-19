@@ -18,5 +18,5 @@ uvicorn==0.31.0
 pytest==8.3.3
 pytest-cov==5.0.0
 mysql-connector==2.2.9
-mysql-connector-python==9.0.0
+mysql-connector-python==9.1.0
 ddt==1.7.2
