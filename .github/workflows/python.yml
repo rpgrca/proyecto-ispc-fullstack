@@ -38,13 +38,21 @@ jobs:
     - name: Test with pytest
       run: |
         cd back-end
-        pytest main_tests.py --cov-config=coverage.ini --doctest-modules --junitxml=../main.coverage.xml --cov-append --cov . --cov-report xml
+        pytest main_tests.py --cov-config=coverage.ini --doctest-modules --junitxml=../main.coverage.xml --junit_family=legacy --cov-append --cov . --cov-report xml
         mv coverage.xml ../${{ matrix.python-version }}-coverage.xml
+        pytest main_tests.py --doctest-modules --junitxml=../test_analytics.junit.xml --cov . -o junit_family=legacy
 
     - name: Upload coverage to CodeCov
       uses: codecov/codecov-action@v5
       env:
         CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+
+    - name: Upload tests to CodeCov
+      run: |
+        if: ${{ !cancelled() }}
+        uses: codecov/test-results-action@v1
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
 
     - name: Archive code coverage results
       uses: actions/upload-artifact@v4
