@@ -1,4 +1,4 @@
-anyio==4.7.0
+anyio==4.8.0
 asgiref==3.8.1
 click==8.1.8
 contextlib2==21.6.0
