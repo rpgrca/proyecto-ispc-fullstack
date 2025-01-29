@@ -7,7 +7,7 @@ fastapi==0.115.6
 h11==0.14.0
 idna==3.10
 immutables==0.21
-importlib-metadata==8.5.0
+importlib-metadata==8.6.1
 pydantic==2.10.6
 python-multipart==0.0.20
 six==1.17.0
@@ -18,5 +18,5 @@ uvicorn==0.34.0
 pytest==8.3.4
 pytest-cov==6.0.0
 mysql-connector==2.2.9
-mysql-connector-python==9.1.0
+mysql-connector-python==9.2.0
 ddt==1.7.2
