@@ -3,7 +3,7 @@ asgiref==3.9.1
 click==8.1.8
 contextlib2==21.6.0
 contextvars==2.4
-fastapi==0.116.1
+fastapi==0.116.2
 h11==0.16.0
 idna==3.10
 immutables==0.21
