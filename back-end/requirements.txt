@@ -8,7 +8,7 @@ h11==0.16.0
 idna==3.10
 immutables==0.21
 importlib-metadata==8.7.0
-pydantic==2.12.0
+pydantic==2.12.3
 python-multipart==0.0.20
 six==1.17.0
 sniffio==1.3.1
