@@ -42,7 +42,7 @@ jobs:
         mv coverage.xml ../${{ matrix.python-version }}-coverage.xml
 
     - name: Upload coverage to CodeCov
-      uses: codecov/codecov-action@v5
+      uses: codecov/codecov-action@v6
       env:
         CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
 
