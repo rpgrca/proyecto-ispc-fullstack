@@ -5,7 +5,7 @@ contextlib2==21.6.0
 contextvars==2.4
 fastapi==0.136.3
 h11==0.16.0
-idna==3.13
+idna==3.18
 immutables==0.21
 importlib-metadata==9.0.0
 pydantic==2.13.4
