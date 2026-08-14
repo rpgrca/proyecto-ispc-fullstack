@@ -1,5 +1,5 @@
 anyio==4.14.2
-asgiref==3.11.1
+asgiref==3.12.1
 click==8.4.2
 contextlib2==21.6.0
 contextvars==2.4
