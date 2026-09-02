@@ -7,7 +7,7 @@ fastapi==0.141.1
 h11==0.16.0
 idna==3.18
 immutables==0.21
-importlib-metadata==9.0.0
+importlib-metadata==9.0.1
 pydantic==2.13.4
 python-multipart==0.0.32
 six==1.17.0
